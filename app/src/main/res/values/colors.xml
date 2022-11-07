@@ -11,4 +11,7 @@
     <color name="text_grey">#6F6F6F</color>
     <color name="light_blue">#00BCD4</color>
 
+    <color name="transparent">#00FFFFFF</color>
+    <color name="theme_blue">#003C81</color>
+
 </resources>

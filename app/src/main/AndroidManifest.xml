@@ -16,16 +16,26 @@
         android:theme="@style/Theme.AgencyPhase2"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.ChooseLoginRegActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>
