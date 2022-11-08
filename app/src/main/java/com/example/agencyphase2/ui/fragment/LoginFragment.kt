@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.agencyphase2.MainActivity
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.FragmentLoginBinding
@@ -47,6 +48,10 @@ class LoginFragment : Fragment() {
             val intent = Intent(requireActivity(), SignUpActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPassEmailFragment)
         }
     }
 }

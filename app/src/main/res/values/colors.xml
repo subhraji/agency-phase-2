@@ -8,10 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_grey">#E3E3E3</color>
+    <color name="light_grey">#F1F1F1</color>
     <color name="text_grey">#6F6F6F</color>
     <color name="light_blue">#00BCD4</color>
 
     <color name="transparent">#00FFFFFF</color>
     <color name="theme_blue">#003C81</color>
+    <color name="post_btn_color">#FF6535</color>
 
 </resources>

@@ -2,6 +2,8 @@ package com.example.agencyphase2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agencyphase2.adapter.DashOpenJobsAdapter
 import com.example.agencyphase2.databinding.ActivityMainBinding
@@ -17,18 +19,10 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val quickCallList = ArrayList<TestModel>()
-        quickCallList.add(TestModel("a"))
-        quickCallList.add(TestModel("b"))
-        quickCallList.add(TestModel("c"))
-        fillQuickCallsRecycler(quickCallList)
+        binding.bottomNavigation.itemIconTintList=null
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
-    private fun fillQuickCallsRecycler(list: List<TestModel>) {
-        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.postJobsRecycler.apply {
-            layoutManager = gridLayoutManager
-            adapter = DashOpenJobsAdapter(list,this@MainActivity,true)
-        }
-    }
 }
