@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,8 @@
             app:layout_constraintStart_toEndOf="@+id/agency_logo_img_view"
             app:layout_constraintEnd_toStartOf="@+id/status_tv"
             android:layout_marginStart="7dp"
-            android:layout_marginEnd="15dp"/>
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:id="@+id/job_title_tv"
             android:layout_width="0dp"
@@ -56,7 +57,8 @@
             app:layout_constraintTop_toTopOf="@+id/agency_logo_img_view"
             android:text="Quick Call"
             android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
         <View
             android:id="@+id/view_1"
             android:layout_width="0dp"
@@ -76,7 +78,8 @@
             app:layout_constraintStart_toStartOf="@+id/agency_logo_img_view"
             android:src="@drawable/ic_baseline_person_24"
             app:tint="@color/text_grey"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
         <TextView
             android:id="@+id/care_type_tv"
             android:layout_width="wrap_content"
@@ -269,10 +272,10 @@
             android:text="TIME LEFT: 30 mins"
             android:textColor="@color/white"
             android:gravity="center"
-            android:paddingStart="7dp"
-            android:paddingEnd="7dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:paddingTop="3dp"
-            android:paddingBottom="1dp"/>
+            android:paddingBottom="5dp"/>
         <ImageView
             android:id="@+id/accept_btn"
             android:layout_width="wrap_content"

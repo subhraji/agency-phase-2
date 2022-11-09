@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -25,6 +26,11 @@ class JobPostActivity : AppCompatActivity() {
 
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
+        }
+
+        binding.nextStepBtn.setOnClickListener {
+            val intent = Intent(this, PostJobPreviewActivity::class.java)
+            startActivity(intent)
         }
 
         binding.backArrow.setOnClickListener {
