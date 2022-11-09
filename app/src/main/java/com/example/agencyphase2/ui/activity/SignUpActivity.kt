@@ -21,7 +21,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.registerBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, AskLocationActivity::class.java)
             startActivity(intent)
         }
 
