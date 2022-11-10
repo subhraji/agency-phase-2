@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.DashOpenJobsAdapter
-import com.example.agencyphase2.databinding.FragmentClosedBinding
-import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.databinding.FragmentOngoingBinding
-import com.example.agencyphase2.databinding.FragmentPostBinding
-import com.example.agencyphase2.model.TestModel
+import com.example.agencyphase2.model.pojo.TestModel
 
 class OngoingFragment : Fragment() {
     private var _binding: FragmentOngoingBinding? = null

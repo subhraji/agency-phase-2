@@ -12,7 +12,7 @@ class PostJobPreviewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityPostJobPreviewBinding.inflate(layoutInflater)
+        binding = ActivityPostJobPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.backArrow.setOnClickListener {

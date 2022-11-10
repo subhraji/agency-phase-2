@@ -1,25 +1,31 @@
 package com.example.agencyphase2.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.agencyphase2.R
-import com.example.agencyphase2.adapter.DashOpenJobsAdapter
 import com.example.agencyphase2.adapter.HomeViewPagerAdapter
 import com.example.agencyphase2.databinding.FragmentHomeBinding
-import com.example.agencyphase2.databinding.FragmentLoginBinding
-import com.example.agencyphase2.model.TestModel
+import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.viewmodel.NewViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.ArrayList
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val tabTitles = arrayListOf("     Post     ","  Ongoing  ", "    Closed    ", " Cancelled ")
+
+    private val mainViewModel: NewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpTabLayoutWithViewPager()
+
+        getTodos()
     }
 
     private fun setUpTabLayoutWithViewPager() {
@@ -53,5 +61,25 @@ class HomeFragment : Fragment() {
             binding.tabLayout.getTabAt(i)?.customView = textView
             textView.text = tabTitles[i]
         }
+    }
+
+    private fun getTodos(){
+        mainViewModel.response.observe(requireActivity(), Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    if(outcome.data?.size!! > 0){
+                        binding.testTv.text = outcome.data!![0].title.toString()
+                    }else{
+                        Toast.makeText(requireActivity(),"size => "+ outcome.data!!.size, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(requireActivity(),outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
     }
 }

@@ -1,4 +1,4 @@
-package com.example.agencyphase2.model
+package com.example.agencyphase2.model.pojo
 
 data class TestModel(
     val name: String

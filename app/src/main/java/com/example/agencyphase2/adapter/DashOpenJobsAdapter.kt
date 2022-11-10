@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.databinding.OpenJobItemLayoutBinding
-import com.example.agencyphase2.model.TestModel
+import com.example.agencyphase2.model.pojo.TestModel
 
 class DashOpenJobsAdapter (private val itemList: List<TestModel>,
                            private val context: Context,
