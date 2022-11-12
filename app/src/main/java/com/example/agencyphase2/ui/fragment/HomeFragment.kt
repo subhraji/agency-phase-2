@@ -25,8 +25,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val tabTitles = arrayListOf("     Post     ","  Ongoing  ", "    Closed    ", " Cancelled ")
 
-    private val mainViewModel: NewViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
@@ -45,8 +43,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpTabLayoutWithViewPager()
-
-        getTodos()
     }
 
     private fun setUpTabLayoutWithViewPager() {
@@ -61,25 +57,5 @@ class HomeFragment : Fragment() {
             binding.tabLayout.getTabAt(i)?.customView = textView
             textView.text = tabTitles[i]
         }
-    }
-
-    private fun getTodos(){
-        mainViewModel.response.observe(requireActivity(), Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    if(outcome.data?.size!! > 0){
-                        binding.testTv.text = outcome.data!![0].title.toString()
-                    }else{
-                        Toast.makeText(requireActivity(),"size => "+ outcome.data!!.size, Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(requireActivity(),outcome.e.message, Toast.LENGTH_SHORT).show()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
     }
 }
