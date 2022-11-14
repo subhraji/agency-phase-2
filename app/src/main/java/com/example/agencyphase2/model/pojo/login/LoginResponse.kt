@@ -1,6 +1,6 @@
-package com.example.agencyphase2.model.pojo.signup
+package com.example.agencyphase2.model.pojo.login
 
-data class SignUpResponse(
+data class LoginResponse(
     val `data`: Any,
     val http_status_code: String,
     val message: String,

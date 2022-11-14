@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.example.agencyphase2.MainActivity
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivitySplashBinding
+import com.example.agencyphase2.utils.PrefManager
+import com.user.caregiver.isConnectedToInternet
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
@@ -26,9 +28,29 @@ class SplashActivity : AppCompatActivity() {
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, ChooseLoginRegActivity::class.java)
-            startActivity(intent)
-            finish() }, 3000)
+        checkInternet()
     }
+
+    private fun checkInternet(){
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            if(isConnectedToInternet()){
+                if(PrefManager.getLogInStatus() == true){
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    val intent = Intent(this, ChooseLoginRegActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }else{
+                val intent = Intent(this, NoInternetActivity::class.java)
+                startActivity(intent)
+                finish()
+            } }, 3000)
+
+    }
+
 }

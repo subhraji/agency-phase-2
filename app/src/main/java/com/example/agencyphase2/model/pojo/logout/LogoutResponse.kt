@@ -1,9 +1,9 @@
-package com.example.agencyphase2.model.pojo.signup
+package com.example.agencyphase2.model.pojo.logout
 
-data class SignUpResponse(
+data class LogoutResponse(
     val `data`: Any,
     val http_status_code: String,
     val message: String,
     val success: Boolean,
-    val token: String?
+    val token: Any
 )

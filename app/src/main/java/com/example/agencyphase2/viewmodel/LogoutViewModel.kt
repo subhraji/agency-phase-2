@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agencyphase2.model.pojo.signup.SignUpResponse
+import com.example.agencyphase2.model.pojo.logout.LogoutResponse
+import com.example.agencyphase2.model.repository.LogoutRepository
 import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.model.repository.SignUpRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
@@ -14,17 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val repository: SignUpRepository) : ViewModel() {
-    private var _response = MutableLiveData<Outcome<SignUpResponse?>?>()
-    val response: LiveData<Outcome<SignUpResponse?>?> = _response
+class LogoutViewModel @Inject constructor(private val repository: LogoutRepository) : ViewModel() {
+    private var _response = MutableLiveData<Outcome<LogoutResponse?>?>()
+    val response: LiveData<Outcome<LogoutResponse?>?> = _response
 
-    fun signup(
-        name: String,
-        email: String,
-        password: String,
-        con_password: String
+    fun logout(
+        token: String,
     ) = viewModelScope.launch {
-        repository.signup(name, email, password, con_password).onStart {
+        repository.logout(token).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

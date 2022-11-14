@@ -15,5 +15,6 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="theme_blue">#003C81</color>
     <color name="post_btn_color">#FF6535</color>
+    <color name="error_red">#FF2222</color>
 
 </resources>

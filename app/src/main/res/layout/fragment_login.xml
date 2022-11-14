@@ -66,6 +66,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_txt_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -75,6 +76,8 @@
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeColor="@color/white"
                     app:hintTextColor="@color/white"
+                    app:helperTextTextColor="@color/error_red"
+                    app:helperText="required"
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -99,6 +102,7 @@
                     android:background="@color/white"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_txt_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -111,7 +115,9 @@
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/white"
                     app:boxStrokeWidthFocused="0dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:helperTextTextColor="@color/error_red"
+                    app:helperText="required">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_txt"

@@ -7,7 +7,9 @@ import com.example.agencyphase2.MainActivity
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityAskLocationBinding
 import com.example.agencyphase2.databinding.ActivityAuthBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AskLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAskLocationBinding
 

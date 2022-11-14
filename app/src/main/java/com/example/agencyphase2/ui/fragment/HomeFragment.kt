@@ -1,21 +1,14 @@
 package com.example.agencyphase2.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.HomeViewPagerAdapter
 import com.example.agencyphase2.databinding.FragmentHomeBinding
-import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.viewmodel.NewViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 

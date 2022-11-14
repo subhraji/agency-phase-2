@@ -1,4 +1,4 @@
-package com.example.agencyphase2.model.repository.signup
+package com.example.agencyphase2.model.repository
 
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
