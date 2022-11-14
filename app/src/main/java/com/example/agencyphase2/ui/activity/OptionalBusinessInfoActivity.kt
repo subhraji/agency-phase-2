@@ -7,7 +7,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityBasicInformationBinding
 import com.example.agencyphase2.databinding.ActivityHomeAddressBinding
 
-class BusinessAddressActivity : AppCompatActivity() {
+class OptionalBusinessInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeAddressBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

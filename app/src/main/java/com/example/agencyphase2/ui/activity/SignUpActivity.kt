@@ -7,13 +7,8 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.agencyphase2.MainActivity
-import com.example.agencyphase2.R
-import com.example.agencyphase2.databinding.ActivityChooseLoginRegBinding
 import com.example.agencyphase2.databinding.ActivitySignUpBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
