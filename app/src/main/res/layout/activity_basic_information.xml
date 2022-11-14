@@ -89,7 +89,7 @@
                 <Spinner
                     android:id="@+id/ls_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"/>
@@ -105,7 +105,7 @@
                 <Spinner
                     android:id="@+id/org_type_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"/>
@@ -233,33 +233,19 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="2">
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:textColorHint="@color/text_grey"
-                        app:boxBackgroundColor="@color/transparent"
-                        android:background="@color/transparent"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeColor="@color/text_grey"
-                        app:boxStrokeWidthFocused="0dp"
+                        android:orientation="vertical"
                         android:layout_weight="1">
-
-                        <com.google.android.material.textfield.TextInputEditText
+                        <Spinner
+                            android:id="@+id/state_spinner"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/transparent"
-                            android:hint="State"
-                            android:inputType="text"
-                            android:maxLength="20"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/text_grey"
-                            android:textCursorDrawable="@null"
-                            android:textSize="16sp"
-                            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-                            android:drawableTint="@color/black"/>
-
+                            android:layout_height="55dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginTop="5dp"
+                            />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -267,7 +253,8 @@
                             android:layout_marginStart="15dp"
                             android:layout_marginEnd="15dp"
                             android:background="@color/text_grey"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
