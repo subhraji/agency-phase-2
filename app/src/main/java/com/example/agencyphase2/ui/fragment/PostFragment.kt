@@ -13,9 +13,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.FragmentClosedBinding
 import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.databinding.FragmentPostBinding
-import com.example.agencyphase2.ui.activity.BasicInformationActivity
-import com.example.agencyphase2.ui.activity.ChooseLoginRegActivity
-import com.example.agencyphase2.ui.activity.JobPostActivity
+import com.example.agencyphase2.ui.activity.*
 
 class PostFragment : Fragment() {
     private var _binding: FragmentPostBinding? = null
@@ -58,7 +56,10 @@ class PostFragment : Fragment() {
         complete.setOnClickListener {
             dialog.dismiss()
 
-            val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
+            /*val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
+            startActivity(intent)*/
+
+            val intent = Intent(requireActivity(), AuthorizedPersonInfoAddActivity::class.java)
             startActivity(intent)
         }
         dialog.show()

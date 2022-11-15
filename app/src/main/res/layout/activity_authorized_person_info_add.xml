@@ -61,6 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/business_info_htv">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/first_name_txt_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -69,16 +70,18 @@
                     app:boxBackgroundColor="@color/transparent"
                     app:boxStrokeColor="@color/text_grey"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
+                    app:boxStrokeWidthFocused="0dp"
+                    app:helperTextTextColor="@color/error_red"
+                    app:helperText="required">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/mobile_number_txt"
+                        android:id="@+id/first_name_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:hint="First name"
-                        android:inputType="number"
-                        android:maxLength="10"
+                        android:inputType="text"
+                        android:maxLength="30"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_grey"
@@ -95,6 +98,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/last_name_txt_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -103,10 +107,12 @@
                     app:boxBackgroundColor="@color/transparent"
                     app:boxStrokeColor="@color/text_grey"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
+                    app:boxStrokeWidthFocused="0dp"
+                    app:helperText="required"
+                    app:helperTextTextColor="@color/error_red">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/legal_structure_txt"
+                        android:id="@+id/last_name_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
@@ -129,6 +135,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_address_txt_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -137,17 +144,17 @@
                     app:boxBackgroundColor="@color/transparent"
                     app:boxStrokeColor="@color/text_grey"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
+                    app:boxStrokeWidthFocused="0dp"
+                    app:helperText="required"
+                    app:helperTextTextColor="@color/error_red">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/org_type_txt"
+                        android:id="@+id/email_address_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-                        android:drawableTint="@color/black"
                         android:hint="Email address"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:maxLength="20"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -165,6 +172,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mobile_number_txt_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -173,10 +181,12 @@
                     app:boxBackgroundColor="@color/transparent"
                     app:boxStrokeColor="@color/text_grey"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp">
+                    app:boxStrokeWidthFocused="0dp"
+                    app:helperTextTextColor="@color/error_red"
+                    app:helperText="required">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tax_number_txt"
+                        android:id="@+id/mobile_number_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
