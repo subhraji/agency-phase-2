@@ -1,5 +1,7 @@
 package com.example.agencyphase2.retrofit
 
+import com.example.agencyphase2.model.pojo.business_information.BusinessInformationRequest
+import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
@@ -22,4 +24,9 @@ interface ApiInterface {
 
     @POST("logout")
     suspend fun logout(@Header("Authorization") token: String): LogoutResponse?
+
+    @POST("profile-registration")
+    suspend fun addBusinessInfo(
+        @Body body: BusinessInformationRequest?,
+        @Header("Authorization") token: String): InsertBusinessInformationResponse?
 }
