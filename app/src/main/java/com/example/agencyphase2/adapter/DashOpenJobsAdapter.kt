@@ -41,4 +41,4 @@ class DashOpenJobsAdapter (private val itemList: List<TestModel>,
         }
 
     }
-    }
+}

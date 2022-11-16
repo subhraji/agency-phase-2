@@ -56,11 +56,9 @@ class PostFragment : Fragment() {
         complete.setOnClickListener {
             dialog.dismiss()
 
-            /*val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
-            startActivity(intent)*/
-
-            val intent = Intent(requireActivity(), AuthorizedPersonInfoAddActivity::class.java)
+            val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
             startActivity(intent)
+
         }
         dialog.show()
     }

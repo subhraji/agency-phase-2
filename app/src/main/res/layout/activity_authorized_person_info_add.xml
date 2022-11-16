@@ -10,207 +10,223 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="80dp">
+            android:orientation="vertical"
+            android:paddingBottom="70dp">
 
-            <ImageView
-                android:id="@+id/back_arrow"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_baseline_arrow_back_ios_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/title_htv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Agency Profile Registration"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/back_arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/back_arrow" />
-
-            <TextView
-                android:id="@+id/business_info_htv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Authorized officer personal information"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/back_arrow" />
-
-            <LinearLayout
-                android:id="@+id/linear_lay_1"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/business_info_htv">
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/first_name_txt_lay"
+                <ImageView
+                    android:id="@+id/back_arrow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/title_htv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agency Profile Registration"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/back_arrow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/back_arrow" />
+
+                <TextView
+                    android:id="@+id/business_info_htv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Authorized officer personal information"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/back_arrow" />
+
+                <LinearLayout
+                    android:id="@+id/linear_lay_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:padding="5dp"
-                    android:textColorHint="@color/text_grey"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/text_grey"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:helperTextTextColor="@color/error_red"
-                    app:helperText="required">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/business_info_htv">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/first_name_txt"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/first_name_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="First name"
-                        android:inputType="text"
-                        android:maxLength="30"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
+                        android:padding="5dp"
                         android:textColorHint="@color/text_grey"
-                        android:textCursorDrawable="@null"
-                        android:textSize="16sp" />
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:helperText="required"
+                        app:helperTextTextColor="@color/error_red">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@color/text_grey"
-                        android:visibility="visible" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/first_name_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="First name"
+                            android:inputType="text"
+                            android:maxLength="30"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="16sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/last_name_txt_lay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:padding="5dp"
-                    android:textColorHint="@color/text_grey"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/text_grey"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:helperText="required"
-                    app:helperTextTextColor="@color/error_red">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@color/text_grey"
+                            android:visibility="visible" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/last_name_txt"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/last_name_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="Last name"
-                        android:inputType="text"
-                        android:maxLength="20"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
+                        android:padding="5dp"
                         android:textColorHint="@color/text_grey"
-                        android:textCursorDrawable="@null"
-                        android:textSize="16sp" />
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:helperText="required"
+                        app:helperTextTextColor="@color/error_red">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@color/text_grey"
-                        android:visibility="visible" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/last_name_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="Last name"
+                            android:inputType="text"
+                            android:maxLength="20"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="16sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/email_address_txt_lay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:padding="5dp"
-                    android:textColorHint="@color/text_grey"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/text_grey"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:helperText="required"
-                    app:helperTextTextColor="@color/error_red">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@color/text_grey"
+                            android:visibility="visible" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/email_address_txt"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/email_address_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="Email address"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="20"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
+                        android:padding="5dp"
                         android:textColorHint="@color/text_grey"
-                        android:textCursorDrawable="@null"
-                        android:textSize="16sp" />
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:helperText="required"
+                        app:helperTextTextColor="@color/error_red">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@color/text_grey"
-                        android:visibility="visible" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/email_address_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="Email address"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="20"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="16sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mobile_number_txt_lay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:padding="5dp"
-                    android:textColorHint="@color/text_grey"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/text_grey"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:helperTextTextColor="@color/error_red"
-                    app:helperText="required">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@color/text_grey"
+                            android:visibility="visible" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/mobile_number_txt"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/mobile_number_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:hint="Mobile number"
-                        android:inputType="number"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
+                        android:padding="5dp"
                         android:textColorHint="@color/text_grey"
-                        android:textCursorDrawable="@null"
-                        android:textSize="16sp" />
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:helperText="required"
+                        app:helperTextTextColor="@color/error_red">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@color/text_grey"
-                        android:visibility="visible" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mobile_number_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="Mobile number"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@color/text_grey"
+                            android:visibility="visible" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notification_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_more_btn"
+                android:layout_marginTop="5dp"
+                />
+
+        </LinearLayout>
     </ScrollView>
     <androidx.cardview.widget.CardView
         android:id="@+id/next_step_btn"
@@ -225,7 +241,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next Step"
+            android:text="Add Officer"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp"

@@ -6,6 +6,8 @@ import com.example.agencyphase2.model.pojo.business_information.BusinessInformat
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
+import com.example.agencyphase2.model.pojo.job_post.JobPostRequest
+import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
@@ -29,18 +31,23 @@ interface ApiInterface {
     @POST("logout")
     suspend fun logout(@Header("Authorization") token: String): LogoutResponse?
 
-    @POST("profile-registration")
+    @POST("profile/registration")
     suspend fun addBusinessInfo(
         @Body body: BusinessInformationRequest?,
         @Header("Authorization") token: String): InsertBusinessInformationResponse?
 
-    @POST("edit-profile-registration")
+    @POST("profile/edit-registration")
     suspend fun editBasicInfo(
         @Body body: EditBasicInfoRequest?,
         @Header("Authorization") token: String): EditBasicInfoResponse?
 
-    @POST("create-authorize-officer")
+    @POST("authorize-officer/create-officer")
     suspend fun addAuthorizeOfficer(
         @Body body: AddAuthorizeOfficerRequest?,
         @Header("Authorization") token: String): AddAuthorizeOfficerResponse?
+
+    @POST("job/create")
+    suspend fun jobPost(
+        @Body body: JobPostRequest?,
+        @Header("Authorization") token: String): JobPostResponse?
 }
