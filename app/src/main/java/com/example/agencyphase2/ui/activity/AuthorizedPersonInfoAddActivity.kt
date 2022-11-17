@@ -13,6 +13,7 @@ import com.example.agencyphase2.databinding.ActivityAuthorizedPersonInfoAddBindi
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.AddAuthorizeOfficerViewModel
+import com.example.agencyphase2.viewmodel.GetAuthorizeOfficerViewModel
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
 import com.user.caregiver.showKeyboard
@@ -22,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizedPersonInfoAddBinding
     private val mAddAuthorizeOfficerViewModel: AddAuthorizeOfficerViewModel by viewModels()
+    private val mGetAuthorizeOfficerViewModel: GetAuthorizeOfficerViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var accessToken: String
 
@@ -87,6 +89,13 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
 
         //observer
         addAuthorizeInoObserve()
+        getAuthorizeInoObserve()
+
+        if(isConnectedToInternet()){
+            mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
+        }else{
+            Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun emailFocusListener(){
@@ -162,8 +171,28 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
+                        mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
                         mAddAuthorizeOfficerViewModel.navigationComplete()
-                        finish()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
+    private fun getAuthorizeInoObserve(){
+        mGetAuthorizeOfficerViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    if(outcome.data?.success == true){
+                        mGetAuthorizeOfficerViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }

@@ -6,6 +6,7 @@ import com.example.agencyphase2.model.pojo.business_information.BusinessInformat
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
+import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.job_post.JobPostRequest
 import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
@@ -50,4 +51,9 @@ interface ApiInterface {
     suspend fun jobPost(
         @Body body: JobPostRequest?,
         @Header("Authorization") token: String): JobPostResponse?
+
+    @GET("authorize-officer/get-officer")
+    suspend fun getAuthorizeOfficer(
+        @Header("Authorization") token: String
+    ): GetAuthOfficerResponse?
 }
