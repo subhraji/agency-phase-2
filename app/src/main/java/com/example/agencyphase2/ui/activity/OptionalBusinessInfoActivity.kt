@@ -124,6 +124,7 @@ class OptionalBusinessInfoActivity : AppCompatActivity() {
                         val intent = Intent(this, AuthorizedPersonInfoAddActivity::class.java)
                         startActivity(intent)
                         mEditBasicInfoViewModel.navigationComplete()
+                        finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }

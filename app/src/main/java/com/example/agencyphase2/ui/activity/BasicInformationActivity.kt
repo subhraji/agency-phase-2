@@ -316,6 +316,7 @@ class BasicInformationActivity : AppCompatActivity() {
                         val intent = Intent(this, OptionalBusinessInfoActivity::class.java)
                         startActivity(intent)
                         addBusinessInfoViewModel.navigationComplete()
+                        finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
