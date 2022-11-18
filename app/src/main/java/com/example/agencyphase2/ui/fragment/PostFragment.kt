@@ -14,16 +14,22 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agencyphase2.R
+import com.example.agencyphase2.adapter.PostJobsAdapter
 import com.example.agencyphase2.databinding.FragmentClosedBinding
 import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.databinding.FragmentPostBinding
+import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.AddBusinessInfoViewModel
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
+import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
+import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,9 +69,18 @@ class PostFragment : Fragment() {
             showCompleteDialog()
         }
 
+        //shimmer
+        binding.postJobsShimmerView.gone()
+
+
         //api call
         if(requireActivity().isConnectedToInternet()){
             mGetPostJobsViewModel.getPostJobs(accessToken)
+            binding.postJobsShimmerView.visible()
+            binding.postJobsShimmerView.startShimmer()
+            binding.postJobCardBtn.gone()
+            binding.textView1.gone()
+            binding.postJobsRecycler.gone()
         }else{
             Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
         }
@@ -95,8 +110,20 @@ class PostFragment : Fragment() {
         mGetPostJobsViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
+                    binding.postJobsShimmerView.stopShimmer()
+                    binding.postJobsShimmerView.gone()
                     if(outcome.data?.success == true){
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        if(outcome.data?.data != null && outcome.data?.data?.size != 0){
+                            binding.postJobsRecycler.visible()
+                            binding.textView1.gone()
+                            binding.postJobCardBtn.gone()
+                            fillRecyclerView(outcome.data?.data!!)
+                        }else{
+                            binding.postJobsRecycler.gone()
+                            binding.textView1.visible()
+                            binding.postJobCardBtn.visible()
+                        }
                         mGetPostJobsViewModel.navigationComplete()
                     }else{
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
@@ -110,6 +137,16 @@ class PostFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun fillRecyclerView(list: List<Data>) {
+        val linearlayoutManager = LinearLayoutManager(activity)
+        binding.postJobsRecycler.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = PostJobsAdapter(list,requireActivity())
+        }
     }
 
 }
