@@ -218,7 +218,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/notification_recycler"
+                android:id="@+id/auth_officer_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_more_btn"
@@ -238,6 +238,7 @@
         app:cardCornerRadius="7dp"
         app:cardBackgroundColor="@color/light_grey">
         <TextView
+            android:id="@+id/add_officer_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Officer"

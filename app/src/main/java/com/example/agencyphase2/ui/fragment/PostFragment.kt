@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.fragment
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -21,12 +22,14 @@ import com.example.agencyphase2.adapter.PostJobsAdapter
 import com.example.agencyphase2.databinding.FragmentClosedBinding
 import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.databinding.FragmentPostBinding
+import com.example.agencyphase2.model.pojo.business_information.BusinessInformationRequest
 import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.AddBusinessInfoViewModel
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
+import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.visible
@@ -39,6 +42,7 @@ class PostFragment : Fragment() {
 
     private lateinit var accessToken: String
     private val mGetPostJobsViewModel: GetPostJobsViewModel by viewModels()
+    private val mGetProfileCompletionStatusViewModel: GetProfileCompletionStatusViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +65,11 @@ class PostFragment : Fragment() {
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
         binding.postJobCardBtn.setOnClickListener {
-            val intent = Intent(requireActivity(), JobPostActivity::class.java)
-            startActivity(intent)
+            if(requireActivity().isConnectedToInternet()){
+                mGetProfileCompletionStatusViewModel.getProfileCompletionStatus(accessToken)
+            }else{
+                Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.textView1.setOnClickListener {
@@ -71,7 +78,6 @@ class PostFragment : Fragment() {
 
         //shimmer
         binding.postJobsShimmerView.gone()
-
 
         //api call
         if(requireActivity().isConnectedToInternet()){
@@ -87,6 +93,7 @@ class PostFragment : Fragment() {
 
         //observer
         getPostJobsObserve()
+        getProfileCompletionStatusObserver()
     }
 
     private fun showCompleteDialog() {
@@ -147,6 +154,53 @@ class PostFragment : Fragment() {
             isFocusable = false
             adapter = PostJobsAdapter(list,requireActivity())
         }
+    }
+
+
+    private fun getProfileCompletionStatusObserver(){
+        mGetProfileCompletionStatusViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    if(outcome.data?.success == true){
+                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+
+                        if(outcome.data?.data?.is_registration_complete == 0){
+                            showRegistrationDialog()
+                        }else if(outcome.data?.data?.is_authorize_info_added == 0){
+
+                        }else if(outcome.data?.data?.is_profile_approved == 0){
+
+                        }
+
+                        mGetProfileCompletionStatusViewModel.navigationComplete()
+                    }else{
+                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(requireActivity(),outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
+    private fun showRegistrationDialog(){
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle("please complete your profile")
+        builder.setMessage("You have not completed your registration, Do you want to complete the process now?")
+        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+            val intent = Intent(requireActivity(), BusinessInformationRequest::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("No"){dialogInterface, which ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
 }

@@ -13,6 +13,7 @@ import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
+import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
 import retrofit2.http.Body
@@ -62,4 +63,9 @@ interface ApiInterface {
     suspend fun getPostJobs(
         @Header("Authorization") token: String
     ): GetPostJobsResponse?
+
+    @GET("information/status")
+    suspend fun getProfileCompletionStatus(
+        @Header("Authorization") token: String
+    ): GetProfileCompletionStatusResponse?
 }

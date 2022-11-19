@@ -9,7 +9,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.agencyphase2.adapter.AuthorizeOfficerAdapter
 import com.example.agencyphase2.databinding.ActivityAuthorizedPersonInfoAddBinding
+import com.example.agencyphase2.model.pojo.get_authorize_officer.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.AddAuthorizeOfficerViewModel
@@ -192,6 +195,12 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
             when(outcome){
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
+                        if(outcome.data?.data != null && outcome.data?.data?.size != 0){
+                            fillUpcomingRecyclerView(outcome.data?.data!!)
+                            binding.addOfficerBtn.text = "Add Officer"
+                        }else{
+                            binding.addOfficerBtn.text = "Add More Officer"
+                        }
                         mGetAuthorizeOfficerViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
@@ -205,6 +214,14 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun fillUpcomingRecyclerView(list: List<Data>) {
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.authOfficerRecycler.apply {
+            layoutManager = gridLayoutManager
+            adapter = AuthorizeOfficerAdapter(list,this@AuthorizedPersonInfoAddActivity)
+        }
     }
 
 }
