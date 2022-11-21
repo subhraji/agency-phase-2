@@ -146,7 +146,6 @@ class JobPostActivity : AppCompatActivity() {
             patientTv.setTextColor(Color.parseColor("#ffffff"));
         }
 
-
         careTypeRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.male_rb -> {

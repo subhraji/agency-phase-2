@@ -35,7 +35,6 @@ class PostJobsAdapter (private val itemList: List<Data>,
         fun bind(data: Data, context: Context) {
 
             itemBinding.apply {
-                //openJobAmountTv.text = "$"+data.amount_per_hour
                 jobTitleTv.text = data?.title.toString()
             }
         }

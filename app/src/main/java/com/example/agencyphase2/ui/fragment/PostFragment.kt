@@ -90,10 +90,14 @@ class PostFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    override fun onResume() {
         //observer
         getPostJobsObserve()
         getProfileCompletionStatusObserver()
+
+        super.onResume()
     }
 
     private fun showCompleteDialog() {
@@ -156,20 +160,20 @@ class PostFragment : Fragment() {
         }
     }
 
-
     private fun getProfileCompletionStatusObserver(){
         mGetProfileCompletionStatusViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
-                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
-
                         if(outcome.data?.data?.is_registration_complete == 0){
                             showRegistrationDialog()
                         }else if(outcome.data?.data?.is_authorize_info_added == 0){
-
+                            showAuthOfficerDialog()
                         }else if(outcome.data?.data?.is_profile_approved == 0){
-
+                            showProfileApprovalDialog()
+                        }else{
+                            val intent = Intent(requireActivity(), JobPostActivity::class.java)
+                            startActivity(intent)
                         }
 
                         mGetProfileCompletionStatusViewModel.navigationComplete()
@@ -193,10 +197,38 @@ class PostFragment : Fragment() {
         builder.setMessage("You have not completed your registration, Do you want to complete the process now?")
         builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
         builder.setPositiveButton("Yes"){dialogInterface, which ->
-            val intent = Intent(requireActivity(), BusinessInformationRequest::class.java)
+            val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
             startActivity(intent)
         }
         builder.setNegativeButton("No"){dialogInterface, which ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+    private fun showAuthOfficerDialog(){
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle("please complete your profile")
+        builder.setMessage("You have not added any authorize officer, Do you want to complete the process now?")
+        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+            val intent = Intent(requireActivity(), AuthorizedPersonInfoAddActivity::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("No"){dialogInterface, which ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+    private fun showProfileApprovalDialog(){
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle("Alert")
+        builder.setMessage("Your profile has not been approved yet.")
+        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
+        builder.setPositiveButton("Ok"){dialogInterface, which ->
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
