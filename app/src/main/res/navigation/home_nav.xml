@@ -15,4 +15,14 @@
         android:name="com.example.agencyphase2.ui.fragment.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/jobPostFragment"
+        android:name="com.example.agencyphase2.ui.fragment.JobPostFragment"
+        android:label="fragment_job_post"
+        tools:layout="@layout/fragment_job_post" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.agencyphase2.ui.fragment.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

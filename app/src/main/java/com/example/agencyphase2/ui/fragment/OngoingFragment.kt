@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.agencyphase2.adapter.DashOpenJobsAdapter
+import com.example.agencyphase2.adapter.OngoingJobsAdapter
 import com.example.agencyphase2.databinding.FragmentOngoingBinding
 import com.example.agencyphase2.model.pojo.TestModel
 
@@ -42,7 +42,7 @@ class OngoingFragment : Fragment() {
         val gridLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         binding.postJobsRecycler.apply {
             layoutManager = gridLayoutManager
-            adapter = DashOpenJobsAdapter(list,requireActivity(),true)
+            adapter = OngoingJobsAdapter(list,requireActivity(),true)
         }
     }
 }

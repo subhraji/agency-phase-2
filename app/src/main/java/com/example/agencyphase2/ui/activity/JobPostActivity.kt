@@ -114,7 +114,6 @@ class JobPostActivity : AppCompatActivity() {
         }
     }
 
-
     private fun showCareTypeBottomSheet(care: String){
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.care_type_bottomsheet, null)
