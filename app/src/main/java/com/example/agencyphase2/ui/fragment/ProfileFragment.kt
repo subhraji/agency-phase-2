@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.FragmentOngoingBinding
 import com.example.agencyphase2.databinding.FragmentProfileBinding
+import com.user.caregiver.gone
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -29,5 +30,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.backBtn.visibility = View.INVISIBLE
     }
 }
