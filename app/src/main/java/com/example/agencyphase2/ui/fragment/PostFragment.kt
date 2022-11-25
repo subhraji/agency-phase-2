@@ -110,7 +110,7 @@ class PostFragment : Fragment() {
         complete.setOnClickListener {
             dialog.dismiss()
 
-            val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
+            val intent = Intent(requireActivity(), RegistrationActivity::class.java)
             startActivity(intent)
 
         }

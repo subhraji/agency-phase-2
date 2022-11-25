@@ -83,7 +83,7 @@ class BasicInformationActivity : AppCompatActivity() {
                                         binding.stateRequired.gone()
                                         if(validZipcode){
 
-                                            addBusinessInfoViewModel.addBusinessInfo(
+                                            /*addBusinessInfoViewModel.addBusinessInfo(
                                                 binding.mobileNumberTxt.text.toString(),
                                                 legal_structure,
                                                 org_type,
@@ -96,7 +96,7 @@ class BasicInformationActivity : AppCompatActivity() {
                                             )
 
                                             loader = this.loadingDialog()
-                                            loader.show()
+                                            loader.show()*/
 
                                         }else{
                                             Toast.makeText(this,binding.zipcodeTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
