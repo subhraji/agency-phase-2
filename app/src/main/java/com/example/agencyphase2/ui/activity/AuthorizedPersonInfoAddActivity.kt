@@ -92,13 +92,13 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
 
         //observer
         addAuthorizeInoObserve()
-        getAuthorizeInoObserve()
 
-        if(isConnectedToInternet()){
+        //getAuthorizeInoObserve()
+        /*if(isConnectedToInternet()){
             mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
         }else{
             Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
     private fun emailFocusListener(){
@@ -174,7 +174,7 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
+                        //mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
                         mAddAuthorizeOfficerViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
