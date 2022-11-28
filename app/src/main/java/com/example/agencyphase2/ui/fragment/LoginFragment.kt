@@ -64,8 +64,8 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginBtn.setOnClickListener {
-            val validEmail = binding.emailTxtLay.helperText == null
-            val validPassword = binding.passwordTxtLay.helperText == null
+            val validEmail = binding.emailTxtLay.helperText == null && binding.emailTxt.text.toString().isNotEmpty()
+            val validPassword = binding.passwordTxtLay.helperText == null && binding.passwordTxt.text.toString().isNotEmpty()
 
             if(validEmail){
                 if(validPassword){
@@ -80,10 +80,12 @@ class LoginFragment : Fragment() {
                         Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_LONG).show()
                     }
                 }else{
+                    if(binding.passwordTxtLay.helperText == null) binding.passwordTxtLay.helperText = "required"
                     Toast.makeText(requireActivity(),binding.passwordTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
                     binding.passwordTxt.showKeyboard()
                 }
             }else{
+                if(binding.emailTxtLay.helperText == null) binding.emailTxtLay.helperText = "required"
                 Toast.makeText(requireActivity(),binding.emailTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
                 binding.emailTxt.showKeyboard()
             }

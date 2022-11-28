@@ -16,10 +16,9 @@ import com.example.agencyphase2.model.pojo.logout.LogoutResponse
 import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface ApiInterface {
     /*@GET("todos")
@@ -34,10 +33,18 @@ interface ApiInterface {
     @POST("logout")
     suspend fun logout(@Header("Authorization") token: String): LogoutResponse?
 
-    @POST("profile/registration")
+    @POST("profile/add-business-info")
     suspend fun addBusinessInfo(
-        @Body body: BusinessInformationRequest?,
-        @Header("Authorization") token: String): InsertBusinessInformationResponse?
+        @Part photo: MultipartBody.Part?,
+        @Part("phone") phone: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("tax_id_or_ein_id") tax_id_or_ein_id: RequestBody,
+        @Part("street") street: RequestBody,
+        @Part("city_or_district") city_or_district: RequestBody,
+        @Part("state") state: RequestBody,
+        @Part("zip_code") zip_code: RequestBody,
+        @Header("Authorization") token: String
+    ): InsertBusinessInformationResponse?
 
     @POST("profile/edit-registration")
     suspend fun editBasicInfo(

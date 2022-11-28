@@ -11,11 +11,12 @@ import javax.inject.Inject
 
 class SignUpRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun signup(
+        company_name: String,
         name: String,
         email: String,
         password: String,
         con_password: String
     ): Flow<SignUpResponse?> = flow{
-        emit(apiInterface.signup(SignUpRequest(name,email,password,con_password)))
+        emit(apiInterface.signup(SignUpRequest(company_name,name,email,password,con_password)))
     }.flowOn(Dispatchers.IO)
 }

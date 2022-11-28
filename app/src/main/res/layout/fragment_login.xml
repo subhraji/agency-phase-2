@@ -77,7 +77,6 @@
                     app:boxStrokeColor="@color/white"
                     app:hintTextColor="@color/white"
                     app:helperTextTextColor="@color/error_red"
-                    app:helperText="required"
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -116,8 +115,7 @@
                     app:passwordToggleTint="@color/white"
                     app:boxStrokeWidthFocused="0dp"
                     android:layout_marginTop="10dp"
-                    app:helperTextTextColor="@color/error_red"
-                    app:helperText="required">
+                    app:helperTextTextColor="@color/error_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_txt"

@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,22 +20,18 @@ class AddBusinessInfoViewModel  @Inject constructor(private val repository: AddB
     val response: LiveData<Outcome<InsertBusinessInformationResponse?>?> = _response
 
     fun addBusinessInfo(
+        photo: MultipartBody.Part?,
         phone: String,
-        legal_structure: String,
-        organization_type: String,
+        email: String,
         tax_id_or_ein_id: String,
         street: String,
         city_or_district: String,
         state: String,
         zip_code: String,
-        number_of_employee: Int? = null,
-        years_in_business: Int? = null,
-        country_of_business: String? = null,
-        annual_business_revenue: String? = null,
         token: String
     ) = viewModelScope.launch {
         repository.addBusinessInfo(
-            phone, legal_structure, organization_type, tax_id_or_ein_id, street, city_or_district, state, zip_code, number_of_employee, years_in_business, country_of_business, annual_business_revenue, token
+            photo, phone, email, tax_id_or_ein_id, street, city_or_district, state, zip_code, token
         ).onStart {
             _response.value = Outcome.loading(true)
         }.catch {

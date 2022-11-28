@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import com.example.agencyphase2.databinding.ActivitySignUpBinding
@@ -32,6 +33,7 @@ class SignUpActivity : AppCompatActivity() {
 
         //validation
         companyNameFocusListener()
+        fullNameFocusListener()
         emailFocusListener()
         passwordFocusListener()
         conPasswordFocusListener()
@@ -42,46 +44,59 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.registerBtn.setOnClickListener {
 
-            val validName = binding.companyNameTxtLay.helperText == null
-            val validEmail = binding.emailTxtLay.helperText == null
-            val validPassword = binding.passwordTxtLay.helperText == null
-            val validConPassword = binding.conPasswordTxtLay.helperText == null
+            val validName = binding.companyNameTxtLay.helperText == null && binding.companyNameTxt.text.toString().isNotEmpty()
+            val validFullName = binding.fullNameTxtLay.helperText == null && binding.fullNameTxt.text.toString().isNotEmpty()
+            val validEmail = binding.emailTxtLay.helperText == null && binding.emailTxt.text.toString().isNotEmpty()
+            val validPassword = binding.passwordTxtLay.helperText == null && binding.passwordTxt.text.toString().isNotEmpty()
+            val validConPassword = binding.conPasswordTxtLay.helperText == null && binding.conPasswordTxt.text.toString().isNotEmpty()
 
             if(validName){
-                if(validEmail){
-                    if(validPassword){
-                        if(validConPassword){
-                            if(binding.passwordTxt.text.toString() == binding.conPasswordTxt.text.toString()){
-                                hideSoftKeyboard()
-                                if(isConnectedToInternet()){
-                                    signUpViewModel.signup(
-                                        binding.companyNameTxt.text.toString(),
-                                        binding.emailTxt.text.toString(),
-                                        binding.passwordTxt.text.toString(),
-                                        binding.conPasswordTxt.text.toString()
-                                    )
-                                    loader = this.loadingDialog()
-                                    loader.show()
+                if(validFullName){
+                    if(validEmail){
+                        if(validPassword){
+                            if(validConPassword){
+                                if(binding.passwordTxt.text.toString() == binding.conPasswordTxt.text.toString()){
+                                    hideSoftKeyboard()
+                                    if(isConnectedToInternet()){
+                                        signUpViewModel.signup(
+                                            binding.companyNameTxt.text.toString(),
+                                            binding.fullNameTxt.text.toString(),
+                                            binding.emailTxt.text.toString(),
+                                            binding.passwordTxt.text.toString(),
+                                            binding.conPasswordTxt.text.toString()
+                                        )
+                                        loader = this.loadingDialog()
+                                        loader.show()
+                                        Toast.makeText(this,"Clicked",Toast.LENGTH_SHORT).show()
+                                    }else{
+                                        Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show()
+                                    }
                                 }else{
-                                    Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"Confirm password mismatch with the new password.", Toast.LENGTH_SHORT).show()
+                                    binding.conPasswordTxt.showKeyboard()
                                 }
                             }else{
-                                Toast.makeText(this,"Confirm password mismatch with the new password.", Toast.LENGTH_SHORT).show()
+                                if(binding.conPasswordTxtLay.helperText == null) binding.conPasswordTxtLay.helperText = "required"
+                                Toast.makeText(this,binding.conPasswordTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
                                 binding.conPasswordTxt.showKeyboard()
                             }
                         }else{
-                            Toast.makeText(this,binding.conPasswordTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
-                            binding.conPasswordTxt.showKeyboard()
+                            if(binding.passwordTxtLay.helperText == null) binding.passwordTxtLay.helperText = "required"
+                            Toast.makeText(this,binding.passwordTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                            binding.passwordTxt.showKeyboard()
                         }
                     }else{
-                        Toast.makeText(this,binding.passwordTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
-                        binding.passwordTxt.showKeyboard()
+                        if(binding.emailTxtLay.helperText == null) binding.emailTxtLay.helperText = "required"
+                        Toast.makeText(this,binding.emailTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                        binding.emailTxt.showKeyboard()
                     }
                 }else{
-                    Toast.makeText(this,binding.emailTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
-                    binding.emailTxt.showKeyboard()
+                    if(binding.fullNameTxtLay.helperText == null) binding.fullNameTxtLay.helperText = "required"
+                    Toast.makeText(this,binding.fullNameTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                    binding.fullNameTxt.showKeyboard()
                 }
             }else{
+                if(binding.companyNameTxtLay.helperText == null) binding.companyNameTxtLay.helperText = "required"
                 Toast.makeText(this,binding.companyNameTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
                 binding.companyNameTxt.showKeyboard()
             }
@@ -107,6 +122,21 @@ class SignUpActivity : AppCompatActivity() {
 
         if(nameText.isEmpty()){
             return "Provide company name."
+        }
+        return null
+    }
+
+    private fun fullNameFocusListener(){
+        binding.fullNameTxt.doOnTextChanged { text, start, before, count ->
+            binding.fullNameTxtLay.helperText = validFullName()
+        }
+    }
+
+    private fun validFullName(): String? {
+        val nameText = binding.fullNameTxt.text.toString()
+
+        if(nameText.isEmpty()){
+            return "Provide full name."
         }
         return null
     }

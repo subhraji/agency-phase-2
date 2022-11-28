@@ -165,7 +165,7 @@ class PostFragment : Fragment() {
             when(outcome){
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
-                        if(outcome.data?.data?.is_registration_complete == 0){
+                        if(outcome.data?.data?.is_business_info_complete == 0){
                             showRegistrationDialog()
                         }else if(outcome.data?.data?.is_authorize_info_added == 0){
                             showAuthOfficerDialog()

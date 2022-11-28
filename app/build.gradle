@@ -93,4 +93,14 @@ dependencies {
 
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.4.0'
+
+    //Image compress
+    implementation 'id.zelory:compressor:3.0.1'
+
+    //permission Listener
+    implementation 'com.karumi:dexter:6.2.3'
 }

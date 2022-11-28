@@ -200,7 +200,6 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/street_name_txt_lay"
                         android:layout_width="match_parent"
@@ -353,6 +352,8 @@
                                 android:visibility="visible" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
+
+
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
