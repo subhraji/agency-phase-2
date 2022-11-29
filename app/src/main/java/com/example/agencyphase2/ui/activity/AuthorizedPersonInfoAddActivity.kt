@@ -1,10 +1,14 @@
 package com.example.agencyphase2.ui.activity
 
+import android.R
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
@@ -25,10 +29,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizedPersonInfoAddBinding
+    val roleList: Array<String> =  arrayOf("Select role", "Master admin", "Super admin", "Admin")
+
     private val mAddAuthorizeOfficerViewModel: AddAuthorizeOfficerViewModel by viewModels()
-    private val mGetAuthorizeOfficerViewModel: GetAuthorizeOfficerViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var accessToken: String
+
+    private var role: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,43 +50,44 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
         }
 
         binding.nextStepBtn.setOnClickListener {
-            val validFirstName = binding.firstNameTxtLay.helperText == null
-            val validLastName = binding.lastNameTxtLay.helperText == null
-            val validEmail = binding.emailAddressTxtLay.helperText == null
-            val validMobile = binding.mobileNumberTxtLay.helperText == null
+            val validFirstName = binding.fullNameTxtLay.helperText == null && binding.fullNameTxt.text.toString().isNotEmpty()
+            val validEmail = binding.emailAddressTxtLay.helperText == null && binding.emailAddressTxt.text.toString().isNotEmpty()
+            val validMobile = binding.mobileNumberTxtLay.helperText == null && binding.mobileNumberTxt.text.toString().isNotEmpty()
 
             if(validFirstName){
-                if(validLastName){
-                    if(validEmail){
-                        if(validMobile){
+                if(validEmail){
+                    if(validMobile){
+                        if(role.isNotEmpty()){
                             if(isConnectedToInternet()){
                                 mAddAuthorizeOfficerViewModel.addAuthorizeInfo(
-                                    binding.firstNameTxt.text.toString(),
-                                    binding.lastNameTxt.text.toString(),
+                                    binding.fullNameTxt.text.toString(),
                                     binding.emailAddressTxt.text.toString(),
                                     binding.mobileNumberTxt.text.toString(),
+                                    role,
                                     accessToken
                                 )
                                 loader = this.loadingDialog()
                                 loader.show()
                             }else{
-                                Toast.makeText(this,"No internet connection", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
                             }
                         }else{
-                            Toast.makeText(this,binding.mobileNumberTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
-                            binding.mobileNumberTxt.showKeyboard()
+                            Toast.makeText(this,"Please select a role.", Toast.LENGTH_SHORT).show()
                         }
                     }else{
-                        Toast.makeText(this,binding.emailAddressTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
-                        binding.emailAddressTxt.showKeyboard()
+                        if(binding.mobileNumberTxtLay.helperText == null) binding.mobileNumberTxtLay.helperText = "required"
+                        Toast.makeText(this,binding.mobileNumberTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
+                        binding.mobileNumberTxt.showKeyboard()
                     }
                 }else{
-                    Toast.makeText(this,binding.lastNameTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
-                    binding.lastNameTxt.showKeyboard()
+                    if(binding.emailAddressTxtLay.helperText == null) binding.emailAddressTxtLay.helperText = "required"
+                    Toast.makeText(this,binding.emailAddressTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
+                    binding.emailAddressTxt.showKeyboard()
                 }
             }else{
-                Toast.makeText(this,binding.firstNameTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
-                binding.firstNameTxt.showKeyboard()
+                if(binding.fullNameTxtLay.helperText == null) binding.fullNameTxtLay.helperText = "required"
+                Toast.makeText(this,binding.fullNameTxtLay.helperText.toString(), Toast.LENGTH_SHORT).show()
+                binding.fullNameTxt.showKeyboard()
             }
 
         }
@@ -88,10 +96,12 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
         emailFocusListener()
         mobileFocusListener()
         firstNameFocusListener()
-        lastNameFocusListener()
 
         //observer
         addAuthorizeInoObserve()
+
+        //spinner
+        setUpRoleSpinner()
 
         //getAuthorizeInoObserve()
         /*if(isConnectedToInternet()){
@@ -100,6 +110,30 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
             Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
         }*/
     }
+
+    private fun setUpRoleSpinner(){
+        val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item,roleList)
+        binding.roleSpinner.adapter = arrayAdapter
+        binding.roleSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
+            AdapterView.OnItemClickListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(p2 == 0){
+                    role = ""
+                }else{
+                    role = roleList[p2]
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+        }
+    }
+
 
     private fun emailFocusListener(){
         binding.emailAddressTxt.doOnTextChanged { text, start, before, count ->
@@ -139,31 +173,16 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
     }
 
     private fun firstNameFocusListener(){
-        binding.firstNameTxt.doOnTextChanged { text, start, before, count ->
-            binding.firstNameTxtLay.helperText = validFirstName()
+        binding.fullNameTxt.doOnTextChanged { text, start, before, count ->
+            binding.fullNameTxtLay.helperText = validFirstName()
         }
     }
 
     private fun validFirstName(): String? {
-        val nameText = binding.firstNameTxt.text.toString()
+        val nameText = binding.fullNameTxt.text.toString()
 
         if(nameText.isEmpty()){
             return "Please provide first name"
-        }
-        return null
-    }
-
-    private fun lastNameFocusListener(){
-        binding.lastNameTxt.doOnTextChanged { text, start, before, count ->
-            binding.lastNameTxtLay.helperText = validLastName()
-        }
-    }
-
-    private fun validLastName(): String? {
-        val nameText = binding.lastNameTxt.text.toString()
-
-        if(nameText.isEmpty()){
-            return "Please provide last name"
         }
         return null
     }
@@ -176,6 +195,7 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
                     if(outcome.data?.success == true){
                         //mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
                         mAddAuthorizeOfficerViewModel.navigationComplete()
+                        finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -188,40 +208,6 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    private fun getAuthorizeInoObserve(){
-        mGetAuthorizeOfficerViewModel.response.observe(this, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    if(outcome.data?.success == true){
-                        if(outcome.data?.data != null && outcome.data?.data?.size != 0){
-                            fillUpcomingRecyclerView(outcome.data?.data!!)
-                            binding.addOfficerBtn.text = "Add Officer"
-                        }else{
-                            binding.addOfficerBtn.text = "Add More Officer"
-                        }
-                        mGetAuthorizeOfficerViewModel.navigationComplete()
-                    }else{
-                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
-    }
-
-    private fun fillUpcomingRecyclerView(list: List<Data>) {
-        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.authOfficerRecycler.apply {
-            layoutManager = gridLayoutManager
-            adapter = AuthorizeOfficerAdapter(list,this@AuthorizedPersonInfoAddActivity)
-        }
     }
 
 }

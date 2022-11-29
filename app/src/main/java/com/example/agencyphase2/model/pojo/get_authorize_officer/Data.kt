@@ -4,9 +4,9 @@ data class Data(
     val agency_id: Int,
     val created_at: String,
     val email: String,
-    val firstname: String,
+    val name: String,
     val id: Int,
-    val lastname: String,
     val phone: String,
+    val role: String,
     val updated_at: String
 )

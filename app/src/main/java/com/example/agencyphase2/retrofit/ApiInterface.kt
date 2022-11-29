@@ -2,6 +2,8 @@ package com.example.agencyphase2.retrofit
 
 import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOfficerRequest
 import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOfficerResponse
+import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoRequest
+import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoResponse
 import com.example.agencyphase2.model.pojo.business_information.BusinessInformationRequest
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
@@ -33,6 +35,7 @@ interface ApiInterface {
     @POST("logout")
     suspend fun logout(@Header("Authorization") token: String): LogoutResponse?
 
+    @Multipart
     @POST("profile/add-business-info")
     suspend fun addBusinessInfo(
         @Part photo: MultipartBody.Part?,
@@ -45,6 +48,11 @@ interface ApiInterface {
         @Part("zip_code") zip_code: RequestBody,
         @Header("Authorization") token: String
     ): InsertBusinessInformationResponse?
+
+    @POST("profile/add-optional-info")
+    suspend fun addOtherInfo(
+        @Body body: AddOtherInfoRequest?,
+        @Header("Authorization") token: String): AddOtherInfoResponse?
 
     @POST("profile/edit-registration")
     suspend fun editBasicInfo(

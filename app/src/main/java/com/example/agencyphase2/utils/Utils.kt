@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import com.airbnb.lottie.LottieAnimationView
 import com.example.agencyphase2.R
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

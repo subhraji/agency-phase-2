@@ -19,14 +19,14 @@ class AddAuthorizeOfficerViewModel @Inject constructor(private val repository: A
     val response: LiveData<Outcome<AddAuthorizeOfficerResponse?>?> = _response
 
     fun addAuthorizeInfo(
-        firstname: String,
-        lastname: String,
+        fullname: String,
         email: String,
         phone: String,
+        role : String,
         token: String
     ) = viewModelScope.launch {
         repository.addAuthorizeOfficer(
-            firstname, lastname, email, phone, token
+            fullname, email, phone, role, token
         ).onStart {
             _response.value = Outcome.loading(true)
         }.catch {

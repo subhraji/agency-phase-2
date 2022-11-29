@@ -48,7 +48,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -113,14 +114,14 @@
                             android:id="@+id/user_img"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@color/light_grey"/>
+                            android:src="@color/light_grey" />
 
                         <ImageView
                             android:id="@+id/image_add_btn"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:padding="10dp"
                             android:layout_gravity="center"
+                            android:padding="10dp"
                             android:src="@drawable/ic_outline_photo_camera_24" />
                     </FrameLayout>
 
@@ -150,6 +151,7 @@
                             android:textCursorDrawable="@null"
                             android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -260,11 +262,13 @@
                             android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_gps_19" />
                     </RelativeLayout>
+
                     <LinearLayout
                         android:id="@+id/address_linear_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/street_name_txt_lay"
                             android:layout_width="match_parent"
@@ -300,6 +304,7 @@
                                 android:background="@color/text_grey"
                                 android:visibility="visible" />
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/city_txt_lay"
                             android:layout_width="match_parent"
@@ -335,6 +340,7 @@
                                 android:background="@color/text_grey"
                                 android:visibility="visible" />
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -354,6 +360,7 @@
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginEnd="15dp" />
+
                                 <TextView
                                     android:id="@+id/state_required"
                                     android:layout_width="wrap_content"
@@ -441,7 +448,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -613,16 +621,6 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="15dp" />
 
-                    <TextView
-                        android:id="@+id/ls_required"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:text="required"
-                        android:textColor="@color/error_red"
-                        android:textSize="13sp"
-                        android:visibility="gone" />
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -659,7 +657,7 @@
                                 android:background="@color/transparent"
                                 android:hint="Annual revenue"
                                 android:inputType="number"
-                                android:maxLength="5"
+                                android:maxLength="15"
                                 android:singleLine="true"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/text_grey"
@@ -688,16 +686,6 @@
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="15dp" />
-
-                            <TextView
-                                android:id="@+id/org_type_required"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="18dp"
-                                android:text="required"
-                                android:textColor="@color/error_red"
-                                android:textSize="13sp"
-                                android:visibility="gone" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -730,8 +718,8 @@
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
                             android:hint="Country of Business"
-                            android:inputType="number"
-                            android:maxLength="3"
+                            android:inputType="text"
+                            android:maxLength="15"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
@@ -832,6 +820,7 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/add_officer_btn"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="15dp"
@@ -857,10 +846,17 @@
                             android:layout_marginStart="10dp"
                             android:layout_toRightOf="@+id/add_symbol"
                             android:background="@color/transparent"
-                            android:hint="Add Business Address"
+                            android:hint="Add Authorize Officer"
                             android:textColorHint="@color/black"
                             android:textSize="14sp" />
                     </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/auth_officer_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"/>
+
                 </LinearLayout>
             </ScrollView>
 
@@ -879,9 +875,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:drawableEnd="@drawable/ic_baseline_chevron_right_24"
-                    android:drawableTint="@color/white"
-                    android:text="Next Step"
+                    android:text="Submit"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />

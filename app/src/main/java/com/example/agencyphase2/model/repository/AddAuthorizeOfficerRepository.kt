@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 class AddAuthorizeOfficerRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun addAuthorizeOfficer(
-        firstname: String ,
-        lastname: String,
+        fullname: String,
         email: String,
         phone: String,
+        role : String,
         token: String
     ): Flow<AddAuthorizeOfficerResponse?> = flow{
         emit(apiInterface.addAuthorizeOfficer(AddAuthorizeOfficerRequest(
-            firstname, lastname, email, phone
+            fullname, email, phone, role
         ), token))
     }.flowOn(Dispatchers.IO)
 }

@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.databinding.AuthOfficerItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_authorize_officer.Data
+import com.user.caregiver.gone
+import com.user.caregiver.visible
 
 class AuthorizeOfficerAdapter (private val itemList: List<Data>,
                                private val context: Context):
@@ -35,8 +37,24 @@ class AuthorizeOfficerAdapter (private val itemList: List<Data>,
         fun bind(data: Data, context: Context) {
 
             itemBinding.apply {
-                //openJobAmountTv.text = "$"+data.amount_per_hour
-                nameTv.text = data?.firstname.toString()+" "+data?.lastname.toString()
+                data?.name?.let {
+                    fullNameTv.text = it
+                }
+                data?.email?.let {
+                    emailTv.text = it
+                }
+                data?.role?.let {
+                    roleTv.text = it
+                }
+
+                if(data?.phone == null || data?.phone.toString().isEmpty()){
+                    mobileTv.gone()
+                    mobileHtv.gone()
+                }else{
+                    mobileTv.visible()
+                    mobileHtv.visible()
+                    mobileTv.text = data?.phone.toString()
+                }
             }
         }
 

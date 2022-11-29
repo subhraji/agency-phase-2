@@ -32,6 +32,7 @@ import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
+import com.user.caregiver.loadingDialog
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,6 +44,7 @@ class PostFragment : Fragment() {
     private lateinit var accessToken: String
     private val mGetPostJobsViewModel: GetPostJobsViewModel by viewModels()
     private val mGetProfileCompletionStatusViewModel: GetProfileCompletionStatusViewModel by viewModels()
+    private lateinit var loader: androidx.appcompat.app.AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +69,11 @@ class PostFragment : Fragment() {
         binding.postJobCardBtn.setOnClickListener {
             if(requireActivity().isConnectedToInternet()){
                 mGetProfileCompletionStatusViewModel.getProfileCompletionStatus(accessToken)
+                loader = requireActivity().loadingDialog()
+                loader.show()
             }else{
                 Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        binding.textView1.setOnClickListener {
-            showCompleteDialog()
         }
 
         //shimmer
@@ -90,6 +90,9 @@ class PostFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
         }
+
+        //observer
+        //getProfileCompletionStatusObserver()
     }
 
     override fun onResume() {
@@ -98,23 +101,6 @@ class PostFragment : Fragment() {
         getProfileCompletionStatusObserver()
 
         super.onResume()
-    }
-
-    private fun showCompleteDialog() {
-        val dialog = Dialog(requireActivity())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setContentView(R.layout.profile_completion_dialog_layout)
-        val complete = dialog.findViewById<TextView>(R.id.complete_btn)
-        complete.setOnClickListener {
-            dialog.dismiss()
-
-            val intent = Intent(requireActivity(), RegistrationActivity::class.java)
-            startActivity(intent)
-
-        }
-        dialog.show()
     }
 
     private fun getPostJobsObserve(){
@@ -164,18 +150,20 @@ class PostFragment : Fragment() {
         mGetProfileCompletionStatusViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
+                    loader.dismiss()
                     if(outcome.data?.success == true){
                         if(outcome.data?.data?.is_business_info_complete == 0){
-                            showRegistrationDialog()
-                        }else if(outcome.data?.data?.is_authorize_info_added == 0){
-                            showAuthOfficerDialog()
+                            showCompleteDialog("You have not added your business information",1)
+                        }else if(outcome.data?.data?.is_other_info_added == 0){
+                            showCompleteDialog("You have not added other optional information",2)
+                        } else if(outcome.data?.data?.is_authorize_info_added == 0){
+                            showCompleteDialog("You have not added any authorize officer",3)
                         }else if(outcome.data?.data?.is_profile_approved == 0){
-                            showProfileApprovalDialog()
+                            showCompleteDialog("Your profile is not approved yet.",4)
                         }else{
                             val intent = Intent(requireActivity(), JobPostActivity::class.java)
                             startActivity(intent)
                         }
-
                         mGetProfileCompletionStatusViewModel.navigationComplete()
                     }else{
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
@@ -190,6 +178,34 @@ class PostFragment : Fragment() {
             }
         })
     }
+
+    private fun showCompleteDialog(content: String, step: Int) {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(R.layout.profile_completion_dialog_layout)
+        val complete = dialog.findViewById<TextView>(R.id.complete_btn)
+        val content_tv = dialog.findViewById<TextView>(R.id.content_tv)
+
+        content_tv.text = content
+
+        complete.setOnClickListener {
+            if(step == 4){
+                dialog.dismiss()
+                val intent = Intent(requireActivity(), RegistrationActivity::class.java)
+                intent.putExtra("step",step)
+                startActivity(intent)
+            }else{
+                dialog.dismiss()
+                val intent = Intent(requireActivity(), RegistrationActivity::class.java)
+                intent.putExtra("step",step)
+                startActivity(intent)
+            }
+        }
+        dialog.show()
+    }
+
 
     private fun showRegistrationDialog(){
         val builder = AlertDialog.Builder(requireActivity())
@@ -206,33 +222,4 @@ class PostFragment : Fragment() {
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
-
-    private fun showAuthOfficerDialog(){
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("please complete your profile")
-        builder.setMessage("You have not added any authorize officer, Do you want to complete the process now?")
-        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
-            val intent = Intent(requireActivity(), AuthorizedPersonInfoAddActivity::class.java)
-            startActivity(intent)
-        }
-        builder.setNegativeButton("No"){dialogInterface, which ->
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
-
-    private fun showProfileApprovalDialog(){
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("Alert")
-        builder.setMessage("Your profile has not been approved yet.")
-        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
-        builder.setPositiveButton("Ok"){dialogInterface, which ->
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
-
 }
