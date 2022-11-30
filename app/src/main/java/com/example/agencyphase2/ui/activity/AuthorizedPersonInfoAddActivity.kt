@@ -21,6 +21,7 @@ import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.AddAuthorizeOfficerViewModel
 import com.example.agencyphase2.viewmodel.GetAuthorizeOfficerViewModel
+import com.user.caregiver.hideSoftKeyboard
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
 import com.user.caregiver.showKeyboard
@@ -66,6 +67,7 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
                                     role,
                                     accessToken
                                 )
+                                hideSoftKeyboard()
                                 loader = this.loadingDialog()
                                 loader.show()
                             }else{

@@ -153,6 +153,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                                 zip_code,
                                 accessToken
                             )
+                            hideSoftKeyboard()
                             loader.show()
                         }else{
                             Toast.makeText(this@RegistrationActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
@@ -177,6 +178,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                     binding.countryOfBusinessTxt.text.toString(),
                     accessToken
                 )
+                hideSoftKeyboard()
                 loader.show()
             }else{
                 Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show()
@@ -208,6 +210,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
 
         binding.addressLay.setOnClickListener {
             binding.addressLinearLay.visible()
+            binding.streetNameTxt.showKeyboard()
         }
 
         //other info number of employees

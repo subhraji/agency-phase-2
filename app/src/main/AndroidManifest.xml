@@ -42,7 +42,7 @@
             android:name=".ui.activity.AuthorizedPersonInfoAddActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.OptionalBusinessInfoActivity"
+            android:name=".ui.activity.SelectCareTypeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.BasicInformationActivity"

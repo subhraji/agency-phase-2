@@ -313,8 +313,8 @@ class BasicInformationActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        val intent = Intent(this, OptionalBusinessInfoActivity::class.java)
-                        startActivity(intent)
+                        /*val intent = Intent(this, OptionalBusinessInfoActivity::class.java)
+                        startActivity(intent)*/
                         addBusinessInfoViewModel.navigationComplete()
                         finish()
                     }else{

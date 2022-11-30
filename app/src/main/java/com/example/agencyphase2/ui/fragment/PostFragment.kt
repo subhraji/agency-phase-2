@@ -110,7 +110,6 @@ class PostFragment : Fragment() {
                     binding.postJobsShimmerView.stopShimmer()
                     binding.postJobsShimmerView.gone()
                     if(outcome.data?.success == true){
-                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         if(outcome.data?.data != null && outcome.data?.data?.size != 0){
                             binding.postJobsRecycler.visible()
                             binding.textView1.gone()
@@ -159,7 +158,10 @@ class PostFragment : Fragment() {
                         } else if(outcome.data?.data?.is_authorize_info_added == 0){
                             showCompleteDialog("You have not added any authorize officer",3)
                         }else if(outcome.data?.data?.is_profile_approved == 0){
-                            showCompleteDialog("Your profile is not approved yet.",4)
+                            //showCompleteDialog("Your profile is not approved yet.",4)
+
+                            val intent = Intent(requireActivity(), JobPostActivity::class.java)
+                            startActivity(intent)
                         }else{
                             val intent = Intent(requireActivity(), JobPostActivity::class.java)
                             startActivity(intent)
@@ -193,9 +195,9 @@ class PostFragment : Fragment() {
         complete.setOnClickListener {
             if(step == 4){
                 dialog.dismiss()
-                val intent = Intent(requireActivity(), RegistrationActivity::class.java)
+                /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
                 intent.putExtra("step",step)
-                startActivity(intent)
+                startActivity(intent)*/
             }else{
                 dialog.dismiss()
                 val intent = Intent(requireActivity(), RegistrationActivity::class.java)
@@ -206,20 +208,4 @@ class PostFragment : Fragment() {
         dialog.show()
     }
 
-
-    private fun showRegistrationDialog(){
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("please complete your profile")
-        builder.setMessage("You have not completed your registration, Do you want to complete the process now?")
-        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
-            val intent = Intent(requireActivity(), BasicInformationActivity::class.java)
-            startActivity(intent)
-        }
-        builder.setNegativeButton("No"){dialogInterface, which ->
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
 }

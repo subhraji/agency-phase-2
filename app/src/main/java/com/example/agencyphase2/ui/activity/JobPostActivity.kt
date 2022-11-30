@@ -39,10 +39,12 @@ class JobPostActivity : AppCompatActivity() {
     var endTime: String = ""
     private lateinit var accessToken: String
 
+    //lists
     private var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
-    private lateinit var loader: androidx.appcompat.app.AlertDialog
 
+    //viewmodel
     private val mPostJobViewModel: PostJobViewModel by viewModels()
+    private lateinit var loader: androidx.appcompat.app.AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +54,16 @@ class JobPostActivity : AppCompatActivity() {
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
+        binding.relativeLay2.gone()
+        binding.relativeLay3.gone()
+
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
         }
 
-        binding.nextStepBtn.setOnClickListener {
-            mPostJobViewModel.jobPost(
-                binding.jobTitleTv.text.toString(),
+        binding.requiredNextStepBtn.setOnClickListener {
+            /*mPostJobViewModel.jobPost(
+                binding.jobTitleTxt.text.toString(),
                 careType,
                 genderAgeList,
                 date,
@@ -70,48 +75,34 @@ class JobPostActivity : AppCompatActivity() {
                 accessToken
             )
             loader = this.loadingDialog()
-            loader.show()
+            loader.show()*/
+
+            binding.relativeLay1.gone()
+            binding.relativeLay3.gone()
+            binding.relativeLay2.visible()
         }
 
-        binding.backArrow.setOnClickListener {
+        binding.optionalNextStepBtn.setOnClickListener {
+            binding.relativeLay2.gone()
+            binding.relativeLay1.gone()
+            binding.relativeLay3.visible()
+        }
+
+        binding.prevNextStepBtn.setOnClickListener {
             finish()
         }
 
-        binding.addPatientDetails.gone()
-        //spinner
-        setCareTypeSpinner()
-
-        binding.addPatientDetails.setOnClickListener {
-            showCareTypeBottomSheet(careType)
+        binding.backBtn.setOnClickListener {
+            finish()
         }
 
         //observer
         jobPostObserve()
     }
 
-    private fun setCareTypeSpinner(){
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,careTypeList)
-        binding.careTypeSpinner.adapter = arrayAdapter
-        binding.careTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
-            AdapterView.OnItemClickListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if(p2 == 0){
-                    binding.addPatientDetails.gone()
-                    careType = ""
-                }else{
-                    binding.addPatientDetails.visible()
-                    careType = careTypeList[p2]
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-            }
-        }
+    override fun onResume() {
+        fillGenderAgeRecycler(genderAgeList)
+        super.onResume()
     }
 
     private fun showCareTypeBottomSheet(care: String){
@@ -163,7 +154,6 @@ class JobPostActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             age = ageTxt.text.toString()
             genderAgeList.add(GenderAgeItemCountModel(gender,age))
-            fillGenderAgeRecycler(genderAgeList)
             dialog.dismiss()
         }
 
