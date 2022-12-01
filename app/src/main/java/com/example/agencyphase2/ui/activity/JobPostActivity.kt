@@ -40,7 +40,9 @@ class JobPostActivity : AppCompatActivity() {
     private lateinit var accessToken: String
 
     //lists
-    private var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
+    companion object {
+        var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
+    }
 
     //viewmodel
     private val mPostJobViewModel: PostJobViewModel by viewModels()
@@ -96,11 +98,17 @@ class JobPostActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.careTypeBtn.setOnClickListener {
+            val intent = Intent(this, SelectCareTypeActivity::class.java)
+            startActivity(intent)
+        }
+
         //observer
         jobPostObserve()
     }
 
     override fun onResume() {
+        Log.d("genderAge", genderAgeList.toString())
         fillGenderAgeRecycler(genderAgeList)
         super.onResume()
     }
@@ -304,5 +312,9 @@ class JobPostActivity : AppCompatActivity() {
         })
     }
 
+    override fun onDestroy() {
+        genderAgeList = mutableListOf()
+        super.onDestroy()
+    }
 
 }

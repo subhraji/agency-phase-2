@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizedPersonInfoAddBinding
-    val roleList: Array<String> =  arrayOf("Select role", "Master admin", "Super admin", "Admin")
+    val roleList: Array<String> =  arrayOf("Select role", "Admin", "Operator")
 
     private val mAddAuthorizeOfficerViewModel: AddAuthorizeOfficerViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
@@ -104,13 +104,6 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
 
         //spinner
         setUpRoleSpinner()
-
-        //getAuthorizeInoObserve()
-        /*if(isConnectedToInternet()){
-            mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
-        }else{
-            Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
-        }*/
     }
 
     private fun setUpRoleSpinner(){
@@ -121,8 +114,10 @@ class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if(p2 == 0){
                     role = ""
-                }else{
-                    role = roleList[p2]
+                }else if(p2 == 1){
+                    role = "4"
+                }else if(p2 == 2){
+                    role = "5"
                 }
             }
 

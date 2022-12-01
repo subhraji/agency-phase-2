@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
     android:padding="15dp"
     android:background="@drawable/grey_corner_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -13,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Full name"
+        android:textSize="13sp"
         android:textColor="@color/text_grey"
         android:textStyle="bold"/>
     <TextView
@@ -48,9 +51,10 @@
         app:layout_constraintTop_toBottomOf="@+id/full_name_tv"
         app:layout_constraintStart_toStartOf="@+id/full_name_tv"
         android:text="Email address"
+        android:textSize="13sp"
         android:textColor="@color/text_grey"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="7dp"/>
     <TextView
         android:id="@+id/email_tv"
         android:layout_width="0dp"
@@ -67,9 +71,10 @@
         app:layout_constraintTop_toBottomOf="@+id/email_tv"
         app:layout_constraintStart_toStartOf="@+id/email_tv"
         android:text="Mobile number"
+        android:textSize="13sp"
         android:textColor="@color/text_grey"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="7dp"
         />
     <TextView
         android:id="@+id/mobile_tv"
@@ -88,6 +93,7 @@
         app:layout_constraintBottom_toTopOf="@+id/role_tv"
         app:layout_constraintStart_toStartOf="@+id/role_tv"
         android:text="Role"
+        android:textSize="13sp"
         android:textColor="@color/text_grey"
         android:textStyle="bold"
         android:layout_marginTop="10dp"/>
@@ -99,7 +105,5 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

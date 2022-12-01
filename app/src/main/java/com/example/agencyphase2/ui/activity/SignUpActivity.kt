@@ -67,7 +67,6 @@ class SignUpActivity : AppCompatActivity() {
                                         )
                                         loader = this.loadingDialog()
                                         loader.show()
-                                        Toast.makeText(this,"Clicked",Toast.LENGTH_SHORT).show()
                                     }else{
                                         Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show()
                                     }
