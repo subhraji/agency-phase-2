@@ -34,9 +34,9 @@ class JobPostActivity : AppCompatActivity() {
     var careType:String = ""
     var gender:String = ""
     var age:String = ""
-    var date: String = ""
-    var startTime: String = ""
-    var endTime: String = ""
+    var date:String = ""
+    var startTime:String = ""
+    var endTime:String = ""
     private lateinit var accessToken: String
 
     //lists
@@ -108,7 +108,14 @@ class JobPostActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        Log.d("genderAge", genderAgeList.toString())
+        if(genderAgeList.isNotEmpty()){
+            binding.typeOfCareLay.visible()
+            careType = genderAgeList[0].careType.toString()
+            binding.typeOfCareTv.text = careType
+        }else{
+            binding.typeOfCareLay.gone()
+            careType = ""
+        }
         fillGenderAgeRecycler(genderAgeList)
         super.onResume()
     }

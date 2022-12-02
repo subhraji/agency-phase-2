@@ -41,9 +41,9 @@
             <LinearLayout
                 android:id="@+id/care_type_linear_lay_1"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
@@ -63,11 +63,13 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/senior_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_baseline_delete_outline_24" />
 
                     <TextView
+                        android:id="@+id/senior_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Senior Care"
@@ -86,11 +88,13 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/child_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_baseline_delete_outline_24" />
 
                     <TextView
+                        android:id="@+id/child_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Child Care"
@@ -109,11 +113,13 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/patient_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_baseline_delete_outline_24" />
 
                     <TextView
+                        android:id="@+id/patient_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Patient Care"
@@ -124,7 +130,7 @@
             <LinearLayout
                 android:id="@+id/care_type_linear_lay_2"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -146,11 +152,13 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/special_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_baseline_delete_outline_24" />
 
                     <TextView
+                        android:id="@+id/special_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Special Care"
@@ -158,7 +166,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/female_lay"
+                    android:id="@+id/old_lay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
@@ -169,11 +177,13 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/old_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_baseline_delete_outline_24" />
 
                     <TextView
+                        android:id="@+id/old_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Old Care"
@@ -348,12 +358,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="1">
+
                     <RadioButton
                         android:id="@+id/male_rb_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="Male"/>
+                        android:text="Male" />
+
                     <RadioButton
                         android:id="@+id/female_rb_1"
                         android:layout_width="wrap_content"
@@ -382,7 +394,6 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/time_selector_border"
                     android:layout_weight="2"/>
-
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/gender_age_2"

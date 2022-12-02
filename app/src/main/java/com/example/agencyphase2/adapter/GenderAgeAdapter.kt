@@ -12,8 +12,7 @@ import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
 
 class GenderAgeAdapter (private val itemList: List<GenderAgeItemCountModel>,
                         private val context: Context,
-                        private val careType: String,
-):
+                        private val careType: String):
     RecyclerView.Adapter<GenderAgeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenderAgeAdapter.ViewHolder {
@@ -30,7 +29,6 @@ class GenderAgeAdapter (private val itemList: List<GenderAgeItemCountModel>,
     }
 
     override fun onBindViewHolder(holder: GenderAgeAdapter.ViewHolder, position: Int) {
-
         val rowData = itemList[position]
         holder.bind(rowData, context, careType)
     }
@@ -39,12 +37,8 @@ class GenderAgeAdapter (private val itemList: List<GenderAgeItemCountModel>,
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: GenderAgeItemCountModel, context: Context, careType: String) {
             itemBinding.apply {
-                //openJobAmountTv.text = "$"+data.amount_per_hour
                 genderAgeTv2.text = data?.gender+": "+data?.age
-                careTypeTv.text = careType
-
             }
         }
-
     }
 }
