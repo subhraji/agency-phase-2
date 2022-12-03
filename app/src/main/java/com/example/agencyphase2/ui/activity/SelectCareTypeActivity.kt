@@ -48,6 +48,12 @@ class SelectCareTypeActivity : AppCompatActivity() {
             finish()
         }
 
+        if(JobPostActivity.genderAgeList.isNotEmpty()){
+
+        }
+
+        binding.personNoHtv.gone()
+        binding.careTypeLay.gone()
         binding.genderAgeHtvLay.gone()
         binding.genderAge1.gone()
         binding.genderAge2.gone()
@@ -296,6 +302,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
             careType = "senior care"
+            binding.personNoHtv.visible()
+            binding.careTypeLay.visible()
         }
         binding.childLay.setOnClickListener {
             binding.seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -315,6 +323,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
             careType = "child care"
+            binding.personNoHtv.visible()
+            binding.careTypeLay.visible()
         }
         binding.patientLay.setOnClickListener {
             binding.seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -334,6 +344,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
             careType = "patient care"
+            binding.personNoHtv.visible()
+            binding.careTypeLay.visible()
         }
         binding.specialLay.setOnClickListener {
             binding.seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -353,6 +365,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.specialTv.setTextColor(resources.getColor(R.color.white, null))
             binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
             careType = "special care"
+            binding.personNoHtv.visible()
+            binding.careTypeLay.visible()
         }
         binding.oldLay.setOnClickListener {
             binding.seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -372,6 +386,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.oldTv.setTextColor(resources.getColor(R.color.white, null))
             careType = "old care"
+            binding.personNoHtv.visible()
+            binding.careTypeLay.visible()
         }
     }
 
