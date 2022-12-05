@@ -74,7 +74,7 @@ class SelectCareTypeActivity : AppCompatActivity() {
                 if(numberOfPerson == 1){
                     if(gender1 != null){
                         if(age1.isNotEmpty()){
-                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender1,age1))
+                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
                             finish()
                         }else{
                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -87,8 +87,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
                         if(age1.isNotEmpty()){
                             if(gender2 != null){
                                 if(age2.isNotEmpty()){
-                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender1,age1))
-                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender2,age2))
+                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
+                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
                                     finish()
                                 }else{
                                     Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -109,9 +109,9 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                 if(age2.isNotEmpty()){
                                     if(gender3 != null){
                                         if(age3.isNotEmpty()){
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender1,age1))
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender2,age2))
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender3,age3))
+                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
+                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
+                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3))
                                             finish()
                                         }else{
                                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -140,10 +140,10 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                         if(age3.isNotEmpty()){
                                             if(gender4 != null){
                                                 if(age4.isNotEmpty()){
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender1,age1))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender2,age2))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender3,age3))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender4,age4))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4))
                                                     finish()
                                                 }else{
                                                     Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -180,11 +180,11 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                                 if(age4.isNotEmpty()){
                                                     if(gender5 != null){
                                                         if(age5.isNotEmpty()){
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender1,age1))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender2,age2))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender3,age3))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender4,age4))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel("senior",gender5,age5))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5))
                                                             finish()
                                                         }else{
                                                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()

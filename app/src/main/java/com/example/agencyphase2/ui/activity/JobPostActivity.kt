@@ -13,15 +13,19 @@ import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agencyphase2.R
+import com.example.agencyphase2.adapter.ChipsAdapter
 import com.example.agencyphase2.adapter.GenderAgeAdapter
+import com.example.agencyphase2.adapter.PostJobsAdapter
 import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
+import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.PostJobViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.user.caregiver.gone
 import com.user.caregiver.loadingDialog
+import com.user.caregiver.showKeyboard
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 import org.w3c.dom.Text
@@ -30,13 +34,15 @@ import java.util.*
 @AndroidEntryPoint
 class JobPostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobPostBinding
-    val careTypeList: Array<String> =  arrayOf("Type of care", "Child care", "Senior care", "Patient care")
     var careType:String = ""
     var gender:String = ""
     var age:String = ""
     var date:String = ""
     var startTime:String = ""
     var endTime:String = ""
+
+    private val medicalHistoryList:MutableList<String> = mutableListOf()
+
     private lateinit var accessToken: String
 
     //lists
@@ -58,6 +64,7 @@ class JobPostActivity : AppCompatActivity() {
 
         binding.relativeLay2.gone()
         binding.relativeLay3.gone()
+        binding.dateTimeLay.gone()
 
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
@@ -103,6 +110,19 @@ class JobPostActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //optional page
+        binding.addMhBtn.setOnClickListener {
+            val medicalHistoryTxt = binding.medicalHistoryTxt.text.toString()
+            if(!medicalHistoryTxt.isEmpty()){
+                medicalHistoryList.add(medicalHistoryTxt)
+                fillMedicalRecycler(medicalHistoryList)
+                binding.medicalHistoryTxt.text = null
+            }else{
+                Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.medicalHistoryTxt.showKeyboard()
+            }
+        }
+
         //observer
         jobPostObserve()
     }
@@ -110,10 +130,12 @@ class JobPostActivity : AppCompatActivity() {
     override fun onResume() {
         if(genderAgeList.isNotEmpty()){
             binding.typeOfCareLay.visible()
+            binding.careTypeBtn.gone()
             careType = genderAgeList[0].careType.toString()
             binding.typeOfCareTv.text = careType
         }else{
             binding.typeOfCareLay.gone()
+            binding.careTypeBtn.visible()
             careType = ""
         }
         fillGenderAgeRecycler(genderAgeList)
@@ -201,8 +223,11 @@ class JobPostActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         btnSave.setOnClickListener {
-            binding.timeDateTxt.text = getCurrentDate(datePicker)
+            binding.timeTv1.text = startTime+" - "+endTime
+            binding.dateTv1.text = getCurrentDate(datePicker)
             date = getCurrentDate(datePicker).toString()
+            binding.dateTimeBtn.gone()
+            binding.dateTimeLay.visible()
             dialog.dismiss()
         }
 
@@ -317,6 +342,16 @@ class JobPostActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun fillMedicalRecycler(list: MutableList<String>) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        binding.medicalRecycler.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
     }
 
     override fun onDestroy() {

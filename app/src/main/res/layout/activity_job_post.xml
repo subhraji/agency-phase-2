@@ -35,7 +35,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -88,15 +89,17 @@
                             android:layout_height="40dp"
                             android:background="@drawable/reg_icon_three" />
                     </LinearLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Job Information"
-                        android:textColor="@color/black"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="20dp"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
+                        android:text="Job Information"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/job_title_txt_lay"
                         android:layout_width="match_parent"
@@ -121,7 +124,7 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
                             android:textCursorDrawable="@null"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <View
@@ -173,12 +176,12 @@
                         android:id="@+id/type_of_care_Lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/job_preview_background"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="@+id/view_1"
                         app:layout_constraintStart_toStartOf="@+id/view_1"
                         app:layout_constraintTop_toBottomOf="@+id/view_1">
@@ -189,6 +192,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:text="Type of care"
+                            android:textColor="@color/black"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -208,14 +212,14 @@
                             android:id="@+id/gender_age_recycler"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintStart_toEndOf="@+id/type_of_care_htv"
-                            app:layout_constraintEnd_toStartOf="@+id/edit_type_of_care_btn"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            tools:listitem="@layout/gender_age_item_layout"
-                            tools:itemCount="2"/>
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_type_of_care_btn"
+                            app:layout_constraintStart_toEndOf="@+id/type_of_care_htv"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/gender_age_item_layout" />
 
                         <ImageView
                             android:id="@+id/edit_type_of_care_btn"
@@ -267,6 +271,72 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/date_time_Lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/job_preview_background"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+                        <TextView
+                            android:id="@+id/date_htv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:text="Date"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/date_tv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/date_htv_1"
+                            app:layout_constraintTop_toBottomOf="@+id/date_htv_1" />
+
+                        <TextView
+                            android:id="@+id/hours_htv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:text="Hours"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toEndOf="@+id/date_tv_1"
+                            app:layout_constraintTop_toTopOf="@+id/date_htv_1" />
+
+                        <TextView
+                            android:id="@+id/time_tv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/hours_htv_1"
+                            app:layout_constraintTop_toBottomOf="@+id/hours_htv_1" />
+
+                        <ImageView
+                            android:id="@+id/edit_date_time_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_baseline_edit_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -286,6 +356,7 @@
                             android:paddingTop="15dp"
                             android:paddingBottom="15dp"
                             android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/add_btn_3"
@@ -319,34 +390,49 @@
                             android:layout_marginStart="10dp"
                             android:background="@color/transparent"
                             android:hint="Location"
-                            android:paddingStart="10dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginEnd="20dp"
+                            android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_gps_19" />
                     </RelativeLayout>
-                    <EditText
-                        android:id="@+id/job_desc_txt"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/job_desc_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="15dp"
-                        android:textAlignment="textStart"
-                        android:inputType="textMultiLine"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:hint="Job description &amp; responsibilities"
-                        android:textColor="@color/text_grey"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:background="@drawable/time_selector_border"/>
+                        android:background="@drawable/time_selector_border"
+                        android:padding="5dp"
+                        android:textColorHint="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:hintTextColor="@color/text_grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/job_desc_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:backgroundTint="@null"
+                            android:gravity="start"
+                            android:hint="Job description &amp; responsibilities"
+                            android:inputType="textMultiLine"
+                            android:textColor="@color/black"
+                            android:textCursorDrawable="@null"
+                            android:textSize="14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!--<View
                         android:layout_width="match_parent"
@@ -454,7 +540,6 @@
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -465,6 +550,12 @@
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/medical_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -487,14 +578,14 @@
                             android:textColorHint="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/add_btn_4"
+                            app:layout_constraintEnd_toStartOf="@+id/add_mh_btn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/add_btn_4"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:id="@+id/add_mh_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -508,10 +599,16 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="10dp"
-                        android:text="Job experties skill(s) required"
+                        android:text="Job expertise skill(s) required"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/expertise_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -560,6 +657,12 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/other_requirement_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -606,6 +709,11 @@
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/checklist_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -961,7 +1069,6 @@
                         app:layout_constraintStart_toStartOf="@+id/cons_lay_3"
                         android:text="Street number, Name"
                         android:layout_marginTop="15dp"
-
                         android:textColor="@color/text_grey"/>
                     <TextView
                         android:id="@+id/street_name_tv"
