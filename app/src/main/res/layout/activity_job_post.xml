@@ -36,7 +36,7 @@
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -434,19 +434,6 @@
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!--<View
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/light_grey" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/light_grey" />-->
                 </LinearLayout>
             </ScrollView>
 
@@ -477,7 +464,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -587,6 +575,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
+                            android:padding="10dp"
                             android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -631,15 +620,16 @@
                             android:textColorHint="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/add_btn_5"
+                            app:layout_constraintEnd_toStartOf="@+id/add_js_btn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/add_btn_5"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:id="@+id/add_js_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
+                            android:padding="10dp"
                             android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -684,14 +674,14 @@
                             android:textColorHint="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/add_btn_6"
+                            app:layout_constraintEnd_toStartOf="@+id/add_or_btn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/add_btn_6"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:id="@+id/add_or_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -736,15 +726,16 @@
                             android:textColorHint="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/add_btn_7"
+                            app:layout_constraintEnd_toStartOf="@+id/add_check_list_btn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
-                            android:id="@+id/add_btn_7"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:id="@+id/add_check_list_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
+                            android:padding="10dp"
                             android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -781,6 +772,7 @@
             android:id="@+id/relative_lay_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -799,9 +791,9 @@
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="3"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
                             android:layout_width="40dp"
@@ -837,48 +829,45 @@
                         android:id="@+id/job_info_htv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/stepper_lay_3"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
                         android:text="Job Information"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:textSize="18sp"
-                        android:layout_marginTop="20dp"/>
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/stepper_lay_3" />
 
-
-                    <TextView
-                        android:id="@+id/job_title_htv"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/show_job_title_txt_lay"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:text="Job Title"
-                        android:textColor="@color/text_grey"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="@+id/job_info_htv"
-                        app:layout_constraintTop_toBottomOf="@+id/job_info_htv" />
-                    <TextView
-                        android:id="@+id/job_title_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="Female caregiver for parents at home"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/job_title_htv"
-                        app:layout_constraintTop_toBottomOf="@+id/job_title_htv" />
-
-                    <View
-                        android:id="@+id/view_1"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/light_grey"
-                        app:layout_constraintEnd_toEndOf="@+id/job_title_tv"
-                        app:layout_constraintStart_toStartOf="@+id/job_title_tv"
-                        app:layout_constraintTop_toBottomOf="@+id/job_title_tv" />
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/transparent"
+                        android:padding="5dp"
+                        android:textColorHint="@color/text_grey"
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:helperTextTextColor="@color/error_red"
+                        app:layout_constraintTop_toBottomOf="@+id/job_info_htv">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/show_job_title_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="Job title"
+                            android:inputType="textEmailAddress"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cons_lay_1"
@@ -888,9 +877,9 @@
                         android:background="@drawable/job_preview_background"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        app:layout_constraintEnd_toEndOf="@+id/view_1"
-                        app:layout_constraintStart_toStartOf="@+id/view_1"
-                        app:layout_constraintTop_toBottomOf="@+id/view_1">
+                        app:layout_constraintEnd_toEndOf="@+id/show_job_title_txt_lay"
+                        app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
+                        app:layout_constraintTop_toBottomOf="@+id/show_job_title_txt_lay">
 
                         <TextView
                             android:id="@+id/care_type_htv"
@@ -898,47 +887,34 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:text="Type of care"
+                            android:textColor="@color/black"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/care_type_tv"
+                            android:id="@+id/show_care_type_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Senior care"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@+id/care_type_htv"
                             app:layout_constraintTop_toBottomOf="@+id/care_type_htv" />
 
-                        <TextView
-                            android:id="@+id/gender_age_tv_1"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/show_gender_age_recycler"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:text="Female: 26 years"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_gender_age_btn"
                             app:layout_constraintStart_toEndOf="@+id/care_type_htv"
-                            app:layout_constraintTop_toTopOf="@+id/care_type_htv" />
-
-                        <TextView
-                            android:id="@+id/gender_age_tv_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Male: 26 years"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/gender_age_tv_1"
-                            app:layout_constraintTop_toBottomOf="@+id/gender_age_tv_1" />
+                            app:layout_constraintTop_toTopOf="@+id/care_type_htv"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/gender_age_item_layout" />
 
                         <ImageView
+                            android:id="@+id/edit_gender_age_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
@@ -956,8 +932,8 @@
                         android:background="@drawable/job_preview_background"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        app:layout_constraintEnd_toEndOf="@+id/view_1"
-                        app:layout_constraintStart_toStartOf="@+id/view_1"
+                        app:layout_constraintEnd_toEndOf="@+id/show_job_title_txt_lay"
+                        app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
                         app:layout_constraintTop_toBottomOf="@+id/cons_lay_1">
 
                         <TextView
@@ -972,7 +948,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/date_tv"
+                            android:id="@+id/show_date_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -991,11 +967,11 @@
                             android:text="Hours"
                             android:textColor="@color/black"
                             android:textSize="15sp"
-                            app:layout_constraintStart_toEndOf="@+id/date_tv"
+                            app:layout_constraintStart_toEndOf="@+id/show_date_tv"
                             app:layout_constraintTop_toTopOf="@+id/date_htv" />
 
                         <TextView
-                            android:id="@+id/time_tv"
+                            android:id="@+id/show_time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -1007,6 +983,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/hours_htv" />
 
                         <ImageView
+                            android:id="@+id/show_date_time_edit_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
@@ -1024,8 +1001,8 @@
                         android:background="@drawable/job_preview_background"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        app:layout_constraintEnd_toEndOf="@+id/view_1"
-                        app:layout_constraintStart_toStartOf="@+id/view_1"
+                        app:layout_constraintEnd_toEndOf="@+id/show_job_title_txt_lay"
+                        app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
                         app:layout_constraintTop_toBottomOf="@+id/cons_lay_2">
 
                         <TextView
@@ -1039,418 +1016,414 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/amount_tv"
-                            android:layout_width="wrap_content"
+                        <EditText
+                            android:id="@+id/show_amount_txt"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="$200"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@+id/amount_htv"
                             app:layout_constraintTop_toBottomOf="@+id/amount_htv" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:src="@drawable/ic_baseline_edit_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/street_name_htv"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/show_address_txt_lay"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_3"
-                        app:layout_constraintStart_toStartOf="@+id/cons_lay_3"
-                        android:text="Street number, Name"
-                        android:layout_marginTop="15dp"
-                        android:textColor="@color/text_grey"/>
-                    <TextView
-                        android:id="@+id/street_name_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="455 Lamb road, Art street"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="15sp"
-                        app:layout_constraintEnd_toStartOf="@+id/loc_btn_img"
-                        app:layout_constraintTop_toBottomOf="@+id/street_name_htv"
-                        app:layout_constraintStart_toStartOf="@+id/street_name_htv"
-                        android:layout_marginTop="5dp"/>
-                    <ImageView
-                        android:id="@+id/loc_btn_img"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/street_name_htv"
-                        app:layout_constraintBottom_toBottomOf="@+id/street_name_tv"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_gps_19"/>
+                        android:background="@drawable/time_selector_border"
+                        android:padding="5dp"
+                        android:textColorHint="@color/text_grey"
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/text_grey"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:helperTextTextColor="@color/error_red"
+                        app:layout_constraintStart_toStartOf="@+id/cons_lay_3"
+                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_3" >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/show_address_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="Address"
+                            android:inputType="textEmailAddress"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/text_grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="14sp"
+                            android:drawableEnd="@drawable/ic_gps_19"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <TextView
                         android:id="@+id/city_htv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:text="City area/District"
+                        android:textColor="@color/text_grey"
                         android:textSize="15sp"
                         android:textStyle="normal"
-                        android:textColor="@color/text_grey"
-                        app:layout_constraintTop_toBottomOf="@+id/street_name_tv"
-                        app:layout_constraintStart_toStartOf="@+id/street_name_htv"
-                        android:layout_marginTop="15dp"/>
+                        app:layout_constraintStart_toStartOf="@+id/show_address_txt_lay"
+                        app:layout_constraintTop_toBottomOf="@+id/show_address_txt_lay" />
+
                     <TextView
                         android:id="@+id/city_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/city_htv"
-                        app:layout_constraintStart_toStartOf="@id/street_name_htv"
+                        android:layout_marginTop="5dp"
                         android:text="Baviera"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:textSize="15sp"
-                        android:layout_marginTop="5dp"/>
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@id/show_address_txt_lay"
+                        app:layout_constraintTop_toBottomOf="@+id/city_htv" />
+
                     <LinearLayout
                         android:id="@+id/linear_lay_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/city_tv"
-                        app:layout_constraintStart_toStartOf="@id/street_name_htv"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="10dp"
-                        android:weightSum="2"
                         android:orientation="horizontal"
-                        android:layout_marginTop="15dp">
+                        android:weightSum="2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/show_address_txt_lay"
+                        app:layout_constraintTop_toBottomOf="@+id/city_tv">
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
+
                             <TextView
                                 android:id="@+id/state_htv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="State"
-                                android:textSize="15sp"
-                                android:textColor="@color/text_grey"/>
+                                android:textColor="@color/text_grey"
+                                android:textSize="15sp" />
 
                             <TextView
                                 android:id="@+id/state_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/state_htv"
+                                android:layout_marginTop="5dp"
                                 android:text="State"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
-                                android:layout_marginTop="5dp"
                                 android:textStyle="bold" />
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
+
                             <TextView
                                 android:id="@+id/zipcode_htv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Zipcode"
-                                android:textSize="15sp"
-                                android:textColor="@color/text_grey"/>
+                                android:textColor="@color/text_grey"
+                                android:textSize="15sp" />
 
                             <TextView
                                 android:id="@+id/zipcode_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/zipcode_htv"
+                                android:layout_marginTop="5dp"
                                 android:text="12345"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
-                                android:layout_marginTop="5dp"
                                 android:textStyle="bold" />
                         </RelativeLayout>
                     </LinearLayout>
+
                     <View
                         android:id="@+id/view_2"
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
-                        android:background="@color/light_grey"
                         android:layout_marginTop="15dp"
-                        app:layout_constraintTop_toBottomOf="@+id/linear_lay_1"/>
+                        android:background="@color/light_grey"
+                        app:layout_constraintTop_toBottomOf="@+id/linear_lay_1" />
+
                     <TextView
                         android:id="@+id/job_desc_htv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/view_2"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="15dp"
                         android:text="Job Description &amp; Responsibilities"
+                        android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:id="@+id/job_desc_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_2" />
+
+                    <EditText
+                        android:id="@+id/show_job_desc_txt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/job_desc_htv"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="7dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/time_selector_border"
+                        android:inputType="textMultiLine"
+                        android:padding="10dp"
+                        android:text="It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
                         android:textColor="@color/black"
-                        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"/>
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/job_desc_htv" />
 
                     <TextView
                         android:id="@+id/medical_history_htv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:text="Medical history (if any)"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:textSize="15sp"
-                        app:layout_constraintTop_toBottomOf="@+id/job_desc_tv"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/job_desc_htv"
-                        android:layout_marginTop="15dp"/>
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toBottomOf="@+id/show_job_desc_txt" />
+
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/medical_his_item_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/job_preview_background"
-                        app:layout_constraintTop_toBottomOf="@+id/medical_history_htv"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp">
-                        <TextView
-                            android:id="@+id/disease_name_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Heart Disease"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:layout_marginStart="10dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Remove"
-                            android:textColor="@color/text_grey"
-                            android:textSize="16sp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_marginEnd="10dp"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/medical_history_htv"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/chips_item_layout" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/medical_history_add_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/job_post_txt_bg"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/job_post_txt_bg"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay">
 
                         <EditText
                             android:id="@+id/prev_medical_history_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
                             android:background="@color/transparent"
                             android:hint="Add"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
                             android:textColorHint="@color/black"
                             android:textSize="14sp"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/add_btn_medi"
-                            android:layout_marginEnd="10dp"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/add_btn_medi"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:src="@drawable/ic_baseline_add_circle_outline_24" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:id="@+id/job_skill_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/medical_history_add_btn"
                         android:layout_marginTop="15dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/medical_history_add_btn">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
                             android:text="Job experties skill(s) required"
-                            android:textSize="14sp"
                             android:textColor="@color/black"
-                            android:textStyle="bold"/>
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/job_skill_item_lay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/job_preview_background"
-                            android:layout_marginTop="10dp"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp">
-                            <TextView
-                                android:id="@+id/skill_name_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="CNA Trained"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/black"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                android:layout_marginStart="10dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Remove"
-                                android:textColor="@color/text_grey"
-                                android:textSize="16sp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginEnd="10dp"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            tools:itemCount="1"
+                            tools:listitem="@layout/chips_item_layout" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/job_skill_add_btn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/job_post_txt_bg"
-                            android:layout_marginTop="10dp">
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/job_post_txt_bg">
 
                             <EditText
                                 android:id="@+id/prev_job_skill_txt"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:background="@color/transparent"
                                 android:hint="Add"
+                                android:paddingTop="15dp"
+                                android:paddingBottom="15dp"
                                 android:textColorHint="@color/black"
                                 android:textSize="14sp"
-                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/add_btn_skill"
-                                android:layout_marginEnd="10dp"
-                                android:paddingTop="15dp"
-                                android:paddingBottom="15dp"/>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/add_btn_skill"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_marginEnd="10dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
+                                android:src="@drawable/ic_baseline_add_circle_outline_24"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                android:src="@drawable/ic_baseline_add_circle_outline_24" />
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Caregiver checklist: Personal care duties &amp; tasks"
-                            android:textSize="14sp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Other requirements"
                             android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="15dp"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/prev_other_requirements_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/chips_item_layout" />
+
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/prev_add_or_lay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/job_post_txt_bg"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay">
+
+                            <EditText
+                                android:id="@+id/prev_add_or_txt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@color/transparent"
+                                android:hint="Add"
+                                android:paddingTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:textColorHint="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/prev_add_or_btn"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/prev_add_or_btn"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/ic_baseline_add_circle_outline_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Caregiver checklist: Personal care duties &amp; tasks"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/check_list_item_lay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/job_preview_background"
-                            android:layout_marginTop="10dp"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp">
-                            <TextView
-                                android:id="@+id/check_list_item_name_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Administer medication properly"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/black"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                android:layout_marginStart="10dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Remove"
-                                android:textColor="@color/text_grey"
-                                android:textSize="16sp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginEnd="10dp"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            tools:itemCount="1"
+                            tools:listitem="@layout/chips_item_layout" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/checklist_add_btn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/job_post_txt_bg"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
-                            app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/job_post_txt_bg"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
+                            app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay">
 
                             <EditText
                                 android:id="@+id/prev_checklist_txt"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:background="@color/transparent"
                                 android:hint="Add"
+                                android:paddingTop="15dp"
+                                android:paddingBottom="15dp"
                                 android:textColorHint="@color/black"
                                 android:textSize="14sp"
-                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/add_btn_check"
-                                android:layout_marginEnd="10dp"
-                                android:paddingTop="15dp"
-                                android:paddingBottom="15dp"/>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
                                 android:id="@+id/add_btn_check"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_marginEnd="10dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
+                                android:src="@drawable/ic_baseline_add_circle_outline_24"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                android:src="@drawable/ic_baseline_add_circle_outline_24" />
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </LinearLayout>

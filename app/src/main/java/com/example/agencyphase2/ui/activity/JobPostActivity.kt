@@ -42,6 +42,9 @@ class JobPostActivity : AppCompatActivity() {
     var endTime:String = ""
 
     private val medicalHistoryList:MutableList<String> = mutableListOf()
+    private val jobSkillList:MutableList<String> = mutableListOf()
+    private val otherReqList:MutableList<String> = mutableListOf()
+    private val checkList:MutableList<String> = mutableListOf()
 
     private lateinit var accessToken: String
 
@@ -62,69 +65,19 @@ class JobPostActivity : AppCompatActivity() {
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
+        binding.relativeLay1.gone()
         binding.relativeLay2.gone()
-        binding.relativeLay3.gone()
+        //binding.relativeLay3.gone()
         binding.dateTimeLay.gone()
-
-        binding.dateTimeBtn.setOnClickListener {
-            showDateTimeBottomSheet()
-        }
-
-        binding.requiredNextStepBtn.setOnClickListener {
-            /*mPostJobViewModel.jobPost(
-                binding.jobTitleTxt.text.toString(),
-                careType,
-                genderAgeList,
-                date,
-                startTime,
-                endTime,
-                binding.addAmountTxt.text.toString(),
-                binding.jobLocTxt.text.toString(),
-                binding.jobDescTxt.text.toString(),
-                accessToken
-            )
-            loader = this.loadingDialog()
-            loader.show()*/
-
-            binding.relativeLay1.gone()
-            binding.relativeLay3.gone()
-            binding.relativeLay2.visible()
-        }
-
-        binding.optionalNextStepBtn.setOnClickListener {
-            binding.relativeLay2.gone()
-            binding.relativeLay1.gone()
-            binding.relativeLay3.visible()
-        }
-
-        binding.prevNextStepBtn.setOnClickListener {
-            finish()
-        }
 
         binding.backBtn.setOnClickListener {
             finish()
         }
 
-        binding.careTypeBtn.setOnClickListener {
-            val intent = Intent(this, SelectCareTypeActivity::class.java)
-            startActivity(intent)
-        }
-
-        //optional page
-        binding.addMhBtn.setOnClickListener {
-            val medicalHistoryTxt = binding.medicalHistoryTxt.text.toString()
-            if(!medicalHistoryTxt.isEmpty()){
-                medicalHistoryList.add(medicalHistoryTxt)
-                fillMedicalRecycler(medicalHistoryList)
-                binding.medicalHistoryTxt.text = null
-            }else{
-                Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
-                binding.medicalHistoryTxt.showKeyboard()
-            }
-        }
-
-        //observer
-        jobPostObserve()
+        //initialize page
+        initializePageOne()
+        initializePageTwo()
+        initializePageThree()
     }
 
     override fun onResume() {
@@ -148,30 +101,8 @@ class JobPostActivity : AppCompatActivity() {
 
         val btnSave = view.findViewById<CardView>(R.id.save_btn)
         val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
-        val childTv = view.findViewById<TextView>(R.id.child_tv)
-        val seniorTv = view.findViewById<TextView>(R.id.senior_tv)
-        val patientTv = view.findViewById<TextView>(R.id.patient_tv)
         val careTypeRbg = view.findViewById<RadioGroup>(R.id.type_of_care_rbg)
         val ageTxt = view.findViewById<EditText>(R.id.age_txt)
-
-        if(care == "Child care"){
-            childTv.setBackgroundColor(Color.parseColor("#000000"));
-            seniorTv.setBackgroundColor(Color.parseColor("#E3E3E3"));
-            patientTv.setBackgroundColor(Color.parseColor("#E3E3E3"));
-            childTv.setTextColor(Color.parseColor("#ffffff"));
-
-        }else if(care == "Senior care"){
-            seniorTv.setBackgroundColor(Color.parseColor("#000000"));
-            childTv.setBackgroundColor(Color.parseColor("#E3E3E3"));
-            patientTv.setBackgroundColor(Color.parseColor("#E3E3E3"));
-            seniorTv.setTextColor(Color.parseColor("#ffffff"));
-
-        }else if(care == "Patient care"){
-            patientTv.setBackgroundColor(Color.parseColor("#000000"));
-            childTv.setBackgroundColor(Color.parseColor("#E3E3E3"));
-            seniorTv.setBackgroundColor(Color.parseColor("#E3E3E3"));
-            patientTv.setTextColor(Color.parseColor("#ffffff"));
-        }
 
         careTypeRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -342,6 +273,117 @@ class JobPostActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+
+    private fun fillJobSkillRecycler(list: MutableList<String>) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        binding.expertiseRecycler.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
+    }
+
+    private fun fillOtherRequirementRecycler(list: MutableList<String>) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        binding.otherRequirementRecycler.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
+    }
+
+    private fun fillCheckListRecycler(list: MutableList<String>) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        binding.checklistRecycler.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
+    }
+
+    private fun initializePageOne(){
+        binding.dateTimeBtn.setOnClickListener {
+            showDateTimeBottomSheet()
+        }
+
+        binding.requiredNextStepBtn.setOnClickListener {
+            binding.relativeLay1.gone()
+            binding.relativeLay3.gone()
+            binding.relativeLay2.visible()
+        }
+
+        binding.careTypeBtn.setOnClickListener {
+            val intent = Intent(this, SelectCareTypeActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun initializePageTwo(){
+        binding.addMhBtn.setOnClickListener {
+            val medicalHistoryTxt = binding.medicalHistoryTxt.text.toString()
+            if(!medicalHistoryTxt.isEmpty()){
+                medicalHistoryList.add(medicalHistoryTxt)
+                fillMedicalRecycler(medicalHistoryList)
+                binding.medicalHistoryTxt.text = null
+            }else{
+                Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.medicalHistoryTxt.showKeyboard()
+            }
+        }
+
+        binding.addJsBtn.setOnClickListener {
+            val jobSkillTxt = binding.jobSkillTxt.text.toString()
+            if(!jobSkillTxt.isEmpty()){
+                jobSkillList.add(jobSkillTxt)
+                fillJobSkillRecycler(jobSkillList)
+                binding.jobSkillTxt.text = null
+            }else{
+                Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.jobSkillTxt.showKeyboard()
+            }
+        }
+
+        binding.addOrBtn.setOnClickListener {
+            val otherReqTxt = binding.otherRequirementsTxt.text.toString()
+            if(!otherReqTxt.isEmpty()){
+                otherReqList.add(otherReqTxt)
+                fillOtherRequirementRecycler(otherReqList)
+                binding.otherRequirementsTxt.text = null
+            }else{
+                Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.otherRequirementsTxt.showKeyboard()
+            }
+        }
+
+        binding.addCheckListBtn.setOnClickListener {
+            val checkListTxt = binding.checklistTxt.text.toString()
+            if(!checkListTxt.isEmpty()){
+                checkList.add(checkListTxt)
+                fillCheckListRecycler(checkList)
+                binding.checklistTxt.text = null
+            }else{
+                Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.checklistTxt.showKeyboard()
+            }
+        }
+
+        binding.optionalNextStepBtn.setOnClickListener {
+            binding.relativeLay2.gone()
+            binding.relativeLay1.gone()
+            binding.relativeLay3.visible()
+        }
+    }
+
+    private fun initializePageThree() {
+        binding.prevNextStepBtn.setOnClickListener {
+            finish()
+        }
     }
 
     private fun fillMedicalRecycler(list: MutableList<String>) {
