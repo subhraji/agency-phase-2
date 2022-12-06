@@ -35,8 +35,7 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -464,8 +463,7 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -952,7 +950,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Today, Sept 26"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -975,7 +972,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="8:00 AM - 12:00 PM"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -1045,21 +1041,21 @@
                         app:boxStrokeWidthFocused="0dp"
                         app:helperTextTextColor="@color/error_red"
                         app:layout_constraintStart_toStartOf="@+id/cons_lay_3"
-                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_3" >
+                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_3">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/show_address_txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
+                            android:drawableEnd="@drawable/ic_gps_19"
                             android:hint="Address"
                             android:inputType="textEmailAddress"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
                             android:textCursorDrawable="@null"
-                            android:textSize="14sp"
-                            android:drawableEnd="@drawable/ic_gps_19"/>
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
@@ -1179,7 +1175,6 @@
                         android:background="@drawable/time_selector_border"
                         android:inputType="textMultiLine"
                         android:padding="10dp"
-                        android:text="It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1199,7 +1194,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/show_job_desc_txt" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/medical_his_item_lay"
+                        android:id="@+id/show_medical_his_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -1219,7 +1214,7 @@
                         android:background="@drawable/job_post_txt_bg"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay">
+                        app:layout_constraintTop_toBottomOf="@+id/show_medical_his_recycler">
 
                         <EditText
                             android:id="@+id/prev_medical_history_txt"
@@ -1269,7 +1264,7 @@
                             android:textStyle="bold" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/job_skill_item_lay"
+                            android:id="@+id/show_job_skill_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:itemCount="1"
@@ -1323,7 +1318,7 @@
                             android:textStyle="bold" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/prev_other_requirements_recycler"
+                            android:id="@+id/show_other_requirements_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:itemCount="1"
@@ -1380,7 +1375,7 @@
                             android:textStyle="bold" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/check_list_item_lay"
+                            android:id="@+id/show_check_list_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:itemCount="1"

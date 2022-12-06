@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.ChipsAdapter
 import com.example.agencyphase2.adapter.GenderAgeAdapter
@@ -65,9 +67,9 @@ class JobPostActivity : AppCompatActivity() {
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
-        binding.relativeLay1.gone()
+        //binding.relativeLay1.gone()
         binding.relativeLay2.gone()
-        //binding.relativeLay3.gone()
+        binding.relativeLay3.gone()
         binding.dateTimeLay.gone()
 
         binding.backBtn.setOnClickListener {
@@ -86,12 +88,13 @@ class JobPostActivity : AppCompatActivity() {
             binding.careTypeBtn.gone()
             careType = genderAgeList[0].careType.toString()
             binding.typeOfCareTv.text = careType
+            binding.showCareTypeTv.text = careType
         }else{
             binding.typeOfCareLay.gone()
             binding.careTypeBtn.visible()
             careType = ""
         }
-        fillGenderAgeRecycler(genderAgeList)
+        fillGenderAgeRecycler(genderAgeList, binding.genderAgeRecycler)
         super.onResume()
     }
 
@@ -130,14 +133,6 @@ class JobPostActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun fillGenderAgeRecycler(list: List<GenderAgeItemCountModel>) {
-        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.genderAgeRecycler.apply {
-            layoutManager = gridLayoutManager
-            adapter = GenderAgeAdapter(list,this@JobPostActivity, careType)
-        }
-    }
-
     private fun showDateTimeBottomSheet(){
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.select_date_time_bottomsheet, null)
@@ -156,6 +151,8 @@ class JobPostActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             binding.timeTv1.text = startTime+" - "+endTime
             binding.dateTv1.text = getCurrentDate(datePicker)
+            binding.showDateTv.text = getCurrentDate(datePicker)
+            binding.showTimeTv.text = startTime+" - "+endTime
             date = getCurrentDate(datePicker).toString()
             binding.dateTimeBtn.gone()
             binding.dateTimeLay.visible()
@@ -275,37 +272,6 @@ class JobPostActivity : AppCompatActivity() {
         })
     }
 
-
-    private fun fillJobSkillRecycler(list: MutableList<String>) {
-        val linearlayoutManager = LinearLayoutManager(this)
-        binding.expertiseRecycler.apply {
-            layoutManager = linearlayoutManager
-            setHasFixedSize(true)
-            isFocusable = false
-            adapter = ChipsAdapter(list,this@JobPostActivity)
-        }
-    }
-
-    private fun fillOtherRequirementRecycler(list: MutableList<String>) {
-        val linearlayoutManager = LinearLayoutManager(this)
-        binding.otherRequirementRecycler.apply {
-            layoutManager = linearlayoutManager
-            setHasFixedSize(true)
-            isFocusable = false
-            adapter = ChipsAdapter(list,this@JobPostActivity)
-        }
-    }
-
-    private fun fillCheckListRecycler(list: MutableList<String>) {
-        val linearlayoutManager = LinearLayoutManager(this)
-        binding.checklistRecycler.apply {
-            layoutManager = linearlayoutManager
-            setHasFixedSize(true)
-            isFocusable = false
-            adapter = ChipsAdapter(list,this@JobPostActivity)
-        }
-    }
-
     private fun initializePageOne(){
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
@@ -329,7 +295,7 @@ class JobPostActivity : AppCompatActivity() {
             val medicalHistoryTxt = binding.medicalHistoryTxt.text.toString()
             if(!medicalHistoryTxt.isEmpty()){
                 medicalHistoryList.add(medicalHistoryTxt)
-                fillMedicalRecycler(medicalHistoryList)
+                fillMedicalRecycler(medicalHistoryList, binding.medicalRecycler)
                 binding.medicalHistoryTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -341,7 +307,7 @@ class JobPostActivity : AppCompatActivity() {
             val jobSkillTxt = binding.jobSkillTxt.text.toString()
             if(!jobSkillTxt.isEmpty()){
                 jobSkillList.add(jobSkillTxt)
-                fillJobSkillRecycler(jobSkillList)
+                fillJobSkillRecycler(jobSkillList, binding.expertiseRecycler)
                 binding.jobSkillTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -353,7 +319,7 @@ class JobPostActivity : AppCompatActivity() {
             val otherReqTxt = binding.otherRequirementsTxt.text.toString()
             if(!otherReqTxt.isEmpty()){
                 otherReqList.add(otherReqTxt)
-                fillOtherRequirementRecycler(otherReqList)
+                fillOtherRequirementRecycler(otherReqList, binding.otherRequirementRecycler)
                 binding.otherRequirementsTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -365,7 +331,7 @@ class JobPostActivity : AppCompatActivity() {
             val checkListTxt = binding.checklistTxt.text.toString()
             if(!checkListTxt.isEmpty()){
                 checkList.add(checkListTxt)
-                fillCheckListRecycler(checkList)
+                fillCheckListRecycler(checkList, binding.checklistRecycler)
                 binding.checklistTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -377,6 +343,10 @@ class JobPostActivity : AppCompatActivity() {
             binding.relativeLay2.gone()
             binding.relativeLay1.gone()
             binding.relativeLay3.visible()
+            binding.showJobTitleTxt.text = Editable.Factory.getInstance().newEditable(binding.jobTitleTxt.text.toString())
+            binding.showAmountTxt.text = Editable.Factory.getInstance().newEditable(binding.addAmountTxt.text.toString())
+            binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(binding.jobLocTxt.text.toString())
+            binding.showJobDescTxt.text = Editable.Factory.getInstance().newEditable(binding.jobDescTxt.text.toString())
         }
     }
 
@@ -384,11 +354,55 @@ class JobPostActivity : AppCompatActivity() {
         binding.prevNextStepBtn.setOnClickListener {
             finish()
         }
+
+        fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
+        fillMedicalRecycler(medicalHistoryList, binding.showMedicalHisRecycler)
+        fillJobSkillRecycler(jobSkillList, binding.showJobSkillRecycler)
+        fillOtherRequirementRecycler(otherReqList, binding.showOtherRequirementsRecycler)
+        fillCheckListRecycler(checkList, binding.showCheckListRecycler)
     }
 
-    private fun fillMedicalRecycler(list: MutableList<String>) {
+    private fun fillGenderAgeRecycler(list: List<GenderAgeItemCountModel>, recycleView: RecyclerView) {
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recycleView.apply {
+            layoutManager = gridLayoutManager
+            adapter = GenderAgeAdapter(list,this@JobPostActivity, careType)
+        }
+    }
+
+    private fun fillMedicalRecycler(list: MutableList<String>, recycleView: RecyclerView) {
         val linearlayoutManager = LinearLayoutManager(this)
-        binding.medicalRecycler.apply {
+        recycleView.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
+    }
+
+    private fun fillJobSkillRecycler(list: MutableList<String>, recycleView: RecyclerView) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        recycleView.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
+    }
+
+    private fun fillOtherRequirementRecycler(list: MutableList<String>, recycleView: RecyclerView) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        recycleView.apply {
+            layoutManager = linearlayoutManager
+            setHasFixedSize(true)
+            isFocusable = false
+            adapter = ChipsAdapter(list,this@JobPostActivity)
+        }
+    }
+
+    private fun fillCheckListRecycler(list: MutableList<String>, recycleView: RecyclerView) {
+        val linearlayoutManager = LinearLayoutManager(this)
+        recycleView.apply {
             layoutManager = linearlayoutManager
             setHasFixedSize(true)
             isFocusable = false
