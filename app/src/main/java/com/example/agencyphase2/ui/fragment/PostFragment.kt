@@ -1,6 +1,5 @@
 package com.example.agencyphase2.ui.fragment
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,22 +11,16 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.PostJobsAdapter
-import com.example.agencyphase2.databinding.FragmentClosedBinding
-import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.databinding.FragmentPostBinding
-import com.example.agencyphase2.model.pojo.business_information.BusinessInformationRequest
 import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.viewmodel.AddBusinessInfoViewModel
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.user.caregiver.gone
@@ -79,7 +72,12 @@ class PostFragment : Fragment() {
         //shimmer
         binding.postJobsShimmerView.gone()
 
-        //api call
+        //observer
+        //getProfileCompletionStatusObserver()
+    }
+
+    override fun onResume() {
+
         if(requireActivity().isConnectedToInternet()){
             mGetPostJobsViewModel.getPostJobs(accessToken)
             binding.postJobsShimmerView.visible()
@@ -91,11 +89,6 @@ class PostFragment : Fragment() {
             Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
         }
 
-        //observer
-        //getProfileCompletionStatusObserver()
-    }
-
-    override fun onResume() {
         //observer
         getPostJobsObserve()
         getProfileCompletionStatusObserver()

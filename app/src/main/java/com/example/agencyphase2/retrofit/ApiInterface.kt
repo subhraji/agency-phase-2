@@ -4,8 +4,8 @@ import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOff
 import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOfficerResponse
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoRequest
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoResponse
-import com.example.agencyphase2.model.pojo.business_information.BusinessInformationRequest
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
+import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
@@ -83,4 +83,10 @@ interface ApiInterface {
     suspend fun getProfileCompletionStatus(
         @Header("Authorization") token: String
     ): GetProfileCompletionStatusResponse?
+
+    @GET("job/delete-job")
+    suspend fun deleteJob(
+        @Header("Authorization") token: String,
+        @Query("id") id: Int?,
+    ): DeleteJobResponse?
 }

@@ -1,20 +1,55 @@
 package com.example.agencyphase2.ui.activity
 
+import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityPostJobsDetailsBinding
+import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.viewmodel.DeleteJobViewModel
+import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.user.caregiver.gone
+import com.user.caregiver.isConnectedToInternet
+import com.user.caregiver.loadingDialog
 import com.user.caregiver.visible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PostJobsDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostJobsDetailsBinding
+    private val mDeleteJobViewModel: DeleteJobViewModel by viewModels()
+    private lateinit var loader: androidx.appcompat.app.AlertDialog
+
+    private lateinit var accessToken: String
+    private var id: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityPostJobsDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //get token
+        accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
+
+
+        val extras = intent.extras
+        if (extras != null) {
+            id = intent?.getIntExtra("id",0)!!
+            val title = intent?.getStringExtra("title")!!
+            binding.jobTitleTv.text = title
+        }
+
+        //observer
+        deleteJobObserver()
 
         clickJobOverview()
 
@@ -28,6 +63,10 @@ class PostJobsDetailsActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.deleteBtn.setOnClickListener {
+            showDeletePopUp()
         }
     }
 
@@ -53,4 +92,49 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         binding.relativeLay2.visible()
         binding.relativeLay1.gone()
     }
+
+    private fun deleteJobObserver(){
+        mDeleteJobViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        mDeleteJobViewModel.navigationComplete()
+                        finish()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
+    private fun showDeletePopUp(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Delete")
+        builder.setMessage("Do you want to delete this job ?")
+        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+            if(isConnectedToInternet()){
+                mDeleteJobViewModel.deleteJob(accessToken,id)
+                loader = this.loadingDialog()
+                loader.show()
+            }else{
+                Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        builder.setNegativeButton("No"){dialogInterface, which ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
 }

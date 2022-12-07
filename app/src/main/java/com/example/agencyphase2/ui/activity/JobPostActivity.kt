@@ -2,11 +2,9 @@ package com.example.agencyphase2.ui.activity
 
 import android.app.TimePickerDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.ChipsAdapter
 import com.example.agencyphase2.adapter.GenderAgeAdapter
-import com.example.agencyphase2.adapter.PostJobsAdapter
 import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
-import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.PostJobViewModel
@@ -30,7 +26,6 @@ import com.user.caregiver.loadingDialog
 import com.user.caregiver.showKeyboard
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
-import org.w3c.dom.Text
 import java.util.*
 
 @AndroidEntryPoint
@@ -71,6 +66,7 @@ class JobPostActivity : AppCompatActivity() {
         binding.relativeLay2.gone()
         binding.relativeLay3.gone()
         binding.dateTimeLay.gone()
+        loader = this.loadingDialog()
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -80,6 +76,9 @@ class JobPostActivity : AppCompatActivity() {
         initializePageOne()
         initializePageTwo()
         initializePageThree()
+
+        //observer
+        jobPostObserve()
     }
 
     override fun onResume() {
@@ -95,6 +94,7 @@ class JobPostActivity : AppCompatActivity() {
             careType = ""
         }
         fillGenderAgeRecycler(genderAgeList, binding.genderAgeRecycler)
+        fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
         super.onResume()
     }
 
@@ -253,11 +253,8 @@ class JobPostActivity : AppCompatActivity() {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-
-                        val intent = Intent(this, PostJobPreviewActivity::class.java)
-                        startActivity(intent)
                         mPostJobViewModel.navigationComplete()
-
+                        finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -352,10 +349,25 @@ class JobPostActivity : AppCompatActivity() {
 
     private fun initializePageThree() {
         binding.prevNextStepBtn.setOnClickListener {
-            finish()
+            mPostJobViewModel.jobPost(
+                binding.showJobTitleTxt.text.toString(),
+                binding.showCareTypeTv.text.toString(),
+                genderAgeList,
+                date,
+                startTime,
+                endTime,
+                binding.showAmountTxt.text.toString(),
+                binding.showAddressTxt.text.toString(),
+                binding.showJobDescTxt.text.toString(),
+                medicalHistoryList,
+                jobSkillList,
+                otherReqList,
+                checkList,
+                accessToken
+            )
+            loader.show()
         }
 
-        fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
         fillMedicalRecycler(medicalHistoryList, binding.showMedicalHisRecycler)
         fillJobSkillRecycler(jobSkillList, binding.showJobSkillRecycler)
         fillOtherRequirementRecycler(otherReqList, binding.showOtherRequirementsRecycler)

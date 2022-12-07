@@ -54,7 +54,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
 
         binding.personNoHtv.gone()
         binding.careTypeLay.gone()
-        binding.genderAgeHtvLay.gone()
         binding.genderAge1.gone()
         binding.genderAge2.gone()
         binding.genderAge3.gone()
@@ -70,11 +69,18 @@ class SelectCareTypeActivity : AppCompatActivity() {
             val age3 = binding.ageTxt3.text.toString()
             val age4 = binding.ageTxt4.text.toString()
             val age5 = binding.ageTxt5.text.toString()
+
+            val name1 = binding.nameTv1.text.toString()
+            val name2 = binding.nameTv2.text.toString()
+            val name3 = binding.nameTv3.text.toString()
+            val name4 = binding.nameTv4.text.toString()
+            val name5 = binding.nameTv5.text.toString()
+
             if(numberOfPerson != null){
                 if(numberOfPerson == 1){
                     if(gender1 != null){
                         if(age1.isNotEmpty()){
-                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
+                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
                             finish()
                         }else{
                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -87,8 +93,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
                         if(age1.isNotEmpty()){
                             if(gender2 != null){
                                 if(age2.isNotEmpty()){
-                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
-                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
+                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
                                     finish()
                                 }else{
                                     Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -109,9 +115,9 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                 if(age2.isNotEmpty()){
                                     if(gender3 != null){
                                         if(age3.isNotEmpty()){
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3))
+                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
                                             finish()
                                         }else{
                                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -140,10 +146,10 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                         if(age3.isNotEmpty()){
                                             if(gender4 != null){
                                                 if(age4.isNotEmpty()){
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
                                                     finish()
                                                 }else{
                                                     Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -180,11 +186,11 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                                 if(age4.isNotEmpty()){
                                                     if(gender5 != null){
                                                         if(age5.isNotEmpty()){
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
+                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5,name5))
                                                             finish()
                                                         }else{
                                                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
@@ -227,7 +233,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.tv1.background.setTint(ContextCompat.getColor(this, R.color.black))
             binding.tv1.setTextColor(resources.getColor(R.color.white, null))
             numberOfPerson = 1
-            binding.genderAgeHtvLay.visible()
             binding.genderAge1.visible()
             binding.genderAge2.gone()
             binding.genderAge3.gone()
@@ -239,7 +244,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.tv2.background.setTint(ContextCompat.getColor(this, R.color.black))
             binding.tv2.setTextColor(resources.getColor(R.color.white, null))
             numberOfPerson = 2
-            binding.genderAgeHtvLay.visible()
             binding.genderAge1.visible()
             binding.genderAge2.visible()
             binding.genderAge3.gone()
@@ -251,7 +255,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.tv3.background.setTint(ContextCompat.getColor(this, R.color.black))
             binding.tv3.setTextColor(resources.getColor(R.color.white, null))
             numberOfPerson = 3
-            binding.genderAgeHtvLay.visible()
             binding.genderAge1.visible()
             binding.genderAge2.visible()
             binding.genderAge3.visible()
@@ -263,7 +266,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.tv4.background.setTint(ContextCompat.getColor(this, R.color.black))
             binding.tv4.setTextColor(resources.getColor(R.color.white, null))
             numberOfPerson = 4
-            binding.genderAgeHtvLay.visible()
             binding.genderAge1.visible()
             binding.genderAge2.visible()
             binding.genderAge3.visible()
@@ -275,7 +277,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.tv5.background.setTint(ContextCompat.getColor(this, R.color.black))
             binding.tv5.setTextColor(resources.getColor(R.color.white, null))
             numberOfPerson = 5
-            binding.genderAgeHtvLay.visible()
             binding.genderAge1.visible()
             binding.genderAge2.visible()
             binding.genderAge3.visible()

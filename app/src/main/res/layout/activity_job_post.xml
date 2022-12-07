@@ -103,14 +103,15 @@
                         android:id="@+id/job_title_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/transparent"
+                        android:background="@drawable/time_selector_border"
                         android:padding="5dp"
                         android:textColorHint="@color/text_grey"
-                        app:boxBackgroundColor="@color/transparent"
                         app:boxStrokeColor="@color/text_grey"
                         app:boxStrokeWidth="0dp"
                         app:boxStrokeWidthFocused="0dp"
-                        app:helperTextTextColor="@color/error_red">
+                        app:helperTextTextColor="@color/error_red"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/job_title_txt"

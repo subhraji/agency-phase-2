@@ -85,7 +85,7 @@ class JobPostFragment : Fragment() {
                 binding.addAmountTxt.text.toString(),
                 binding.jobLocTxt.text.toString(),
                 binding.jobDescTxt.text.toString(),
-                accessToken
+                token = accessToken
             )
             loader = requireActivity().loadingDialog()
             loader.show()
