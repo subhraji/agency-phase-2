@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:hint="Email Address"
-                        android:inputType="textPersonName"
+                        android:inputType="textEmailAddress"
                         android:singleLine="true"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"

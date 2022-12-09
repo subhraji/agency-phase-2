@@ -168,7 +168,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         }
 
         binding.otherNextStepBtn.setOnClickListener {
-            if(isConnectedToInternet()){
+            /*if(isConnectedToInternet()){
                 mAddOtherInfoViewModel.addOtherInfo(
                     number_employee,
                     binding.revenueTxt.text.toString(),
@@ -182,7 +182,14 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                 loader.show()
             }else{
                 Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show()
+            }*/
+
+            if(imageUri != null){
+
+            }else{
+                Toast.makeText(this,"Please select a profile picture",Toast.LENGTH_SHORT).show()
             }
+
         }
 
         binding.authOfficerNextStepBtn.setOnClickListener {
