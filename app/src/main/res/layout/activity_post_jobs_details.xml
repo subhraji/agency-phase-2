@@ -131,8 +131,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
-
             <TextView
                 android:id="@+id/job_title_tv"
                 android:layout_width="0dp"
@@ -141,7 +139,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="Urgently need a female vhasv caregiver for old patient"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/back_btn"
@@ -149,8 +147,8 @@
 
             <ImageView
                 android:id="@+id/person_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/ic_baseline_person_24"
                 app:layout_constraintStart_toStartOf="@+id/job_title_tv"
@@ -170,51 +168,72 @@
                 app:layout_constraintStart_toEndOf="@+id/person_img"
                 app:layout_constraintTop_toTopOf="@+id/person_img" />
 
-            <View
-                android:id="@+id/view_1"
-                android:layout_width="1dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="5dp"
-                android:background="@color/color_grey"
-                app:layout_constraintBottom_toBottomOf="@+id/person_img"
-                app:layout_constraintStart_toEndOf="@+id/person_count_tv"
-                app:layout_constraintTop_toTopOf="@+id/person_img" />
-
             <TextView
                 android:id="@+id/person_age_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:text="Female: 60 yrs, Male: 26 yrs"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/person_img"
-                app:layout_constraintEnd_toStartOf="@+id/status_tv"
-                app:layout_constraintStart_toEndOf="@+id/view_1"
-                app:layout_constraintTop_toTopOf="@+id/person_img" />
+                app:layout_constraintTop_toBottomOf="@+id/person_count_tv"
+                app:layout_constraintStart_toStartOf="@+id/person_count_tv"/>
 
             <TextView
                 android:id="@+id/status_tv"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="QUICK CALL"
+                android:text="Remittance"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/person_img" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$80"
+                android:textColor="@color/light_blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/status_tv"
+                app:layout_constraintStart_toStartOf="@+id/status_tv"/>
+
+            <TextView
+                android:id="@+id/loc_tv"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="dbcjhvhjxvaj dcbdjc jnsjk "
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/date_img"
+                android:layout_marginEnd="10dp"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+
             <ImageView
                 android:id="@+id/loc_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_baseline_location_on_24"
+                app:tint="@color/text_grey"
+                app:layout_constraintTop_toTopOf="@+id/date_img"
+                app:layout_constraintEnd_toStartOf="@+id/loc_tv"/>
+
+<!--
+            <ImageView
+                android:id="@+id/loc_img"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_baseline_location_on_24"
                 app:layout_constraintStart_toStartOf="@+id/person_img"
-                app:layout_constraintTop_toBottomOf="@+id/status_tv"
+                app:layout_constraintTop_toBottomOf="@+id/person_age_tv"
                 app:tint="@color/text_grey" />
+-->
 
+<!--
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -228,15 +247,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/loc_img"
                 app:layout_constraintTop_toTopOf="@+id/loc_img" />
+-->
 
             <ImageView
                 android:id="@+id/date_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/ic_baseline_date_range_24"
-                app:layout_constraintStart_toStartOf="@+id/loc_img"
-                app:layout_constraintTop_toBottomOf="@+id/loc_img"
+                app:layout_constraintStart_toStartOf="@+id/person_img"
+                app:layout_constraintTop_toBottomOf="@+id/person_age_tv"
                 app:tint="@color/text_grey" />
 
             <TextView
@@ -244,7 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Date; Today, Sept 24"
+                android:text="Today, Sept 24"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -256,12 +276,10 @@
                 android:id="@+id/time_img"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="10dp"
                 android:src="@drawable/ic_baseline_access_time_24"
-                app:layout_constraintBottom_toBottomOf="@+id/date_htv"
-                app:layout_constraintStart_toEndOf="@+id/date_htv"
-                app:layout_constraintTop_toTopOf="@+id/date_htv"
-                app:tint="@color/text_grey" />
+                app:layout_constraintTop_toBottomOf="@+id/date_img"
+                app:layout_constraintStart_toStartOf="@+id/date_img"
+                app:tint="@color/text_grey"/>
 
             <TextView
                 android:id="@+id/time_tv"
@@ -269,74 +287,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Hours: 12:00 AM - 02:30 PM"
+                android:text="12:00 AM - 02:30 PM"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/date_htv"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/time_img"
+                app:layout_constraintEnd_toStartOf="@+id/loc_img"
                 app:layout_constraintStart_toEndOf="@+id/time_img"
-                app:layout_constraintTop_toTopOf="@+id/date_htv" />
+                app:layout_constraintTop_toTopOf="@+id/time_img" />
 
-            <LinearLayout
-                android:id="@+id/linear_lay_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_tv">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remittance"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:text="$80"
-                    android:textColor="@color/light_blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rewards"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:layout_gravity="center_vertical"/>
-                <RelativeLayout
-                    android:id="@+id/start_img_lay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    app:layout_constraintEnd_toEndOf="@+id/reward_htv"
-                    app:layout_constraintStart_toStartOf="@+id/reward_htv"
-                    app:layout_constraintTop_toBottomOf="@+id/reward_htv">
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/ic_star_19" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:text="13"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-            </LinearLayout>
             <View
                 android:id="@+id/view_2"
                 android:layout_width="match_parent"
@@ -344,8 +303,8 @@
                 android:background="@color/color_grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_lay_1"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/time_img"
+                android:layout_marginTop="20dp"/>
             <LinearLayout
                 android:id="@+id/linear_lay_3"
                 android:layout_width="wrap_content"
@@ -370,7 +329,7 @@
                         android:layout_height="match_parent"
                         android:text="Job overview"
                         android:textColor="@color/white"
-                        android:background="@color/theme_blue"
+                        android:background="@color/black"
                         android:gravity="center"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
@@ -392,7 +351,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Checklist"
-                        android:textColor="@color/theme_blue"
+                        android:textColor="@color/black"
                         android:background="@color/white"
                         android:gravity="center"
                         android:paddingStart="10dp"

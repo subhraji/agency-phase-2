@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/status_tv_lay"
             android:text="Urgently required for a caregiver for elderly patient"
-            android:textSize="11sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginEnd="15dp"
@@ -76,7 +76,7 @@
             app:layout_constraintStart_toEndOf="@+id/person_img"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:gravity="center"
             android:layout_marginStart="5dp"/>
         <ImageView
@@ -101,7 +101,7 @@
             android:textColor="@color/black"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
-            android:textSize="11sp"/>
+            android:textSize="13sp"/>
 
         <ImageView
             android:id="@+id/location_img_view"
@@ -120,7 +120,7 @@
             app:layout_constraintStart_toEndOf="@+id/location_img_view"
             app:layout_constraintTop_toTopOf="@+id/location_img_view"
             android:text="San Francisco, California"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="5dp"/>
@@ -138,7 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="2 Mils"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="@+id/address_tv"
@@ -161,19 +161,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Today, Sept 13"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@+id/job_bag_img"
             app:layout_constraintStart_toEndOf="@+id/job_bag_img"
-            android:layout_marginStart="10dp"
-            />
+            android:layout_marginStart="5dp"/>
         <TextView
             android:id="@+id/hour_htv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="8:00 AM - 12:00 PM"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@+id/job_bag_img"
@@ -187,7 +186,7 @@
             app:layout_constraintTop_toBottomOf="@+id/hour_htv"
             app:layout_constraintStart_toStartOf="@+id/person_img"
             android:text="$80"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="@color/light_blue"
             android:textStyle="bold"
             android:layout_marginTop="10dp"/>
@@ -199,7 +198,7 @@
             app:layout_constraintTop_toTopOf="@+id/price_tv"
             app:layout_constraintBottom_toBottomOf="@+id/price_tv"
             android:layout_marginStart="10dp"
-            android:textSize="10sp"
+            android:textSize="11sp"
             android:background="@drawable/time_left_bg"
             android:text="TIME LEFT: 30 mins"
             android:textColor="@color/white"

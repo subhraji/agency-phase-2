@@ -34,6 +34,7 @@ class PostJobsAdapter (private val itemList: List<Data>,
 
     class ViewHolder(private val itemBinding: PostJobsItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
+        private lateinit var gen:String
         fun bind(data: Data, context: Context) {
 
             itemBinding.apply {
@@ -49,6 +50,15 @@ class PostJobsAdapter (private val itemList: List<Data>,
                     intent.putExtra("title",data?.title)
                     context.startActivity(intent)
                 }
+                gen = ""
+                for(i in data?.care_items){
+                    if(gen.isEmpty()){
+                        gen = i.gender+": "+i.age
+                    }else{
+                        gen = gen+", "+i.gender+": "+i.age
+                    }
+                }
+                ageTv.text = gen
             }
         }
 
