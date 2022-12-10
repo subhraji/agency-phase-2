@@ -146,15 +146,17 @@ class PostFragment : Fragment() {
                     if(outcome.data?.success == true){
                         if(outcome.data?.data?.is_business_info_complete == 0){
                             showCompleteDialog("You have not added your business information",1)
-                        }else if(outcome.data?.data?.is_other_info_added == 0){
-                            showCompleteDialog("You have not added other optional information",2)
-                        } else if(outcome.data?.data?.is_authorize_info_added == 0){
+                        }else if(outcome.data?.data?.is_authorize_info_added == 0){
                             showCompleteDialog("You have not added any authorize officer",3)
                         }else if(outcome.data?.data?.is_profile_approved == 0){
                             showCompleteDialog("Your profile is not approved yet.",4)
 
                             /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
                             startActivity(intent)*/
+
+                            /*else if(outcome.data?.data?.is_other_info_added == 0){
+                                showCompleteDialog("You have not added other optional information",2)
+                            }*/
                         }else{
                             val intent = Intent(requireActivity(), JobPostActivity::class.java)
                             startActivity(intent)

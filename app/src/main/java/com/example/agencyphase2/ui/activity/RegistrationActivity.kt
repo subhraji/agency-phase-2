@@ -18,6 +18,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -25,6 +26,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -128,47 +130,91 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         }
 
         binding.businessNextStepBtn.setOnClickListener {
-            val email = binding.companyEmailTxt.text.toString()
-            val phone = binding.mobileNumberTxt.text.toString()
-            val tax = binding.taxNumberTxt.text.toString()
-            val street = binding.streetNameTxt.text.toString()
-            val city = binding.cityTxt.text.toString()
-            val zip_code = binding.zipcodeTxt.text.toString()
+            val validEmail = binding.companyEmailTxtLay.helperText == null && binding.companyEmailTxt.text.toString().isNotEmpty()
+            val validMobile = binding.mobileNumberTxtLay.helperText == null && binding.mobileNumberTxt.text.toString().isNotEmpty()
+            val validTax = binding.taxNumberTxtLay.helperText == null && binding.taxNumberTxt.text.toString().isNotEmpty()
+            val validStreet = binding.streetNameTxtLay.helperText == null && binding.streetNameTxt.text.toString().isNotEmpty()
+            val validCity = binding.cityTxtLay.helperText == null && binding.cityTxt.text.toString().isNotEmpty()
+            val validZipcode = binding.zipcodeTxtLay.helperText == null && binding.zipcodeTxt.text.toString().isNotEmpty()
 
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
-                    withContext(Dispatchers.Main) {
-                        val file = File(absolutePath)
-                        val compressedImageFile = Compressor.compress(this@RegistrationActivity, file)
-                        val imagePart = createMultiPart("photo", compressedImageFile)
-                        if(isConnectedToInternet()){
-                            addBusinessInfoViewModel.addBusinessInfo(
-                                imagePart,
-                                phone,
-                                email,
-                                tax,
-                                street,
-                                city,
-                                state,
-                                zip_code,
-                                accessToken
-                            )
-                            hideSoftKeyboard()
-                            loader.show()
+            if(imageUri != null){
+                if(validEmail){
+                    if(validMobile){
+                        if(validTax){
+                            if(validStreet){
+                                if(validCity){
+                                    if(!state.isEmpty()){
+                                        if(validZipcode){
+                                            try {
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    withContext(Dispatchers.Main) {
+                                                        val file = File(absolutePath)
+                                                        val compressedImageFile = Compressor.compress(this@RegistrationActivity, file)
+                                                        val imagePart = createMultiPart("photo", compressedImageFile)
+                                                        if(isConnectedToInternet()){
+                                                            addBusinessInfoViewModel.addBusinessInfo(
+                                                                imagePart,
+                                                                binding.mobileNumberTxt.text.toString(),
+                                                                binding.companyEmailTxt.text.toString(),
+                                                                binding.taxNumberTxt.text.toString(),
+                                                                binding.streetNameTxt.text.toString(),
+                                                                binding.cityTxt.text.toString(),
+                                                                state,
+                                                                binding.zipcodeTxt.text.toString(),
+                                                                accessToken
+                                                            )
+                                                            hideSoftKeyboard()
+                                                            loader.show()
+                                                        }else{
+                                                            Toast.makeText(this@RegistrationActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                                                        }
+
+                                                    }
+                                                }
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                            }
+                                        }else{
+                                            if(binding.zipcodeTxtLay.helperText == null) binding.zipcodeTxtLay.helperText = "required"
+                                            Toast.makeText(this,binding.zipcodeTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                                            binding.zipcodeTxt.showKeyboard()
+                                        }
+                                    }else{
+                                        Toast.makeText(this,"Please select a state.",Toast.LENGTH_SHORT).show()
+                                    }
+                                }else{
+                                    if(binding.cityTxtLay.helperText == null) binding.cityTxtLay.helperText = "required"
+                                    Toast.makeText(this,binding.cityTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                                    binding.cityTxt.showKeyboard()
+                                }
+                            }else{
+                                if(binding.streetNameTxtLay.helperText == null) binding.streetNameTxtLay.helperText = "required"
+                                Toast.makeText(this,binding.streetNameTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                                binding.addressLinearLay.visible()
+                                binding.streetNameTxt.showKeyboard()
+                            }
                         }else{
-                            Toast.makeText(this@RegistrationActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                            if(binding.taxNumberTxtLay.helperText == null) binding.taxNumberTxtLay.helperText = "required"
+                            Toast.makeText(this,binding.taxNumberTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                            binding.taxNumberTxt.showKeyboard()
                         }
-
+                    }else{
+                        if(binding.mobileNumberTxtLay.helperText == null) binding.mobileNumberTxtLay.helperText = "required"
+                        Toast.makeText(this,binding.mobileNumberTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                        binding.mobileNumberTxt.showKeyboard()
                     }
+                }else{
+                    if(binding.companyEmailTxtLay.helperText == null) binding.companyEmailTxtLay.helperText = "required"
+                    Toast.makeText(this,binding.companyEmailTxtLay.helperText.toString(),Toast.LENGTH_SHORT).show()
+                    binding.companyEmailTxt.showKeyboard()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }else{
+                Toast.makeText(this,"Please select a profile picture.",Toast.LENGTH_SHORT).show()
             }
-
         }
 
         binding.otherNextStepBtn.setOnClickListener {
-            /*if(isConnectedToInternet()){
+            if(isConnectedToInternet()){
                 mAddOtherInfoViewModel.addOtherInfo(
                     number_employee,
                     binding.revenueTxt.text.toString(),
@@ -182,14 +228,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                 loader.show()
             }else{
                 Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show()
-            }*/
-
-            if(imageUri != null){
-
-            }else{
-                Toast.makeText(this,"Please select a profile picture",Toast.LENGTH_SHORT).show()
             }
-
         }
 
         binding.authOfficerNextStepBtn.setOnClickListener {
@@ -284,6 +323,14 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         addBusinessObserve()
         addOtherInfoObserve()
         getAuthorizeInoObserve()
+
+        //listener
+        emailFocusListener()
+        mobileFocusListener()
+        taxFocusListener()
+        streetFocusListener()
+        cityFocusListener()
+        zipCodeFocusListener()
     }
 
     override fun onResume() {
@@ -293,6 +340,111 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
             Toast.makeText(this,"No internet connection.", Toast.LENGTH_LONG).show()
         }
         super.onResume()
+    }
+
+    private fun emailFocusListener(){
+        binding.companyEmailTxt.doOnTextChanged { text, start, before, count ->
+            binding.companyEmailTxtLay.helperText = validEmail()
+        }
+    }
+
+    private fun validEmail(): String? {
+        val emailText = binding.companyEmailTxt.text.toString()
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
+            return "Invalid Email Address"
+        }
+
+        return null
+    }
+
+    private fun mobileFocusListener(){
+        binding.mobileNumberTxt.doOnTextChanged { text, start, before, count ->
+            binding.mobileNumberTxtLay.helperText = validMobileNumber()
+        }
+    }
+
+    private fun validMobileNumber(): String? {
+        val mobileText = binding.mobileNumberTxt.text.toString()
+        if(mobileText.length != 10){
+            return "10 digit number required."
+        }
+
+        if(binding.mobileNumberTxt.text.toString().toDouble() == 0.00){
+            return "Please provide a valid phone number."
+        }
+
+        return  null
+    }
+
+    private fun taxFocusListener(){
+        binding.taxNumberTxt.doOnTextChanged { text, start, before, count ->
+            binding.taxNumberTxtLay.helperText = validTaxNumber()
+        }
+    }
+
+    private fun validTaxNumber(): String? {
+        val mobileText = binding.taxNumberTxt.text.toString()
+        if(mobileText.length != 9){
+            return "9 digit number required."
+        }
+
+        if(binding.taxNumberTxt.text.toString().toDouble() == 0.00){
+            return "Please provide a valid tax number."
+        }
+
+        return  null
+    }
+
+    private fun streetFocusListener(){
+        binding.streetNameTxt.doOnTextChanged { text, start, before, count ->
+            binding.streetNameTxtLay.helperText = validStreet()
+        }
+    }
+
+    private fun validStreet(): String? {
+        val streetText = binding.streetNameTxt.text.toString()
+
+        if(streetText.isEmpty()){
+            return "Provide street number, name"
+        }
+        return null
+    }
+
+    private fun cityFocusListener(){
+        binding.cityTxt.doOnTextChanged { text, start, before, count ->
+            binding.cityTxtLay.helperText = validCity()
+        }
+    }
+
+    private fun validCity(): String? {
+        val cityText = binding.cityTxt.text.toString()
+
+        if(cityText.isEmpty()){
+            return "Provide city area/District"
+        }
+        return null
+    }
+
+    private fun zipCodeFocusListener(){
+        binding.zipcodeTxt.doOnTextChanged { text, start, before, count ->
+            binding.zipcodeTxtLay.helperText = validZipcode()
+        }
+    }
+
+    private fun validZipcode(): String? {
+        val zipcodeText = binding.zipcodeTxt.text.toString()
+
+        if(zipcodeText.isEmpty()){
+            return "Provide zipcode"
+        }
+        if(zipcodeText.length != 5){
+            return "Zipcode must be a 5 digit format"
+        }
+        if(zipcodeText.toDouble() == 0.00){
+            return "Invalid zipcode"
+        }
+        return null
     }
 
     private fun setUpOrgTypeSpinner(){
