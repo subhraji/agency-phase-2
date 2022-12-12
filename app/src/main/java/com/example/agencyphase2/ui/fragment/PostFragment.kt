@@ -193,7 +193,7 @@ class PostFragment : Fragment() {
                 /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
                 intent.putExtra("step",step)
                 startActivity(intent)*/
-                val intent = Intent(requireActivity(), JobPostActivity::class.java)
+                val intent = Intent(requireActivity(), RegistrationActivity::class.java)
                 intent.putExtra("step",step)
                 startActivity(intent)
             }else{

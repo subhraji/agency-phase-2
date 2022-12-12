@@ -48,7 +48,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -180,6 +181,7 @@
                             android:background="@color/transparent"
                             android:hint="Mobile Number"
                             android:inputType="number"
+                            android:digits="0123456789"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -217,6 +219,7 @@
                             android:hint="Tax Id Number/EIN Number"
                             android:inputType="number"
                             android:maxLength="9"
+                            android:digits="0123456789"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
@@ -289,6 +292,7 @@
                                 android:hint="Street number, name"
                                 android:inputType="text"
                                 android:maxLength="100"
+                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
                                 android:singleLine="true"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/text_grey"
@@ -325,6 +329,7 @@
                                 android:hint="City area/district"
                                 android:inputType="text"
                                 android:maxLength="80"
+                                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                                 android:singleLine="true"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/text_grey"
@@ -401,6 +406,7 @@
                                     android:hint="Zipcode"
                                     android:inputType="number"
                                     android:maxLength="5"
+                                    android:digits="0123456789"
                                     android:singleLine="true"
                                     android:textColor="@color/black"
                                     android:textColorHint="@color/text_grey"
@@ -448,7 +454,7 @@
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -596,6 +602,7 @@
                             android:background="@color/transparent"
                             android:hint="Years in Business"
                             android:inputType="number"
+                            android:digits="0123456789"
                             android:maxLength="3"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -657,6 +664,7 @@
                                 android:hint="Annual revenue"
                                 android:inputType="number"
                                 android:maxLength="15"
+                                android:digits="0123456789"
                                 android:singleLine="true"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/text_grey"
@@ -719,6 +727,7 @@
                             android:hint="Country of Business"
                             android:inputType="text"
                             android:maxLength="15"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
@@ -818,12 +827,113 @@
                             android:background="@drawable/reg_icon_three" />
                     </LinearLayout>
 
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:padding="15dp"
+                        android:background="@drawable/grey_corner_bg">
+                        <TextView
+                            android:id="@+id/full_name_htv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="Full name"
+                            android:textSize="13sp"
+                            android:textColor="@color/text_grey"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/full_name_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/full_name_htv"
+                            app:layout_constraintStart_toStartOf="@+id/full_name_htv"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_btn"/>
+                        <TextView
+                            android:id="@+id/email_htv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/full_name_tv"
+                            app:layout_constraintStart_toStartOf="@+id/full_name_tv"
+                            android:text="Email address"
+                            android:textSize="13sp"
+                            android:textColor="@color/text_grey"
+                            android:textStyle="bold"
+                            android:layout_marginTop="15dp"/>
+                        <TextView
+                            android:id="@+id/email_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/email_htv"
+                            app:layout_constraintStart_toStartOf="@+id/email_htv"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_btn"/>
+                        <TextView
+                            android:id="@+id/mobile_htv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mobile number"
+                            android:textSize="13sp"
+                            android:textColor="@color/text_grey"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="@+id/email_htv"
+                            app:layout_constraintStart_toStartOf="@+id/mobile_tv"
+                            />
+                        <TextView
+                            android:id="@+id/mobile_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@+id/mobile_htv"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                        <TextView
+                            android:id="@+id/add_mobile_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+ Add Number"
+                            android:textStyle="bold"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toTopOf="@+id/email_htv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/email_tv"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp"/>
+                        <TextView
+                            android:id="@+id/role_htv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/full_name_htv"
+                            app:layout_constraintStart_toStartOf="@+id/role_tv"
+                            android:text="Role"
+                            android:textSize="13sp"
+                            android:textColor="@color/text_grey"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/role_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="xbsjkxbak"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@id/role_htv"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <RelativeLayout
                         android:id="@+id/add_officer_btn"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="15dp"
                         android:background="@drawable/grey_corner_bg">
 

@@ -3,6 +3,7 @@ package com.example.agencyphase2.ui.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,8 +21,10 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -42,6 +45,7 @@ import com.example.agencyphase2.utils.UploadDocListener
 import com.example.agencyphase2.viewmodel.AddBusinessInfoViewModel
 import com.example.agencyphase2.viewmodel.AddOtherInfoViewModel
 import com.example.agencyphase2.viewmodel.GetAuthorizeOfficerViewModel
+import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -79,6 +83,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
     var number_employee: String = ""
     var legal_structure: String = ""
     var org_type: String = ""
+    private var owner_mobile = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -232,7 +237,12 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         }
 
         binding.authOfficerNextStepBtn.setOnClickListener {
-            finish()
+            if(!owner_mobile.isEmpty()){
+                finish()
+            }else{
+                showMobileDialog()
+                Toast.makeText(this,"Please add your mobile number",Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.skipBtn.setOnClickListener {
@@ -675,6 +685,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                         binding.relativeLay2.visible()
                         binding.skipBtn.visible()
                         addBusinessInfoViewModel.navigationComplete()
+                        binding.titleTv.text = "Other Information"
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -700,6 +711,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                         binding.relativeLay3.visible()
                         binding.skipBtn.gone()
                         mAddOtherInfoViewModel.navigationComplete()
+                        binding.titleTv.text = "Authorized Officer"
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -720,7 +732,24 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
                         if(outcome.data?.data != null && outcome.data?.data?.size != 0){
-                            fillAuthRecyclerView(outcome.data?.data!!)
+
+                            val list = outcome.data?.data?.filterIndexed { index, data -> index!=0 }
+
+                            list?.let { fillAuthRecyclerView(it) }
+                            binding.fullNameTv.text = outcome.data?.data!![0].name
+                            binding.emailTv.text = outcome.data?.data!![0].email
+                            binding.roleTv.text = outcome.data?.data!![0].role
+
+                            if(outcome.data?.data!![0].phone != null){
+                                binding.addMobileBtn.gone()
+                                binding.mobileTv.text = outcome.data?.data!![0].phone.toString()
+                            }else{
+                                binding.addMobileBtn.visible()
+                                binding.addMobileBtn.setOnClickListener {
+                                    showMobileDialog()
+                                }
+                            }
+
                         }else{
 
                         }
@@ -745,6 +774,35 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
             layoutManager = gridLayoutManager
             adapter = AuthorizeOfficerAdapter(list,this@RegistrationActivity)
         }
+    }
+
+    private fun showMobileDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(R.layout.add_mobile_number_layout)
+        val mobile_txt = dialog.findViewById<TextInputEditText>(R.id.mobile_number_txt)
+        val submit = dialog.findViewById<TextView>(R.id.submit_btn)
+        val cancel = dialog.findViewById<TextView>(R.id.cancel_btn)
+
+        submit.setOnClickListener {
+            val mobile_number = mobile_txt.text.toString()
+            if(!mobile_number.isEmpty()){
+                owner_mobile = mobile_number
+                binding.addMobileBtn.gone()
+                binding.mobileTv.text = owner_mobile
+                dialog.dismiss()
+            }else{
+                owner_mobile = ""
+                Toast.makeText(this,"Please enter your mobile number",Toast.LENGTH_SHORT).show()
+                mobile_txt.showKeyboard()
+            }
+        }
+        cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 }

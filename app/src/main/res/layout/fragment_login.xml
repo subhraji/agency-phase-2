@@ -123,6 +123,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:hint="Password"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^*()_-+={}[];:.,/?|\"
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:textColor="@color/white"

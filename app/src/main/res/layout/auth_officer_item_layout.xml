@@ -6,7 +6,9 @@
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
     android:padding="15dp"
+    android:id="@+id/root_lay"
     android:background="@drawable/grey_corner_bg"
+    android:backgroundTint="@color/light_grey"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/full_name_htv"

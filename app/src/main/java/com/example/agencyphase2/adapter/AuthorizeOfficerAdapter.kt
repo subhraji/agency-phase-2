@@ -29,12 +29,12 @@ class AuthorizeOfficerAdapter (private val itemList: List<Data>,
     override fun onBindViewHolder(holder: AuthorizeOfficerAdapter.ViewHolder, position: Int) {
 
         val rowData = itemList[position]
-        holder.bind(rowData, context)
+        holder.bind(rowData, context, position)
     }
 
     class ViewHolder(private val itemBinding: AuthOfficerItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(data: Data, context: Context) {
+        fun bind(data: Data, context: Context, position: Int) {
 
             itemBinding.apply {
                 data?.name?.let {
@@ -46,14 +46,8 @@ class AuthorizeOfficerAdapter (private val itemList: List<Data>,
                 data?.role?.let {
                     roleTv.text = it
                 }
-
-                if(data?.phone == null || data?.phone.toString().isEmpty()){
-                    mobileTv.gone()
-                    mobileHtv.gone()
-                }else{
-                    mobileTv.visible()
-                    mobileHtv.visible()
-                    mobileTv.text = data?.phone.toString()
+                data?.phone?.let {
+                    mobileTv.text = it
                 }
             }
         }
