@@ -48,8 +48,7 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -143,7 +142,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:hint="Company email address"
+                            android:hint="Company email address *"
                             android:inputType="textEmailAddress"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -179,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:hint="Mobile Number"
+                            android:hint="Mobile Number *"
                             android:inputType="number"
                             android:digits="0123456789"
                             android:maxLength="10"
@@ -216,7 +215,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:hint="Tax Id Number/EIN Number"
+                            android:hint="Tax Id Number/EIN Number *"
                             android:inputType="number"
                             android:maxLength="9"
                             android:digits="0123456789"
@@ -251,7 +250,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
                             android:layout_toLeftOf="@+id/loc_img"
-                            android:text="Add Business Address"
+                            android:text="Add Business Address *"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -289,7 +288,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/transparent"
-                                android:hint="Street number, name"
+                                android:hint="Street number, name *"
                                 android:inputType="text"
                                 android:maxLength="100"
                                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
@@ -326,7 +325,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/transparent"
-                                android:hint="City area/district"
+                                android:hint="City area/district *"
                                 android:inputType="text"
                                 android:maxLength="80"
                                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
@@ -403,7 +402,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@color/transparent"
-                                    android:hint="Zipcode"
+                                    android:hint="Zipcode *"
                                     android:inputType="number"
                                     android:maxLength="5"
                                     android:digits="0123456789"
@@ -453,8 +452,7 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <ScrollView
                 android:layout_width="match_parent"

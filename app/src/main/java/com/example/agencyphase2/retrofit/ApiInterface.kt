@@ -5,6 +5,7 @@ import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOff
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoRequest
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoResponse
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
+import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
@@ -89,4 +90,10 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("id") id: Int?,
     ): DeleteJobResponse?
+
+    @GET("authorize-officer/delete-officer")
+    suspend fun deleteAuthOfficer(
+        @Header("Authorization") token: String,
+        @Query("id") id: Int?,
+    ): DeleteAuthOfficerResponse?
 }

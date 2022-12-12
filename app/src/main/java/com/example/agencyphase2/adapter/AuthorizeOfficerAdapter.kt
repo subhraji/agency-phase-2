@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.databinding.AuthOfficerItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_authorize_officer.Data
+import com.example.agencyphase2.utils.EditDeleteClickListener
 import com.user.caregiver.gone
 import com.user.caregiver.visible
 
 class AuthorizeOfficerAdapter (private val itemList: List<Data>,
-                               private val context: Context):
+                               private val context: Context,
+                               private val editDeleteClickListener: EditDeleteClickListener):
     RecyclerView.Adapter<AuthorizeOfficerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthorizeOfficerAdapter.ViewHolder {
@@ -19,7 +21,7 @@ class AuthorizeOfficerAdapter (private val itemList: List<Data>,
             parent,
             false
         )
-        return AuthorizeOfficerAdapter.ViewHolder(itemBinding)
+        return AuthorizeOfficerAdapter.ViewHolder(itemBinding, editDeleteClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +34,7 @@ class AuthorizeOfficerAdapter (private val itemList: List<Data>,
         holder.bind(rowData, context, position)
     }
 
-    class ViewHolder(private val itemBinding: AuthOfficerItemLayoutBinding) :
+    class ViewHolder(private val itemBinding: AuthOfficerItemLayoutBinding, private val editDeleteClickListener: EditDeleteClickListener) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Data, context: Context, position: Int) {
 
@@ -48,6 +50,10 @@ class AuthorizeOfficerAdapter (private val itemList: List<Data>,
                 }
                 data?.phone?.let {
                     mobileTv.text = it
+                }
+
+                deleteBtn.setOnClickListener {
+                    editDeleteClickListener.onClick(it.rootView, data?.user_id)
                 }
             }
         }

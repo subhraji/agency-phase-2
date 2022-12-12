@@ -3,6 +3,7 @@ package com.example.agencyphase2.ui.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -40,10 +41,12 @@ import com.example.agencyphase2.databinding.ActivityRegistrationBinding
 import com.example.agencyphase2.model.pojo.get_authorize_officer.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.fragment.ImagePreviewFragment
+import com.example.agencyphase2.utils.EditDeleteClickListener
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.utils.UploadDocListener
 import com.example.agencyphase2.viewmodel.AddBusinessInfoViewModel
 import com.example.agencyphase2.viewmodel.AddOtherInfoViewModel
+import com.example.agencyphase2.viewmodel.DeleteAuthOfficerViewModel
 import com.example.agencyphase2.viewmodel.GetAuthorizeOfficerViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
@@ -62,7 +65,7 @@ import java.io.File
 import java.io.InputStream
 
 @AndroidEntryPoint
-class RegistrationActivity : AppCompatActivity(), UploadDocListener {
+class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteClickListener {
     private lateinit var binding: ActivityRegistrationBinding
     val stateList: Array<String> =  arrayOf("State","AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC")
     val legalStructureList: Array<String> =  arrayOf("Select legal structure", "Solo Proprietorship", "Partnership", "Corporation", "Limited Liability Company")
@@ -78,6 +81,8 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
     private val addBusinessInfoViewModel: AddBusinessInfoViewModel by viewModels()
     private val mAddOtherInfoViewModel: AddOtherInfoViewModel by viewModels()
     private val mGetAuthorizeOfficerViewModel: GetAuthorizeOfficerViewModel by viewModels()
+    private val mDeleteAuthOfficerViewModel: DeleteAuthOfficerViewModel by viewModels()
+
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     var state: String = ""
     var number_employee: String = ""
@@ -333,6 +338,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         addBusinessObserve()
         addOtherInfoObserve()
         getAuthorizeInoObserve()
+        deleteAuthOfficerObserver()
 
         //listener
         emailFocusListener()
@@ -734,8 +740,8 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                         if(outcome.data?.data != null && outcome.data?.data?.size != 0){
 
                             val list = outcome.data?.data?.filterIndexed { index, data -> index!=0 }
-
                             list?.let { fillAuthRecyclerView(it) }
+
                             binding.fullNameTv.text = outcome.data?.data!![0].name
                             binding.emailTv.text = outcome.data?.data!![0].email
                             binding.roleTv.text = outcome.data?.data!![0].role
@@ -749,11 +755,30 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
                                     showMobileDialog()
                                 }
                             }
-
-                        }else{
-
                         }
                         mGetAuthorizeOfficerViewModel.navigationComplete()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
+    private fun deleteAuthOfficerObserver(){
+        mDeleteAuthOfficerViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        mDeleteAuthOfficerViewModel.navigationComplete()
+                        mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -772,7 +797,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.authOfficerRecycler.apply {
             layoutManager = gridLayoutManager
-            adapter = AuthorizeOfficerAdapter(list,this@RegistrationActivity)
+            adapter = AuthorizeOfficerAdapter(list,this@RegistrationActivity, this@RegistrationActivity)
         }
     }
 
@@ -805,4 +830,26 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener {
         dialog.show()
     }
 
+    override fun onClick(view: View, id: Int) {
+        showRemoveAuthOfficerDialog(id)
+    }
+
+    private fun showRemoveAuthOfficerDialog(id: Int){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Remove Authorize Officer")
+        builder.setMessage("Do you want to remove the authorize officer ?")
+        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+            if(isConnectedToInternet()){
+                mDeleteAuthOfficerViewModel.deleteAuthOfficer(accessToken,id)
+            }else{
+                Toast.makeText(this,"No internet connection.",Toast.LENGTH_LONG).show()
+            }
+        }
+        builder.setNegativeButton("No"){dialogInterface, which ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
 }
