@@ -874,7 +874,7 @@
                             android:textColor="@color/black"
                             app:layout_constraintTop_toBottomOf="@+id/email_htv"
                             app:layout_constraintStart_toStartOf="@+id/email_htv"
-                            app:layout_constraintEnd_toStartOf="@+id/edit_btn"/>
+                            app:layout_constraintEnd_toStartOf="@+id/mobile_htv"/>
                         <TextView
                             android:id="@+id/mobile_htv"
                             android:layout_width="wrap_content"
@@ -884,8 +884,7 @@
                             android:textColor="@color/text_grey"
                             android:textStyle="bold"
                             app:layout_constraintTop_toTopOf="@+id/email_htv"
-                            app:layout_constraintStart_toStartOf="@+id/mobile_tv"
-                            />
+                            app:layout_constraintStart_toStartOf="@+id/mobile_tv"/>
                         <TextView
                             android:id="@+id/mobile_tv"
                             android:layout_width="0dp"

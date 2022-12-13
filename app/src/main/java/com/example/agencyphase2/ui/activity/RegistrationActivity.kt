@@ -828,7 +828,6 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                 loader.show()
 
                 addMobileNumberObserver(mobile_number)
-
                 //dialog.dismiss()
             }else{
                 owner_mobile = ""
