@@ -48,7 +48,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -452,7 +453,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -943,7 +945,7 @@
                             android:layout_marginStart="15dp"
                             android:text="+"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"/>
 
                         <TextView
                             android:id="@+id/add_officer_htv"
@@ -957,13 +959,22 @@
                             android:textColorHint="@color/black"
                             android:textSize="14sp" />
                     </RelativeLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/auth_officer_recycler"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"/>
-
+                        android:layout_height="wrap_content">
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/get_auth_officer_shimmer_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+                            <include layout="@layout/get_auth_officer_shimmer_layout" />
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/auth_officer_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"/>
+                    </FrameLayout>
                 </LinearLayout>
             </ScrollView>
 

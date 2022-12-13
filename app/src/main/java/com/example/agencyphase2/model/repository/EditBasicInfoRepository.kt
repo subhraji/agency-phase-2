@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 class EditBasicInfoRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun editBasicInfo(
+        photo: String? = null,
         phone: String? = null,
         legal_structure: String? = null,
         organization_type: String? = null,
@@ -26,7 +27,7 @@ class EditBasicInfoRepository @Inject constructor(private val apiInterface: ApiI
         token: String
     ): Flow<EditBasicInfoResponse?> = flow{
         emit(apiInterface.editBasicInfo(EditBasicInfoRequest(
-            phone, legal_structure, organization_type, tax_id_or_ein_id, street, city_or_district, state, zip_code, number_of_employee, years_in_business, country_of_business, annual_business_revenue
+            photo, phone, legal_structure, organization_type, tax_id_or_ein_id, street, city_or_district, state, zip_code, number_of_employee, years_in_business, country_of_business, annual_business_revenue
         ), token))
     }.flowOn(Dispatchers.IO)
 }

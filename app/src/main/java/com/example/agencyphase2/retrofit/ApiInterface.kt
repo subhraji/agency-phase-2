@@ -55,7 +55,7 @@ interface ApiInterface {
         @Body body: AddOtherInfoRequest?,
         @Header("Authorization") token: String): AddOtherInfoResponse?
 
-    @POST("profile/edit-registration")
+    @POST("profile/edit-basic-profile-details")
     suspend fun editBasicInfo(
         @Body body: EditBasicInfoRequest?,
         @Header("Authorization") token: String): EditBasicInfoResponse?

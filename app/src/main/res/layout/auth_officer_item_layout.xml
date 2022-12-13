@@ -39,15 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
-        android:id="@+id/edit_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:padding="3dp"
-        android:src="@drawable/ic_baseline_edit_24"
-        app:layout_constraintEnd_toStartOf="@+id/delete_btn"
-        app:layout_constraintTop_toTopOf="@+id/full_name_htv"/>
     <TextView
         android:id="@+id/email_htv"
         android:layout_width="wrap_content"
@@ -67,7 +58,7 @@
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/email_htv"
         app:layout_constraintStart_toStartOf="@+id/email_htv"
-        app:layout_constraintEnd_toStartOf="@+id/edit_btn"/>
+        app:layout_constraintEnd_toStartOf="@+id/delete_btn"/>
     <TextView
         android:id="@+id/mobile_htv"
         android:layout_width="wrap_content"

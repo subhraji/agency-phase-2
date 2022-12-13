@@ -1,6 +1,7 @@
 package com.example.agencyphase2.model.pojo.edit_basic_info
 
 data class EditBasicInfoRequest(
+    val photo: String? = null,
     val phone: String? = null,
     val legal_structure: String? = null,
     val organization_type: String? = null,

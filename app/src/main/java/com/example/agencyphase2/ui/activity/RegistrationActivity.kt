@@ -44,10 +44,7 @@ import com.example.agencyphase2.ui.fragment.ImagePreviewFragment
 import com.example.agencyphase2.utils.EditDeleteClickListener
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.utils.UploadDocListener
-import com.example.agencyphase2.viewmodel.AddBusinessInfoViewModel
-import com.example.agencyphase2.viewmodel.AddOtherInfoViewModel
-import com.example.agencyphase2.viewmodel.DeleteAuthOfficerViewModel
-import com.example.agencyphase2.viewmodel.GetAuthorizeOfficerViewModel
+import com.example.agencyphase2.viewmodel.*
 import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -78,12 +75,15 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     private val PICK_IMAGE = 100
 
     private lateinit var accessToken: String
+    private val mEditBasicInfoViewModel: EditBasicInfoViewModel by viewModels()
     private val addBusinessInfoViewModel: AddBusinessInfoViewModel by viewModels()
     private val mAddOtherInfoViewModel: AddOtherInfoViewModel by viewModels()
     private val mGetAuthorizeOfficerViewModel: GetAuthorizeOfficerViewModel by viewModels()
     private val mDeleteAuthOfficerViewModel: DeleteAuthOfficerViewModel by viewModels()
 
     private lateinit var loader: androidx.appcompat.app.AlertDialog
+    private lateinit var dialog: Dialog
+
     var state: String = ""
     var number_employee: String = ""
     var legal_structure: String = ""
@@ -351,6 +351,9 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
 
     override fun onResume() {
         if(isConnectedToInternet()){
+            binding.getAuthOfficerShimmerView.visible()
+            binding.getAuthOfficerShimmerView.startShimmer()
+            binding.authOfficerRecycler.gone()
             mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
         }else{
             Toast.makeText(this,"No internet connection.", Toast.LENGTH_LONG).show()
@@ -736,11 +739,15 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         mGetAuthorizeOfficerViewModel.response.observe(this, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
+                    binding.getAuthOfficerShimmerView.gone()
+                    binding.getAuthOfficerShimmerView.stopShimmer()
                     if(outcome.data?.success == true){
                         if(outcome.data?.data != null && outcome.data?.data?.size != 0){
-
+                            binding.authOfficerRecycler.visible()
                             val list = outcome.data?.data?.filterIndexed { index, data -> index!=0 }
-                            list?.let { fillAuthRecyclerView(it) }
+                            list?.let {
+                                fillAuthRecyclerView(it)
+                            }
 
                             binding.fullNameTv.text = outcome.data?.data!![0].name
                             binding.emailTv.text = outcome.data?.data!![0].email
@@ -778,6 +785,9 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         mDeleteAuthOfficerViewModel.navigationComplete()
+                        binding.getAuthOfficerShimmerView.visible()
+                        binding.getAuthOfficerShimmerView.startShimmer()
+                        binding.authOfficerRecycler.gone()
                         mGetAuthorizeOfficerViewModel.getAuthOfficer(accessToken)
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
@@ -802,7 +812,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     }
 
     private fun showMobileDialog() {
-        val dialog = Dialog(this)
+        dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setCanceledOnTouchOutside(true)
@@ -814,10 +824,12 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         submit.setOnClickListener {
             val mobile_number = mobile_txt.text.toString()
             if(!mobile_number.isEmpty()){
-                owner_mobile = mobile_number
-                binding.addMobileBtn.gone()
-                binding.mobileTv.text = owner_mobile
-                dialog.dismiss()
+                mEditBasicInfoViewModel.editBasicInfo(phone = mobile_number, token = accessToken)
+                loader.show()
+
+                addMobileNumberObserver(mobile_number)
+
+                //dialog.dismiss()
             }else{
                 owner_mobile = ""
                 Toast.makeText(this,"Please enter your mobile number",Toast.LENGTH_SHORT).show()
@@ -829,6 +841,32 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         }
         dialog.show()
     }
+
+    private fun addMobileNumberObserver(mobile: String?){
+        mEditBasicInfoViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        binding.addMobileBtn.gone()
+                        binding.mobileTv.text = mobile
+                        owner_mobile = mobile!!
+                        dialog.dismiss()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                    mEditBasicInfoViewModel.navigationComplete()
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
 
     override fun onClick(view: View, id: Int) {
         showRemoveAuthOfficerDialog(id)
@@ -842,6 +880,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         builder.setPositiveButton("Yes"){dialogInterface, which ->
             if(isConnectedToInternet()){
                 mDeleteAuthOfficerViewModel.deleteAuthOfficer(accessToken,id)
+                loader.show()
             }else{
                 Toast.makeText(this,"No internet connection.",Toast.LENGTH_LONG).show()
             }

@@ -16,7 +16,6 @@ import com.user.caregiver.visible
 
 class SelectCareTypeActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectCareTypeBinding
-    private val mEditBasicInfoViewModel: EditBasicInfoViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var accessToken: String
     private var numberOfPerson: Int? = null
