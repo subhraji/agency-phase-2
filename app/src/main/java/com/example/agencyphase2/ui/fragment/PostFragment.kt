@@ -151,9 +151,6 @@ class PostFragment : Fragment() {
                         }else if(outcome.data?.data?.is_profile_approved == 0){
                             showCompleteDialog("Your profile is not approved yet.",4)
 
-                            /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
-                            startActivity(intent)*/
-
                             /*else if(outcome.data?.data?.is_other_info_added == 0){
                                 showCompleteDialog("You have not added other optional information",2)
                             }*/
@@ -193,7 +190,7 @@ class PostFragment : Fragment() {
                 /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
                 intent.putExtra("step",step)
                 startActivity(intent)*/
-                val intent = Intent(requireActivity(), RegistrationActivity::class.java)
+                val intent = Intent(requireActivity(), JobPostActivity::class.java)
                 intent.putExtra("step",step)
                 startActivity(intent)
             }else{

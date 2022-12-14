@@ -858,6 +858,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                 }
                 is Outcome.Failure<*> -> {
                     Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    loader.dismiss()
 
                     outcome.e.printStackTrace()
                     Log.i("status",outcome.e.cause.toString())
@@ -890,4 +891,5 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
+
 }
