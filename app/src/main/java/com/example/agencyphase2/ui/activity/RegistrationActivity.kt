@@ -756,7 +756,10 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                             if(outcome.data?.data!![0].phone != null){
                                 binding.addMobileBtn.gone()
                                 binding.mobileTv.text = outcome.data?.data!![0].phone.toString()
+                                owner_mobile = outcome.data?.data!![0].phone.toString()
                             }else{
+                                owner_mobile = ""
+                                binding.mobileTv.text = ""
                                 binding.addMobileBtn.visible()
                                 binding.addMobileBtn.setOnClickListener {
                                     showMobileDialog()
