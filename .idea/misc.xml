@@ -3,16 +3,85 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/bullet_point_bg.xml" value="0.186" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/dash_black_bg.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/dash_search_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/grey_corner_bg.xml" value="0.147" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/home_icon.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_anagcy_logo_18.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_baseline_chevron_right_24.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_baseline_person_24.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_job_create_67.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_logo_white_18.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_notifications_blue.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_profile_17.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_profile_grey_17.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_settings_17.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/ic_star_19.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/job_post_icon.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/profile_icon.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/reg_dot_green.xml" value="0.147" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/reg_icon_one.xml" value="0.147" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/register_btn_border_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/stepper_done_icon.xml" value="0.147" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable-v24/time_left_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/black_border_bg.xml" value="0.1775" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.147" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/ic_notifications_grey.xml" value="0.186" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/job_post_txt_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/job_preview_background.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/notification_icon.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/post_jobs_shimmer_lay_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/rating_bg_1.xml" value="0.147" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/retry_button_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/status_half_curve_bg.xml" value="0.136" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/tab_background_selector.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/tab_bg_not_selected.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/tab_bg_selected.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/tab_layout_bg.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/time_selector_border.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_ask_location.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_auth.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_authorized_person_info_add.xml" value="0.2" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_basic_information.xml" value="0.2" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_choose_login_reg.xml" value="0.25" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_home_address.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_job_details.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_job_post.xml" value="0.25" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_no_internet.xml" value="0.2" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_optional_business_info.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_post_job_preview.xml" value="0.2" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_post_jobs_details.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_registration.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_select_care_type.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/open_job_item_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/add_mobile_number_layout.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/auth_officer_item_layout.xml" value="0.1" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/care_type_bottomsheet.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/chips_item_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_forgot_pass_email.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_image_preview.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_job_post.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_login.xml" value="0.2" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_ongoing.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_post.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/fragment_settings.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/gender_age_item_layout.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/get_auth_officer_shimmer_layout.xml" value="0.203125" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/loadingdialog.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/ongoing_jobs_item_layout.xml" value="0.22" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/open_job_item_layout.xml" value="0.33" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/post_jobs_item_layout.xml" value="0.25" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/post_jobs_shemmer_lay.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/profile_completion_dialog_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/select_date_time_bottomsheet.xml" value="0.2" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/tab_title_layout.xml" value="0.203125" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/menu/bottom_menu.xml" value="0.19537037037037036" />
       </map>
     </option>
   </component>
