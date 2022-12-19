@@ -139,7 +139,7 @@ class EmailVerificationActivity : AppCompatActivity() {
                     Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
                 }
             }else{
-                Toast.makeText(this,"Invalid Otp.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Invalid OTP.", Toast.LENGTH_SHORT).show()
             }
         }
 
