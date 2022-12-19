@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.example.agencyphase2.databinding.ActivitySignUpBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.viewmodel.GetEmailVerificationOtpViewModel
 import com.example.agencyphase2.viewmodel.SignUpViewModel
 import com.user.caregiver.hideSoftKeyboard
 import com.user.caregiver.isConnectedToInternet
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private val signUpViewModel: SignUpViewModel by viewModels()
+    private val mGetEmailVerificationOtpViewModel: GetEmailVerificationOtpViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,12 +59,8 @@ class SignUpActivity : AppCompatActivity() {
                                 if(binding.passwordTxt.text.toString() == binding.conPasswordTxt.text.toString()){
                                     hideSoftKeyboard()
                                     if(isConnectedToInternet()){
-                                        signUpViewModel.signup(
-                                            binding.companyNameTxt.text.toString(),
-                                            binding.fullNameTxt.text.toString(),
-                                            binding.emailTxt.text.toString(),
-                                            binding.passwordTxt.text.toString(),
-                                            binding.conPasswordTxt.text.toString()
+                                        mGetEmailVerificationOtpViewModel.getOtp(
+                                            binding.emailTxt.text.toString()
                                         )
                                         loader = this.loadingDialog()
                                         loader.show()
@@ -107,7 +104,8 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        signObserve()
+        //observer
+        getOtpObserver()
     }
 
     private fun companyNameFocusListener(){
@@ -197,27 +195,30 @@ class SignUpActivity : AppCompatActivity() {
         return  null
     }
 
-    private fun signObserve(){
-        signUpViewModel.response.observe(this, Observer { outcome ->
+
+    private fun getOtpObserver(){
+        mGetEmailVerificationOtpViewModel.response.observe(this, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        if (outcome.data!!.token != null) {
-                            outcome.data!!.token?.let { PrefManager.setKeyAuthToken(it) }
-                        }
-                        PrefManager.setLogInStatus(true)
-                        val intent = Intent(this, AskLocationActivity::class.java)
+                        Toast.makeText(this,outcome.data!!.data.toString(), Toast.LENGTH_LONG).show()
+                        val intent = Intent(this, EmailVerificationActivity::class.java)
+                        intent.putExtra("company_name",binding.companyNameTxt.text.toString())
+                        intent.putExtra("full_name",binding.fullNameTxt.text.toString())
+                        intent.putExtra("email",binding.emailTxt.text.toString())
+                        intent.putExtra("password",binding.passwordTxt.text.toString())
+                        intent.putExtra("con_password",binding.conPasswordTxt.text.toString())
                         startActivity(intent)
                         finish()
-                        signUpViewModel.navigationComplete()
+                        mGetEmailVerificationOtpViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Outcome.Failure<*> -> {
                     Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-
+                    loader.dismiss()
                     outcome.e.printStackTrace()
                     Log.i("status",outcome.e.cause.toString())
                 }

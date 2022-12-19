@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agencyphase2.model.pojo.signup.SignUpResponse
+import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
+import com.example.agencyphase2.model.repository.GetEmailVerificationOtpRepository
 import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.model.repository.SignUpRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
@@ -14,19 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val repository: SignUpRepository) : ViewModel() {
-    private var _response = MutableLiveData<Outcome<SignUpResponse?>?>()
-    val response: LiveData<Outcome<SignUpResponse?>?> = _response
+class GetEmailVerificationOtpViewModel @Inject constructor(private val repository: GetEmailVerificationOtpRepository) : ViewModel() {
+    private var _response = MutableLiveData<Outcome<GetOtpResponse?>?>()
+    val response: LiveData<Outcome<GetOtpResponse?>?> = _response
 
-    fun signup(
-        otp: Int,
-        company_name: String,
-        name: String,
-        email: String,
-        password: String,
-        con_password: String
+    fun getOtp(
+        email: String
     ) = viewModelScope.launch {
-        repository.signup(otp, company_name, name, email, password, con_password).onStart {
+        repository.getOtp(email).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

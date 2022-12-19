@@ -10,6 +10,8 @@ import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
+import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
+import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
 import com.example.agencyphase2.model.pojo.job_post.JobPostRequest
 import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
@@ -96,4 +98,8 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("id") id: Int?,
     ): DeleteAuthOfficerResponse?
+
+    @POST("check-email-exist")
+    suspend fun getEmailVerificationOtp(
+        @Body body: GetOtpRequest?): GetOtpResponse?
 }

@@ -32,6 +32,7 @@
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/job_post_txt_bg.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/job_preview_background.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/notification_icon.xml" value="0.1285" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/otp_bg.xml" value="0.1255" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/post_jobs_shimmer_lay_bg.xml" value="0.1285" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/rating_bg_1.xml" value="0.147" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/drawable/retry_button_bg.xml" value="0.1285" />
@@ -46,6 +47,7 @@
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_authorized_person_info_add.xml" value="0.2" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_basic_information.xml" value="0.2" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_choose_login_reg.xml" value="0.25" />
+        <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_email_verification.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_home_address.xml" value="0.22" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_job_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/User Hp/AndroidStudioProjects/Agencyphase2/app/src/main/res/layout/activity_job_post.xml" value="0.25" />
