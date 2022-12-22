@@ -75,11 +75,12 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     private val PICK_IMAGE = 100
 
     private lateinit var accessToken: String
-    private val mEditBasicInfoViewModel: EditBasicInfoViewModel by viewModels()
+    //private val mEditBasicInfoViewModel: EditBasicInfoViewModel by viewModels()
     private val addBusinessInfoViewModel: AddBusinessInfoViewModel by viewModels()
     private val mAddOtherInfoViewModel: AddOtherInfoViewModel by viewModels()
     private val mGetAuthorizeOfficerViewModel: GetAuthorizeOfficerViewModel by viewModels()
     private val mDeleteAuthOfficerViewModel: DeleteAuthOfficerViewModel by viewModels()
+    private val mChangeOwnerPhoneViewModel: ChangeOwnerPhoneViewModel by viewModels()
 
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var dialog: Dialog
@@ -827,7 +828,8 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         submit.setOnClickListener {
             val mobile_number = mobile_txt.text.toString()
             if(!mobile_number.isEmpty()){
-                mEditBasicInfoViewModel.editBasicInfo(phone = mobile_number, token = accessToken)
+                //mEditBasicInfoViewModel.editBasicInfo(phone = mobile_number, token = accessToken)
+                mChangeOwnerPhoneViewModel.changeOwnerPhone(phone = mobile_number, token = accessToken)
                 loader.show()
 
                 addMobileNumberObserver(mobile_number)
@@ -845,7 +847,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     }
 
     private fun addMobileNumberObserver(mobile: String?){
-        mEditBasicInfoViewModel.response.observe(this, Observer { outcome ->
+        mChangeOwnerPhoneViewModel.response.observe(this, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
                     loader.dismiss()
@@ -857,7 +859,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
-                    mEditBasicInfoViewModel.navigationComplete()
+                    mChangeOwnerPhoneViewModel.navigationComplete()
                 }
                 is Outcome.Failure<*> -> {
                     Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
