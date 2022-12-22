@@ -94,6 +94,10 @@ class SettingsFragment : Fragment() {
                         logoutViewModel.navigationComplete()
                     }else{
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+
+                        PrefManager.clearPref()
+                        startActivity(Intent(requireActivity(), ChooseLoginRegActivity::class.java))
+                        requireActivity().finish()
                     }
                 }
                 is Outcome.Failure<*> -> {

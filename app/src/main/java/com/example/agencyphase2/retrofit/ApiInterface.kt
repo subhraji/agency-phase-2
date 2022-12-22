@@ -5,6 +5,10 @@ import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOff
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoRequest
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoResponse
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
+import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneRequest
+import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneResponse
+import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
+import com.example.agencyphase2.model.pojo.change_password.ChangePasswordResponse
 import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
@@ -102,4 +106,16 @@ interface ApiInterface {
     @POST("check-email-exist")
     suspend fun getEmailVerificationOtp(
         @Body body: GetOtpRequest?): GetOtpResponse?
+
+    @POST("owner/change-password")
+    suspend fun changePassword(
+        @Body body: ChangePasswordRequest?,
+        @Header("Authorization") token: String,
+    ): ChangePasswordResponse?
+
+    @POST("owner/edit-phone")
+    suspend fun changeOwnerPhone(
+        @Body body: ChangeOwnerPhoneRequest?,
+        @Header("Authorization") token: String,
+    ): ChangeOwnerPhoneResponse?
 }
