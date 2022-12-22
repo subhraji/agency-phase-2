@@ -39,7 +39,7 @@ interface ApiInterface {
     suspend fun logout(@Header("Authorization") token: String): LogoutResponse?
 
     @Multipart
-    @POST("profile/add-business-info")
+    @POST("business-profile/add-business-info")
     suspend fun addBusinessInfo(
         @Part photo: MultipartBody.Part?,
         @Part("phone") phone: RequestBody,
@@ -52,12 +52,12 @@ interface ApiInterface {
         @Header("Authorization") token: String
     ): InsertBusinessInformationResponse?
 
-    @POST("profile/add-optional-info")
+    @POST("business-profile/add-optional-info")
     suspend fun addOtherInfo(
         @Body body: AddOtherInfoRequest?,
         @Header("Authorization") token: String): AddOtherInfoResponse?
 
-    @POST("profile/edit-basic-profile-details")
+    @POST("business-profile/edit-basic-profile-details")
     suspend fun editBasicInfo(
         @Body body: EditBasicInfoRequest?,
         @Header("Authorization") token: String): EditBasicInfoResponse?
