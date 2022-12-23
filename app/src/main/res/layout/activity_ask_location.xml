@@ -22,21 +22,10 @@
         app:layout_constraintStart_toStartOf="@+id/logo_img"
         app:layout_constraintTop_toBottomOf="@+id/logo_img"
         app:layout_constraintEnd_toEndOf="@+id/logo_img"
-        android:text="Peaceworc"
+        android:text="Peaceworc Agency"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="28sp"/>
-    <TextView
-        android:id="@+id/agency_htv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Agency"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/peaceworc_htv"
-        app:layout_constraintStart_toStartOf="@+id/peaceworc_htv"
-        app:layout_constraintEnd_toEndOf="@+id/peaceworc_htv"
-        android:textSize="18sp"/>
+        android:textSize="24sp"/>
     <TextView
         android:id="@+id/hello_htv"
         android:layout_width="wrap_content"
@@ -45,7 +34,7 @@
         android:textSize="22sp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/agency_htv"
+        app:layout_constraintTop_toBottomOf="@+id/peaceworc_htv"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="10dp"
         android:layout_marginTop="50dp"/>
