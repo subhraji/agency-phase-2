@@ -274,10 +274,8 @@ class JobPostActivity : AppCompatActivity() {
             showDateTimeBottomSheet()
         }
 
-        binding.requiredNextStepBtn.setOnClickListener {
-            binding.relativeLay1.gone()
-            binding.relativeLay3.gone()
-            binding.relativeLay2.visible()
+        binding.dateTimeLay.setOnClickListener {
+            showDateTimeBottomSheet()
         }
 
         binding.careTypeBtn.setOnClickListener {
@@ -285,6 +283,53 @@ class JobPostActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.typeOfCareLay.setOnClickListener {
+            val intent = Intent(this, SelectCareTypeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.requiredNextStepBtn.setOnClickListener {
+            val job_title = binding.jobTitleTxt.text.toString()
+            val amount = binding.addAmountTxt.text.toString()
+            val address = binding.jobLocTxt.text.toString()
+            val job_desc = binding.jobDescTxt.text.toString()
+
+            if(!job_title.isEmpty()){
+                if(!careType.isEmpty()){
+                    if(!date.isEmpty()){
+                        if(!startTime.isEmpty()){
+                            if(!endTime.isEmpty()){
+                                if(!amount.isEmpty()){
+                                    if(!address.isEmpty()){
+                                        if(!job_desc.isEmpty()){
+                                            binding.relativeLay1.gone()
+                                            binding.relativeLay3.gone()
+                                            binding.relativeLay2.visible()
+                                        }else{
+                                            Toast.makeText(this,"Please provide the job description.",Toast.LENGTH_SHORT).show()
+                                        }
+                                    }else{
+                                        Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
+                                    }
+                                }else{
+                                    Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
+                            }
+                        }else{
+                            Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Please provide the job title.",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initializePageTwo(){

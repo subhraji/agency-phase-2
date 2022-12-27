@@ -981,7 +981,8 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintEnd_toStartOf="@+id/edit_gender_age_btn"
                             app:layout_constraintStart_toEndOf="@+id/care_type_htv_lay_2"
-                            app:layout_constraintTop_toTopOf="@+id/care_type_htv_lay_2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             tools:itemCount="2"
                             tools:listitem="@layout/gender_age_item_layout" />
 
