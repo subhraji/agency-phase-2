@@ -79,8 +79,12 @@ class SelectCareTypeActivity : AppCompatActivity() {
                 if(numberOfPerson == 1){
                     if(gender1 != null){
                         if(age1.isNotEmpty()){
-                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                            finish()
+                            if(name1.isNotEmpty()){
+                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                finish()
+                            }else{
+                                Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
+                            }
                         }else{
                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
                         }
@@ -92,9 +96,13 @@ class SelectCareTypeActivity : AppCompatActivity() {
                         if(age1.isNotEmpty()){
                             if(gender2 != null){
                                 if(age2.isNotEmpty()){
-                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                    finish()
+                                    if(name2.isNotEmpty()){
+                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                        finish()
+                                    }else{
+                                        Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
+                                    }
                                 }else{
                                     Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
                                 }
@@ -114,10 +122,14 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                 if(age2.isNotEmpty()){
                                     if(gender3 != null){
                                         if(age3.isNotEmpty()){
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
-                                            finish()
+                                            if(name3.isNotEmpty()){
+                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                finish()
+                                            }else{
+                                                Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
+                                            }
                                         }else{
                                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
                                         }
@@ -145,11 +157,15 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                         if(age3.isNotEmpty()){
                                             if(gender4 != null){
                                                 if(age4.isNotEmpty()){
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
-                                                    JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
-                                                    finish()
+                                                    if(name4.isNotEmpty()){
+                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
+                                                        finish()
+                                                    }else{
+                                                        Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
+                                                    }
                                                 }else{
                                                     Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
                                                 }
@@ -185,12 +201,16 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                                 if(age4.isNotEmpty()){
                                                     if(gender5 != null){
                                                         if(age5.isNotEmpty()){
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
-                                                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5,name5))
-                                                            finish()
+                                                            if(name5.isNotEmpty()){
+                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
+                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5,name5))
+                                                                finish()
+                                                            }else{
+                                                                Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
+                                                            }
                                                         }else{
                                                             Toast.makeText(this,"please provide the age of patient.",Toast.LENGTH_SHORT).show()
                                                         }
@@ -291,16 +311,16 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.childImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
             binding.patientLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.patientImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
-            binding.specialLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            /*binding.specialLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.specialImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.oldLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.oldImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
-
+*/
             binding.seniorTv.setTextColor(resources.getColor(R.color.white, null))
             binding.childTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
-            binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
-            binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            /*binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))*/
             careType = "senior care"
             binding.personNoHtv.visible()
             binding.careTypeLay.visible()
@@ -312,16 +332,16 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.childImg.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.patientLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.patientImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
-            binding.specialLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            /*binding.specialLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.specialImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.oldLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
-            binding.oldImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.oldImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)*/
 
             binding.seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.childTv.setTextColor(resources.getColor(R.color.white, null))
             binding.patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
-            binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
-            binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            /*binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))*/
             careType = "child care"
             binding.personNoHtv.visible()
             binding.careTypeLay.visible()
@@ -333,21 +353,21 @@ class SelectCareTypeActivity : AppCompatActivity() {
             binding.childImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.patientLay.background.setTint(ContextCompat.getColor(this, R.color.black))
             binding.patientImg.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
-            binding.specialLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            /*binding.specialLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.specialImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.oldLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.oldImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
-
+*/
             binding.seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.childTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.patientTv.setTextColor(resources.getColor(R.color.white, null))
-            binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
-            binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            /*binding.specialTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            binding.oldTv.setTextColor(resources.getColor(R.color.text_grey, null))*/
             careType = "patient care"
             binding.personNoHtv.visible()
             binding.careTypeLay.visible()
         }
-        binding.specialLay.setOnClickListener {
+        /*binding.specialLay.setOnClickListener {
             binding.seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
             binding.seniorImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.childLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -388,7 +408,7 @@ class SelectCareTypeActivity : AppCompatActivity() {
             careType = "old care"
             binding.personNoHtv.visible()
             binding.careTypeLay.visible()
-        }
+        }*/
     }
 
     private fun backgroundGrey(){

@@ -66,7 +66,7 @@
                         android:id="@+id/senior_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ic_baseline_delete_outline_24" />
+                        android:src="@drawable/ic_senior_49" />
 
                     <TextView
                         android:id="@+id/senior_tv"
@@ -91,7 +91,7 @@
                         android:id="@+id/child_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ic_baseline_delete_outline_24" />
+                        android:src="@drawable/ic_childe_care_49" />
 
                     <TextView
                         android:id="@+id/child_tv"
@@ -116,7 +116,7 @@
                         android:id="@+id/patient_img"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ic_baseline_delete_outline_24" />
+                        android:src="@drawable/ic_patient_care_49" />
 
                     <TextView
                         android:id="@+id/patient_tv"
@@ -127,6 +127,7 @@
                 </LinearLayout>
             </LinearLayout>
 
+<!--
             <LinearLayout
                 android:id="@+id/care_type_linear_lay_2"
                 android:layout_width="match_parent"
@@ -140,7 +141,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/care_type_linear_lay_1">
 
-                <LinearLayout
+                &lt;!&ndash;<LinearLayout
                     android:id="@+id/special_lay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -188,7 +189,7 @@
                         android:layout_height="wrap_content"
                         android:text="Old Care"
                         android:textColor="@color/text_grey" />
-                </LinearLayout>
+                </LinearLayout>&ndash;&gt;
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -201,6 +202,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+-->
 
             <TextView
                 android:id="@+id/person_no_htv"
@@ -213,7 +215,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/care_type_linear_lay_2" />
+                app:layout_constraintTop_toBottomOf="@+id/care_type_linear_lay_1" />
 
             <LinearLayout
                 android:id="@+id/care_type_lay"

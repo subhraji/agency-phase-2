@@ -212,7 +212,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_centerHorizontal="true"
-                                android:src="@drawable/ic_baseline_delete_outline_24"
+                                android:src="@drawable/ic_senior_49"
                                 app:tint="@color/white" />
 
                             <TextView
@@ -961,7 +961,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_centerHorizontal="true"
-                                android:src="@drawable/ic_baseline_delete_outline_24"
+                                android:src="@drawable/ic_senior_49"
                                 app:tint="@color/white" />
 
                             <TextView

@@ -55,6 +55,8 @@ class EmailVerificationActivity : AppCompatActivity() {
         binding.resendTv.gone()
 
         binding.backBtn.setOnClickListener {
+            val intent = Intent(this, ChooseLoginRegActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
@@ -207,7 +209,7 @@ class EmailVerificationActivity : AppCompatActivity() {
     }
 
     fun startTimer() {
-        cTimer = object : CountDownTimer(300000, 1000) {
+        cTimer = object : CountDownTimer(180000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.timerTv.setText("OTP well be expired in: " + millisUntilFinished / 1000 +" sec");
             }
