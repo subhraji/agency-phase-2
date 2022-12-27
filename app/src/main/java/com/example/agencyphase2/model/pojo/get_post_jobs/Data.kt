@@ -17,5 +17,6 @@ data class Data(
     val start_time: String,
     val title: String,
     val updated_at: String,
-    val user_id: Int
+    val user_id: Int,
+    val status: String
 )

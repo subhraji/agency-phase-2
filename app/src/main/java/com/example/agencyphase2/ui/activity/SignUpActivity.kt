@@ -3,6 +3,7 @@ package com.example.agencyphase2.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
@@ -26,6 +27,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private val mGetEmailVerificationOtpViewModel: GetEmailVerificationOtpViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
+    var cTimer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -202,7 +204,7 @@ class SignUpActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        Toast.makeText(this,outcome.data!!.data.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,outcome.data!!.message.toString(), Toast.LENGTH_LONG).show()
                         val intent = Intent(this, EmailVerificationActivity::class.java)
                         intent.putExtra("company_name",binding.companyNameTxt.text.toString())
                         intent.putExtra("full_name",binding.fullNameTxt.text.toString())
@@ -225,5 +227,4 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
     }
-
 }

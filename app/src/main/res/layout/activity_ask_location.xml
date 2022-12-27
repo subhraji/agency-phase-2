@@ -30,31 +30,22 @@
         android:id="@+id/hello_htv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello, nice to"
+        android:text="Hello, nice to meet you"
         android:textSize="22sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/peaceworc_htv"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="10dp"
         android:layout_marginTop="50dp"/>
-    <TextView
-        android:id="@+id/meet_u_htv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="meet you"
-        android:textSize="22sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/hello_htv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"/>
     <TextView
         android:id="@+id/textview_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/meet_u_htv"
-        app:layout_constraintStart_toStartOf="@+id/meet_u_htv"
+        app:layout_constraintTop_toBottomOf="@+id/hello_htv"
+        app:layout_constraintStart_toStartOf="@+id/hello_htv"
+        app:layout_constraintEnd_toEndOf="@+id/hello_htv"
         android:text="Set your location to start find"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"/>
@@ -63,7 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textview_1"
-        app:layout_constraintStart_toStartOf="@+id/meet_u_htv"
+        app:layout_constraintStart_toStartOf="@+id/hello_htv"
+        app:layout_constraintEnd_toEndOf="@+id/hello_htv"
         android:text="caregiver job around you"
         android:textColor="@color/white"/>
     <androidx.cardview.widget.CardView
@@ -96,6 +88,7 @@
         app:layout_constraintEnd_toEndOf="@+id/use_loc_btn"
         android:textColor="@color/white"
         android:layout_marginTop="15dp"
+        android:textAlignment="center"
         android:text="We only access your location when you are using this incredible app"/>
     <TextView
         android:layout_width="0dp"
@@ -105,6 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10dp"
         android:textColor="@color/white"
+        android:textAlignment="center"
         android:text="Or Set your location manually"
         android:layout_marginTop="15dp"
         android:textSize="18sp"

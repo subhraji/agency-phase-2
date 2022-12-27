@@ -244,6 +244,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
 
         binding.authOfficerNextStepBtn.setOnClickListener {
             if(!owner_mobile.isEmpty()){
+                Toast.makeText(this,"Profile completed successfully.",Toast.LENGTH_SHORT).show()
                 finish()
             }else{
                 showMobileDialog()

@@ -59,6 +59,8 @@ class PostJobsAdapter (private val itemList: List<Data>,
                     }
                 }
                 ageTv.text = gen
+
+                statusTv.text = data?.status.toString()
             }
         }
 
