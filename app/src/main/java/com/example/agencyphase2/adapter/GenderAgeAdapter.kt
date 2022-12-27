@@ -37,7 +37,7 @@ class GenderAgeAdapter (private val itemList: List<GenderAgeItemCountModel>,
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: GenderAgeItemCountModel, context: Context, careType: String) {
             itemBinding.apply {
-                genderAgeTv2.text = data?.gender+": "+data?.age
+                genderAgeTv2.text = data?.gender+": "+data?.patient_name+", "+data?.age
             }
         }
     }
