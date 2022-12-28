@@ -24,7 +24,6 @@ class SearchLocationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding= ActivitySearchLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

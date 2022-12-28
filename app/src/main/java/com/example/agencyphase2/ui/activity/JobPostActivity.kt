@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +21,14 @@ import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.PostJobViewModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.user.caregiver.gone
 import com.user.caregiver.loadingDialog
@@ -37,6 +46,7 @@ class JobPostActivity : AppCompatActivity() {
     var date:String = ""
     var startTime:String = ""
     var endTime:String = ""
+    var job_address: String = ""
 
     private val medicalHistoryList:MutableList<String> = mutableListOf()
     private val jobSkillList:MutableList<String> = mutableListOf()
@@ -44,6 +54,8 @@ class JobPostActivity : AppCompatActivity() {
     private val checkList:MutableList<String> = mutableListOf()
 
     private lateinit var accessToken: String
+
+    private val AUTOCOMPLETE_REQUEST_CODE = 1
 
     //lists
     companion object {
@@ -62,6 +74,8 @@ class JobPostActivity : AppCompatActivity() {
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
+        Places.initialize(applicationContext, getString(R.string.api_key))
+
         //binding.relativeLay1.gone()
         binding.relativeLay2.gone()
         binding.relativeLay3.gone()
@@ -79,6 +93,7 @@ class JobPostActivity : AppCompatActivity() {
 
         //observer
         jobPostObserve()
+
     }
 
     override fun onResume() {
@@ -97,6 +112,25 @@ class JobPostActivity : AppCompatActivity() {
         fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
         super.onResume()
     }
+
+
+    private fun autocompleteWithIntent(){
+        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+
+        // Start the autocomplete intent.
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            .setTypeFilter(TypeFilter.ESTABLISHMENT)
+            .setLocationBias(
+                RectangularBounds.newInstance(
+                    LatLng(26.1442464,91.784392),
+                    LatLng(26.1442464,91.784392)
+                )
+            )
+            .setCountry("IN")
+            .build(this)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    }
+
 
     private fun showCareTypeBottomSheet(care: String){
         val dialog = BottomSheetDialog(this)
@@ -186,6 +220,8 @@ class JobPostActivity : AppCompatActivity() {
                         startTimeTv.setText("$hour2:$selectedMinute ${AM_PM}")
                     }
                     startTime = "$selectedHour:$selectedMinute:${"00"}"
+                    //startTime = "$selectedHour-$selectedMinute-${"00"}"
+
                 },
                 hour,
                 minute,
@@ -223,6 +259,8 @@ class JobPostActivity : AppCompatActivity() {
                         endTimeTv.setText("$hour2:$selectedMinute ${AM_PM}")
                     }
                     endTime = "$selectedHour:$selectedMinute:${"00"}"
+                    //endTime = "$selectedHour-$selectedMinute-${"00"}"
+
                 },
                 hour,
                 minute,
@@ -240,8 +278,8 @@ class JobPostActivity : AppCompatActivity() {
 
     fun getCurrentDate(picker: DatePicker): String? {
         val builder = StringBuilder()
-        builder.append((picker.getMonth() + 1).toString() + "/") //month is 0 based
-        builder.append(picker.getDayOfMonth().toString() + "/")
+        builder.append((picker.getMonth() + 1).toString() + "-") //month is 0 based
+        builder.append(picker.getDayOfMonth().toString() + "-")
         builder.append(picker.getYear())
         return builder.toString()
     }
@@ -289,14 +327,14 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         binding.jobLocBtn.setOnClickListener {
-            val intent = Intent(this, SearchLocationActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(this, SearchLocationActivity::class.java)
+            startActivity(intent)*/
+            autocompleteWithIntent()
         }
 
         binding.requiredNextStepBtn.setOnClickListener {
             val job_title = binding.jobTitleTxt.text.toString()
             val amount = binding.addAmountTxt.text.toString()
-            val address = "job address"
             val job_desc = binding.jobDescTxt.text.toString()
 
             if(!job_title.isEmpty()){
@@ -305,7 +343,7 @@ class JobPostActivity : AppCompatActivity() {
                         if(!startTime.isEmpty()){
                             if(!endTime.isEmpty()){
                                 if(!amount.isEmpty()){
-                                    if(!address.isEmpty()){
+                                    if(!job_address.isEmpty()){
                                         if(!job_desc.isEmpty()){
                                             binding.relativeLay1.gone()
                                             binding.relativeLay3.gone()
@@ -394,7 +432,7 @@ class JobPostActivity : AppCompatActivity() {
             binding.showAmountTxt.text = Editable.Factory.getInstance().newEditable(binding.addAmountTxt.text.toString())
 
             //binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(binding.jobLocTxt.text.toString())
-            binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable("job address")
+            binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(job_address)
 
             binding.showJobDescTxt.text = Editable.Factory.getInstance().newEditable(binding.jobDescTxt.text.toString())
         }
@@ -473,6 +511,33 @@ class JobPostActivity : AppCompatActivity() {
             isFocusable = false
             adapter = ChipsAdapter(list,this@JobPostActivity)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        Log.i("place", "Place: ${place.name}, ${place.id}, ${place.address}")
+                        binding.jobLocTxt.text = place.address
+                        job_address = place.address
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                        Log.i("place", status.statusMessage ?: "")
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {

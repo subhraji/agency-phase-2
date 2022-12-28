@@ -17,6 +17,7 @@ import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerR
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
+import com.example.agencyphase2.model.pojo.get_profile.GetProfileResponse
 import com.example.agencyphase2.model.pojo.job_post.JobPostRequest
 import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
@@ -118,4 +119,9 @@ interface ApiInterface {
         @Body body: ChangeOwnerPhoneRequest?,
         @Header("Authorization") token: String,
     ): ChangeOwnerPhoneResponse?
+
+    @GET("business-profile/get-profile-details")
+    suspend fun getProfile(
+        @Header("Authorization") token: String,
+    ): GetProfileResponse?
 }
