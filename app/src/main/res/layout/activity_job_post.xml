@@ -395,6 +395,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <RelativeLayout
+                        android:id="@+id/job_loc_btn"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:layout_marginStart="10dp"
@@ -402,17 +403,17 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/job_post_txt_bg">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/job_loc_txt"
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:layout_toLeftOf="@+id/right_arrow_img"
                             android:layout_toRightOf="@+id/loc_img_1"
                             android:background="@color/transparent"
-                            android:hint="Add Location"
+                            android:text="Add Location"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black"
                             android:textSize="14sp" />

@@ -17,6 +17,7 @@ import com.example.agencyphase2.databinding.FragmentPostBinding
 import com.example.agencyphase2.databinding.FragmentSettingsBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.AuthActivity
+import com.example.agencyphase2.ui.activity.ChangePasswordActivity
 import com.example.agencyphase2.ui.activity.ChooseLoginRegActivity
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.LoginViewModel
@@ -55,6 +56,11 @@ class SettingsFragment : Fragment() {
 
         binding.logoutBtn.setOnClickListener {
             showLogoutPopUp()
+        }
+
+        binding.changePassBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), ChangePasswordActivity::class.java)
+            startActivity(intent)
         }
 
         //observe

@@ -288,10 +288,15 @@ class JobPostActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.jobLocBtn.setOnClickListener {
+            val intent = Intent(this, SearchLocationActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.requiredNextStepBtn.setOnClickListener {
             val job_title = binding.jobTitleTxt.text.toString()
             val amount = binding.addAmountTxt.text.toString()
-            val address = binding.jobLocTxt.text.toString()
+            val address = "job address"
             val job_desc = binding.jobDescTxt.text.toString()
 
             if(!job_title.isEmpty()){
@@ -387,7 +392,10 @@ class JobPostActivity : AppCompatActivity() {
             binding.relativeLay3.visible()
             binding.showJobTitleTxt.text = Editable.Factory.getInstance().newEditable(binding.jobTitleTxt.text.toString())
             binding.showAmountTxt.text = Editable.Factory.getInstance().newEditable(binding.addAmountTxt.text.toString())
-            binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(binding.jobLocTxt.text.toString())
+
+            //binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(binding.jobLocTxt.text.toString())
+            binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable("job address")
+
             binding.showJobDescTxt.text = Editable.Factory.getInstance().newEditable(binding.jobDescTxt.text.toString())
         }
     }
