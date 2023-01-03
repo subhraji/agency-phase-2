@@ -16,5 +16,7 @@
     <color name="theme_blue">#003C81</color>
     <color name="post_btn_color">#FF6535</color>
     <color name="error_red">#FF2222</color>
+    <color name="color_green">#00C147</color>
+    <color name="color_yellow">#FFC107</color>
 
 </resources>

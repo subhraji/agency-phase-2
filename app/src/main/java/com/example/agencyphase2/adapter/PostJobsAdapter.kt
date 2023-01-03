@@ -2,9 +2,11 @@ package com.example.agencyphase2.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
@@ -61,6 +63,17 @@ class PostJobsAdapter (private val itemList: List<Data>,
                 ageTv.text = gen
 
                 statusTv.text = data?.status.toString()
+
+                if(data?.status == "Bidding Started"){
+                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
+                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
+                }else if(data?.status == "Quick Call"){
+                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
+                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
+                }else if(data?.status == "Open Job"){
+                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
+                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
+                }
             }
         }
 
