@@ -84,7 +84,8 @@ interface ApiInterface {
 
     @GET("job/get-job")
     suspend fun getPostJobs(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("id") id: Int? = null,
     ): GetPostJobsResponse?
 
     @GET("information/status")

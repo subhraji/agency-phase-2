@@ -13,6 +13,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivitySplashBinding
 import com.example.agencyphase2.utils.PrefManager
 import com.user.caregiver.isConnectedToInternet
+import com.user.caregiver.lightStatusBar
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
@@ -21,12 +22,13 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        lightStatusBar(this,R.color.black)
 
-        val windowInsetsController =
+        /*val windowInsetsController =
             WindowCompat.getInsetsController(window, window.decorView) ?: return
         windowInsetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())*/
 
         checkInternet()
     }

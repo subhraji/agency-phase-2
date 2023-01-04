@@ -18,5 +18,8 @@ data class Data(
     val title: String,
     val updated_at: String,
     val user_id: Int,
-    val status: String
+    val status: String,
+    val short_address: String,
+    val lat: String,
+    val long: String
 )

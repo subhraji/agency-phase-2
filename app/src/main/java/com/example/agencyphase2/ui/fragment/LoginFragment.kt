@@ -142,6 +142,8 @@ class LoginFragment : Fragment() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
+                        loader.dismiss()
+
                         if (outcome.data!!.token != null) {
                             outcome.data!!.token?.let { PrefManager.setKeyAuthToken(it) }
                         }
@@ -152,10 +154,14 @@ class LoginFragment : Fragment() {
                         requireActivity().finish()
                         loginViewModel.navigationComplete()
                     }else{
+                        loader.dismiss()
+
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Outcome.Failure<*> -> {
+                    loader.dismiss()
+
                     Toast.makeText(requireActivity(),outcome.e.message, Toast.LENGTH_SHORT).show()
 
                     outcome.e.printStackTrace()

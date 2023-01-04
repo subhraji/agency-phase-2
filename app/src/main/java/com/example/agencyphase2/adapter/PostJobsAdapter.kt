@@ -10,6 +10,9 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_post_jobs.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PostJobsAdapter (private val itemList: List<Data>,
                        private val context: Context):
@@ -42,7 +45,7 @@ class PostJobsAdapter (private val itemList: List<Data>,
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
-                addressTv.text = data?.address.toString()
+                addressTv.text = data?.short_address.toString()
                 dateHtv.text = data?.date.toString()
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()

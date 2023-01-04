@@ -40,8 +40,8 @@ class HomeFragment : Fragment() {
         setUpTabLayoutWithViewPager()
 
         binding.userImageView.setOnClickListener {
-            val intent = Intent(requireActivity(), JobPostActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
+            startActivity(intent)*/
         }
     }
 

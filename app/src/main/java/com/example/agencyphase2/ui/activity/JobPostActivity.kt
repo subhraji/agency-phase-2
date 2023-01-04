@@ -47,6 +47,9 @@ class JobPostActivity : AppCompatActivity() {
     var startTime:String = ""
     var endTime:String = ""
     var job_address: String = ""
+    var place_name: String = ""
+    var lat: String = ""
+    var lang: String = ""
 
     private val medicalHistoryList:MutableList<String> = mutableListOf()
     private val jobSkillList:MutableList<String> = mutableListOf()
@@ -130,7 +133,6 @@ class JobPostActivity : AppCompatActivity() {
             .build(this)
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
-
 
     private fun showCareTypeBottomSheet(care: String){
         val dialog = BottomSheetDialog(this)
@@ -278,9 +280,19 @@ class JobPostActivity : AppCompatActivity() {
 
     fun getCurrentDate(picker: DatePicker): String? {
         val builder = StringBuilder()
-        builder.append((picker.getMonth() + 1).toString() + "-") //month is 0 based
-        builder.append(picker.getDayOfMonth().toString() + "-")
+        var month = ""
+        var day = ""
+        if((picker.getMonth() + 1) < 10){
+            month = "0"+ (picker.getMonth() + 1)
+        }
+        if(picker.getDayOfMonth() < 10){
+            day = "0"+picker.getDayOfMonth().toString()
+        }
+
+        builder.append(month.toString() + "-") //month is 0 based
+        builder.append(day.toString() + "-")
         builder.append(picker.getYear())
+
         return builder.toString()
     }
 
@@ -454,6 +466,9 @@ class JobPostActivity : AppCompatActivity() {
                 jobSkillList,
                 otherReqList,
                 checkList,
+                place_name,
+                lat,
+                lang,
                 accessToken
             )
             loader.show()
@@ -519,9 +534,17 @@ class JobPostActivity : AppCompatActivity() {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        Log.i("place", "Place: ${place.name}, ${place.id}, ${place.address}")
+                        Log.i("place", "Place: ${place.name}, ${place.id}, ${place.latLng}")
                         binding.jobLocTxt.text = place.address
                         job_address = place.address
+                        place_name = place.name
+
+                        lat = place.latLng.toString()
+                        lang = place.latLng.toString()
+
+                        /*val latLangList: MutableList<List<String>> = Arrays.asList(place.latLng.toString().split(","))
+                        lat = latLangList[0].toString()
+                        lang = latLangList[1].toString()*/
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {

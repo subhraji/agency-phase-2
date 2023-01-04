@@ -7,7 +7,7 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile_icon"/>
     <item android:title="Job post"
-        android:id="@+id/jobPostFragment_test"
+        android:id="@+id/jobPostFragment"
         android:icon="@drawable/ic_job_create_67"/>
     <item android:title="Notification"
         android:icon="@drawable/notification_icon"/>

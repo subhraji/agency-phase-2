@@ -79,7 +79,7 @@ class PostFragment : Fragment() {
     override fun onResume() {
 
         if(requireActivity().isConnectedToInternet()){
-            mGetPostJobsViewModel.getPostJobs(accessToken)
+            mGetPostJobsViewModel.getPostJobs(accessToken,0)
             binding.postJobsShimmerView.visible()
             binding.postJobsShimmerView.startShimmer()
             binding.postJobCardBtn.gone()

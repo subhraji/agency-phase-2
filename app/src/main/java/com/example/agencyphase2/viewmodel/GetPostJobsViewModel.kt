@@ -19,9 +19,10 @@ class GetPostJobsViewModel @Inject constructor(private val repository: GetPostJo
     val response: LiveData<Outcome<GetPostJobsResponse?>?> = _response
 
     fun getPostJobs(
-        token: String
+        token: String,
+        id: Int? = null
     ) = viewModelScope.launch {
-        repository.getPostJobs(token).onStart {
+        repository.getPostJobs(token, id).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

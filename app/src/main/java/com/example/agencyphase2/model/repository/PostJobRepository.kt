@@ -25,11 +25,14 @@ class PostJobRepository @Inject constructor(private  val apiInterface: ApiInterf
         expertise: List<String>? = null,
         other_requirements: List<String>? = null,
         check_list: List<String>? = null,
+        short_address: String,
+        lat: String,
+        long: String,
         token: String
     ): Flow<JobPostResponse?> = flow{
         emit(apiInterface.jobPost(
             JobPostRequest(
-                title, care_type, care_items, date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list
+                title, care_type, care_items, date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long
         ), token))
     }.flowOn(Dispatchers.IO)
 }

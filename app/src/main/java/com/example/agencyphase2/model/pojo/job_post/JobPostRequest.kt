@@ -15,5 +15,8 @@ data class JobPostRequest(
     val medical_history: List<String>? = null,
     val expertise: List<String>? = null,
     val other_requirements: List<String>? = null,
-    val check_list: List<String>? = null
+    val check_list: List<String>? = null,
+    val short_address: String,
+    val lat: String,
+    val long: String
 )
