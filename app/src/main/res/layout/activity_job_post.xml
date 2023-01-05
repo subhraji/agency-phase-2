@@ -500,6 +500,7 @@
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             >
 
             <ScrollView
@@ -978,10 +979,10 @@
                             android:id="@+id/show_gender_age_recycler"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/edit_gender_age_btn"
                             app:layout_constraintStart_toEndOf="@+id/care_type_htv_lay_2"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             tools:itemCount="2"
                             tools:listitem="@layout/gender_age_item_layout" />
 
@@ -1091,9 +1092,9 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@color/transparent"
-                            android:paddingStart="10dp"
                             android:inputType="number"
                             android:maxLength="4"
+                            android:paddingStart="10dp"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -1299,8 +1300,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="10dp"
-                            android:backgroundTint="@color/white"
                             android:background="@drawable/job_post_txt_bg"
+                            android:backgroundTint="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/show_medical_his_recycler">
@@ -1354,6 +1355,7 @@
                             android:orientation="vertical"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1362,12 +1364,14 @@
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/show_job_skill_recycler"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:itemCount="1"
                                 tools:listitem="@layout/chips_item_layout" />
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/job_skill_add_btn"
                                 android:layout_width="match_parent"
@@ -1375,8 +1379,8 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:backgroundTint="@color/white"
-                                android:background="@drawable/job_post_txt_bg">
+                                android:background="@drawable/job_post_txt_bg"
+                                android:backgroundTint="@color/white">
 
                                 <EditText
                                     android:id="@+id/prev_job_skill_txt"
@@ -1418,6 +1422,7 @@
                             android:orientation="vertical"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1427,12 +1432,14 @@
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/show_other_requirements_recycler"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:itemCount="1"
                                 tools:listitem="@layout/chips_item_layout" />
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/prev_add_or_lay"
                                 android:layout_width="match_parent"
@@ -1440,8 +1447,8 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:backgroundTint="@color/white"
                                 android:background="@drawable/job_post_txt_bg"
+                                android:backgroundTint="@color/white"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay">
@@ -1486,6 +1493,7 @@
                             android:orientation="vertical"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -1495,12 +1503,14 @@
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/show_check_list_recycler"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:itemCount="1"
                                 tools:listitem="@layout/chips_item_layout" />
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/checklist_add_btn"
                                 android:layout_width="match_parent"
@@ -1508,8 +1518,8 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:backgroundTint="@color/white"
                                 android:background="@drawable/job_post_txt_bg"
+                                android:backgroundTint="@color/white"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/medical_his_item_lay">

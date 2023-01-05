@@ -111,10 +111,6 @@ class JobPostFragment : Fragment() {
         binding.dateTimeLay.gone()
         loader = requireActivity().loadingDialog()
 
-        binding.backBtn.setOnClickListener {
-            requireActivity().finish()
-        }
-
         //initialize page
         initializePageOne()
         initializePageTwo()
@@ -170,6 +166,8 @@ class JobPostFragment : Fragment() {
         val endTimeBtn = view.findViewById<RelativeLayout>(R.id.end_time_btn)
         val startTimeTv = view.findViewById<TextView>(R.id.start_time_txt)
         val endTimeTv = view.findViewById<TextView>(R.id.end_time_txt)
+
+        datePicker.setMinDate(System.currentTimeMillis() - 1000)
 
         btnClear.setOnClickListener {
             dialog.dismiss()
@@ -274,9 +272,14 @@ class JobPostFragment : Fragment() {
         var day = ""
         if((picker.getMonth() + 1) < 10){
             month = "0"+ (picker.getMonth() + 1)
+        }else{
+            month = (picker.getMonth() + 1).toString()
         }
+
         if(picker.getDayOfMonth() < 10){
             day = "0"+picker.getDayOfMonth().toString()
+        }else{
+            day = picker.getDayOfMonth().toString()
         }
 
         builder.append(month.toString() + "-") //month is 0 based
@@ -444,6 +447,60 @@ class JobPostFragment : Fragment() {
     }
 
     private fun initializePageThree() {
+
+        binding.addBtnMedi.setOnClickListener {
+            val medicalHistoryTxt = binding.prevMedicalHistoryTxt.text.toString()
+            if(!medicalHistoryTxt.isEmpty()){
+                medicalHistoryList.add(medicalHistoryTxt)
+                fillMedicalRecycler(medicalHistoryList, binding.showMedicalHisRecycler)
+                binding.prevMedicalHistoryTxt.text = null
+            }else{
+                Toast.makeText(requireActivity(),"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.prevMedicalHistoryTxt.showKeyboard()
+            }
+        }
+
+        binding.addBtnSkill.setOnClickListener {
+            val jobSkillTxt = binding.prevJobSkillTxt.text.toString()
+            if(!jobSkillTxt.isEmpty()){
+                jobSkillList.add(jobSkillTxt)
+                fillJobSkillRecycler(jobSkillList, binding.showJobSkillRecycler)
+                binding.prevJobSkillTxt.text = null
+            }else{
+                Toast.makeText(requireActivity(),"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.prevJobSkillTxt.showKeyboard()
+            }
+        }
+
+        binding.prevAddOrBtn.setOnClickListener {
+            val otherReqTxt = binding.prevAddOrTxt.text.toString()
+            if(!otherReqTxt.isEmpty()){
+                otherReqList.add(otherReqTxt)
+                fillOtherRequirementRecycler(otherReqList, binding.showOtherRequirementsRecycler)
+                binding.prevAddOrTxt.text = null
+            }else{
+                Toast.makeText(requireActivity(),"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.prevAddOrTxt.showKeyboard()
+            }
+        }
+
+        binding.addBtnCheck.setOnClickListener {
+            val checkListTxt = binding.prevChecklistTxt.text.toString()
+            if(!checkListTxt.isEmpty()){
+                checkList.add(checkListTxt)
+                fillCheckListRecycler(checkList, binding.showCheckListRecycler)
+                binding.prevChecklistTxt.text = null
+            }else{
+                Toast.makeText(requireActivity(),"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
+                binding.prevChecklistTxt.showKeyboard()
+            }
+        }
+
+        binding.consLay1.setOnClickListener {
+            val intent = Intent(requireActivity(), SelectCareTypeActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.prevNextStepBtn.setOnClickListener {
             mPostJobViewModel.jobPost(
                 binding.showJobTitleTxt.text.toString(),
