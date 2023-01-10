@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "92764368956",
+    "project_id": "peaceworc-5f320",
+    "storage_bucket": "peaceworc-5f320.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92764368956:android:3828755555819be5f8d339",
+        "android_client_info": {
+          "package_name": "com.example.agencyphase2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92764368956-7p5tp1pj54fhrp24io5p42jar4tbpkcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABT4ubYuNU6_4WiozvOiUQ2uJyX_ss_eI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92764368956-7p5tp1pj54fhrp24io5p42jar4tbpkcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92764368956:android:e27b970b99bb3068f8d339",
+        "android_client_info": {
+          "package_name": "com.example.hiltapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92764368956-7p5tp1pj54fhrp24io5p42jar4tbpkcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABT4ubYuNU6_4WiozvOiUQ2uJyX_ss_eI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92764368956-7p5tp1pj54fhrp24io5p42jar4tbpkcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
