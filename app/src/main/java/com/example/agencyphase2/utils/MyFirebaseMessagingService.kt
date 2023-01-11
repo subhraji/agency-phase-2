@@ -10,6 +10,8 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.example.agencyphase2.MainActivity
+import com.example.agencyphase2.ui.activity.AskLocationActivity
+import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -30,7 +32,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         remoteview.setImageViewResource(com.example.agencyphase2.R.id.notification_img,com.example.agencyphase2.R.drawable.ic_baseline_circle_notifications_24)
 
         return remoteview
-
     }
 
     private fun getNotification(title: String?, body: String?){
@@ -44,6 +45,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             .setContentText(body)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
+            .setFullScreenIntent(pendingIntent, true)
 
         builder = builder.setContent(getRemoveView(title,body))
 
