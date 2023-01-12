@@ -184,6 +184,9 @@ class PostFragment : Fragment() {
 
         content_tv.text = content
 
+        if(step == 4){
+            complete.text = "Ok"
+        }
         complete.setOnClickListener {
             if(step == 4){
                 dialog.dismiss()
