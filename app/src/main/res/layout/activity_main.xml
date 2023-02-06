@@ -15,6 +15,19 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/home_nav" />
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/post_job_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:fabSize="normal"
+        android:layout_above="@+id/bottomNavigation"
+        android:layout_alignParentEnd="true"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

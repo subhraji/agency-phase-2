@@ -3,6 +3,7 @@ package com.example.agencyphase2
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.agencyphase2.databinding.ActivityMainBinding
+import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +35,11 @@ class MainActivity : AppCompatActivity() {
         createNotificationChannel()
         getToken()
         subscribeToTopic()
+
+        binding.postJobBtn.setOnClickListener {
+            val intent = Intent(this, JobPostActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
