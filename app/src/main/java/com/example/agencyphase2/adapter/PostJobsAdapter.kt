@@ -65,7 +65,7 @@ class PostJobsAdapter (private val itemList: List<Data>,
                 }
                 ageTv.text = gen
 
-                statusTv.text = data?.status.toString()
+                statusTv.text = data.status.toString()
 
                 if(data?.status == "Bidding Started"){
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
