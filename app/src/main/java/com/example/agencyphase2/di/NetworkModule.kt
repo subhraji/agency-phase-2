@@ -2,6 +2,7 @@ package com.example.agencyphase2.di
 
 import com.example.agencyphase2.BuildConfig
 import com.example.agencyphase2.retrofit.ApiInterface
+import com.example.agencyphase2.retrofit.PaymentService
 import com.example.agencyphase2.utils.Constants
 import dagger.Module
 import dagger.Provides
