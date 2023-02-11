@@ -676,10 +676,10 @@ class JobPostActivity : AppCompatActivity() {
                     loader.dismiss()
                     if (outcome.data?.id != null) {
                         ephemeralKey = outcome.data?.id
-                        var amount = "100"
-                        if(!amount.isEmpty()){
+                        var amount = binding.showAmountTxt.text.toString().toDouble()*100.00
+                        if(!amount.toString().isEmpty()){
                             if(isConnectedToInternet()){
-                                mGetPaymentIntentViewModel.getPaymentIntent(customerId,amount,"usd","true","Bearer $SECRET_KEY")
+                                mGetPaymentIntentViewModel.getPaymentIntent(customerId,amount.toString(),"usd","true","Bearer $SECRET_KEY")
                                 loader.show()
                             }else{
                                 Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
