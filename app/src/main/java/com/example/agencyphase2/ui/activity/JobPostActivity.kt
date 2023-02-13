@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,14 +40,13 @@ import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import com.user.caregiver.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.w3c.dom.Text
 import java.util.*
 
 @AndroidEntryPoint
 class JobPostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobPostBinding
     var careType:String = ""
-    var gender:String = ""
-    var age:String = ""
     var date:String = ""
     var startTime:String = ""
     var endTime:String = ""
@@ -74,7 +74,6 @@ class JobPostActivity : AppCompatActivity() {
     var ephemeralKey: String? = null
     var clientSecret: String? = null
 
-    //lists
     companion object {
         var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
     }
@@ -131,18 +130,10 @@ class JobPostActivity : AppCompatActivity() {
 
     override fun onResume() {
         if(genderAgeList.isNotEmpty()){
-            binding.typeOfCareLay.visible()
-            binding.careTypeBtn.gone()
-            careType = genderAgeList[0].careType.toString()
-            binding.typeOfCareTv.text = careType
-            binding.showCareTypeTv.text = careType
+            binding.addCareTypeHtv.text = "Add more care type"
         }else{
-            binding.typeOfCareLay.gone()
-            binding.careTypeBtn.visible()
-            careType = ""
+            binding.addCareTypeHtv.text = "Add care type"
         }
-        fillGenderAgeRecycler(genderAgeList, binding.genderAgeRecycler)
-        fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
         super.onResume()
     }
 
@@ -164,7 +155,7 @@ class JobPostActivity : AppCompatActivity() {
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
 
-    private fun showCareTypeBottomSheet(care: String){
+    private fun showCareTypeBottomSheet(){
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.care_type_bottomsheet, null)
 
@@ -172,7 +163,18 @@ class JobPostActivity : AppCompatActivity() {
         val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
         val careTypeRbg = view.findViewById<RadioGroup>(R.id.type_of_care_rbg)
         val ageTxt = view.findViewById<EditText>(R.id.age_txt)
+        val nameTxt = view.findViewById<EditText>(R.id.name_txt)
+        val seniorLay = view.findViewById<LinearLayout>(R.id.senior_lay)
+        val childLay = view.findViewById<LinearLayout>(R.id.child_lay)
+        val patientLay = view.findViewById<LinearLayout>(R.id.patient_lay)
+        val seniorImg = view.findViewById<ImageView>(R.id.senior_img)
+        val childImg = view.findViewById<ImageView>(R.id.child_img)
+        val patientImg = view.findViewById<ImageView>(R.id.patient_img)
+        val seniorTv = view.findViewById<TextView>(R.id.senior_tv)
+        val childTv = view.findViewById<TextView>(R.id.child_tv)
+        val patientTv = view.findViewById<TextView>(R.id.patient_tv)
 
+        var gender: String = ""
         careTypeRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.male_rb -> {
@@ -181,17 +183,85 @@ class JobPostActivity : AppCompatActivity() {
                 R.id.female_rb -> {
                     gender = "female"
                 }
+                R.id.others_rb -> {
+                    gender = "Others"
+                }
             }
         })
 
         btnClear.setOnClickListener {
+            genderAgeList = mutableListOf()
+            careType = ""
             dialog.dismiss()
         }
 
         btnSave.setOnClickListener {
-            age = ageTxt.text.toString()
-            genderAgeList.add(GenderAgeItemCountModel(gender,age))
-            dialog.dismiss()
+            val age = ageTxt.text.toString()
+            val name = nameTxt.text.toString()
+            if(!careType.isEmpty()){
+                if(!name.isEmpty()){
+                    if(!age.isEmpty()){
+                        if(!gender.isEmpty()){
+                            genderAgeList.add(GenderAgeItemCountModel(careType,gender,age,name))
+                            fillGenderAgeRecycler(genderAgeList, binding.careTypeRecycler)
+                            fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
+                            dialog.dismiss()
+                        }else{
+                            Toast.makeText(this,"Please select gender.", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        ageTxt.showKeyboard()
+                        Toast.makeText(this,"Please provide the age of the patient", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    nameTxt.showKeyboard()
+                    Toast.makeText(this,"Please type the name of the patient", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Please select a care type", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        //care type
+        seniorLay.setOnClickListener {
+            seniorLay.background.setTint(ContextCompat.getColor(this, R.color.black))
+            seniorImg.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+            childLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            childImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+            patientLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            patientImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+
+            seniorTv.setTextColor(resources.getColor(R.color.white, null))
+            childTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            careType = "senior care"
+        }
+        childLay.setOnClickListener {
+            seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            seniorImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+            childLay.background.setTint(ContextCompat.getColor(this, R.color.black))
+            childImg.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+            patientLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            patientImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+
+            seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            childTv.setTextColor(resources.getColor(R.color.white, null))
+            patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            careType = "child care"
+        }
+        patientLay.setOnClickListener {
+            seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            seniorImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+            childLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+            childImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+            patientLay.background.setTint(ContextCompat.getColor(this, R.color.black))
+            patientImg.setColorFilter(ContextCompat.getColor(this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+
+            seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            childTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            patientTv.setTextColor(resources.getColor(R.color.white, null))
+            careType = "patient care"
         }
 
         dialog.setCancelable(false)
@@ -369,13 +439,9 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         binding.careTypeBtn.setOnClickListener {
-            val intent = Intent(this, SelectCareTypeActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.typeOfCareLay.setOnClickListener {
-            val intent = Intent(this, SelectCareTypeActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(this, SelectCareTypeActivity::class.java)
+            startActivity(intent)*/
+            showCareTypeBottomSheet()
         }
 
         binding.jobLocBtn.setOnClickListener {
@@ -560,7 +626,7 @@ class JobPostActivity : AppCompatActivity() {
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recycleView.apply {
             layoutManager = gridLayoutManager
-            adapter = GenderAgeAdapter(list,this@JobPostActivity, careType)
+            adapter = GenderAgeAdapter(list.toMutableList(),this@JobPostActivity, careType)
         }
     }
 

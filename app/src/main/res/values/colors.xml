@@ -18,5 +18,6 @@
     <color name="error_red">#FF2222</color>
     <color name="color_green">#00C147</color>
     <color name="color_yellow">#FFC107</color>
+    <color name="color_teal">#008080</color>
 
 </resources>

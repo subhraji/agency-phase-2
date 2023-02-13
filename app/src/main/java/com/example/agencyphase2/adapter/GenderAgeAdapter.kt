@@ -4,13 +4,15 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.GenderAgeItemLayoutBinding
 import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
+import com.example.agencyphase2.ui.activity.JobPostActivity
 
-class GenderAgeAdapter (private val itemList: List<GenderAgeItemCountModel>,
+class GenderAgeAdapter (private val itemList: MutableList<GenderAgeItemCountModel>,
                         private val context: Context,
                         private val careType: String):
     RecyclerView.Adapter<GenderAgeAdapter.ViewHolder>() {
@@ -28,16 +30,29 @@ class GenderAgeAdapter (private val itemList: List<GenderAgeItemCountModel>,
         return itemList.size
     }
 
+    fun remove(genderAgeItemCountModel: GenderAgeItemCountModel) {
+        itemList.remove(genderAgeItemCountModel)
+        JobPostActivity.genderAgeList.remove(genderAgeItemCountModel)
+    }
+
     override fun onBindViewHolder(holder: GenderAgeAdapter.ViewHolder, position: Int) {
         val rowData = itemList[position]
         holder.bind(rowData, context, careType)
+        val deleteBtn = holder.itemView.findViewById<ImageView>(R.id.image_view)
+        deleteBtn.setOnClickListener {
+            remove(rowData)
+            notifyItemRemoved(position)
+        }
     }
 
     class ViewHolder(private val itemBinding: GenderAgeItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: GenderAgeItemCountModel, context: Context, careType: String) {
             itemBinding.apply {
-                genderAgeTv2.text = data?.gender+": "+data?.patient_name+", "+data?.age
+                nameTv.text = data?.patient_name
+                ageTv.text = "Age: ${data?.age} years"
+                careTypeTv.text = "Care type: ${data?.careType}"
+                genderTv.text = "Gender: ${data?.gender}"
             }
         }
     }

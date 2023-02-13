@@ -154,6 +154,7 @@
                             app:tint="@color/white" />
 
                         <TextView
+                            android:id="@+id/add_care_type_htv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -161,7 +162,6 @@
                             android:background="@color/transparent"
                             android:paddingTop="15dp"
                             android:paddingBottom="15dp"
-                            android:text="Add care type"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -180,75 +180,10 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/type_of_care_Lay"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/care_type_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/job_preview_background"
-                        android:backgroundTint="@color/black"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        app:layout_constraintEnd_toEndOf="@+id/view_1"
-                        app:layout_constraintStart_toStartOf="@+id/view_1"
-                        app:layout_constraintTop_toBottomOf="@+id/view_1">
-
-                        <RelativeLayout
-                            android:id="@+id/type_of_care_htv_lay"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/care_img_1"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/ic_senior_49"
-                                app:tint="@color/white" />
-
-                            <TextView
-                                android:id="@+id/type_of_care_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/care_img_1"
-                                android:layout_centerHorizontal="true"
-                                android:text="2 Senior care"
-                                android:textColor="@color/white"
-                                android:textSize="15sp" />
-
-                        </RelativeLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/gender_age_recycler"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/edit_type_of_care_btn"
-                            app:layout_constraintStart_toEndOf="@+id/type_of_care_htv_lay"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:itemCount="2"
-                            tools:listitem="@layout/gender_age_item_layout" />
-
-                        <ImageView
-                            android:id="@+id/edit_type_of_care_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:src="@drawable/ic_baseline_chevron_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
+                        android:layout_height="wrap_content"/>
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_time_btn"
                         android:layout_width="match_parent"
@@ -970,21 +905,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/care_type_img_2"
                                 android:layout_centerHorizontal="true"
-                                android:text="2 Senior Care"
+                                android:text="Senior Care"
                                 android:textColor="@color/white"
                                 android:textSize="15sp" />
                         </RelativeLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/show_gender_age_recycler"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/edit_gender_age_btn"
-                            app:layout_constraintStart_toEndOf="@+id/care_type_htv_lay_2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:itemCount="2"
-                            tools:listitem="@layout/gender_age_item_layout" />
 
                         <ImageView
                             android:id="@+id/edit_gender_age_btn"
@@ -996,6 +920,11 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/show_gender_age_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_1"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cons_lay_2"
@@ -1007,7 +936,7 @@
                         android:paddingBottom="15dp"
                         app:layout_constraintEnd_toEndOf="@+id/show_job_title_txt_lay"
                         app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
-                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_1">
+                        app:layout_constraintTop_toBottomOf="@+id/show_gender_age_recycler">
 
                         <RelativeLayout
                             android:id="@+id/date_time_htv_lay_2"

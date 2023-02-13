@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="4dp">
+    android:layout_marginTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/border_background_1">
     <TextView
-        android:id="@+id/gender_age_tv_2"
+        android:id="@+id/name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Jhon Methew"
+        android:textColor="@color/text_grey"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/age_tv"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/care_type_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Care Type: Senior care"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/name_tv"
+        app:layout_constraintStart_toStartOf="@+id/name_tv"
+        app:layout_constraintEnd_toStartOf="@+id/gender_tv"
+        android:textSize="13sp"
+        android:layout_marginTop="7dp"/>
+    <TextView
+        android:id="@+id/age_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Age: 25 years"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/image_view"
+        app:layout_constraintTop_toTopOf="@id/name_tv"
+        app:layout_constraintStart_toEndOf="@+id/name_tv"/>
+    <TextView
+        android:id="@+id/gender_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Gender: Male"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/image_view"
+        app:layout_constraintTop_toTopOf="@+id/care_type_tv"
+        app:layout_constraintStart_toStartOf="@id/age_tv"/>
+    <ImageView
+        android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Male: 26 years"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        android:textStyle="bold"/>
-</LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:src="@drawable/ic_baseline_delete_outline_24"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

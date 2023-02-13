@@ -47,10 +47,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
             finish()
         }
 
-        if(JobPostActivity.genderAgeList.isNotEmpty()){
-
-        }
-
         binding.personNoHtv.gone()
         binding.careTypeLay.gone()
         binding.genderAge1.gone()
@@ -58,7 +54,6 @@ class SelectCareTypeActivity : AppCompatActivity() {
         binding.genderAge3.gone()
         binding.genderAge4.gone()
         binding.genderAge5.gone()
-        JobPostActivity.genderAgeList = mutableListOf()
 
         setUpRadioButtons()
 
@@ -80,7 +75,7 @@ class SelectCareTypeActivity : AppCompatActivity() {
                     if(gender1 != null){
                         if(age1.isNotEmpty()){
                             if(name1.isNotEmpty()){
-                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
                                 finish()
                             }else{
                                 Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
@@ -97,8 +92,8 @@ class SelectCareTypeActivity : AppCompatActivity() {
                             if(gender2 != null){
                                 if(age2.isNotEmpty()){
                                     if(name2.isNotEmpty()){
-                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                        //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                        //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
                                         finish()
                                     }else{
                                         Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
@@ -123,9 +118,9 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                     if(gender3 != null){
                                         if(age3.isNotEmpty()){
                                             if(name3.isNotEmpty()){
-                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
                                                 finish()
                                             }else{
                                                 Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
@@ -158,10 +153,10 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                             if(gender4 != null){
                                                 if(age4.isNotEmpty()){
                                                     if(name4.isNotEmpty()){
-                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
-                                                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
+                                                        //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                        //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                        //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                        //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
                                                         finish()
                                                     }else{
                                                         Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
@@ -202,11 +197,11 @@ class SelectCareTypeActivity : AppCompatActivity() {
                                                     if(gender5 != null){
                                                         if(age5.isNotEmpty()){
                                                             if(name5.isNotEmpty()){
-                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
-                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
-                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
-                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
-                                                                JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5,name5))
+                                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender1,age1,name1))
+                                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender2,age2,name2))
+                                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender3,age3,name3))
+                                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender4,age4,name4))
+                                                                //JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(careType,gender5,age5,name5))
                                                                 finish()
                                                             }else{
                                                                 Toast.makeText(this,"please provide the name of patient.",Toast.LENGTH_SHORT).show()
