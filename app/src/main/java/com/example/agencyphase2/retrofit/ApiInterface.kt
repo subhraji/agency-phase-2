@@ -14,13 +14,16 @@ import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
+import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
 import com.example.agencyphase2.model.pojo.get_customer_id.GetCustomerIdResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
 import com.example.agencyphase2.model.pojo.get_ephemeral_key.GetEphemeralKeyResponse
+import com.example.agencyphase2.model.pojo.get_ongoing_job.GetOngoingJobsResponse
 import com.example.agencyphase2.model.pojo.get_payment_intent.GetPaymentIntentResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
 import com.example.agencyphase2.model.pojo.get_profile.GetProfileResponse
+import com.example.agencyphase2.model.pojo.get_upcomming_jobs.GetUpcommingJobResponse
 import com.example.agencyphase2.model.pojo.job_post.JobPostRequest
 import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
@@ -128,4 +131,19 @@ interface ApiInterface {
     suspend fun getProfile(
         @Header("Authorization") token: String,
     ): GetProfileResponse?
+
+    @GET("job/care-types/get")
+    suspend fun getCareType(
+        @Header("Authorization") token: String,
+    ): GetCareTypeResponse?
+
+    @GET("job/accepted-job/upcoming")
+    suspend fun getUpcomminJobs(
+        @Header("Authorization") token: String,
+    ): GetUpcommingJobResponse?
+
+    @GET("job/accepted-job/ongoing")
+    suspend fun getOngoingJob(
+        @Header("Authorization") token: String,
+    ): GetOngoingJobsResponse?
 }

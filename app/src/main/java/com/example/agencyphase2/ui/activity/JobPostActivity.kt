@@ -128,16 +128,6 @@ class JobPostActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        if(genderAgeList.isNotEmpty()){
-            binding.addCareTypeHtv.text = "Add more care type"
-        }else{
-            binding.addCareTypeHtv.text = "Add care type"
-        }
-        super.onResume()
-    }
-
-
     private fun autocompleteWithIntent(){
         val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
 
@@ -173,6 +163,17 @@ class JobPostActivity : AppCompatActivity() {
         val seniorTv = view.findViewById<TextView>(R.id.senior_tv)
         val childTv = view.findViewById<TextView>(R.id.child_tv)
         val patientTv = view.findViewById<TextView>(R.id.patient_tv)
+
+        //care type select
+        seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+        seniorImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+        childLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+        childImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+        patientLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
+        patientImg.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
+        seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
+        childTv.setTextColor(resources.getColor(R.color.text_grey, null))
+        patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
 
         var gender: String = ""
         careTypeRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
@@ -742,7 +743,7 @@ class JobPostActivity : AppCompatActivity() {
                     loader.dismiss()
                     if (outcome.data?.id != null) {
                         ephemeralKey = outcome.data?.id
-                        var amount = binding.showAmountTxt.text.toString().toDouble()*100.00
+                        var amount = binding.showAmountTxt.text.toString().toInt()*100
                         if(!amount.toString().isEmpty()){
                             if(isConnectedToInternet()){
                                 mGetPaymentIntentViewModel.getPaymentIntent(customerId,amount.toString(),"usd","true","Bearer $SECRET_KEY")

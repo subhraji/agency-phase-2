@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="100dp">
+    <LinearLayout
+        android:id="@+id/senior_lay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/grey_corner_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/senior_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_senior_49" />
+
+        <TextView
+            android:id="@+id/care_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Senior Care"
+            android:textColor="@color/text_grey" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
