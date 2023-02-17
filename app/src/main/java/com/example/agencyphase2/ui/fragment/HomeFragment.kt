@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val tabTitles = arrayListOf("     Post     ","  Ongoing  ", "    Closed    ", " Canceled ")
+    private val tabTitles = arrayListOf("     Post     "," Accepted ", "    Closed    ", " Canceled ")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

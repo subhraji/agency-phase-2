@@ -5,20 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.databinding.OngoingJobsItemLayoutBinding
+import com.example.agencyphase2.databinding.OngoingListItemLayoutBinding
 import com.example.agencyphase2.model.pojo.TestModel
+import com.example.agencyphase2.model.pojo.get_ongoing_job.Data
 
-class OngoingJobsAdapter (private val itemList: List<TestModel>,
-                          private val context: Context,
-                          private val isBid: Boolean):
+class OngoingJobsAdapter (private val itemList: List<Data>,
+                          private val context: Context):
     RecyclerView.Adapter<OngoingJobsAdapter.DashQuickCallsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OngoingJobsAdapter.DashQuickCallsViewHolder {
-        val itemBinding = OngoingJobsItemLayoutBinding.inflate(
+        val itemBinding = OngoingListItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return OngoingJobsAdapter.DashQuickCallsViewHolder(itemBinding,isBid)
+        return OngoingJobsAdapter.DashQuickCallsViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int {
@@ -31,9 +32,9 @@ class OngoingJobsAdapter (private val itemList: List<TestModel>,
         holder.bind(rowData, context)
     }
 
-    class DashQuickCallsViewHolder(private val itemBinding: OngoingJobsItemLayoutBinding, private val isBid: Boolean) :
+    class DashQuickCallsViewHolder(private val itemBinding: OngoingListItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(data: TestModel, context: Context) {
+        fun bind(data: Data, context: Context) {
 
             itemBinding.apply {
                 //openJobAmountTv.text = "$"+data.amount_per_hour

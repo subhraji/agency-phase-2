@@ -30,19 +30,13 @@ class OngoingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val quickCallList = ArrayList<TestModel>()
-        quickCallList.add(TestModel("a"))
-        quickCallList.add(TestModel("b"))
-        quickCallList.add(TestModel("c"))
-        fillQuickCallsRecycler(quickCallList)
     }
 
-    private fun fillQuickCallsRecycler(list: List<TestModel>) {
+    /*private fun fillQuickCallsRecycler(list: List<TestModel>) {
         val gridLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         binding.postJobsRecycler.apply {
             layoutManager = gridLayoutManager
             adapter = OngoingJobsAdapter(list,requireActivity(),true)
         }
-    }
+    }*/
 }

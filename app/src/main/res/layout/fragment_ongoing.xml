@@ -6,27 +6,91 @@
     android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.OngoingFragment">
-
         <TextView
-            android:id="@+id/post_job_htv"
+            android:id="@+id/ongoing_jobs_htv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Ongoing Jobs"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/see_all_htv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See All"
+            android:textColor="@color/theme_blue"
+            android:textSize="14sp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ongoing_jobs_htv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ongoing_jobs_htv" />
+        <RelativeLayout
+            android:id="@+id/ongoing_jobs_relay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="7dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/post_jobs_recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_job_htv" />
+            app:layout_constraintTop_toBottomOf="@+id/ongoing_jobs_htv">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/ongoing_shimmer_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <include layout="@layout/open_jobs_shimmer_layout" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ongoing_job_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/upcoming_jobs_htv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Accepted Jobs"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/ongoing_jobs_relay"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/see_all_htv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See All"
+            android:textColor="@color/theme_blue"
+            android:textSize="14sp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/upcoming_jobs_htv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/upcoming_jobs_htv" />
+        <RelativeLayout
+            android:id="@+id/upcoming_jobs_relay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upcoming_jobs_htv">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/upcoming_shimmer_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <include layout="@layout/open_jobs_shimmer_layout" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/upcoming_job_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+        </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
