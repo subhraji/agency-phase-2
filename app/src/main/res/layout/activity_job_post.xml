@@ -189,6 +189,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
+                        android:visibility="gone"
                         android:background="@drawable/job_post_txt_bg"
                         android:backgroundTint="@color/black">
 

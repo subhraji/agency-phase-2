@@ -15,6 +15,7 @@ import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
+import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
 import com.example.agencyphase2.model.pojo.get_customer_id.GetCustomerIdResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
@@ -146,4 +147,9 @@ interface ApiInterface {
     suspend fun getOngoingJob(
         @Header("Authorization") token: String,
     ): GetOngoingJobsResponse?
+
+    @GET("job/completed-job/get")
+    suspend fun getCompletedJob(
+        @Header("Authorization") token: String,
+    ): GetCompleteJobsResponse?
 }

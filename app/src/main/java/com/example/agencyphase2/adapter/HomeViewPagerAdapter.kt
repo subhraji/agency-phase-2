@@ -13,7 +13,7 @@ class HomeViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) 
         return when (position) {
             0 -> PostFragment()
             1 -> AcceptedFragment()
-            2 -> ClosedFragment()
+            2 -> CompletedJobsFragment()
             else -> CanceledFragment()
         }
     }

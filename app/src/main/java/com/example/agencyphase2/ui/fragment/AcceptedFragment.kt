@@ -87,15 +87,17 @@ class AcceptedFragment : Fragment() {
                     if(outcome.data?.success == true){
                         binding.ongoingShimmerView.stopShimmer()
                         binding.ongoingShimmerView.gone()
-                        if(outcome.data?.data!!.isNotEmpty() && outcome.data?.data == null){
+                        if(outcome.data?.data!!.isNotEmpty()){
                             binding.ongoingJobRecycler.visible()
                             binding.ongoingJobsHtv.visible()
                             binding.seeAllHtv.visible()
                             fillOngoingJobsRecycler(outcome.data?.data!!)
+                            binding.noDataLottie.gone()
                         }else{
                             binding.ongoingJobRecycler.gone()
                             binding.ongoingJobsHtv.gone()
                             binding.seeAllHtv.gone()
+                            binding.noDataLottie.visible()
                         }
                         mGetOngoingJobViewModel.navigationComplete()
                     }else{
@@ -119,15 +121,19 @@ class AcceptedFragment : Fragment() {
                     if(outcome.data?.success == true){
                         binding.upcomingShimmerView.stopShimmer()
                         binding.upcomingShimmerView.gone()
-                        if(outcome.data?.data!!.isNotEmpty() && outcome.data?.data == null){
+                        if(outcome.data?.data!!.isNotEmpty()){
                             binding.upcomingJobRecycler.visible()
                             binding.upcomingJobsHtv.visible()
                             binding.seeAllHtv2.visible()
                             fillUpcomingJobsRecycler(outcome.data?.data!!)
+                            binding.noDataLottie.gone()
+
                         }else{
                             binding.upcomingJobRecycler.gone()
                             binding.upcomingJobsHtv.gone()
                             binding.seeAllHtv2.gone()
+                            binding.noDataLottie.visible()
+
                         }
                         mGetUpcommingJobViewModel.navigationComplete()
                     }else{
