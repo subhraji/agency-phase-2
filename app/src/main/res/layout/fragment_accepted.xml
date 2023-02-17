@@ -54,6 +54,16 @@
                     android:id="@+id/ongoing_job_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/no_data_ongoing_lottie"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:lottie_rawRes="@raw/no_data_lottie"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:layout_centerInParent="true"/>
+
             </RelativeLayout>
             <TextView
                 android:id="@+id/upcoming_jobs_htv"
@@ -98,17 +108,17 @@
                     android:id="@+id/upcoming_job_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/no_data_upcoming_lottie"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:lottie_rawRes="@raw/no_data_lottie"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:layout_centerInParent="true"/>
+
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/no_data_lottie"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:lottie_rawRes="@raw/no_data_lottie"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
-
 </RelativeLayout>

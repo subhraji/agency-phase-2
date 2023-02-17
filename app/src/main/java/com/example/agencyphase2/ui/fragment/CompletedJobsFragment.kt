@@ -54,6 +54,7 @@ class CompletedJobsFragment : Fragment() {
         binding.completedJobRecycler.gone()
         binding.completedJobsShimmerView.visible()
         binding.completedJobsShimmerView.startShimmer()
+        binding.noDataLottie.gone()
 
         if(requireActivity().isConnectedToInternet()){
             mGetCompleteJobViewModel.getCompleteJob(accessToken)
@@ -72,8 +73,9 @@ class CompletedJobsFragment : Fragment() {
                         if(outcome.data?.data != null && outcome.data?.data?.size != 0){
                             binding.completedJobRecycler.visible()
                             fillRecyclerView(outcome.data?.data!!)
+                            binding.noDataLottie.gone()
                         }else{
-
+                            binding.noDataLottie.visible()
                         }
                         mGetCompleteJobViewModel.navigationComplete()
                     }else{

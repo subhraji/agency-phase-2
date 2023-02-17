@@ -70,6 +70,8 @@ class AcceptedFragment : Fragment() {
         binding.upcomingJobRecycler.gone()
         binding.ongoingShimmerView.startShimmer()
         binding.upcomingShimmerView.startShimmer()
+        binding.noDataOngoingLottie.gone()
+        binding.noDataUpcomingLottie.gone()
 
         if(requireActivity().isConnectedToInternet()){
             mGetOngoingJobViewModel.getOnGoingJob(accessToken)
@@ -92,12 +94,12 @@ class AcceptedFragment : Fragment() {
                             binding.ongoingJobsHtv.visible()
                             binding.seeAllHtv.visible()
                             fillOngoingJobsRecycler(outcome.data?.data!!)
-                            binding.noDataLottie.gone()
+                            binding.noDataOngoingLottie.gone()
                         }else{
                             binding.ongoingJobRecycler.gone()
                             binding.ongoingJobsHtv.gone()
                             binding.seeAllHtv.gone()
-                            binding.noDataLottie.visible()
+                            binding.noDataOngoingLottie.visible()
                         }
                         mGetOngoingJobViewModel.navigationComplete()
                     }else{
@@ -126,13 +128,13 @@ class AcceptedFragment : Fragment() {
                             binding.upcomingJobsHtv.visible()
                             binding.seeAllHtv2.visible()
                             fillUpcomingJobsRecycler(outcome.data?.data!!)
-                            binding.noDataLottie.gone()
+                            binding.noDataUpcomingLottie.gone()
 
                         }else{
                             binding.upcomingJobRecycler.gone()
                             binding.upcomingJobsHtv.gone()
                             binding.seeAllHtv2.gone()
-                            binding.noDataLottie.visible()
+                            binding.noDataUpcomingLottie.visible()
 
                         }
                         mGetUpcommingJobViewModel.navigationComplete()
