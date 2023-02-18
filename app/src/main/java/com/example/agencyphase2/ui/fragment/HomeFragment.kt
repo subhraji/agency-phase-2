@@ -39,14 +39,15 @@ class HomeFragment : Fragment() {
 
         setUpTabLayoutWithViewPager()
 
-        binding.userImageView.setOnClickListener {
+        /*binding.userImageView.setOnClickListener {
             val intent = Intent(requireActivity(), JobPostActivity::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
     private fun setUpTabLayoutWithViewPager() {
         binding.viewPager.adapter = HomeViewPagerAdapter(this)
+        binding.viewPager.setUserInputEnabled(false)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()

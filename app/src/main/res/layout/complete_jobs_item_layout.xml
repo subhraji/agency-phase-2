@@ -34,7 +34,7 @@
             android:ellipsize="end"/>
         <FrameLayout
             android:id="@+id/status_tv_lay"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/status_half_curve_bg"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/status_tv"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:textColor="@color/white"

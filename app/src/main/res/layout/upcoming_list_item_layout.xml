@@ -30,7 +30,7 @@
             android:ellipsize="end"/>
         <FrameLayout
             android:id="@+id/status_tv_lay"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/status_half_curve_bg"
             android:backgroundTint="@color/theme_blue"
@@ -38,12 +38,12 @@
             app:layout_constraintTop_toTopOf="@+id/job_title_tv">
             <TextView
                 android:id="@+id/status_tv"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:textColor="@color/white"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:textStyle="bold"
                 android:layout_marginStart="15dp"/>
         </FrameLayout>

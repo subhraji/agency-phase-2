@@ -75,7 +75,7 @@ class ProfileFragment : Fragment() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                             .placeholder(R.color.color_grey)
                             .error(R.color.error_red)

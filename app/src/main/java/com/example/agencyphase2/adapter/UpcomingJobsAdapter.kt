@@ -65,12 +65,6 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
 
                 statusTv.text = data.status.toString()
 
-                statusTvLay.setBackgroundTintList(
-                    ColorStateList.valueOf(context.resources.getColor(
-                        R.color.color_green)))
-                timeLeftTv.setBackgroundTintList(
-                    ColorStateList.valueOf(context.resources.getColor(
-                        R.color.color_green)))
             }
         }
 

@@ -61,9 +61,8 @@ class AcceptedFragment : Fragment() {
         //observe
         getOngoingJobObserver()
         getUpcomingJobObserver()
-    }
 
-    override fun onResume() {
+
         binding.ongoingShimmerView.visible()
         binding.upcomingShimmerView.visible()
         binding.ongoingJobRecycler.gone()
@@ -79,6 +78,9 @@ class AcceptedFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onResume() {
         super.onResume()
     }
 
@@ -91,14 +93,10 @@ class AcceptedFragment : Fragment() {
                         binding.ongoingShimmerView.gone()
                         if(outcome.data?.data!!.isNotEmpty()){
                             binding.ongoingJobRecycler.visible()
-                            binding.ongoingJobsHtv.visible()
-                            binding.seeAllHtv.visible()
                             fillOngoingJobsRecycler(outcome.data?.data!!)
                             binding.noDataOngoingLottie.gone()
                         }else{
                             binding.ongoingJobRecycler.gone()
-                            binding.ongoingJobsHtv.gone()
-                            binding.seeAllHtv.gone()
                             binding.noDataOngoingLottie.visible()
                         }
                         mGetOngoingJobViewModel.navigationComplete()
@@ -125,15 +123,11 @@ class AcceptedFragment : Fragment() {
                         binding.upcomingShimmerView.gone()
                         if(outcome.data?.data!!.isNotEmpty()){
                             binding.upcomingJobRecycler.visible()
-                            binding.upcomingJobsHtv.visible()
-                            binding.seeAllHtv2.visible()
                             fillUpcomingJobsRecycler(outcome.data?.data!!)
                             binding.noDataUpcomingLottie.gone()
 
                         }else{
                             binding.upcomingJobRecycler.gone()
-                            binding.upcomingJobsHtv.gone()
-                            binding.seeAllHtv2.gone()
                             binding.noDataUpcomingLottie.visible()
 
                         }
