@@ -24,6 +24,7 @@ import com.example.agencyphase2.viewmodel.GetProfileViewModel
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
+import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +33,6 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var accessToken: String
-    private lateinit var loader: androidx.appcompat.app.AlertDialog
     private val mGetProfileViewModel: GetProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,14 +56,14 @@ class ProfileFragment : Fragment() {
         //get token
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
 
-        loader = requireActivity().loadingDialog()
-
         //observer
         getProfileObserver()
 
+        binding.mainLay.gone()
+        binding.profileShimmerView.visible()
+        binding.profileShimmerView.startShimmer()
         if(requireActivity().isConnectedToInternet()){
             mGetProfileViewModel.getProfile(accessToken)
-            loader.show()
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
@@ -73,9 +73,11 @@ class ProfileFragment : Fragment() {
         mGetProfileViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
-                    loader.dismiss()
                     if(outcome.data?.success == true){
-                        //Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        binding.mainLay.visible()
+                        binding.profileShimmerView.gone()
+                        binding.profileShimmerView.stopShimmer()
+
                         Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                             .placeholder(R.color.color_grey)
                             .error(R.color.error_red)

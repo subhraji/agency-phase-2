@@ -5,8 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.ProfileFragment">
-
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/profile_shimmer_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/profile_shimmer_layout" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
     <ScrollView
+        android:id="@+id/main_lay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
