@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.agencyphase2.MainActivity
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityChooseLoginRegBinding
 import com.example.agencyphase2.databinding.ActivityEmailVerificationBinding
@@ -179,21 +180,16 @@ class EmailVerificationActivity : AppCompatActivity() {
                     if(outcome.data?.success == true){
                         if (outcome.data!!.token != null) {
                             outcome.data!!.token?.let {
-                                PrefManager.setKeyAuthToken(it)
 
-                                val intent = Intent(this, AskLocationActivity::class.java)
+                                PrefManager.setLogInStatus(true)
+
+                                PrefManager.setKeyAuthToken(it)
+                                val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
                         }
-                        PrefManager.setLogInStatus(true)
-
                         signUpViewModel.navigationComplete()
-
-
-                        val intent = Intent(this, AskLocationActivity::class.java)
-                        startActivity(intent)
-                        finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }

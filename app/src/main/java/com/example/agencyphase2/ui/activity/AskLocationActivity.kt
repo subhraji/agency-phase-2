@@ -9,7 +9,6 @@ import com.example.agencyphase2.databinding.ActivityAskLocationBinding
 import com.example.agencyphase2.databinding.ActivityAuthBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class AskLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAskLocationBinding
 
@@ -18,9 +17,5 @@ class AskLocationActivity : AppCompatActivity() {
         binding= ActivityAskLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.useLocBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
     }
 }
