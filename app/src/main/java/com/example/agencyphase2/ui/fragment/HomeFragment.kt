@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.HomeViewPagerAdapter
 import com.example.agencyphase2.databinding.FragmentHomeBinding
+import com.example.agencyphase2.ui.activity.AskLocationActivity
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,10 +40,10 @@ class HomeFragment : Fragment() {
 
         setUpTabLayoutWithViewPager()
 
-        /*binding.userImageView.setOnClickListener {
-            val intent = Intent(requireActivity(), JobPostActivity::class.java)
+        binding.userImageView.setOnClickListener {
+            val intent = Intent(requireActivity(), AskLocationActivity::class.java)
             startActivity(intent)
-        }*/
+        }
     }
 
     private fun setUpTabLayoutWithViewPager() {
