@@ -41,6 +41,9 @@ import com.stripe.android.paymentsheet.PaymentSheetResult
 import com.user.caregiver.*
 import dagger.hilt.android.AndroidEntryPoint
 import org.w3c.dom.Text
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 @AndroidEntryPoint
@@ -54,6 +57,10 @@ class JobPostActivity : AppCompatActivity() {
     var place_name: String = ""
     var lat: String = ""
     var lang: String = ""
+
+    private var durationHour: Int = 0
+    private var durationDay: Int = 0
+    private var durationTotalMin: Int = 0
 
     private val medicalHistoryList:MutableList<String> = mutableListOf()
     private val jobSkillList:MutableList<String> = mutableListOf()
@@ -865,4 +872,75 @@ class JobPostActivity : AppCompatActivity() {
         genderAgeList = mutableListOf()
         super.onDestroy()
     }
+
+
+    private fun getDurationHour(startDateTime: String, endDateTime: String) {
+
+        val sdf: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+
+        try {
+            val d1:Date = sdf.parse(startDateTime)
+            val d2:Date = sdf.parse(endDateTime)
+
+            val difference_In_Time = d2.time - d1.time
+
+            val difference_In_Seconds = (difference_In_Time / 1000)% 60
+
+            val difference_In_Minutes = (difference_In_Time / (1000 * 60))% 60
+
+            val difference_In_Hours = (difference_In_Time / (1000 * 60 * 60))% 24
+
+            val difference_In_Years = (difference_In_Time / (1000 * 60 * 60 * 24 * 365))
+
+            var difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24))% 365
+
+            durationDay = difference_In_Days.toInt()
+            durationHour = difference_In_Hours.toInt()
+
+            durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
+
+            if(durationHour < 0){
+                val endDateTimeArray = endDateTime.split(" ")
+                val date = endDateTimeArray[0]
+                val time = endDateTimeArray[1]
+
+                val dateArray = date.split("-")
+                val day = dateArray[0].toInt()
+                val month = dateArray[1].toInt()
+                val year = dateArray[2].toInt()
+
+                val datePlus1: LocalDate = LocalDate.of(year, month, day).plusDays(1)
+                val datePlus1Array = datePlus1.toString().split("-")
+                val new_day = datePlus1Array[2]
+                val new_month = datePlus1Array[1]
+                val new_year = datePlus1Array[0]
+                val new_end_date = new_day+"-"+new_month+"-"+new_year
+                val new_end_date_time = new_end_date+" "+time
+                Log.d("dateTime", "new year => "+new_end_date_time.toString())
+
+                getDurationHour(startDateTime,new_end_date_time)
+
+            }
+
+
+            Log.d("dateTime","duration => "+
+                    difference_In_Years.toString()+
+                    " years, "
+                    + difference_In_Days
+                    + " days, "
+                    + difference_In_Hours
+                    + " hours, "
+                    + difference_In_Minutes
+                    + " minutes, "
+                    + difference_In_Seconds
+                    + " seconds"
+            )
+        }
+
+        // Catch the Exception
+        catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+
 }
