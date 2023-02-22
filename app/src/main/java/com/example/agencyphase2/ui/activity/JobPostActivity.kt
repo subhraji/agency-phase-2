@@ -71,24 +71,10 @@ class JobPostActivity : AppCompatActivity() {
 
     private val AUTOCOMPLETE_REQUEST_CODE = 1
 
-    var SECRET_KEY =
-        "sk_test_51MQJHfL8ZKWD5NB0RSjiA2UpuyCb9IqZYIuUztJNZKkWH0f4voJn2jcqwJe52YTRtzoqm2kG9bZeVFjoRQyOumEA00n1jYW2B4"
-    var PUBLISH_KEY =
-        "pk_test_51MQJHfL8ZKWD5NB0rS94Ml3S51XA88c2Aw9GSkFmayOQM3P4ycRFE1NTKwZrhjNi9qodQCoPGe1UwQ1TpnzidFUz009qJ6u5Fj"
-    var paymentSheet: PaymentSheet? = null
-
-    var customerId: String? = null
-    var ephemeralKey: String? = null
-    var clientSecret: String? = null
-
     companion object {
         var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
     }
 
-    //viewmodel
-    private val mGetCustomerIdViewModel: GetCustomerIdViewModel by viewModels()
-    private val mGetEphemeralKeyViewModel: GetEphemeralKeyViewModel by viewModels()
-    private val mGetPaymentIntentViewModel: GetPaymentIntentViewModel by viewModels()
     private val mPostJobViewModel: PostJobViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
@@ -99,16 +85,6 @@ class JobPostActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
-
-        PaymentConfiguration.init(this, PUBLISH_KEY)
-
-        paymentSheet = PaymentSheet(
-            this
-        ) { paymentSheetResult: PaymentSheetResult? ->
-            onPaymentResult(
-                paymentSheetResult
-            )
-        }
 
         Places.initialize(applicationContext, getString(R.string.api_key))
 
@@ -129,10 +105,6 @@ class JobPostActivity : AppCompatActivity() {
 
         //observer
         jobPostObserve()
-        getCustomerIdObserve()
-        getEphemeralKeyObserve()
-        getPaymentIntentObserve()
-
     }
 
     private fun autocompleteWithIntent(){
@@ -416,7 +388,9 @@ class JobPostActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this,PaymentDetailsActivity::class.java)
+                        startActivity(intent)
                         mPostJobViewModel.navigationComplete()
                         finish()
                     }else{
@@ -620,8 +594,31 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         binding.prevNextStepBtn.setOnClickListener {
-            mGetCustomerIdViewModel.getCustomerId("Bearer ${SECRET_KEY}")
-            loader.show()
+
+            if(isConnectedToInternet()){
+                mPostJobViewModel.jobPost(
+                    binding.showJobTitleTxt.text.toString(),
+                    binding.showCareTypeTv.text.toString(),
+                    genderAgeList,
+                    date,
+                    startTime,
+                    endTime,
+                    binding.showAmountTxt.text.toString(),
+                    binding.showAddressTxt.text.toString(),
+                    binding.showJobDescTxt.text.toString(),
+                    medicalHistoryList,
+                    jobSkillList,
+                    otherReqList,
+                    checkList,
+                    place_name,
+                    lat,
+                    lang,
+                    accessToken
+                )
+                loader.show()
+            }else{
+                Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+            }
         }
 
         fillMedicalRecycler(medicalHistoryList, binding.showMedicalHisRecycler)
@@ -684,17 +681,19 @@ class JobPostActivity : AppCompatActivity() {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        Log.i("place", "Place: ${place.name}, ${place.id}, ${place.latLng}")
+                        Log.e("place", "Place: ${place.name}, ${place.id}, ${place.latLng}")
                         binding.jobLocTxt.text = place.address
                         job_address = place.address
                         place_name = place.name
 
-                        lat = place.latLng.toString()
-                        lang = place.latLng.toString()
+                        val latLangList = place.latLng.toString().split("(").toTypedArray()
+                        val final_latLangList = latLangList[1].toString().split(",").toTypedArray()
+                        lat = final_latLangList[0].toString()
+                        lang = final_latLangList[1].toString().substring(0, final_latLangList[1].length - 1)
 
-                        /*val latLangList: MutableList<List<String>> = Arrays.asList(place.latLng.toString().split(","))
-                        lat = latLangList[0].toString()
-                        lang = latLangList[1].toString()*/
+                        Log.e("place", "Lat: ${lat}")
+                        Log.e("place", "Long: ${lang}")
+
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
@@ -711,161 +710,6 @@ class JobPostActivity : AppCompatActivity() {
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    //stripe
-    private fun getCustomerIdObserve(){
-        mGetCustomerIdViewModel.response.observe(this, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    loader.dismiss()
-                    if (outcome.data?.id != null) {
-                        customerId = outcome.data?.id
-                        if(isConnectedToInternet()){
-                            mGetEphemeralKeyViewModel.getEphemeralKey(customerId!!,"Bearer $SECRET_KEY","2020-08-27")
-                            loader.show()
-                        }else{
-                            Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
-                    }
-
-                    mGetCustomerIdViewModel.navigationComplete()
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-                    loader.dismiss()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
-    }
-    private fun getEphemeralKeyObserve(){
-        mGetEphemeralKeyViewModel.response.observe(this, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    loader.dismiss()
-                    if (outcome.data?.id != null) {
-                        ephemeralKey = outcome.data?.id
-                        var amount = binding.showAmountTxt.text.toString().toInt()*100
-                        if(!amount.toString().isEmpty()){
-                            if(isConnectedToInternet()){
-                                mGetPaymentIntentViewModel.getPaymentIntent(customerId,amount.toString(),"usd","true","Bearer $SECRET_KEY")
-                                loader.show()
-                            }else{
-                                Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
-                            }
-                        }else{
-                            Toast.makeText(this,"invalid amount to pay",Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
-                    }
-                    mGetEphemeralKeyViewModel.navigationComplete()
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-                    loader.dismiss()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
-    }
-
-    private fun getPaymentIntentObserve(){
-        mGetPaymentIntentViewModel.response.observe(this, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    loader.dismiss()
-                    if (outcome.data?.id != null) {
-                        clientSecret = outcome.data?.client_secret
-                        if(isConnectedToInternet()){
-                            paymentFlow(customerId,ephemeralKey)
-                        }else{
-                            Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
-                    }
-                    mGetPaymentIntentViewModel.navigationComplete()
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-                    loader.dismiss()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
-    }
-
-    private fun paymentFlow(customer: String?,ephericalKey: String?) {
-        paymentSheet!!.presentWithPaymentIntent(
-            clientSecret!!, PaymentSheet.Configuration(
-                "peaceworc",
-                PaymentSheet.CustomerConfiguration(
-                    customer!!,
-                    ephericalKey!!
-                )
-            )
-        )
-    }
-
-    private fun showPaymentFailedDialog(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Payment Failed")
-        builder.setMessage("Your Payment has been failed, Please try again to post the job.")
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
-        builder.setPositiveButton("Ok, thank you"){dialogInterface, which ->
-
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
-
-    private fun onPaymentResult(paymentSheetResult: PaymentSheetResult?) {
-
-        if (paymentSheetResult is PaymentSheetResult.Completed) {
-            Toast.makeText(this, "Payment Successful.", Toast.LENGTH_SHORT).show()
-            if(isConnectedToInternet()){
-
-                mPostJobViewModel.jobPost(
-                    binding.showJobTitleTxt.text.toString(),
-                    binding.showCareTypeTv.text.toString(),
-                    genderAgeList,
-                    date,
-                    startTime,
-                    endTime,
-                    binding.showAmountTxt.text.toString(),
-                    binding.showAddressTxt.text.toString(),
-                    binding.showJobDescTxt.text.toString(),
-                    medicalHistoryList,
-                    jobSkillList,
-                    otherReqList,
-                    checkList,
-                    place_name,
-                    lat,
-                    lang,
-                    accessToken
-                )
-                loader.show()
-
-            }else{
-                Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
-            }
-            binding.prevNextStepBtn.gone()
-
-        }else{
-            Toast.makeText(this, "Woops! Payment Failed.", Toast.LENGTH_SHORT).show()
-            showPaymentFailedDialog()
-        }
     }
 
     override fun onDestroy() {

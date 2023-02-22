@@ -14,6 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.user.caregiver.gone
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -51,10 +52,8 @@ class AskLocationActivity : AppCompatActivity() {
             Toast.makeText(this,"clicked...",Toast.LENGTH_SHORT).show()
             getDurationHour(startDateTime, endDateTime)
         }
+
     }
-
-
-
 
     private fun getDurationHour(startDateTime: String, endDateTime: String) {
 

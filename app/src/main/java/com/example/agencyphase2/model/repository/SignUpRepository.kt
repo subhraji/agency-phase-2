@@ -16,8 +16,9 @@ class SignUpRepository @Inject constructor(private val apiInterface: ApiInterfac
         name: String,
         email: String,
         password: String,
-        con_password: String
+        con_password: String,
+        token: String
     ): Flow<SignUpResponse?> = flow{
-        emit(apiInterface.signup(SignUpRequest(otp,company_name,name,email,password,con_password)))
+        emit(apiInterface.signup(SignUpRequest(otp,company_name,name,email,password,con_password,token)))
     }.flowOn(Dispatchers.IO)
 }

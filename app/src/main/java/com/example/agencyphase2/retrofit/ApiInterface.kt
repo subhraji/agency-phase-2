@@ -31,6 +31,8 @@ import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
 import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
+import com.example.agencyphase2.model.pojo.save_payment.SavePaymentRequest
+import com.example.agencyphase2.model.pojo.save_payment.SavePaymentResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
 import okhttp3.MultipartBody
@@ -152,4 +154,10 @@ interface ApiInterface {
     suspend fun getCompletedJob(
         @Header("Authorization") token: String,
     ): GetCompleteJobsResponse?
+
+    @POST("payment/save-payment-details")
+    suspend fun savePayment(
+        @Body body: SavePaymentRequest?,
+        @Header("Authorization") token: String,
+    ): SavePaymentResponse?
 }
