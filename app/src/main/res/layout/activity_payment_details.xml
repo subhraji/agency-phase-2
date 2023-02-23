@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.PaymentDetailsActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/payment_summary_htv"
             android:layout_width="wrap_content"
@@ -27,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:text="Subtotal"
+            android:text="Caregiver charge"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="Total"
+            android:text="Total amount"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,16 +96,16 @@
             app:layout_constraintTop_toBottomOf="@+id/peaceworc_charge_htv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.cardview.widget.CardView
+        android:id="@+id/pay_now_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:cardBackgroundColor="@color/theme_blue"
+        app:cardBackgroundColor="@color/black"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp">
         <TextView
             android:id="@+id/pay_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pay now"
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:textSize="16sp"/>

@@ -390,6 +390,8 @@ class JobPostActivity : AppCompatActivity() {
                     if(outcome.data?.success == true){
                         //Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         val intent = Intent(this,PaymentDetailsActivity::class.java)
+                        intent.putExtra("amount",outcome.data?.data!!.amount)
+                        intent.putExtra("job_id",outcome.data?.data!!.id.toString())
                         startActivity(intent)
                         mPostJobViewModel.navigationComplete()
                         finish()

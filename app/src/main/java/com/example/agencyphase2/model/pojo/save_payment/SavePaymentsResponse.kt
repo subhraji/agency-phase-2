@@ -1,6 +1,6 @@
 package com.example.agencyphase2.model.pojo.save_payment
 
-data class SavePaymentResponse(
+data class SavePaymentsResponse(
     val `data`: Any,
     val http_status_code: Int,
     val message: String,

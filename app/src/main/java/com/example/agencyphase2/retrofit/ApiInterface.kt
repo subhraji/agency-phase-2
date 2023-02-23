@@ -16,12 +16,9 @@ import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
 import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
-import com.example.agencyphase2.model.pojo.get_customer_id.GetCustomerIdResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
-import com.example.agencyphase2.model.pojo.get_ephemeral_key.GetEphemeralKeyResponse
 import com.example.agencyphase2.model.pojo.get_ongoing_job.GetOngoingJobsResponse
-import com.example.agencyphase2.model.pojo.get_payment_intent.GetPaymentIntentResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
 import com.example.agencyphase2.model.pojo.get_profile.GetProfileResponse
 import com.example.agencyphase2.model.pojo.get_upcomming_jobs.GetUpcommingJobResponse
@@ -32,7 +29,7 @@ import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
 import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
 import com.example.agencyphase2.model.pojo.save_payment.SavePaymentRequest
-import com.example.agencyphase2.model.pojo.save_payment.SavePaymentResponse
+import com.example.agencyphase2.model.pojo.save_payment.SavePaymentsResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
 import okhttp3.MultipartBody
@@ -159,5 +156,5 @@ interface ApiInterface {
     suspend fun savePayment(
         @Body body: SavePaymentRequest?,
         @Header("Authorization") token: String,
-    ): SavePaymentResponse?
+    ): SavePaymentsResponse?
 }

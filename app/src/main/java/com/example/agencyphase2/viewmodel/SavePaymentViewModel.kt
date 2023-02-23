@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.agencyphase2.model.pojo.save_payment.SavePaymentResponse
+import com.example.agencyphase2.model.pojo.save_payment.SavePaymentsResponse
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.model.repository.SavePaymentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,16 +15,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SavePaymentViewModel @Inject constructor(private val repository: SavePaymentRepository) : ViewModel() {
-    private var _response = MutableLiveData<Outcome<SavePaymentResponse?>?>()
-    val response: LiveData<Outcome<SavePaymentResponse?>?> = _response
+    private var _response = MutableLiveData<Outcome<SavePaymentsResponse?>?>()
+    val response: LiveData<Outcome<SavePaymentsResponse?>?> = _response
 
     fun savePayment(
         job_id: Int,
-        amount: String,
+        amount: Double,
         customer_id: String,
-        caregiver_charge: String,
-        peaceworc_percentage: String,
-        peaceworc_charge: String,
+        caregiver_charge: Double,
+        peaceworc_percentage: Double,
+        peaceworc_charge: Double,
         Payment_status: String,
         token: String
     ) = viewModelScope.launch {

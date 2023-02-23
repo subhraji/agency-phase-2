@@ -43,13 +43,31 @@ class PaymentDetailsActivity : AppCompatActivity() {
     private val mGetPaymentIntentViewModel: GetPaymentIntentViewModel by viewModels()
     private val mSavePaymentViewModel: SavePaymentViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
-    private lateinit var total_amount: String
     private lateinit var accessToken: String
+    private var amount: String? = null
+    private var totalAmount: Int? = null
+    private var percentage: Double? = null
+    private var job_id: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityPaymentDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val extras = intent.extras
+        if (extras != null) {
+            amount = intent?.getStringExtra("amount")!!
+            job_id = intent?.getStringExtra("job_id")!!
+        }
+
+        amount?.let {
+            percentage= (amount!!.toInt()*10).toFloat()/100.00
+            binding.peaceworcChargeTv.text = "$"+percentage.toString()
+            binding.subTotalTv.text = "$"+amount.toString()
+            binding.totalTv.text = "$"+(amount!!.toFloat()+percentage!!).toString()
+            binding.payBtn.text = "Pay now $${(amount!!.toFloat()+percentage!!)}"
+            totalAmount = ((amount!!.toFloat()+percentage!!)*100).toInt()
+        }
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
@@ -64,9 +82,22 @@ class PaymentDetailsActivity : AppCompatActivity() {
             )
         }
 
-        binding.payBtn.setOnClickListener {
+        binding.payNowBtn.setOnClickListener {
             if(isConnectedToInternet()){
                 mGetCustomerIdViewModel.getCustomerId("Bearer ${SECRET_KEY}")
+
+                /*mSavePaymentViewModel.savePayment(
+                    13,
+                    100.00,
+                    "customerId",
+                    80.00,
+                    10.00,
+                    20.00,
+                    "success",
+                    accessToken
+                )
+                loader.show()*/
+
             }else{
                 Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
             }
@@ -116,10 +147,9 @@ class PaymentDetailsActivity : AppCompatActivity() {
                     loader.dismiss()
                     if (outcome.data?.id != null) {
                         ephemeralKey = outcome.data?.id
-                        var amount = total_amount.toInt()*10
-                        if(!amount.toString().isEmpty()){
+                        if(!totalAmount.toString().isEmpty()){
                             if(isConnectedToInternet()){
-                                mGetPaymentIntentViewModel.getPaymentIntent(customerId,amount.toString(),"usd","true","Bearer $SECRET_KEY")
+                                mGetPaymentIntentViewModel.getPaymentIntent(customerId,totalAmount.toString(),"usd","true","Bearer $SECRET_KEY")
                                 loader.show()
                             }else{
                                 Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
@@ -176,20 +206,26 @@ class PaymentDetailsActivity : AppCompatActivity() {
             when(outcome){
                 is Outcome.Success ->{
                     loader.dismiss()
-                    if(outcome.data?.success == true){
+                    /*if(outcome.data?.success == true){
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                    }
-                    mSavePaymentViewModel.navigationComplete()
+                    }*/
+                    Toast.makeText(this,outcome.data!!.message.toString(), Toast.LENGTH_SHORT).show()
+
+
                 }
                 is Outcome.Failure<*> -> {
+                    Toast.makeText(this,mSavePaymentViewModel.response.value.toString(), Toast.LENGTH_SHORT).show()
+
                     Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
                     loader.dismiss()
 
                     outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
+                    Log.i("status",outcome.e.cause?.message.toString())
+                    Log.i("status",outcome.e.message.toString())
+
                 }
             }
         })
@@ -201,7 +237,17 @@ class PaymentDetailsActivity : AppCompatActivity() {
         builder.setMessage("Your Payment has been failed, Please try again to post the job.")
         builder.setIcon(android.R.drawable.ic_dialog_alert)
         builder.setPositiveButton("Ok, thank you"){dialogInterface, which ->
-
+            mSavePaymentViewModel.savePayment(
+                job_id!!.toInt(),
+                (amount!!.toFloat()+percentage!!).toDouble(),
+                customerId.toString(),
+                amount!!.toDouble(),
+                10.00,
+                percentage!!.toDouble(),
+                "fail",
+                accessToken
+            )
+            loader.show()
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
@@ -213,13 +259,13 @@ class PaymentDetailsActivity : AppCompatActivity() {
         if (paymentSheetResult is PaymentSheetResult.Completed) {
             Toast.makeText(this, "Payment Successful.", Toast.LENGTH_SHORT).show()
             mSavePaymentViewModel.savePayment(
-                0,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
+                job_id!!.toInt(),
+                (amount!!.toFloat()+percentage!!).toDouble(),
+                customerId.toString(),
+                amount!!.toDouble(),
+                10.00,
+                percentage!!.toDouble(),
+                "success",
                 accessToken
             )
             loader.show()
