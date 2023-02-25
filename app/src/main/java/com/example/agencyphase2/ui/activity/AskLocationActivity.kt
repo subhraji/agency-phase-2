@@ -1,27 +1,30 @@
 package com.example.agencyphase2.ui.activity
 
 import android.app.TimePickerDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import com.example.agencyphase2.MainActivity
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityAskLocationBinding
-import com.example.agencyphase2.databinding.ActivityAuthBinding
+import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.viewmodel.UpdatePaymentStatusViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.user.caregiver.gone
-import com.user.caregiver.visible
+import com.user.caregiver.isConnectedToInternet
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
+@AndroidEntryPoint
 class AskLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAskLocationBinding
+    private val mUpdatePaymentStatusViewModel: UpdatePaymentStatusViewModel by viewModels()
+    private lateinit var accessToken: String
 
     var date:String = ""
     var startTime:String = ""
@@ -41,6 +44,8 @@ class AskLocationActivity : AppCompatActivity() {
         binding= ActivityAskLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //get token
+        accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
         binding.useLocBtn.setOnClickListener {
             showDateTimeBottomSheet()
@@ -53,6 +58,19 @@ class AskLocationActivity : AppCompatActivity() {
             getDurationHour(startDateTime, endDateTime)
         }
 
+        //observe
+        updatePaymentStatusObserve()
+
+        mUpdatePaymentStatusViewModel.updatePaymentStatus(
+            16,
+            110.00,
+            "vxss_hHgdbcv",
+            10.00,
+            10,
+            10.00,
+            1,
+            accessToken
+        )
     }
 
     private fun getDurationHour(startDateTime: String, endDateTime: String) {
@@ -277,6 +295,27 @@ class AskLocationActivity : AppCompatActivity() {
         builder.append(picker.getYear())
 
         return builder.toString()
+    }
+
+    private fun updatePaymentStatusObserve(){
+        mUpdatePaymentStatusViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    //loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
     }
 
 }

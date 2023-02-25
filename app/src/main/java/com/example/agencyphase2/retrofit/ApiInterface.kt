@@ -32,6 +32,8 @@ import com.example.agencyphase2.model.pojo.save_payment.SavePaymentRequest
 import com.example.agencyphase2.model.pojo.save_payment.SavePaymentsResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
+import com.example.agencyphase2.model.pojo.update_payment_status.UpdatePaymentStatusRequest
+import com.example.agencyphase2.model.pojo.update_payment_status.UpdatePaymentStatusResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -157,4 +159,10 @@ interface ApiInterface {
         @Body body: SavePaymentRequest?,
         @Header("Authorization") token: String,
     ): SavePaymentsResponse?
+
+    @POST("payment/update-status")
+    suspend fun updatePaymentStatus(
+        @Body body: UpdatePaymentStatusRequest?,
+        @Header("Authorization") token: String,
+    ): UpdatePaymentStatusResponse?
 }

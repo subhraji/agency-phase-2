@@ -388,7 +388,7 @@ class JobPostActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        //Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,outcome.data!!.message.toString(), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this,PaymentDetailsActivity::class.java)
                         intent.putExtra("amount",outcome.data?.data!!.amount)
                         intent.putExtra("job_id",outcome.data?.data!!.id.toString())

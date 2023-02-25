@@ -12,10 +12,7 @@ import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.databinding.ActivityPaymentDetailsBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.viewmodel.GetCustomerIdViewModel
-import com.example.agencyphase2.viewmodel.GetEphemeralKeyViewModel
-import com.example.agencyphase2.viewmodel.GetPaymentIntentViewModel
-import com.example.agencyphase2.viewmodel.SavePaymentViewModel
+import com.example.agencyphase2.viewmodel.*
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -41,7 +38,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
     private val mGetCustomerIdViewModel: GetCustomerIdViewModel by viewModels()
     private val mGetEphemeralKeyViewModel: GetEphemeralKeyViewModel by viewModels()
     private val mGetPaymentIntentViewModel: GetPaymentIntentViewModel by viewModels()
-    private val mSavePaymentViewModel: SavePaymentViewModel by viewModels()
+    private val mUpdatePaymentStatusViewModel: UpdatePaymentStatusViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var accessToken: String
     private var amount: String? = null
@@ -56,16 +53,40 @@ class PaymentDetailsActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if (extras != null) {
-            amount = intent?.getStringExtra("amount")!!
+            amount = intent?.getStringExtra("amount")!!+".00"
             job_id = intent?.getStringExtra("job_id")!!
         }
 
         amount?.let {
-            percentage= (amount!!.toInt()*10).toFloat()/100.00
-            binding.peaceworcChargeTv.text = "$"+percentage.toString()
-            binding.subTotalTv.text = "$"+amount.toString()
-            binding.totalTv.text = "$"+(amount!!.toFloat()+percentage!!).toString()
-            binding.payBtn.text = "Pay now $${(amount!!.toFloat()+percentage!!)}"
+            percentage= (amount!!.toDouble()*10).toFloat()/100.00
+            val percentList = percentage.toString().split(".").toTypedArray()
+            val p1 = percentList[0]
+            var p2 = percentList[1]
+            if(percentList[1].toDouble()<10.00){
+                p2 = percentList[1]+"0"
+            }
+
+            /*val amountList = amount.toString().split(".").toTypedArray()
+            val a1 = amountList[0]
+            var a2 = amountList[1]
+            if(amountList[1].toDouble()<10.00){
+                a2 = amountList[1]+"0"
+            }*/
+
+            val totalList = (amount!!.toFloat()+percentage!!).toString().split(".").toTypedArray()
+            val t1 = totalList[0]
+            var t2 = totalList[1]
+            if(totalList[1].toDouble()<10.00){
+                t2 = totalList[1]+"0"
+            }
+
+            binding.peaceworcChargeTv.text = "$${p1}.${p2}"
+            binding.subTotalTv.text = amount.toString()
+            binding.totalTv.text = "$${t1}.${t2}"
+            //binding.totalTv.text = (amount!!.toFloat()+percentage!!).toString()
+            binding.payBtn.text = "$${t1}.${t2}"
+            //binding.totalTv.text = (amount!!.toFloat()+percentage!!).toString()
+
             totalAmount = ((amount!!.toFloat()+percentage!!)*100).toInt()
         }
 
@@ -84,20 +105,8 @@ class PaymentDetailsActivity : AppCompatActivity() {
 
         binding.payNowBtn.setOnClickListener {
             if(isConnectedToInternet()){
-                mGetCustomerIdViewModel.getCustomerId("Bearer ${SECRET_KEY}")
-
-                /*mSavePaymentViewModel.savePayment(
-                    13,
-                    100.00,
-                    "customerId",
-                    80.00,
-                    10.00,
-                    20.00,
-                    "success",
-                    accessToken
-                )
-                loader.show()*/
-
+                mGetCustomerIdViewModel.getCustomerId("Bearer $SECRET_KEY")
+                loader.show()
             }else{
                 Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
             }
@@ -202,23 +211,20 @@ class PaymentDetailsActivity : AppCompatActivity() {
     }
 
     private fun savePaymentObserve(){
-        mSavePaymentViewModel.response.observe(this, Observer { outcome ->
+        mUpdatePaymentStatusViewModel.response.observe(this, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
                     loader.dismiss()
-                    /*if(outcome.data?.success == true){
+                    if(outcome.data?.success == true){
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                    }*/
+                    }
                     Toast.makeText(this,outcome.data!!.message.toString(), Toast.LENGTH_SHORT).show()
-
 
                 }
                 is Outcome.Failure<*> -> {
-                    Toast.makeText(this,mSavePaymentViewModel.response.value.toString(), Toast.LENGTH_SHORT).show()
-
                     Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
                     loader.dismiss()
 
@@ -237,14 +243,14 @@ class PaymentDetailsActivity : AppCompatActivity() {
         builder.setMessage("Your Payment has been failed, Please try again to post the job.")
         builder.setIcon(android.R.drawable.ic_dialog_alert)
         builder.setPositiveButton("Ok, thank you"){dialogInterface, which ->
-            mSavePaymentViewModel.savePayment(
+            mUpdatePaymentStatusViewModel.updatePaymentStatus(
                 job_id!!.toInt(),
                 (amount!!.toFloat()+percentage!!).toDouble(),
                 customerId.toString(),
                 amount!!.toDouble(),
-                10.00,
+                10,
                 percentage!!.toDouble(),
-                "fail",
+                0,
                 accessToken
             )
             loader.show()
@@ -258,14 +264,14 @@ class PaymentDetailsActivity : AppCompatActivity() {
 
         if (paymentSheetResult is PaymentSheetResult.Completed) {
             Toast.makeText(this, "Payment Successful.", Toast.LENGTH_SHORT).show()
-            mSavePaymentViewModel.savePayment(
+            mUpdatePaymentStatusViewModel.updatePaymentStatus(
                 job_id!!.toInt(),
                 (amount!!.toFloat()+percentage!!).toDouble(),
                 customerId.toString(),
                 amount!!.toDouble(),
-                10.00,
+                10,
                 percentage!!.toDouble(),
-                "success",
+                1,
                 accessToken
             )
             loader.show()

@@ -56,7 +56,6 @@ object PrefManager {
             mEditor.putInt(key, it)
             mEditor.commit()
         }
-
     }
 
     fun putBoolean(key: String, value: Boolean?) {
