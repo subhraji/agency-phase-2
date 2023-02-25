@@ -66,13 +66,6 @@ class PaymentDetailsActivity : AppCompatActivity() {
                 p2 = percentList[1]+"0"
             }
 
-            /*val amountList = amount.toString().split(".").toTypedArray()
-            val a1 = amountList[0]
-            var a2 = amountList[1]
-            if(amountList[1].toDouble()<10.00){
-                a2 = amountList[1]+"0"
-            }*/
-
             val totalList = (amount!!.toFloat()+percentage!!).toString().split(".").toTypedArray()
             val t1 = totalList[0]
             var t2 = totalList[1]
@@ -83,10 +76,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
             binding.peaceworcChargeTv.text = "$${p1}.${p2}"
             binding.subTotalTv.text = amount.toString()
             binding.totalTv.text = "$${t1}.${t2}"
-            //binding.totalTv.text = (amount!!.toFloat()+percentage!!).toString()
             binding.payBtn.text = "$${t1}.${t2}"
-            //binding.totalTv.text = (amount!!.toFloat()+percentage!!).toString()
-
             totalAmount = ((amount!!.toFloat()+percentage!!)*100).toInt()
         }
 
