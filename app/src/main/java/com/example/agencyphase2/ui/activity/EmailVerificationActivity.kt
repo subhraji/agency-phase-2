@@ -65,8 +65,6 @@ class EmailVerificationActivity : AppCompatActivity() {
         binding.resendTv.gone()
 
         binding.backBtn.setOnClickListener {
-            val intent = Intent(this, ChooseLoginRegActivity::class.java)
-            startActivity(intent)
             finish()
         }
 
@@ -199,6 +197,7 @@ class EmailVerificationActivity : AppCompatActivity() {
 
                                 PrefManager.setKeyAuthToken(it)
                                 val intent = Intent(this, MainActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                                 finish()
                             }

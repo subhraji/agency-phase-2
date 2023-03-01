@@ -94,7 +94,6 @@ class LoginFragment : Fragment() {
         binding.register.setOnClickListener {
             val intent = Intent(requireActivity(), SignUpActivity::class.java)
             startActivity(intent)
-            requireActivity().finish()
         }
 
         binding.forgotPassword.setOnClickListener {

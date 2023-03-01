@@ -219,7 +219,6 @@ class SignUpActivity : AppCompatActivity() {
                         intent.putExtra("password",binding.passwordTxt.text.toString())
                         intent.putExtra("con_password",binding.conPasswordTxt.text.toString())
                         startActivity(intent)
-                        finish()
                         mGetEmailVerificationOtpViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
