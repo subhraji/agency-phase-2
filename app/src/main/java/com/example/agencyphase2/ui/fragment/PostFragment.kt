@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.PostJobsAdapter
 import com.example.agencyphase2.databinding.FragmentPostBinding
-import com.example.agencyphase2.model.pojo.get_post_jobs.Data
+import com.example.agencyphase2.model.pojo.get_post_jobs.DataX
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.PrefManager
@@ -38,6 +38,8 @@ class PostFragment : Fragment() {
     private val mGetPostJobsViewModel: GetPostJobsViewModel by viewModels()
     private val mGetProfileCompletionStatusViewModel: GetProfileCompletionStatusViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
+
+    private var pageNumber = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +81,7 @@ class PostFragment : Fragment() {
     override fun onResume() {
 
         if(requireActivity().isConnectedToInternet()){
-            mGetPostJobsViewModel.getPostJobs(accessToken,0)
+            mGetPostJobsViewModel.getPostJobs(accessToken,0, pageNumber)
             binding.postJobsShimmerView.visible()
             binding.postJobsShimmerView.startShimmer()
             binding.postJobCardBtn.gone()
@@ -103,11 +105,11 @@ class PostFragment : Fragment() {
                     binding.postJobsShimmerView.stopShimmer()
                     binding.postJobsShimmerView.gone()
                     if(outcome.data?.success == true){
-                        if(outcome.data?.data != null && outcome.data?.data?.size != 0){
+                        if(outcome.data?.data != null && outcome.data?.data?.data?.size != 0){
                             binding.postJobsRecycler.visible()
                             binding.textView1.gone()
                             binding.postJobCardBtn.gone()
-                            fillRecyclerView(outcome.data?.data!!)
+                            fillRecyclerView(outcome.data?.data?.data!!)
                         }else{
                             binding.postJobsRecycler.gone()
                             binding.textView1.visible()
@@ -128,7 +130,7 @@ class PostFragment : Fragment() {
         })
     }
 
-    private fun fillRecyclerView(list: List<Data>) {
+    private fun fillRecyclerView(list: List<DataX>) {
         val linearlayoutManager = LinearLayoutManager(activity)
         binding.postJobsRecycler.apply {
             layoutManager = linearlayoutManager

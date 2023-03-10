@@ -1,25 +1,17 @@
 package com.example.agencyphase2.model.pojo.get_post_jobs
 
 data class Data(
-    val address: String,
-    val amount: String,
-    val care_items: List<CareItem>,
-    val care_type: String,
-    val check_list: List<Any>,
-    val created_at: String,
-    val date: String,
-    val description: String,
-    val end_time: String,
-    val experties: List<Any>,
-    val id: Int,
-    val medical_history: List<String>,
-    val other_requirements: List<Any>,
-    val start_time: String,
-    val title: String,
-    val updated_at: String,
-    val user_id: Int,
-    val status: String?,
-    val short_address: String,
-    val lat: String,
-    val long: String
+    val current_page: Int,
+    val `data`: List<DataX>,
+    val first_page_url: String,
+    val from: Int,
+    val last_page: Int,
+    val last_page_url: String,
+    val links: List<Link>,
+    val next_page_url: Any,
+    val path: String,
+    val per_page: String,
+    val prev_page_url: Any,
+    val to: Int,
+    val total: Int
 )

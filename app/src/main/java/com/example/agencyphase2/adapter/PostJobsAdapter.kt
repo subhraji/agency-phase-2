@@ -8,13 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
-import com.example.agencyphase2.model.pojo.get_post_jobs.Data
+import com.example.agencyphase2.model.pojo.get_post_jobs.DataX
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
-class PostJobsAdapter (private val itemList: List<Data>,
+class PostJobsAdapter (private val itemList: List<DataX>,
                        private val context: Context):
     RecyclerView.Adapter<PostJobsAdapter.ViewHolder>() {
 
@@ -40,7 +38,7 @@ class PostJobsAdapter (private val itemList: List<Data>,
     class ViewHolder(private val itemBinding: PostJobsItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         private lateinit var gen:String
-        fun bind(data: Data, context: Context) {
+        fun bind(data: DataX, context: Context) {
 
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()

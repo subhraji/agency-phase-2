@@ -19,9 +19,10 @@ class GetCompleteJobViewModel @Inject constructor(private val repository: GetCom
     val response: LiveData<Outcome<GetCompleteJobsResponse?>?> = _response
 
     fun getCompleteJob(
-        token: String
+        token: String,
+        page: Int
     ) = viewModelScope.launch {
-        repository.getCompleteJob(token).onStart {
+        repository.getCompleteJob(token, page).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

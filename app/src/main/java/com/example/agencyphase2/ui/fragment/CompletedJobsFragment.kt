@@ -29,6 +29,8 @@ class CompletedJobsFragment : Fragment() {
     private val mGetCompleteJobViewModel: GetCompleteJobViewModel by viewModels()
     private lateinit var accessToken: String
 
+    private var pageNumber = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
@@ -57,7 +59,7 @@ class CompletedJobsFragment : Fragment() {
         binding.noDataLottie.gone()
 
         if(requireActivity().isConnectedToInternet()){
-            mGetCompleteJobViewModel.getCompleteJob(accessToken)
+            mGetCompleteJobViewModel.getCompleteJob(accessToken, pageNumber)
         }else{
             Toast.makeText(requireActivity(),"No internet connection.",Toast.LENGTH_SHORT).show()
         }

@@ -11,8 +11,9 @@ import javax.inject.Inject
 class GetPostJobsRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun getPostJobs(
         token: String,
-        id: Int? = null
+        id: Int? = null,
+        page: Int
     ): Flow<GetPostJobsResponse?> = flow{
-        emit(apiInterface.getPostJobs(token, id))
+        emit(apiInterface.getPostJobs(token, id, page))
     }.flowOn(Dispatchers.IO)
 }

@@ -94,6 +94,7 @@ interface ApiInterface {
     suspend fun getPostJobs(
         @Header("Authorization") token: String,
         @Query("id") id: Int? = null,
+        @Query("page") page: Int
     ): GetPostJobsResponse?
 
     @GET("information/status")
@@ -152,6 +153,7 @@ interface ApiInterface {
     @GET("job/completed-job/get")
     suspend fun getCompletedJob(
         @Header("Authorization") token: String,
+        @Query("page") page: Int?,
     ): GetCompleteJobsResponse?
 
     @POST("payment/save-payment-details")
