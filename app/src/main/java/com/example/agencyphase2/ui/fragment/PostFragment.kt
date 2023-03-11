@@ -20,6 +20,7 @@ import com.example.agencyphase2.databinding.FragmentPostBinding
 import com.example.agencyphase2.model.pojo.get_post_jobs.DataX
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.*
+import com.example.agencyphase2.utils.PaginationScrollListener
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
@@ -39,7 +40,10 @@ class PostFragment : Fragment() {
     private val mGetProfileCompletionStatusViewModel: GetProfileCompletionStatusViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
-    private var pageNumber = 1
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
+    var page_no = 1
+    lateinit var adapter: PostJobsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,19 +78,21 @@ class PostFragment : Fragment() {
         //shimmer
         binding.postJobsShimmerView.gone()
 
-        //observer
-        //getProfileCompletionStatusObserver()
+        onScrollLister()
     }
 
     override fun onResume() {
 
         if(requireActivity().isConnectedToInternet()){
-            mGetPostJobsViewModel.getPostJobs(accessToken,0, pageNumber)
+            adapter = PostJobsAdapter(mutableListOf(),requireActivity())
+            binding.postJobsRecycler.adapter = adapter
             binding.postJobsShimmerView.visible()
             binding.postJobsShimmerView.startShimmer()
             binding.postJobCardBtn.gone()
             binding.textView1.gone()
             binding.postJobsRecycler.gone()
+            page_no = 1
+            mGetPostJobsViewModel.getPostJobs(accessToken,0, page_no)
         }else{
             Toast.makeText(requireActivity(),"No internet connection.", Toast.LENGTH_SHORT).show()
         }
@@ -96,6 +102,26 @@ class PostFragment : Fragment() {
         getProfileCompletionStatusObserver()
 
         super.onResume()
+    }
+
+    private fun onScrollLister(){
+        val layoutManager = LinearLayoutManager(requireActivity())
+        binding.postJobsRecycler.layoutManager = layoutManager
+        binding.postJobsRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                page_no++
+                mGetPostJobsViewModel.getPostJobs(accessToken,0, page_no)
+            }
+        })
     }
 
     private fun getPostJobsObserve(){
@@ -109,11 +135,15 @@ class PostFragment : Fragment() {
                             binding.postJobsRecycler.visible()
                             binding.textView1.gone()
                             binding.postJobCardBtn.gone()
-                            fillRecyclerView(outcome.data?.data?.data!!)
+                            //fillRecyclerView(outcome.data?.data?.data!!)
+                            isLoading = false
+                            adapter.add(outcome.data?.data?.data!!)
                         }else{
-                            binding.postJobsRecycler.gone()
-                            binding.textView1.visible()
-                            binding.postJobCardBtn.visible()
+                            if(page_no == 1){
+                                binding.postJobsRecycler.gone()
+                                binding.textView1.visible()
+                                binding.postJobCardBtn.visible()
+                            }
                         }
                         mGetPostJobsViewModel.navigationComplete()
                     }else{
@@ -136,7 +166,7 @@ class PostFragment : Fragment() {
             layoutManager = linearlayoutManager
             setHasFixedSize(true)
             isFocusable = false
-            adapter = PostJobsAdapter(list,requireActivity())
+            adapter = PostJobsAdapter(list.toMutableList(),requireActivity())
         }
     }
 

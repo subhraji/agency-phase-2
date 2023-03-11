@@ -12,7 +12,7 @@ import com.example.agencyphase2.model.pojo.get_post_jobs.DataX
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
 import java.util.*
 
-class PostJobsAdapter (private val itemList: List<DataX>,
+class PostJobsAdapter (private val itemList: MutableList<DataX>,
                        private val context: Context):
     RecyclerView.Adapter<PostJobsAdapter.ViewHolder>() {
 
@@ -27,6 +27,11 @@ class PostJobsAdapter (private val itemList: List<DataX>,
 
     override fun getItemCount(): Int {
         return itemList.size
+    }
+
+    fun add(jobs: List<DataX>) {
+        itemList.addAll(jobs)
+        notifyItemInserted(itemList.size-1)
     }
 
     override fun onBindViewHolder(holder: PostJobsAdapter.ViewHolder, position: Int) {
