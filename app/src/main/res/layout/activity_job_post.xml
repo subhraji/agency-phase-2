@@ -32,7 +32,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -117,9 +118,9 @@
                             android:background="@color/transparent"
                             android:hint="Job title"
                             android:inputType="textEmailAddress|textCapWords"
+                            android:minLines="2"
                             android:singleLine="true"
                             android:textColor="@color/black"
-                            android:minLines="2"
                             android:textColorHint="@color/text_grey"
                             android:textCursorDrawable="@null"
                             android:textSize="14sp" />
@@ -163,8 +164,8 @@
                             android:background="@color/transparent"
                             android:paddingTop="15dp"
                             android:paddingBottom="15dp"
-                            android:textColor="@color/white"
                             android:text="Select care type"
+                            android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -190,9 +191,9 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:visibility="gone"
                         android:background="@drawable/job_post_txt_bg"
-                        android:backgroundTint="@color/black">
+                        android:backgroundTint="@color/black"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/add_img"
@@ -214,10 +215,10 @@
                             android:background="@color/transparent"
                             android:paddingTop="15dp"
                             android:paddingBottom="15dp"
+                            android:text="Add Patient"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:text="Add Patient"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/add_patient_arrow"
                             app:layout_constraintStart_toEndOf="@+id/add_img"
@@ -237,7 +238,62 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/care_type_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/add_patient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/job_preview_background"
+                        android:backgroundTint="@color/black"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp">
+
+                        <ImageView
+                            android:id="@+id/add_btn"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@color/transparent"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:text="Add patient details"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/arrow_forward_1"
+                            app:layout_constraintStart_toEndOf="@+id/add_btn"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/arrow_forward_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_time_btn"
                         android:layout_width="match_parent"
@@ -366,8 +422,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@color/transparent"
-                            android:hint="Type Remittance"
                             android:digits="0123456789"
+                            android:hint="Type Remittance"
                             android:inputType="number"
                             android:maxLength="6"
                             android:paddingTop="25dp"
@@ -489,7 +545,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -567,7 +624,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/medical_recycler"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="match_parent" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -631,7 +688,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/expertise_recycler"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="match_parent" />
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -694,7 +751,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/other_requirement_recycler"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="match_parent" />
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -756,7 +813,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/checklist_recycler"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="match_parent" />
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -936,32 +993,17 @@
                         app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
                         app:layout_constraintTop_toBottomOf="@+id/show_job_title_txt_lay">
 
-                        <RelativeLayout
-                            android:id="@+id/care_type_htv_lay_2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                        <ImageView
+                            android:id="@+id/care_type_img_2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            app:tint="@color/white"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/care_type_img_2"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/ic_senior_49"
-                                app:tint="@color/white" />
-
-                            <TextView
-                                android:id="@+id/show_care_type_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/care_type_img_2"
-                                android:layout_centerHorizontal="true"
-                                android:text="Senior Care"
-                                android:textColor="@color/white"
-                                android:textSize="15sp" />
-                        </RelativeLayout>
+                            android:layout_marginStart="10dp"/>
 
                         <TextView
                             android:id="@+id/show_add_care_type_htv"
@@ -978,7 +1020,7 @@
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/edit_gender_age_btn"
-                            app:layout_constraintStart_toEndOf="@+id/care_type_htv_lay_2"
+                            app:layout_constraintStart_toEndOf="@+id/care_type_img_2"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
@@ -999,6 +1041,61 @@
                         app:layout_constraintTop_toBottomOf="@+id/cons_lay_1" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/show_add_patient"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/job_preview_background"
+                        android:backgroundTint="@color/black"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        app:layout_constraintEnd_toEndOf="@+id/show_job_title_txt_lay"
+                        app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
+                        app:layout_constraintTop_toBottomOf="@+id/show_gender_age_recycler">
+                        <ImageView
+                            android:id="@+id/show_add_btn"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            app:tint="@color/white"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@color/transparent"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:text="Add patient details"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/arrow_forward"
+                            app:layout_constraintStart_toEndOf="@+id/show_add_btn"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/arrow_forward"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cons_lay_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -1008,7 +1105,7 @@
                         android:paddingBottom="15dp"
                         app:layout_constraintEnd_toEndOf="@+id/show_job_title_txt_lay"
                         app:layout_constraintStart_toStartOf="@+id/show_job_title_txt_lay"
-                        app:layout_constraintTop_toBottomOf="@+id/show_gender_age_recycler">
+                        app:layout_constraintTop_toBottomOf="@+id/show_add_patient">
 
                         <RelativeLayout
                             android:id="@+id/date_time_htv_lay_2"

@@ -51,7 +51,7 @@ class GenderAgeAdapter (private val itemList: MutableList<GenderAgeItemCountMode
             itemBinding.apply {
                 nameTv.text = data?.patient_name
                 ageTv.text = "Age: ${data?.age} years"
-                careTypeTv.text = "Care type: ${data?.careType}"
+                careTypeTv.text = "Care type: ${careType}"
                 genderTv.text = "Gender: ${data?.gender}"
             }
         }

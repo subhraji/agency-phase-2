@@ -126,13 +126,10 @@ class JobPostActivity : AppCompatActivity() {
 
     private fun showCareTypeBottomSheet(){
         val dialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.care_type_bottomsheet, null)
+        val view = layoutInflater.inflate(R.layout.care_type_bottomsheet_layout, null)
 
-        val btnSave = view.findViewById<CardView>(R.id.save_btn)
-        val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
-        val careTypeRbg = view.findViewById<RadioGroup>(R.id.type_of_care_rbg)
-        val ageTxt = view.findViewById<EditText>(R.id.age_txt)
-        val nameTxt = view.findViewById<EditText>(R.id.name_txt)
+        val btnSave = view.findViewById<CardView>(R.id.save_care_type_btn)
+        val btnClear = view.findViewById<ImageView>(R.id.clear_care_type_btn)
         val seniorLay = view.findViewById<LinearLayout>(R.id.senior_lay)
         val childLay = view.findViewById<LinearLayout>(R.id.child_lay)
         val patientLay = view.findViewById<LinearLayout>(R.id.patient_lay)
@@ -154,53 +151,20 @@ class JobPostActivity : AppCompatActivity() {
         childTv.setTextColor(resources.getColor(R.color.text_grey, null))
         patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
 
-        var gender: String = ""
-        careTypeRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.male_rb -> {
-                    gender = "male"
-                }
-                R.id.female_rb -> {
-                    gender = "female"
-                }
-                R.id.others_rb -> {
-                    gender = "Others"
-                }
-            }
-        })
-
         btnClear.setOnClickListener {
-            genderAgeList = mutableListOf()
-            careType = ""
             dialog.dismiss()
         }
 
         btnSave.setOnClickListener {
-            val age = ageTxt.text.toString()
-            val name = nameTxt.text.toString()
             if(!careType.isEmpty()){
-                if(!name.isEmpty()){
-                    if(!age.isEmpty()){
-                        if(!gender.isEmpty()){
-                            genderAgeList.add(GenderAgeItemCountModel(careType,gender,age,name))
-                            fillGenderAgeRecycler(genderAgeList, binding.careTypeRecycler)
-                            fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
-                            dialog.dismiss()
-                        }else{
-                            Toast.makeText(this,"Please select gender.", Toast.LENGTH_SHORT).show()
-                        }
-                    }else{
-                        ageTxt.showKeyboard()
-                        Toast.makeText(this,"Please provide the age of the patient", Toast.LENGTH_SHORT).show()
-                    }
-                }else{
-                    nameTxt.showKeyboard()
-                    Toast.makeText(this,"Please type the name of the patient", Toast.LENGTH_SHORT).show()
-                }
+                binding.addPatient.visible()
+                binding.addCareTypeHtv.text = careType.toString()
+                binding.showAddCareTypeHtv.text = careType.toString()
+                dialog.dismiss()
             }else{
+                careType = ""
                 Toast.makeText(this,"Please select a care type", Toast.LENGTH_SHORT).show()
             }
-
         }
 
         //care type
@@ -242,6 +206,65 @@ class JobPostActivity : AppCompatActivity() {
             childTv.setTextColor(resources.getColor(R.color.text_grey, null))
             patientTv.setTextColor(resources.getColor(R.color.white, null))
             careType = "patient care"
+        }
+
+        dialog.setCancelable(false)
+        dialog.setContentView(view)
+        dialog.show()
+    }
+
+    private fun showPatientDetailsBottomSheet(){
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.care_type_bottomsheet, null)
+
+        val btnSave = view.findViewById<CardView>(R.id.save_btn)
+        val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
+        val careTypeRbg = view.findViewById<RadioGroup>(R.id.type_of_care_rbg)
+        val ageTxt = view.findViewById<EditText>(R.id.age_txt)
+        val nameTxt = view.findViewById<EditText>(R.id.name_txt)
+
+        var gender: String = ""
+        careTypeRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.male_rb -> {
+                    gender = "Male"
+                }
+                R.id.female_rb -> {
+                    gender = "Female"
+                }
+                R.id.others_rb -> {
+                    gender = "Others"
+                }
+            }
+        })
+
+        btnClear.setOnClickListener {
+            genderAgeList = mutableListOf()
+            dialog.dismiss()
+        }
+
+        btnSave.setOnClickListener {
+            val age = ageTxt.text.toString()
+            val name = nameTxt.text.toString()
+            if(!name.isEmpty()){
+                if(!age.isEmpty()){
+                    if(!gender.isEmpty()){
+                        genderAgeList.add(GenderAgeItemCountModel(gender,age,name))
+                        fillGenderAgeRecycler(genderAgeList, binding.careTypeRecycler)
+                        fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
+                        dialog.dismiss()
+                    }else{
+                        Toast.makeText(this,"Please select gender.", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    ageTxt.showKeyboard()
+                    Toast.makeText(this,"Please provide the age of the patient", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                nameTxt.showKeyboard()
+                Toast.makeText(this,"Please type the name of the patient", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         dialog.setCancelable(false)
@@ -410,6 +433,8 @@ class JobPostActivity : AppCompatActivity() {
     }
 
     private fun initializePageOne(){
+        binding.addPatient.gone()
+
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
         }
@@ -426,6 +451,10 @@ class JobPostActivity : AppCompatActivity() {
             /*val intent = Intent(this, SelectCareTypeActivity::class.java)
             startActivity(intent)*/
             showCareTypeBottomSheet()
+        }
+
+        binding.addPatient.setOnClickListener {
+            showPatientDetailsBottomSheet()
         }
 
         binding.jobLocBtn.setOnClickListener {
@@ -471,7 +500,7 @@ class JobPostActivity : AppCompatActivity() {
                             Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
                         }
                     }else{
-                        Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Please add patient details.",Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
@@ -602,13 +631,17 @@ class JobPostActivity : AppCompatActivity() {
 
         }
 
+        binding.showAddPatient.setOnClickListener {
+            showPatientDetailsBottomSheet()
+        }
+
         binding.prevNextStepBtn.setOnClickListener {
 
             if(!genderAgeList.isEmpty()){
                 if(isConnectedToInternet()){
                     mPostJobViewModel.jobPost(
                         binding.showJobTitleTxt.text.toString(),
-                        binding.showCareTypeTv.text.toString(),
+                        binding.showAddCareTypeHtv.text.toString(),
                         genderAgeList,
                         date,
                         startTime,

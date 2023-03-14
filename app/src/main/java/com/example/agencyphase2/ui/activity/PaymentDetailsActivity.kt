@@ -73,10 +73,10 @@ class PaymentDetailsActivity : AppCompatActivity() {
                 t2 = totalList[1]+"0"
             }
 
-            binding.peaceworcChargeTv.text = "$${p1}.${p2}"
+            binding.peaceworcChargeTv.text = "${p1}.${p2}"
             binding.subTotalTv.text = amount.toString()
             binding.totalTv.text = "$${t1}.${t2}"
-            binding.payBtn.text = "$${t1}.${t2}"
+            binding.payBtn.text = "Pay $${t1}.${t2}"
             totalAmount = ((amount!!.toFloat()+percentage!!)*100).toInt()
         }
 
