@@ -81,6 +81,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     private val mGetAuthorizeOfficerViewModel: GetAuthorizeOfficerViewModel by viewModels()
     private val mDeleteAuthOfficerViewModel: DeleteAuthOfficerViewModel by viewModels()
     private val mChangeOwnerPhoneViewModel: ChangeOwnerPhoneViewModel by viewModels()
+    private val mUpdateAuthOfficerStatusViewModel: UpdateAuthOfficerStatusViewModel by viewModels()
 
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var dialog: Dialog
@@ -244,8 +245,8 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
 
         binding.authOfficerNextStepBtn.setOnClickListener {
             if(!owner_mobile.isEmpty()){
-                Toast.makeText(this,"Profile completed successfully.",Toast.LENGTH_SHORT).show()
-                finish()
+                mUpdateAuthOfficerStatusViewModel.updateAuthOfficerStatus(accessToken)
+                loader.show()
             }else{
                 showMobileDialog()
                 Toast.makeText(this,"Please add your mobile number",Toast.LENGTH_SHORT).show()
@@ -336,11 +337,12 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         setUpLsSpinner()
         setUpOrgTypeSpinner()
 
-        //observer
+        //observe
         addBusinessObserve()
         addOtherInfoObserve()
         getAuthorizeInoObserve()
         deleteAuthOfficerObserver()
+        updateAuthOfficerStatusObserver()
 
         //listener
         emailFocusListener()
@@ -873,6 +875,29 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         })
     }
 
+    private fun updateAuthOfficerStatusObserver(){
+        mUpdateAuthOfficerStatusViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                    mUpdateAuthOfficerStatusViewModel.navigationComplete()
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    loader.dismiss()
+
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
 
     override fun onClick(view: View, id: Int) {
         showRemoveAuthOfficerDialog(id)
