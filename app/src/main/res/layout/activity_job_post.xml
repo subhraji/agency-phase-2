@@ -963,6 +963,24 @@
                                 android:textSize="15sp" />
                         </RelativeLayout>
 
+                        <TextView
+                            android:id="@+id/show_add_care_type_htv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@color/transparent"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:text="Select care type"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_gender_age_btn"
+                            app:layout_constraintStart_toEndOf="@+id/care_type_htv_lay_2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:id="@+id/edit_gender_age_btn"
                             android:layout_width="wrap_content"
@@ -973,11 +991,12 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/show_gender_age_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_1"/>
+                        app:layout_constraintTop_toBottomOf="@+id/cons_lay_1" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cons_lay_2"
@@ -1460,16 +1479,17 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
-                app:cardCornerRadius="7dp"
-                app:cardBackgroundColor="@color/black">
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="7dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="Post this job"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 

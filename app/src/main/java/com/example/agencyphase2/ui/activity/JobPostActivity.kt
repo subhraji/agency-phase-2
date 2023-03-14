@@ -441,32 +441,37 @@ class JobPostActivity : AppCompatActivity() {
 
             if(!job_title.isEmpty()){
                 if(!careType.isEmpty()){
-                    if(!date.isEmpty()){
-                        if(!startTime.isEmpty()){
-                            if(!endTime.isEmpty()){
-                                if(!amount.isEmpty()){
-                                    if(!job_address.isEmpty()){
-                                        if(!job_desc.isEmpty()){
-                                            binding.relativeLay1.gone()
-                                            binding.relativeLay3.gone()
-                                            binding.relativeLay2.visible()
+                    if(!genderAgeList.isEmpty()){
+                        if(!date.isEmpty()){
+                            if(!startTime.isEmpty()){
+                                if(!endTime.isEmpty()){
+                                    if(!amount.isEmpty()){
+                                        if(!job_address.isEmpty()){
+                                            if(!job_desc.isEmpty()){
+                                                fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
+                                                binding.relativeLay1.gone()
+                                                binding.relativeLay3.gone()
+                                                binding.relativeLay2.visible()
+                                            }else{
+                                                Toast.makeText(this,"Please provide the job description.",Toast.LENGTH_SHORT).show()
+                                            }
                                         }else{
-                                            Toast.makeText(this,"Please provide the job description.",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
                                         }
                                     }else{
-                                        Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
                                     }
                                 }else{
-                                    Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
                                 }
                             }else{
-                                Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
                             }
                         }else{
-                            Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
                         }
                     }else{
-                        Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
@@ -591,8 +596,10 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         binding.consLay1.setOnClickListener {
-            val intent = Intent(this, SelectCareTypeActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(this, SelectCareTypeActivity::class.java)
+            startActivity(intent)*/
+            showCareTypeBottomSheet()
+
         }
 
         binding.prevNextStepBtn.setOnClickListener {
