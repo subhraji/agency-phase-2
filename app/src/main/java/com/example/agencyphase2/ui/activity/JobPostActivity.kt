@@ -604,29 +604,33 @@ class JobPostActivity : AppCompatActivity() {
 
         binding.prevNextStepBtn.setOnClickListener {
 
-            if(isConnectedToInternet()){
-                mPostJobViewModel.jobPost(
-                    binding.showJobTitleTxt.text.toString(),
-                    binding.showCareTypeTv.text.toString(),
-                    genderAgeList,
-                    date,
-                    startTime,
-                    endTime,
-                    binding.showAmountTxt.text.toString(),
-                    binding.showAddressTxt.text.toString(),
-                    binding.showJobDescTxt.text.toString(),
-                    medicalHistoryList,
-                    jobSkillList,
-                    otherReqList,
-                    checkList,
-                    place_name,
-                    lat,
-                    lang,
-                    accessToken
-                )
-                loader.show()
+            if(!genderAgeList.isEmpty()){
+                if(isConnectedToInternet()){
+                    mPostJobViewModel.jobPost(
+                        binding.showJobTitleTxt.text.toString(),
+                        binding.showCareTypeTv.text.toString(),
+                        genderAgeList,
+                        date,
+                        startTime,
+                        endTime,
+                        binding.showAmountTxt.text.toString(),
+                        binding.showAddressTxt.text.toString(),
+                        binding.showJobDescTxt.text.toString(),
+                        medicalHistoryList,
+                        jobSkillList,
+                        otherReqList,
+                        checkList,
+                        place_name,
+                        lat,
+                        lang,
+                        accessToken
+                    )
+                    loader.show()
+                }else{
+                    Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                }
             }else{
-                Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select a care type.", Toast.LENGTH_SHORT).show()
             }
         }
 
