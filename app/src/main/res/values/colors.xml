@@ -19,5 +19,6 @@
     <color name="color_green">#00C147</color>
     <color name="color_yellow">#FFC107</color>
     <color name="color_teal">#008080</color>
+    <color name="light_white">#F3F3F3</color>
 
 </resources>

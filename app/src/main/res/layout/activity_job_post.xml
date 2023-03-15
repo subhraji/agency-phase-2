@@ -39,13 +39,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/required_next_step_btn"
-                android:fillViewport="true"
-                android:paddingBottom="20dp">
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="50dp">
 
                     <LinearLayout
                         android:id="@+id/sign_up_stepper_lay"
@@ -438,14 +438,34 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <LinearLayout
+                        android:id="@+id/place_search_linear_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/settings_item_background">
+
+                        <fragment
+                            android:id="@+id/autocomplete_fragment"
+                            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
                     <RelativeLayout
                         android:id="@+id/job_loc_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:background="@drawable/job_post_txt_bg">
+                        android:background="@drawable/job_post_txt_bg"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
                             android:id="@+id/job_loc_txt"
@@ -479,6 +499,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_baseline_chevron_right_24"
+                            android:visibility="gone"
                             app:tint="@color/black" />
 
                     </RelativeLayout>

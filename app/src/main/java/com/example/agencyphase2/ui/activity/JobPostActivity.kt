@@ -26,6 +26,7 @@ import com.example.agencyphase2.viewmodel.GetCustomerIdViewModel
 import com.example.agencyphase2.viewmodel.GetEphemeralKeyViewModel
 import com.example.agencyphase2.viewmodel.GetPaymentIntentViewModel
 import com.example.agencyphase2.viewmodel.PostJobViewModel
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -33,6 +34,8 @@ import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.stripe.android.PaymentConfiguration
@@ -87,6 +90,7 @@ class JobPostActivity : AppCompatActivity() {
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
         Places.initialize(applicationContext, getString(R.string.api_key))
+        autocomplete()
 
         //binding.relativeLay1.gone()
         binding.relativeLay2.gone()
@@ -106,6 +110,44 @@ class JobPostActivity : AppCompatActivity() {
         //observer
         jobPostObserve()
     }
+
+    private fun autocomplete(){
+        // Initialize the AutocompleteSupportFragment.
+        val autocompleteFragment =
+            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
+        autocompleteFragment.setCountries("USA")
+        autocompleteFragment.setLocationBias(
+            RectangularBounds.newInstance(
+                LatLng(37.0902,95.7129),
+                LatLng(37.0902,95.7129)
+            )
+        )
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG))
+
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                Log.i("place2", "Place: ${place.name}, ${place.id}, ${place.address}")
+
+                binding.jobLocBtn.visible()
+                binding.jobLocTxt.text = place.address
+                job_address = place.address
+                place_name = place.name
+
+                val latLangList = place.latLng.toString().split("(").toTypedArray()
+                val final_latLangList = latLangList[1].toString().split(",").toTypedArray()
+                lat = final_latLangList[0].toString()
+                lang = final_latLangList[1].toString().substring(0, final_latLangList[1].length - 1)
+            }
+
+            override fun onError(status: Status) {
+                Log.i("place2", "An error occurred: $status")
+            }
+        })
+    }
+
 
     private fun autocompleteWithIntent(){
         val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
@@ -434,6 +476,7 @@ class JobPostActivity : AppCompatActivity() {
 
     private fun initializePageOne(){
         binding.addPatient.gone()
+        binding.jobLocBtn.gone()
 
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
@@ -460,12 +503,13 @@ class JobPostActivity : AppCompatActivity() {
         binding.jobLocBtn.setOnClickListener {
             /*val intent = Intent(this, SearchLocationActivity::class.java)
             startActivity(intent)*/
-            autocompleteWithIntent()
+            //autocompleteWithIntent()
         }
 
         binding.requiredNextStepBtn.setOnClickListener {
             val job_title = binding.jobTitleTxt.text.toString()
             val amount = binding.addAmountTxt.text.toString()
+            val jobLoc = binding.jobLocTxt.text.toString()
             val job_desc = binding.jobDescTxt.text.toString()
 
             if(!job_title.isEmpty()){
@@ -474,21 +518,25 @@ class JobPostActivity : AppCompatActivity() {
                         if(!date.isEmpty()){
                             if(!startTime.isEmpty()){
                                 if(!endTime.isEmpty()){
-                                    if(!amount.isEmpty()){
-                                        if(!job_address.isEmpty()){
-                                            if(!job_desc.isEmpty()){
-                                                fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
-                                                binding.relativeLay1.gone()
-                                                binding.relativeLay3.gone()
-                                                binding.relativeLay2.visible()
+                                    if(!jobLoc.isEmpty()){
+                                        if(!amount.isEmpty()){
+                                            if(!job_address.isEmpty()){
+                                                if(!job_desc.isEmpty()){
+                                                    fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
+                                                    binding.relativeLay1.gone()
+                                                    binding.relativeLay3.gone()
+                                                    binding.relativeLay2.visible()
+                                                }else{
+                                                    Toast.makeText(this,"Please provide the job description.",Toast.LENGTH_SHORT).show()
+                                                }
                                             }else{
-                                                Toast.makeText(this,"Please provide the job description.",Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
                                             }
                                         }else{
-                                            Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
                                         }
                                     }else{
-                                        Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this,"Please provide job location.",Toast.LENGTH_SHORT).show()
                                     }
                                 }else{
                                     Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()

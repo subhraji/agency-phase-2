@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.fragment.SettingsFragment">
     <TextView
@@ -14,7 +15,108 @@
         android:text="Settings"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"/>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/owner_shimmer_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/authorize_owner_shimmer_layout" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/owner_main_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/settings_item_background"
+        android:backgroundTint="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:padding="15dp">
+        <TextView
+            android:id="@+id/full_name_htv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="13sp"
+            android:textColor="@color/light_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/full_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/full_name_htv"
+            app:layout_constraintStart_toStartOf="@+id/full_name_htv"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Steve Jobs"/>
 
+        <TextView
+            android:id="@+id/email_htv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            app:layout_constraintTop_toBottomOf="@+id/full_name_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:textSize="13sp"
+            android:textColor="@color/light_white"/>
+        <TextView
+            android:id="@+id/email_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/email_htv"
+            app:layout_constraintStart_toStartOf="@+id/email_htv"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="stevejobs@gmail.com"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/email_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="20dp">
+            <TextView
+                android:id="@+id/role_htv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Role"
+                android:textSize="13sp"
+                android:textColor="@color/light_white"/>
+            <TextView
+                android:id="@+id/role_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="Owner"/>
+            <TextView
+                android:id="@+id/mobile_htv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile Number"
+                android:textSize="13sp"
+                android:textColor="@color/light_white"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:id="@+id/mobile_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="+16837676232"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <RelativeLayout
         android:id="@+id/change_pass_btn"
         android:layout_width="match_parent"
@@ -22,7 +124,7 @@
         android:padding="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/settings_item_background">
 
         <ImageView
@@ -46,7 +148,68 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/authorize_officer_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/settings_item_background">
 
+        <ImageView
+            android:id="@+id/auth_officer_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_outline_person_outline_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Authorize officer"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/auth_officer_icon"
+            android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/client_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/settings_item_background">
+
+        <ImageView
+            android:id="@+id/client_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_outline_people_outline_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Client management"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/client_icon"
+            android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/logout_btn"
         android:layout_width="match_parent"
