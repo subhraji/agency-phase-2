@@ -206,7 +206,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
-                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Job posted successfully.", Toast.LENGTH_SHORT).show()
                         finish()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
