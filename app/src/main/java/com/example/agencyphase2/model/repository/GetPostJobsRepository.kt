@@ -12,7 +12,7 @@ class GetPostJobsRepository @Inject constructor(private val apiInterface: ApiInt
     fun getPostJobs(
         token: String,
         id: Int? = null,
-        page: Int
+        page: Int? = null
     ): Flow<GetPostJobsResponse?> = flow{
         emit(apiInterface.getPostJobs(token, id, page))
     }.flowOn(Dispatchers.IO)

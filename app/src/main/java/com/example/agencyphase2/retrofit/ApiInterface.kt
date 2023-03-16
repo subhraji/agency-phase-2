@@ -95,7 +95,7 @@ interface ApiInterface {
     suspend fun getPostJobs(
         @Header("Authorization") token: String,
         @Query("id") id: Int? = null,
-        @Query("page") page: Int
+        @Query("page") page: Int? = null
     ): GetPostJobsResponse?
 
     @GET("information/status")

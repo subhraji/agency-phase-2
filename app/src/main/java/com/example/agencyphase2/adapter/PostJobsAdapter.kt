@@ -55,7 +55,6 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 rootLay.setOnClickListener {
                     val intent = Intent(context, PostJobsDetailsActivity::class.java)
                     intent.putExtra("id",data?.id)
-                    intent.putExtra("title",data?.title)
                     context.startActivity(intent)
                 }
                 gen = ""

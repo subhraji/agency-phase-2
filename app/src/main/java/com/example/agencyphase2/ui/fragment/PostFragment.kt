@@ -160,16 +160,6 @@ class PostFragment : Fragment() {
         })
     }
 
-    private fun fillRecyclerView(list: List<DataX>) {
-        val linearlayoutManager = LinearLayoutManager(activity)
-        binding.postJobsRecycler.apply {
-            layoutManager = linearlayoutManager
-            setHasFixedSize(true)
-            isFocusable = false
-            adapter = PostJobsAdapter(list.toMutableList(),requireActivity())
-        }
-    }
-
     private fun getProfileCompletionStatusObserver(){
         mGetProfileCompletionStatusViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
             when(outcome){

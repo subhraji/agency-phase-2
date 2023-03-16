@@ -21,7 +21,7 @@ class GetPostJobsViewModel @Inject constructor(private val repository: GetPostJo
     fun getPostJobs(
         token: String,
         id: Int? = null,
-        page: Int
+        page: Int? = null
     ) = viewModelScope.launch {
         repository.getPostJobs(token, id, page).onStart {
             _response.value = Outcome.loading(true)
