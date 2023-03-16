@@ -43,6 +43,7 @@ import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import com.user.caregiver.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONArray
 import org.w3c.dom.Text
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -118,18 +119,18 @@ class JobPostActivity : AppCompatActivity() {
 
         // Specify the types of place data to return.
         autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
-        autocompleteFragment.setCountries("USA")
+        autocompleteFragment.setCountries("IN")
         autocompleteFragment.setLocationBias(
             RectangularBounds.newInstance(
                 LatLng(37.0902,95.7129),
                 LatLng(37.0902,95.7129)
             )
         )
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG))
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                Log.i("place2", "Place: ${place.name}, ${place.id}, ${place.address}")
+                Log.i("place2", "Place: ${place.name}, ${place.address}, address_component: ${place.addressComponents.asList()}")
 
                 binding.jobLocBtn.visible()
                 binding.jobLocTxt.text = place.address
@@ -140,6 +141,33 @@ class JobPostActivity : AppCompatActivity() {
                 val final_latLangList = latLangList[1].toString().split(",").toTypedArray()
                 lat = final_latLangList[0].toString()
                 lang = final_latLangList[1].toString().substring(0, final_latLangList[1].length - 1)
+
+                var streetName = ""
+                var streetNumber = ""
+                var city = ""
+                var state = ""
+                var zipcode = ""
+
+                for (i in place.addressComponents.asList()){
+                    if(i.types[0] == "locality"){
+                        city = i.name
+                    }
+                    if(i.types[0] == "route"){
+                        streetName = i.name.toString()
+                    }
+                    if(i.types[0] == "street_number"){
+                        streetNumber = i.name.toString()
+                    }
+                    if(i.types[0] == "administrative_area_level_1"){
+                        state = i.name.toString()
+                    }
+                    if(i.types[0] == "postal_code"){
+                        zipcode = i.name.toString()
+                    }
+                }
+
+                showAddressBottomSheet(streetName, streetNumber, city, state, zipcode)
+
             }
 
             override fun onError(status: Status) {
@@ -148,22 +176,8 @@ class JobPostActivity : AppCompatActivity() {
         })
     }
 
+    private fun getAddressComponent(){
 
-    private fun autocompleteWithIntent(){
-        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-
-        // Start the autocomplete intent.
-        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-            .setTypeFilter(TypeFilter.ESTABLISHMENT)
-            .setLocationBias(
-                RectangularBounds.newInstance(
-                    LatLng(37.0902,95.7129),
-                    LatLng(37.0902,95.7129)
-                )
-            )
-            .setCountry("USA")
-            .build(this)
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
 
     private fun showCareTypeBottomSheet(){
@@ -418,6 +432,69 @@ class JobPostActivity : AppCompatActivity() {
 
             mTimePicker.setTitle("Select End Time")
             mTimePicker.show()
+        }
+
+        dialog.setCancelable(false)
+        dialog.setContentView(view)
+        dialog.show()
+    }
+
+    private fun showAddressBottomSheet(
+        streetName: String = "",
+        streetNumber: String = "",
+        city: String? = null,
+        state: String? = null,
+        zipcode: String? = null,
+        building: String? = null,
+        floor: String? = null
+    ){
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.address_fill_bottomsheet_layout, null)
+
+        val btnSave = view.findViewById<CardView>(R.id.save_address_btn)
+        val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
+        val streetTxt = view.findViewById<EditText>(R.id.street_txt)
+        val cityTxt = view.findViewById<EditText>(R.id.city_txt)
+        val stateTxt = view.findViewById<EditText>(R.id.state_txt)
+        val zipcodeTxt = view.findViewById<EditText>(R.id.zipcode_txt)
+        val buildingTxt = view.findViewById<EditText>(R.id.building_txt)
+        val floorTxt = view.findViewById<EditText>(R.id.floor_txt)
+
+        var streetVar = ""
+        if(streetName.isEmpty() && streetNumber.isEmpty()){
+            streetVar = " "
+        }else if(streetName.isEmpty() && streetNumber.isNotEmpty()){
+            streetVar = streetNumber
+        }else if(streetName.isNotEmpty() && streetNumber.isEmpty()){
+            streetVar = streetName
+        }else if(streetName.isNotEmpty() && streetNumber.isNotEmpty()){
+            streetVar = streetNumber+", "+streetName
+        }
+
+        streetTxt.text = Editable.Factory.getInstance().newEditable(streetVar)
+
+        city?.let{
+            cityTxt.text = Editable.Factory.getInstance().newEditable(city)
+        }
+        state?.let {
+            stateTxt.text = Editable.Factory.getInstance().newEditable(state)
+        }
+        zipcode?.let {
+            zipcodeTxt.text = Editable.Factory.getInstance().newEditable(zipcode)
+        }
+        building?.let {
+            buildingTxt.text = Editable.Factory.getInstance().newEditable(building)
+        }
+        floor?.let {
+            floorTxt.text = Editable.Factory.getInstance().newEditable(floor)
+        }
+
+        btnClear.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnSave.setOnClickListener {
+            dialog.dismiss()
         }
 
         dialog.setCancelable(false)
@@ -769,116 +846,8 @@ class JobPostActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            when (resultCode) {
-                Activity.RESULT_OK -> {
-                    data?.let {
-                        val place = Autocomplete.getPlaceFromIntent(data)
-                        Log.e("place", "Place: ${place.name}, ${place.id}, ${place.latLng}")
-                        binding.jobLocTxt.text = place.address
-                        job_address = place.address
-                        place_name = place.name
-
-                        val latLangList = place.latLng.toString().split("(").toTypedArray()
-                        val final_latLangList = latLangList[1].toString().split(",").toTypedArray()
-                        lat = final_latLangList[0].toString()
-                        lang = final_latLangList[1].toString().substring(0, final_latLangList[1].length - 1)
-
-                        Log.e("place", "Lat: ${lat}")
-                        Log.e("place", "Long: ${lang}")
-
-                    }
-                }
-                AutocompleteActivity.RESULT_ERROR -> {
-                    // TODO: Handle the error.
-                    data?.let {
-                        val status = Autocomplete.getStatusFromIntent(data)
-                        Log.i("place", status.statusMessage ?: "")
-                    }
-                }
-                Activity.RESULT_CANCELED -> {
-                    // The user canceled the operation.
-                }
-            }
-            return
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     override fun onDestroy() {
         genderAgeList = mutableListOf()
         super.onDestroy()
     }
-
-
-    private fun getDurationHour(startDateTime: String, endDateTime: String) {
-
-        val sdf: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-
-        try {
-            val d1:Date = sdf.parse(startDateTime)
-            val d2:Date = sdf.parse(endDateTime)
-
-            val difference_In_Time = d2.time - d1.time
-
-            val difference_In_Seconds = (difference_In_Time / 1000)% 60
-
-            val difference_In_Minutes = (difference_In_Time / (1000 * 60))% 60
-
-            val difference_In_Hours = (difference_In_Time / (1000 * 60 * 60))% 24
-
-            val difference_In_Years = (difference_In_Time / (1000 * 60 * 60 * 24 * 365))
-
-            var difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24))% 365
-
-            durationDay = difference_In_Days.toInt()
-            durationHour = difference_In_Hours.toInt()
-
-            durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
-
-            if(durationHour < 0){
-                val endDateTimeArray = endDateTime.split(" ")
-                val date = endDateTimeArray[0]
-                val time = endDateTimeArray[1]
-
-                val dateArray = date.split("-")
-                val day = dateArray[0].toInt()
-                val month = dateArray[1].toInt()
-                val year = dateArray[2].toInt()
-
-                val datePlus1: LocalDate = LocalDate.of(year, month, day).plusDays(1)
-                val datePlus1Array = datePlus1.toString().split("-")
-                val new_day = datePlus1Array[2]
-                val new_month = datePlus1Array[1]
-                val new_year = datePlus1Array[0]
-                val new_end_date = new_day+"-"+new_month+"-"+new_year
-                val new_end_date_time = new_end_date+" "+time
-                Log.d("dateTime", "new year => "+new_end_date_time.toString())
-
-                getDurationHour(startDateTime,new_end_date_time)
-
-            }
-
-
-            Log.d("dateTime","duration => "+
-                    difference_In_Years.toString()+
-                    " years, "
-                    + difference_In_Days
-                    + " days, "
-                    + difference_In_Hours
-                    + " hours, "
-                    + difference_In_Minutes
-                    + " minutes, "
-                    + difference_In_Seconds
-                    + " seconds"
-            )
-        }
-
-        // Catch the Exception
-        catch (e: ParseException) {
-            e.printStackTrace()
-        }
-    }
-
 }

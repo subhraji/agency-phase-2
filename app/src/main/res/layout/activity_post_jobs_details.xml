@@ -9,7 +9,7 @@
         android:id="@+id/shimmer_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/profile_shimmer_layout" />
+        <include layout="@layout/job_details_shimmer_layout" />
     </com.facebook.shimmer.ShimmerFrameLayout>
     <ScrollView
         android:id="@+id/main_lay"

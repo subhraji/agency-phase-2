@@ -13,8 +13,7 @@
         android:src="@drawable/ic_outline_person_outline_24"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/client_finger_print_img"/>
+        app:layout_constraintStart_toStartOf="parent"/>
     <ImageView
         android:id="@+id/client_finger_print_img"
         android:layout_width="60dp"
@@ -44,7 +43,7 @@
         android:id="@+id/full_name_htv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Client full name"
+        android:text="Full Name"
         app:layout_constraintStart_toEndOf="@+id/client_img"
         app:layout_constraintEnd_toStartOf="@+id/edit_btn"
         app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +62,7 @@
         android:text="Alex O'Brown"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/light_black"/>
     <LinearLayout
         android:id="@+id/linear_lay_1"
         android:layout_width="0dp"
@@ -80,7 +79,7 @@
             android:id="@+id/email_htv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email address"
+            android:text="Email Address"
             android:textSize="13sp"/>
         <TextView
             android:id="@+id/email_tv"
@@ -88,14 +87,14 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="alex@gmail.com"
-            android:textColor="@color/black"
+            android:textColor="@color/light_black"
             android:textStyle="bold"/>
     </LinearLayout>
     <TextView
         android:id="@+id/mobile_htv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Mobile number"
+        android:text="Mobile Number"
         app:layout_constraintStart_toStartOf="@+id/full_name_htv"
         app:layout_constraintBottom_toTopOf="@+id/mobile_tv"
         app:layout_constraintTop_toBottomOf="@+id/linear_lay_1"
@@ -109,7 +108,7 @@
         android:text="+180112889354"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/light_black"
         app:layout_constraintStart_toStartOf="@+id/mobile_htv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
