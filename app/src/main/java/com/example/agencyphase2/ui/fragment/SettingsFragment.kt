@@ -17,10 +17,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.FragmentPostBinding
 import com.example.agencyphase2.databinding.FragmentSettingsBinding
 import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.ui.activity.AuthActivity
-import com.example.agencyphase2.ui.activity.AuthOfficerListActivity
-import com.example.agencyphase2.ui.activity.ChangePasswordActivity
-import com.example.agencyphase2.ui.activity.ChooseLoginRegActivity
+import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetAuthorizeOfficerViewModel
 import com.example.agencyphase2.viewmodel.LoginViewModel
@@ -72,6 +69,11 @@ class SettingsFragment : Fragment() {
 
         binding.authorizeOfficerBtn.setOnClickListener {
             val intent = Intent(requireActivity(), AuthOfficerListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.clientBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), ClientListActivity::class.java)
             startActivity(intent)
         }
 
