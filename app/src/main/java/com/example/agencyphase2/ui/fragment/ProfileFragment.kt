@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.fragment
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
@@ -17,6 +20,7 @@ import com.example.agencyphase2.databinding.FragmentOngoingBinding
 import com.example.agencyphase2.databinding.FragmentProfileBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.JobPostActivity
+import com.example.agencyphase2.ui.activity.RegistrationActivity
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.ChangePasswordViewModel
@@ -128,6 +132,13 @@ class ProfileFragment : Fragment() {
                             binding.taxIdTv.text = "no data"
                         }
 
+                        //profile status
+                        if(outcome.data?.data?.profile_status?.is_business_info_complete == 0){
+                            showCompleteDialog("You have not added your business information",1)
+                        }else if(outcome.data?.data?.profile_status?.is_authorize_info_added == 0){
+                            showCompleteDialog("You have not added any authorize officer",3)
+                        }
+
                         mGetProfileViewModel.navigationComplete()
                     }else{
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
@@ -141,6 +152,37 @@ class ProfileFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun showCompleteDialog(content: String, step: Int) {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(R.layout.profile_completion_dialog_layout)
+        val complete = dialog.findViewById<TextView>(R.id.complete_btn)
+        val content_tv = dialog.findViewById<TextView>(R.id.content_tv)
+
+        content_tv.text = content
+
+        if(step == 4){
+            complete.text = "Ok"
+        }
+        complete.setOnClickListener {
+            if(step == 4){
+                dialog.dismiss()
+                val intent = Intent(requireActivity(), JobPostActivity::class.java)
+                intent.putExtra("step",step)
+                startActivity(intent)
+            }else{
+                dialog.dismiss()
+                val intent = Intent(requireActivity(), RegistrationActivity::class.java)
+                intent.putExtra("step",step)
+                startActivity(intent)
+            }
+        }
+        dialog.getWindow()?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.show()
     }
 
 }

@@ -159,10 +159,6 @@ class JobPostActivity : AppCompatActivity() {
         })
     }
 
-    private fun getAddressComponent(){
-
-    }
-
     private fun showCareTypeBottomSheet(){
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.care_type_bottomsheet_layout, null)
@@ -218,6 +214,9 @@ class JobPostActivity : AppCompatActivity() {
             seniorTv.setTextColor(resources.getColor(R.color.white, null))
             childTv.setTextColor(resources.getColor(R.color.text_grey, null))
             patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            binding.careTypeImg1.setImageResource(R.drawable.ic_senior_49)
+            binding.careTypeImg2.setImageResource(R.drawable.ic_senior_49)
+
             careType = "senior care"
         }
         childLay.setOnClickListener {
@@ -231,6 +230,8 @@ class JobPostActivity : AppCompatActivity() {
             seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
             childTv.setTextColor(resources.getColor(R.color.white, null))
             patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
+            binding.careTypeImg1.setImageResource(R.drawable.ic_childe_care_49)
+            binding.careTypeImg2.setImageResource(R.drawable.ic_childe_care_49)
             careType = "child care"
         }
         patientLay.setOnClickListener {
@@ -244,6 +245,8 @@ class JobPostActivity : AppCompatActivity() {
             seniorTv.setTextColor(resources.getColor(R.color.text_grey, null))
             childTv.setTextColor(resources.getColor(R.color.text_grey, null))
             patientTv.setTextColor(resources.getColor(R.color.white, null))
+            binding.careTypeImg1.setImageResource(R.drawable.ic_patient_care_49)
+            binding.careTypeImg2.setImageResource(R.drawable.ic_patient_care_49)
             careType = "patient care"
         }
 
@@ -322,17 +325,18 @@ class JobPostActivity : AppCompatActivity() {
         val endTimeBtn = view.findViewById<RelativeLayout>(R.id.end_time_btn)
         val startTimeTv = view.findViewById<TextView>(R.id.start_time_txt)
         val endTimeTv = view.findViewById<TextView>(R.id.end_time_txt)
-
+        var startTime_n = ""
+        var endTime_n = ""
         datePicker.setMinDate(System.currentTimeMillis() - 1000)
 
         btnClear.setOnClickListener {
             dialog.dismiss()
         }
         btnSave.setOnClickListener {
-            binding.timeTv1.text = startTime+" - "+endTime
             binding.dateTv1.text = getCurrentDate(datePicker)
             binding.showDateTv.text = getCurrentDate(datePicker)
-            binding.showTimeTv.text = startTime+" - "+endTime
+            binding.timeTv1.text = startTime_n+" - "+endTime_n
+            binding.showTimeTv.text = startTime_n+" - "+endTime_n
             date = getCurrentDate(datePicker).toString()
             binding.dateTimeBtn.gone()
             binding.dateTimeLay.visible()
@@ -362,8 +366,10 @@ class JobPostActivity : AppCompatActivity() {
                     }
                     if(selectedMinute < 10){
                         startTimeTv.setText("$hour2:0$selectedMinute ${AM_PM}")
+                        startTime_n = "$hour2:0$selectedMinute ${AM_PM}"
                     }else{
                         startTimeTv.setText("$hour2:$selectedMinute ${AM_PM}")
+                        startTime_n = "$hour2:$selectedMinute ${AM_PM}"
                     }
                     startTime = "$selectedHour:$selectedMinute:${"00"}"
                     //startTime = "$selectedHour-$selectedMinute-${"00"}"
@@ -401,8 +407,10 @@ class JobPostActivity : AppCompatActivity() {
                     }
                     if(selectedMinute<10){
                         endTimeTv.setText("$hour2:0$selectedMinute ${AM_PM}")
+                        endTime_n = "$hour2:0$selectedMinute ${AM_PM}"
                     }else{
                         endTimeTv.setText("$hour2:$selectedMinute ${AM_PM}")
+                        endTime_n = "$hour2:$selectedMinute ${AM_PM}"
                     }
                     endTime = "$selectedHour:$selectedMinute:${"00"}"
                     //endTime = "$selectedHour-$selectedMinute-${"00"}"

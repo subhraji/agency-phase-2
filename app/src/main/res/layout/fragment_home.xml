@@ -109,18 +109,19 @@
                         android:text="50"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_tv_3"
-                        android:layout_alignStart="@+id/number_tv_3"
                         android:layout_marginEnd="10dp"
                         android:text="Total jobs post"
                         android:textColor="#A6FFFFFF"
                         android:textSize="10sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -140,18 +141,19 @@
                         android:text="$50"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_tv_2"
-                        android:layout_alignStart="@+id/number_tv_2"
                         android:layout_marginEnd="10dp"
                         android:text="Total Investment"
                         android:textColor="#A6FFFFFF"
                         android:textSize="9sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -171,18 +173,19 @@
                         android:text="4.5"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/number_tv_1"
-                        android:layout_alignStart="@+id/number_tv_1"
                         android:layout_marginEnd="10dp"
                         android:text="Total Ratings"
                         android:textColor="#A6FFFFFF"
                         android:textSize="10sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
                 </RelativeLayout>
             </LinearLayout>
 

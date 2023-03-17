@@ -20,5 +20,6 @@ data class Data(
     val updated_at: String,
     val user_id: Int,
     val years_in_business: Int,
-    val zip_code: String
+    val zip_code: String,
+    val profile_status: ProfileStatus
 )

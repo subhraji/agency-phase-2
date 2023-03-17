@@ -101,8 +101,8 @@
                         android:id="@+id/job_title_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/time_selector_border"
                         android:padding="5dp"
@@ -146,7 +146,7 @@
                         android:backgroundTint="@color/black">
 
                         <ImageView
-                            android:id="@+id/add_img_1"
+                            android:id="@+id/care_type_img_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -171,7 +171,7 @@
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/add_care_type_btn"
-                            app:layout_constraintStart_toEndOf="@+id/add_img_1"
+                            app:layout_constraintStart_toEndOf="@+id/care_type_img_1"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
@@ -416,11 +416,24 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/job_post_txt_bg">
 
+                        <TextView
+                            android:id="@+id/dollar_htv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="$"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                         <EditText
                             android:id="@+id/add_amount_txt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="5dp"
                             android:layout_marginEnd="10dp"
                             android:background="@color/transparent"
                             android:digits="0123456789"
@@ -434,7 +447,7 @@
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/dollar_htv"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -452,7 +465,7 @@
                             android:id="@+id/autocomplete_fragment"
                             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <androidx.cardview.widget.CardView
@@ -460,92 +473,101 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
                         app:cardBackgroundColor="@color/color_grey"
                         app:cardCornerRadius="7dp">
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp">
+
                             <TextView
                                 android:id="@+id/city_name_tv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:text="Guwahati"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/address_delete_icon"
                                 android:textColor="@color/black"
                                 android:textSize="13sp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/address_delete_icon"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
                             <TextView
                                 android:id="@+id/full_address_tv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:text="123 street, la, guwahati, assam,897353"
+                                android:textColor="@color/light_black"
                                 android:textSize="13sp"
                                 android:textStyle="normal"
-                                android:textColor="@color/light_black"
-                                android:text="123 street, la, guwahati, assam,897353"
-                                app:layout_constraintTop_toBottomOf="@+id/city_name_tv"
+                                app:layout_constraintEnd_toStartOf="@+id/address_delete_icon"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/address_delete_icon"/>
+                                app:layout_constraintTop_toBottomOf="@+id/city_name_tv" />
+
                             <ImageView
                                 android:id="@+id/address_delete_icon"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
+                                android:src="@drawable/ic_baseline_delete_outline_24"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:src="@drawable/ic_baseline_delete_outline_24"/>
+                                app:layout_constraintTop_toTopOf="parent" />
+
                             <View
                                 android:id="@+id/address_view_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="0.5dp"
-                                app:layout_constraintTop_toBottomOf="@+id/full_address_tv"
                                 android:layout_marginTop="15dp"
-                                android:background="@color/address_view_grey"/>
+                                android:background="@color/address_view_grey"
+                                app:layout_constraintTop_toBottomOf="@+id/full_address_tv" />
+
                             <TextView
                                 android:id="@+id/street_htv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
                                 android:text="Street name/number"
                                 android:textColor="@color/text_grey"
                                 android:textSize="13sp"
-                                app:layout_constraintTop_toBottomOf="@+id/address_view_1"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginTop="15dp"/>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/address_view_1" />
+
                             <TextView
                                 android:id="@+id/street_tv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/street_htv"
                                 android:textColor="@color/black"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textSize="13sp"/>
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/street_htv" />
+
                             <TextView
                                 android:id="@+id/building_htv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
                                 android:text="Building name/number"
                                 android:textColor="@color/text_grey"
                                 android:textSize="13sp"
-                                app:layout_constraintTop_toBottomOf="@+id/street_tv"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginTop="10dp"/>
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/street_tv" />
+
                             <TextView
                                 android:id="@+id/building_tv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/building_htv"
                                 android:textColor="@color/black"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textSize="13sp"/>
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/building_htv" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>

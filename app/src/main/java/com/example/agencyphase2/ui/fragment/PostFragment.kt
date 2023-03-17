@@ -212,9 +212,6 @@ class PostFragment : Fragment() {
         complete.setOnClickListener {
             if(step == 4){
                 dialog.dismiss()
-                /*val intent = Intent(requireActivity(), JobPostActivity::class.java)
-                intent.putExtra("step",step)
-                startActivity(intent)*/
                 val intent = Intent(requireActivity(), JobPostActivity::class.java)
                 intent.putExtra("step",step)
                 startActivity(intent)
@@ -225,6 +222,8 @@ class PostFragment : Fragment() {
                 startActivity(intent)
             }
         }
+
+        dialog.getWindow()?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.show()
     }
 
