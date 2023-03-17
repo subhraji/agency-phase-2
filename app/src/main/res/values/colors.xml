@@ -12,6 +12,7 @@
     <color name="text_grey">#6F6F6F</color>
     <color name="light_blue">#00BCD4</color>
     <color name="light_black">#333333</color>
+    <color name="address_view_grey">#979797</color>
 
     <color name="transparent">#00FFFFFF</color>
     <color name="theme_blue">#003C81</color>

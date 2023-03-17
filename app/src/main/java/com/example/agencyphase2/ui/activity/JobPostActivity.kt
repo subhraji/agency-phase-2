@@ -1,7 +1,5 @@
 package com.example.agencyphase2.ui.activity
 
-import android.app.Activity
-import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -22,9 +20,6 @@ import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.viewmodel.GetCustomerIdViewModel
-import com.example.agencyphase2.viewmodel.GetEphemeralKeyViewModel
-import com.example.agencyphase2.viewmodel.GetPaymentIntentViewModel
 import com.example.agencyphase2.viewmodel.PostJobViewModel
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.model.LatLng
@@ -32,23 +27,13 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.stripe.android.PaymentConfiguration
-import com.stripe.android.paymentsheet.PaymentSheet
-import com.stripe.android.paymentsheet.PaymentSheetResult
 import com.user.caregiver.*
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
-import org.w3c.dom.Text
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
+
 
 @AndroidEntryPoint
 class JobPostActivity : AppCompatActivity() {
@@ -113,27 +98,25 @@ class JobPostActivity : AppCompatActivity() {
     }
 
     private fun autocomplete(){
-        // Initialize the AutocompleteSupportFragment.
         val autocompleteFragment =
             supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
 
-        // Specify the types of place data to return.
+        val etTextInput: EditText = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
+        etTextInput.setTextColor(R.color.black)
+        etTextInput.setTextSize(14.5f)
+        etTextInput.setHint(R.string.search_loc)
+        etTextInput.setHintTextColor(R.color.black)
+
+        val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
+        ivSearch.setImageResource(R.drawable.ic_gps_19)
+
         autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
         autocompleteFragment.setCountries("IN")
-        autocompleteFragment.setLocationBias(
-            RectangularBounds.newInstance(
-                LatLng(37.0902,95.7129),
-                LatLng(37.0902,95.7129)
-            )
-        )
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                Log.i("place2", "Place: ${place.name}, ${place.address}, address_component: ${place.addressComponents.asList()}")
 
-                binding.jobLocBtn.visible()
-                binding.jobLocTxt.text = place.address
                 job_address = place.address
                 place_name = place.name
 
@@ -166,7 +149,7 @@ class JobPostActivity : AppCompatActivity() {
                     }
                 }
 
-                showAddressBottomSheet(streetName, streetNumber, city, state, zipcode)
+                showAddressBottomSheet(place_name, streetName, streetNumber, city, state, zipcode)
 
             }
 
@@ -440,6 +423,7 @@ class JobPostActivity : AppCompatActivity() {
     }
 
     private fun showAddressBottomSheet(
+        subLocality: String,
         streetName: String = "",
         streetNumber: String = "",
         city: String? = null,
@@ -494,7 +478,51 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         btnSave.setOnClickListener {
-            dialog.dismiss()
+            val street_n = streetTxt.text.toString()
+            val city_n = cityTxt.text.toString()
+            val state_n = stateTxt.text.toString()
+            val zipcode_n = zipcodeTxt.text.toString()
+            val building_n = buildingTxt.text.toString()
+            val floor_n = floorTxt.text.toString()
+            if(!street_n.isEmpty()){
+                if(!city_n.isEmpty()){
+                    if(!state_n.isEmpty()){
+                        if(!zipcode_n.isEmpty()){
+                            if(zipcode_n.length != 5){
+                                if(!building_n.isEmpty()){
+                                    binding.addressCard.visible()
+                                    binding.fullAddressTv.text = subLocality+", "+street_n+", "+city_n+", "+state_n+", "+zipcode
+                                    binding.cityNameTv.text = city_n
+                                    binding.streetTv.text = street_n
+                                    binding.buildingTv.text = building_n
+                                    if(!floor_n.isEmpty()){
+                                        binding.buildingTv.text = building_n+", "+floor_n
+                                    }
+                                    dialog.dismiss()
+                                }else{
+                                    Toast.makeText(this,"provide building name or number", Toast.LENGTH_SHORT).show()
+                                    buildingTxt.showKeyboard()
+                                }
+                            }else{
+                                Toast.makeText(this,"provide a valid zipcode", Toast.LENGTH_SHORT).show()
+                                zipcodeTxt.showKeyboard()
+                            }
+                        }else{
+                            Toast.makeText(this,"provide zipcode", Toast.LENGTH_SHORT).show()
+                            zipcodeTxt.showKeyboard()
+                        }
+                    }else{
+                        Toast.makeText(this,"provide state name", Toast.LENGTH_SHORT).show()
+                        stateTxt.showKeyboard()
+                    }
+                }else{
+                    Toast.makeText(this,"provide city name", Toast.LENGTH_SHORT).show()
+                    cityTxt.showKeyboard()
+                }
+            }else{
+                Toast.makeText(this,"provide street name", Toast.LENGTH_SHORT).show()
+                streetTxt.showKeyboard()
+            }
         }
 
         dialog.setCancelable(false)
@@ -553,7 +581,7 @@ class JobPostActivity : AppCompatActivity() {
 
     private fun initializePageOne(){
         binding.addPatient.gone()
-        binding.jobLocBtn.gone()
+        binding.addressCard.gone()
 
         binding.dateTimeBtn.setOnClickListener {
             showDateTimeBottomSheet()
@@ -577,16 +605,18 @@ class JobPostActivity : AppCompatActivity() {
             showPatientDetailsBottomSheet()
         }
 
-        binding.jobLocBtn.setOnClickListener {
-            /*val intent = Intent(this, SearchLocationActivity::class.java)
-            startActivity(intent)*/
-            //autocompleteWithIntent()
+        binding.addressDeleteIcon.setOnClickListener {
+            binding.cityNameTv.text = null
+            binding.fullAddressTv.text = null
+            binding.streetTv.text = null
+            binding.buildingTv.text = null
+            binding.addressCard.gone()
         }
 
         binding.requiredNextStepBtn.setOnClickListener {
             val job_title = binding.jobTitleTxt.text.toString()
             val amount = binding.addAmountTxt.text.toString()
-            val jobLoc = binding.jobLocTxt.text.toString()
+            val jobLoc = binding.fullAddressTv.text.toString()
             val job_desc = binding.jobDescTxt.text.toString()
 
             if(!job_title.isEmpty()){
