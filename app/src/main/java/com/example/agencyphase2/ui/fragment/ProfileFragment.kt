@@ -19,6 +19,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.FragmentOngoingBinding
 import com.example.agencyphase2.databinding.FragmentProfileBinding
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.ui.activity.ChooseLoginRegActivity
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.example.agencyphase2.ui.activity.RegistrationActivity
 import com.example.agencyphase2.utils.Constants
@@ -141,7 +142,13 @@ class ProfileFragment : Fragment() {
 
                         mGetProfileViewModel.navigationComplete()
                     }else{
-                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        if(outcome.data?.http_status_code == 401){
+                            PrefManager.clearPref()
+                            startActivity(Intent(requireActivity(), ChooseLoginRegActivity::class.java))
+                            requireActivity().finish()
+                        }else{
+                            Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 is Outcome.Failure<*> -> {

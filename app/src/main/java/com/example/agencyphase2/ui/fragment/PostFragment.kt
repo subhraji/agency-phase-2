@@ -147,7 +147,13 @@ class PostFragment : Fragment() {
                         }
                         mGetPostJobsViewModel.navigationComplete()
                     }else{
-                        Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        if(outcome.data?.http_status_code == 401){
+                            PrefManager.clearPref()
+                            startActivity(Intent(requireActivity(), ChooseLoginRegActivity::class.java))
+                            requireActivity().finish()
+                        }else{
+                            Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 is Outcome.Failure<*> -> {
