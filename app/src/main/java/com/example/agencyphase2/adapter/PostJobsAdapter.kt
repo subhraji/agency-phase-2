@@ -53,9 +53,9 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
-                    val intent = Intent(context, PostJobsDetailsActivity::class.java)
+                    /*val intent = Intent(context, PostJobsDetailsActivity::class.java)
                     intent.putExtra("id",data?.id)
-                    context.startActivity(intent)
+                    context.startActivity(intent)*/
                 }
                 gen = ""
                 for(i in data?.care_items){
