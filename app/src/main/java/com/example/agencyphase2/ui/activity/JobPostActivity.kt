@@ -111,7 +111,7 @@ class JobPostActivity : AppCompatActivity() {
         ivSearch.setImageResource(R.drawable.ic_gps_19)
 
         autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
-        autocompleteFragment.setCountries("IN")
+        autocompleteFragment.setCountries("US")
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
