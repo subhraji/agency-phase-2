@@ -90,7 +90,9 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:gravity="center"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
         <ImageView
             android:id="@+id/dot_img_tv"
             android:layout_width="4dp"
@@ -112,7 +114,9 @@
             android:textColor="@color/black"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <ImageView
             android:id="@+id/location_img_view"
@@ -135,7 +139,9 @@
             android:textSize="13sp"
             android:textColor="@color/black"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
         <ImageView
             android:id="@+id/job_bag_img"
             android:layout_width="20dp"
@@ -155,7 +161,9 @@
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="@+id/job_bag_img"
             app:layout_constraintStart_toEndOf="@+id/job_bag_img"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
         <TextView
             android:id="@+id/hour_htv"
             android:layout_width="0dp"
@@ -167,7 +175,9 @@
             app:layout_constraintStart_toEndOf="@+id/date_htv"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
         <TextView
             android:id="@+id/price_tv"
             android:layout_width="wrap_content"

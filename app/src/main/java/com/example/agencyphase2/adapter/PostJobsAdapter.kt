@@ -78,6 +78,9 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 }else if(data?.status == "Open Job"){
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
+                }else if(data?.status == "Upcoming"){
+                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.theme_blue)))
+                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.theme_blue)))
                 }
             }
         }

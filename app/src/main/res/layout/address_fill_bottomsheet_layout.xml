@@ -134,7 +134,7 @@
                         android:background="@color/transparent"
                         android:hint="Zipcode"
                         android:inputType="number"
-                        android:maxLength="10"
+                        android:maxLength="5"
                         android:singleLine="true"
                         android:textCursorDrawable="@null"
                         android:textSize="16sp" />
