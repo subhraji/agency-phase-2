@@ -77,6 +77,7 @@ class JobPostActivity : AppCompatActivity() {
 
         Places.initialize(applicationContext, getString(R.string.api_key))
         autocomplete()
+        showAutocomplete()
 
         //binding.relativeLay1.gone()
         binding.relativeLay2.gone()
@@ -158,6 +159,70 @@ class JobPostActivity : AppCompatActivity() {
             }
         })
     }
+
+
+    private fun showAutocomplete(){
+        val autocompleteFragment =
+            supportFragmentManager.findFragmentById(R.id.show_autocomplete_fragment) as AutocompleteSupportFragment
+
+        val etTextInput: EditText = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
+        etTextInput.setTextColor(R.color.black)
+        etTextInput.setTextSize(14.5f)
+        etTextInput.setHint(R.string.search_loc)
+        etTextInput.setHintTextColor(R.color.black)
+
+        val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
+        ivSearch.setImageResource(R.drawable.ic_gps_19)
+
+        autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
+        autocompleteFragment.setCountries("US")
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
+
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+
+                job_address = place.address
+                place_name = place.name
+
+                val latLangList = place.latLng.toString().split("(").toTypedArray()
+                val final_latLangList = latLangList[1].toString().split(",").toTypedArray()
+                lat = final_latLangList[0].toString()
+                lang = final_latLangList[1].toString().substring(0, final_latLangList[1].length - 1)
+
+                var streetName = ""
+                var streetNumber = ""
+                var city = ""
+                var state = ""
+                var zipcode = ""
+
+                for (i in place.addressComponents.asList()){
+                    if(i.types[0] == "locality"){
+                        city = i.name
+                    }
+                    if(i.types[0] == "route"){
+                        streetName = i.name.toString()
+                    }
+                    if(i.types[0] == "street_number"){
+                        streetNumber = i.name.toString()
+                    }
+                    if(i.types[0] == "administrative_area_level_1"){
+                        state = i.name.toString()
+                    }
+                    if(i.types[0] == "postal_code"){
+                        zipcode = i.name.toString()
+                    }
+                }
+
+                showAddressBottomSheet(place_name, streetName, streetNumber, city, state, zipcode)
+
+            }
+
+            override fun onError(status: Status) {
+                Log.i("place2", "An error occurred: $status")
+            }
+        })
+    }
+
 
     private fun showCareTypeBottomSheet(){
         val dialog = BottomSheetDialog(this)
@@ -496,15 +561,23 @@ class JobPostActivity : AppCompatActivity() {
                 if(!city_n.isEmpty()){
                     if(!state_n.isEmpty()){
                         if(!zipcode_n.isEmpty()){
-                            if(zipcode_n.length != 5){
+                            if(zipcode_n.length == 5){
                                 if(!building_n.isEmpty()){
                                     binding.addressCard.visible()
+                                    binding.showAddressCard.visible()
+
                                     binding.fullAddressTv.text = subLocality+", "+street_n+", "+city_n+", "+state_n+", "+zipcode
                                     binding.cityNameTv.text = city_n
                                     binding.streetTv.text = street_n
                                     binding.buildingTv.text = building_n
+
+                                    binding.showFullAddressTv.text = subLocality+", "+street_n+", "+city_n+", "+state_n+", "+zipcode
+                                    binding.showCityNameTv.text = city_n
+                                    binding.showStreetTv.text = street_n
+                                    binding.showBuildingTv.text = building_n
                                     if(!floor_n.isEmpty()){
                                         binding.buildingTv.text = building_n+", "+floor_n
+                                        binding.showBuildingTv.text = building_n+", "+floor_n
                                     }
                                     dialog.dismiss()
                                 }else{
@@ -731,7 +804,7 @@ class JobPostActivity : AppCompatActivity() {
             binding.showAmountTxt.text = Editable.Factory.getInstance().newEditable(binding.addAmountTxt.text.toString())
 
             //binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(binding.jobLocTxt.text.toString())
-            binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(job_address)
+            //binding.showAddressTxt.text = Editable.Factory.getInstance().newEditable(job_address)
 
             binding.showJobDescTxt.text = Editable.Factory.getInstance().newEditable(binding.jobDescTxt.text.toString())
         }
@@ -810,7 +883,7 @@ class JobPostActivity : AppCompatActivity() {
                         startTime,
                         endTime,
                         binding.showAmountTxt.text.toString(),
-                        binding.showAddressTxt.text.toString(),
+                        binding.showFullAddressTv.text.toString(),
                         binding.showJobDescTxt.text.toString(),
                         medicalHistoryList,
                         jobSkillList,
