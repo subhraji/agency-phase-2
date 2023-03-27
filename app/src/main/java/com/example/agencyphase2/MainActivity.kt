@@ -36,10 +36,10 @@ class MainActivity : AppCompatActivity() {
         getToken()
         subscribeToTopic()
 
-        binding.postJobBtn.setOnClickListener {
+        /*binding.postJobBtn.setOnClickListener {
             val intent = Intent(this, JobPostActivity::class.java)
             startActivity(intent)
-        }
+        }*/
     }
 
 

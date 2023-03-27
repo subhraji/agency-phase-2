@@ -20,7 +20,7 @@
         android:layout_alignTop="@+id/back_btn"
         android:layout_alignBottom="@+id/back_btn"
         android:layout_centerHorizontal="true"
-        android:text="Business  Information"
+        android:text="Basic  Information"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -63,47 +63,109 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/sign_up_stepper_lay"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="3"
+                        android:paddingStart="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:background="@drawable/reg_icon_one" />
+                            android:id="@+id/basic_step_1"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/reg_icon_one"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/basic_htv_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="Basic"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@+id/basic_step_1"
+                            app:layout_constraintStart_toStartOf="@+id/basic_step_1"
+                            app:layout_constraintTop_toBottomOf="@+id/basic_step_1" />
+
+                        <ImageView
+                            android:id="@+id/basic_dot_1"
+                            android:layout_width="50dp"
+                            android:layout_height="7dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="@drawable/reg_dots" />
+                            android:background="@drawable/reg_dots"
+                            app:layout_constraintBottom_toBottomOf="@+id/basic_step_1"
+                            app:layout_constraintStart_toEndOf="@+id/basic_step_1"
+                            app:layout_constraintTop_toTopOf="@+id/basic_step_1" />
 
                         <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:background="@drawable/reg_icon_two" />
+                            android:id="@+id/basic_step_2"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/reg_icon_two"
+                            app:layout_constraintStart_toEndOf="@+id/basic_dot_1"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/address_htv_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/reg_dots" />
+                            android:text="Optional"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@+id/basic_step_2"
+                            app:layout_constraintStart_toStartOf="@+id/basic_step_2"
+                            app:layout_constraintTop_toBottomOf="@+id/basic_step_2" />
+
 
                         <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:background="@drawable/reg_icon_three" />
-                    </LinearLayout>
+                            android:id="@+id/basic_dot_2"
+                            android:layout_width="50dp"
+                            android:layout_height="7dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/reg_dots"
+                            app:layout_constraintBottom_toBottomOf="@+id/basic_step_2"
+                            app:layout_constraintStart_toEndOf="@+id/basic_step_2"
+                            app:layout_constraintTop_toTopOf="@+id/basic_step_2" />
 
-                    <FrameLayout
+                        <ImageView
+                            android:id="@+id/basic_step_3"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/reg_icon_three"
+                            app:layout_constraintStart_toEndOf="@+id/basic_dot_2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/doc_htv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Officers"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@+id/basic_step_3"
+                            app:layout_constraintStart_toStartOf="@+id/basic_step_3"
+                            app:layout_constraintTop_toBottomOf="@+id/basic_step_3" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <RelativeLayout
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
@@ -113,16 +175,24 @@
                             android:id="@+id/user_img"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@color/light_grey" />
+                            android:src="@drawable/avatar_user_2" />
 
-                        <ImageView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/image_add_btn"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_outline_photo_camera_24" />
-                    </FrameLayout>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            app:cardCornerRadius="100dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ic_outline_camera_alt_24" />
+                        </androidx.cardview.widget.CardView>
+
+
+                    </RelativeLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/company_email_txt_lay"
@@ -178,9 +248,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
+                            android:digits="0123456789"
                             android:hint="Mobile Number *"
                             android:inputType="number"
-                            android:digits="0123456789"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -215,10 +285,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
+                            android:digits="0123456789"
                             android:hint="Tax Id Number/EIN Number *"
                             android:inputType="number"
                             android:maxLength="9"
-                            android:digits="0123456789"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
@@ -241,15 +311,16 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
-                        android:orientation="vertical"
-                        android:background="@drawable/settings_item_background">
+                        android:background="@drawable/settings_item_background"
+                        android:orientation="vertical">
 
                         <fragment
-                            android:id="@+id/autocomplete_fragment"
+                            android:id="@+id/reg_autocomplete_fragment"
                             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/address_card"
                         android:layout_width="match_parent"
@@ -294,6 +365,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@drawable/ic_baseline_delete_outline_24"
+                                android:visibility="invisible"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -333,7 +405,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Building name/number"
+                                android:text="Apartment name/number"
                                 android:textColor="@color/text_grey"
                                 android:textSize="13sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -384,7 +456,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -399,44 +472,98 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/optional_stepper_lay"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="3"
+                        android:layout_gravity="center_horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/stepper_done_icon" />
-
-                        <ImageView
+                            android:id="@+id/optional_step_1"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/stepper_done_icon"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                        <TextView
+                            android:id="@+id/basic_htv_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/optional_step_1"
+                            app:layout_constraintStart_toStartOf="@+id/optional_step_1"
+                            app:layout_constraintEnd_toEndOf="@+id/optional_step_1"
+                            android:textSize="12sp"
+                            android:textColor="@color/black"
+                            android:text="Basic"/>
+                        <ImageView
+                            android:id="@+id/optional_dot_1"
+                            android:layout_width="50dp"
+                            android:layout_height="7dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="@drawable/reg_dot_green" />
+                            android:background="@drawable/reg_dot_green"
+                            app:layout_constraintStart_toEndOf="@+id/optional_step_1"
+                            app:layout_constraintTop_toTopOf="@+id/optional_step_1"
+                            app:layout_constraintBottom_toBottomOf="@+id/optional_step_1"/>
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/reg_icon_two" />
-
-                        <ImageView
+                            android:id="@+id/optional_step_2"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/reg_icon_two"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/optional_dot_1"
+                            android:layout_marginStart="10dp"/>
+                        <TextView
+                            android:id="@+id/address_htv_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/reg_dots" />
+                            app:layout_constraintTop_toBottomOf="@+id/optional_step_2"
+                            app:layout_constraintStart_toStartOf="@+id/optional_step_2"
+                            app:layout_constraintEnd_toEndOf="@+id/optional_step_2"
+                            android:textSize="12sp"
+                            android:textColor="@color/black"
+                            android:text="Optional"/>
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/reg_icon_three" />
-                    </LinearLayout>
+                            android:id="@+id/optional_dot_2"
+                            android:layout_width="50dp"
+                            android:layout_height="7dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/reg_dots"
+                            app:layout_constraintTop_toTopOf="@+id/optional_step_2"
+                            app:layout_constraintBottom_toBottomOf="@+id/optional_step_2"
+                            app:layout_constraintStart_toEndOf="@+id/optional_step_2"/>
+
+                        <ImageView
+                            android:id="@+id/optional_step_3"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/reg_icon_three"
+                            app:layout_constraintStart_toEndOf="@+id/optional_dot_2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="10dp"/>
+                        <TextView
+                            android:id="@+id/doc_htv_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/optional_step_3"
+                            app:layout_constraintStart_toStartOf="@+id/optional_step_3"
+                            app:layout_constraintEnd_toEndOf="@+id/optional_step_3"
+                            android:textSize="12sp"
+                            android:textColor="@color/black"
+                            android:text="Add Officers"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -718,143 +845,211 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/doc_stepper_lay"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:paddingStart="30dp"
+                        android:weightSum="3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/stepper_done_icon" />
+                            android:id="@+id/doc_step_1"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/stepper_done_icon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/basic_htv_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="Basic"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@+id/doc_step_1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/doc_step_1" />
+
+                        <ImageView
+                            android:id="@+id/doc_dot_1"
+                            android:layout_width="50dp"
+                            android:layout_height="7dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:background="@drawable/reg_dot_green" />
+                            android:background="@drawable/reg_dot_green"
+                            app:layout_constraintBottom_toBottomOf="@+id/doc_step_1"
+                            app:layout_constraintStart_toEndOf="@+id/doc_step_1"
+                            app:layout_constraintTop_toTopOf="@+id/doc_step_1" />
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/stepper_done_icon" />
+                            android:id="@+id/doc_step_2"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/stepper_done_icon"
+                            app:layout_constraintStart_toEndOf="@+id/doc_dot_1"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/address_htv_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/reg_dot_green" />
+                            android:text="Optional"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@+id/doc_step_2"
+                            app:layout_constraintStart_toStartOf="@+id/doc_step_2"
+                            app:layout_constraintTop_toBottomOf="@+id/doc_step_2" />
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/reg_icon_three" />
-                    </LinearLayout>
+                            android:id="@+id/doc_dot_2"
+                            android:layout_width="50dp"
+                            android:layout_height="7dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/reg_dot_green"
+                            app:layout_constraintBottom_toBottomOf="@+id/doc_step_2"
+                            app:layout_constraintStart_toEndOf="@+id/doc_step_2"
+                            app:layout_constraintTop_toTopOf="@+id/doc_step_2" />
+
+                        <ImageView
+                            android:id="@+id/doc_step_3"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/reg_icon_three"
+                            app:layout_constraintStart_toEndOf="@+id/doc_dot_2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/doc_htv_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Officers"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@+id/doc_step_3"
+                            app:layout_constraintStart_toStartOf="@+id/doc_step_3"
+                            app:layout_constraintTop_toBottomOf="@+id/doc_step_3" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="24dp"
                         android:layout_marginEnd="15dp"
-                        android:padding="15dp"
-                        android:background="@drawable/grey_corner_bg">
+                        android:background="@drawable/grey_corner_bg"
+                        android:padding="15dp">
+
                         <TextView
                             android:id="@+id/full_name_htv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             android:text="Full name"
-                            android:textSize="13sp"
                             android:textColor="@color/text_grey"
-                            android:textStyle="bold"/>
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                         <TextView
                             android:id="@+id/full_name_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:textColor="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/full_name_htv"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_btn"
                             app:layout_constraintStart_toStartOf="@+id/full_name_htv"
-                            app:layout_constraintEnd_toStartOf="@+id/edit_btn"/>
+                            app:layout_constraintTop_toBottomOf="@+id/full_name_htv" />
+
                         <TextView
                             android:id="@+id/email_htv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toBottomOf="@+id/full_name_tv"
-                            app:layout_constraintStart_toStartOf="@+id/full_name_tv"
+                            android:layout_marginTop="15dp"
                             android:text="Email address"
-                            android:textSize="13sp"
                             android:textColor="@color/text_grey"
+                            android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="15dp"/>
+                            app:layout_constraintStart_toStartOf="@+id/full_name_tv"
+                            app:layout_constraintTop_toBottomOf="@+id/full_name_tv" />
+
                         <TextView
                             android:id="@+id/email_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:textColor="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/email_htv"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/mobile_htv"
                             app:layout_constraintStart_toStartOf="@+id/email_htv"
-                            app:layout_constraintEnd_toStartOf="@+id/mobile_htv"/>
+                            app:layout_constraintTop_toBottomOf="@+id/email_htv" />
+
                         <TextView
                             android:id="@+id/mobile_htv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mobile number"
-                            android:textSize="13sp"
                             android:textColor="@color/text_grey"
+                            android:textSize="13sp"
                             android:textStyle="bold"
-                            app:layout_constraintTop_toTopOf="@+id/email_htv"
-                            app:layout_constraintStart_toStartOf="@+id/mobile_tv"/>
+                            app:layout_constraintStart_toStartOf="@+id/mobile_tv"
+                            app:layout_constraintTop_toTopOf="@+id/email_htv" />
+
                         <TextView
                             android:id="@+id/mobile_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:textColor="@color/black"
-                            app:layout_constraintTop_toBottomOf="@+id/mobile_htv"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/mobile_htv" />
+
                         <TextView
                             android:id="@+id/add_mobile_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+ Add Number"
-                            android:textStyle="bold"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            app:layout_constraintTop_toTopOf="@+id/email_htv"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="@+id/email_tv"
                             android:paddingTop="7dp"
-                            android:paddingBottom="7dp"/>
+                            android:paddingBottom="7dp"
+                            android:text="+ Add Number"
+                            android:textColor="@color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/email_tv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/email_htv" />
+
                         <TextView
                             android:id="@+id/role_htv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/full_name_htv"
-                            app:layout_constraintStart_toStartOf="@+id/role_tv"
                             android:text="Role"
-                            android:textSize="13sp"
                             android:textColor="@color/text_grey"
-                            android:textStyle="bold"/>
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/role_tv"
+                            app:layout_constraintTop_toTopOf="@id/full_name_htv" />
+
                         <TextView
                             android:id="@+id/role_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:text="xbsjkxbak"
                             android:textColor="@color/black"
-                            app:layout_constraintTop_toBottomOf="@id/role_htv"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/role_htv" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <RelativeLayout
@@ -874,7 +1069,7 @@
                             android:layout_marginStart="15dp"
                             android:text="+"
                             android:textColor="@color/black"
-                            android:textSize="18sp"/>
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/add_officer_htv"
@@ -888,21 +1083,25 @@
                             android:textColorHint="@color/black"
                             android:textSize="14sp" />
                     </RelativeLayout>
+
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/get_auth_officer_shimmer_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp">
+
                             <include layout="@layout/get_auth_officer_shimmer_layout" />
                         </com.facebook.shimmer.ShimmerFrameLayout>
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/auth_officer_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"/>
+                            android:layout_marginTop="10dp" />
                     </FrameLayout>
                 </LinearLayout>
             </ScrollView>

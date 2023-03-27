@@ -160,7 +160,6 @@ class JobPostActivity : AppCompatActivity() {
         })
     }
 
-
     private fun showAutocomplete(){
         val autocompleteFragment =
             supportFragmentManager.findFragmentById(R.id.show_autocomplete_fragment) as AutocompleteSupportFragment
@@ -222,7 +221,6 @@ class JobPostActivity : AppCompatActivity() {
             }
         })
     }
-
 
     private fun showCareTypeBottomSheet(){
         val dialog = BottomSheetDialog(this)
@@ -581,7 +579,7 @@ class JobPostActivity : AppCompatActivity() {
                                     }
                                     dialog.dismiss()
                                 }else{
-                                    Toast.makeText(this,"provide building name or number", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"provide apartment name or number", Toast.LENGTH_SHORT).show()
                                     buildingTxt.showKeyboard()
                                 }
                             }else{
@@ -643,6 +641,7 @@ class JobPostActivity : AppCompatActivity() {
                         val intent = Intent(this,PaymentDetailsActivity::class.java)
                         intent.putExtra("amount",outcome.data?.data!!.amount)
                         intent.putExtra("job_id",outcome.data?.data!!.id.toString())
+                        intent.putExtra("from","activity")
                         startActivity(intent)
                         mPostJobViewModel.navigationComplete()
                         finish()

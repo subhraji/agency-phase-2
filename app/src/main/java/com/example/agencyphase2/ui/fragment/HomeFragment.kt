@@ -96,7 +96,6 @@ class HomeFragment : Fragment() {
 
                         Glide.with(requireActivity()).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                             .placeholder(R.color.color_grey)
-                            .error(R.color.error_red)
                             .into(binding.userImageView)
 
                         mGetProfileViewModel.navigationComplete()

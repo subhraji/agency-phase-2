@@ -45,6 +45,7 @@ import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.utils.UploadDocListener
 import com.example.agencyphase2.viewmodel.*
 import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
@@ -154,6 +155,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
 
+        Places.initialize(applicationContext, getString(R.string.api_key))
         autocomplete()
 
         binding.backBtn.setOnClickListener {
@@ -350,8 +352,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     }
 
     private fun autocomplete(){
-        val autocompleteFragment =
-            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+        val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.reg_autocomplete_fragment) as AutocompleteSupportFragment
 
         val etTextInput: EditText = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input)
         etTextInput.setTextColor(R.color.black)
@@ -478,7 +479,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                 if(!city_n.isEmpty()){
                     if(!state_n.isEmpty()){
                         if(!zipcode_n.isEmpty()){
-                            if(zipcode_n.length == 5){
+                            if(zipcode_n.length >= 5){
                                 if(!building_n.isEmpty()){
                                     binding.addressCard.visible()
 
@@ -492,7 +493,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                                     }
                                     dialog.dismiss()
                                 }else{
-                                    Toast.makeText(this,"provide building name or number", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"provide apartment name or number", Toast.LENGTH_SHORT).show()
                                     buildingTxt.showKeyboard()
                                 }
                             }else{

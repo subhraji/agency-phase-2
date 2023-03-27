@@ -1,12 +1,14 @@
 package com.example.agencyphase2.ui.activity
 
 import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.agencyphase2.MainActivity
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.databinding.ActivityPaymentDetailsBinding
@@ -45,6 +47,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
     private var totalAmount: Int? = null
     private var percentage: Double? = null
     private var job_id: String? = null
+    private var from: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +58,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
         if (extras != null) {
             amount = intent?.getStringExtra("amount")!!+".00"
             job_id = intent?.getStringExtra("job_id")!!
+            from = intent?.getStringExtra("from")!!
         }
 
         amount?.let {
@@ -207,7 +211,13 @@ class PaymentDetailsActivity : AppCompatActivity() {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         Toast.makeText(this,"Job posted successfully.", Toast.LENGTH_SHORT).show()
-                        finish()
+                        if(from == "activity"){
+                            finish()
+                        }else{
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }

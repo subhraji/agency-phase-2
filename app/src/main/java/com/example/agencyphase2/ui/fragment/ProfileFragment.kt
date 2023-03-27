@@ -85,7 +85,6 @@ class ProfileFragment : Fragment() {
 
                         Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                             .placeholder(R.color.color_grey)
-                            .error(R.color.error_red)
                             .into(binding.profileImg)
                         outcome.data!!.data.company_name?.let {
                             binding.nameTv.text = it
@@ -134,7 +133,9 @@ class ProfileFragment : Fragment() {
                         }
 
                         //profile status
-                        if(outcome.data?.data?.profile_status?.is_business_info_complete == 0){
+                        if(outcome.data?.data?.profile_status == null){
+                            showCompleteDialog("You have not added your business information",1)
+                        }else if(outcome.data?.data?.profile_status?.is_business_info_complete == 0){
                             showCompleteDialog("You have not added your business information",1)
                         }else if(outcome.data?.data?.profile_status?.is_authorize_info_added == 0){
                             showCompleteDialog("You have not added any authorize officer",3)
