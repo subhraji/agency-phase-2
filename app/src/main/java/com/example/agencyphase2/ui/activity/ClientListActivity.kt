@@ -29,6 +29,10 @@ class ClientListActivity : AppCompatActivity() {
 
         fillClientListRecycler(list)
 
+        binding.backArrow.setOnClickListener {
+            finish()
+        }
+
     }
 
     private fun fillClientListRecycler(list: List<TestModel>) {

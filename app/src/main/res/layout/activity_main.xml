@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,31 +11,45 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigation"
         app:defaultNavHost="true"
         app:navGraph="@navigation/home_nav" />
 
-
-<!--
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomAppBar"
+        android:layout_gravity="bottom"
+        android:background="@color/black"
+        android:backgroundTint="@color/white"
+        app:fabCradleRoundedCornerRadius="50dp">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottomNavigation"
+            android:background="@color/transparent"
+            app:menu="@menu/bottom_menu"
+            android:layout_marginEnd="20dp"
+            app:elevation="0dp"
+            android:elevation="0dp"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconSize="20dp"/>
+    </com.google.android.material.bottomappbar.BottomAppBar>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/post_job_btn"
+        android:id="@+id/job_post_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomNavigation"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/black"
         android:src="@drawable/ic_baseline_add_24"
-        android:tint="@color/white"
-        app:fabSize="normal" />
--->
+        app:layout_anchor="@id/bottomAppBar"
+        app:maxImageSize="40dp"
+        app:tint ="@color/white"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
-</RelativeLayout>
+        app:menu="@menu/bottom_menu" />-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

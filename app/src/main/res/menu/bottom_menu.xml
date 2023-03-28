@@ -6,9 +6,11 @@
     <item android:title="Profile"
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile_icon"/>
-    <item android:title="Jop post"
+    <item
         android:id="@+id/jobPostFragment"
-        android:icon="@drawable/ic_job_create_67"/>
+        android:title=""
+        android:enabled="false"/>
+
     <item android:title="Notification"
         android:icon="@drawable/notification_icon"/>
     <item android:title="Settings"

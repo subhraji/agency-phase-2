@@ -177,7 +177,7 @@ class PostFragment : Fragment() {
                         }else if(outcome.data?.data?.is_authorize_info_added == 0){
                             showCompleteDialog("You have not added any authorize officer",3)
                         }else if(outcome.data?.data?.is_profile_approved == 0){
-                            showCompleteDialog("Your profile is not approved yet.",4)
+                            showCompleteDialog("Your profile is under review. It will take 24 to 48 hours to get the approval.",4)
 
                             /*else if(outcome.data?.data?.is_other_info_added == 0){
                                 showCompleteDialog("You have not added other optional information",2)

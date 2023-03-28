@@ -806,7 +806,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                         binding.relativeLay3.visible()
                         binding.skipBtn.gone()
                         mAddOtherInfoViewModel.navigationComplete()
-                        binding.titleTv.text = "Authorized Officer"
+                        binding.titleTv.text = "Authorized Officers"
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
