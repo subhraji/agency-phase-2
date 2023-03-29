@@ -15,11 +15,12 @@
         android:text="Jhon Methew"
         android:textColor="@color/text_grey"
         android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/age_tv"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"/>
+        android:layout_marginStart="30dp"/>
     <TextView
         android:id="@+id/care_type_tv"
         android:layout_width="0dp"
@@ -29,14 +30,14 @@
         app:layout_constraintTop_toBottomOf="@+id/name_tv"
         app:layout_constraintStart_toStartOf="@+id/name_tv"
         app:layout_constraintEnd_toStartOf="@+id/gender_tv"
-        android:textSize="13sp"
+        android:textSize="16sp"
         android:layout_marginTop="7dp"/>
     <TextView
         android:id="@+id/age_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Age: 25 years"
-        android:textSize="13sp"
+        android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/image_view"
         app:layout_constraintTop_toTopOf="@id/name_tv"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="Gender: Male"
         android:textColor="@color/black"
-        android:textSize="13sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/image_view"
         app:layout_constraintTop_toTopOf="@+id/care_type_tv"
         app:layout_constraintStart_toStartOf="@id/age_tv"/>
@@ -57,6 +58,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:padding="5dp"
-        android:src="@drawable/ic_baseline_delete_outline_24"/>
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_cancel_fill0_wght400_grad0_opsz48"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -108,8 +108,8 @@ class JobPostActivity : AppCompatActivity() {
         etTextInput.setHint(R.string.search_loc)
         etTextInput.setHintTextColor(R.color.black)
 
-        val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
-        ivSearch.setImageResource(R.drawable.ic_gps_19)
+        /*val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
+        ivSearch.setImageResource(R.drawable.ic_gps_19)*/
 
         autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
         autocompleteFragment.setCountries("US")
@@ -170,8 +170,8 @@ class JobPostActivity : AppCompatActivity() {
         etTextInput.setHint(R.string.search_loc)
         etTextInput.setHintTextColor(R.color.black)
 
-        val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
-        ivSearch.setImageResource(R.drawable.ic_gps_19)
+        /*val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
+        ivSearch.setImageResource(R.drawable.ic_gps_19)*/
 
         autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
         autocompleteFragment.setCountries("US")
@@ -280,7 +280,7 @@ class JobPostActivity : AppCompatActivity() {
             binding.careTypeImg1.setImageResource(R.drawable.ic_senior_49)
             binding.careTypeImg2.setImageResource(R.drawable.ic_senior_49)
 
-            careType = "senior care"
+            careType = "Senior Care"
         }
         childLay.setOnClickListener {
             seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -295,7 +295,7 @@ class JobPostActivity : AppCompatActivity() {
             patientTv.setTextColor(resources.getColor(R.color.text_grey, null))
             binding.careTypeImg1.setImageResource(R.drawable.ic_childe_care_49)
             binding.careTypeImg2.setImageResource(R.drawable.ic_childe_care_49)
-            careType = "child care"
+            careType = "Child Care"
         }
         patientLay.setOnClickListener {
             seniorLay.background.setTint(ContextCompat.getColor(this, R.color.color_grey))
@@ -310,7 +310,7 @@ class JobPostActivity : AppCompatActivity() {
             patientTv.setTextColor(resources.getColor(R.color.white, null))
             binding.careTypeImg1.setImageResource(R.drawable.ic_patient_care_49)
             binding.careTypeImg2.setImageResource(R.drawable.ic_patient_care_49)
-            careType = "patient care"
+            careType = "Patient Care"
         }
 
         dialog.setCancelable(false)
@@ -344,7 +344,7 @@ class JobPostActivity : AppCompatActivity() {
         })
 
         btnClear.setOnClickListener {
-            genderAgeList = mutableListOf()
+            //genderAgeList = mutableListOf()
             dialog.dismiss()
         }
 

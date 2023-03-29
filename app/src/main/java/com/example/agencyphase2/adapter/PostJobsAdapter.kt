@@ -67,15 +67,17 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 }
                 ageTv.text = gen
 
-                statusTv.text = data.status.toString()
+                //statusTv.text = data.status.toString()
 
                 if(data?.status == "Bidding Started"){
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
                 }else if(data?.status == "Quick Call"){
+                    statusTv.text = "Quick Call"
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
                 }else if(data?.status == "Open Job"){
+                    statusTv.text = "Open \u00A0 Job "
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                 }else if(data?.status == "Upcoming"){

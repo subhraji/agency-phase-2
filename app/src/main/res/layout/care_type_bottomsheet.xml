@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:hint="Patient name"
-                android:inputType="text"
+                android:inputType="text|textCapWords"
                 android:maxLength="50"
                 android:singleLine="true"
                 android:textCursorDrawable="@null"
