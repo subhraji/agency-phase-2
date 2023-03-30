@@ -11,12 +11,15 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
+import com.example.agencyphase2.adapter.BulletPointAdapter
 import com.example.agencyphase2.databinding.ActivityPostJobsDetailsBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.DeleteJobViewModel
+import com.example.agencyphase2.viewmodel.GetPostJobDetailsViewModel
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -31,7 +34,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostJobsDetailsBinding
 
     private val mDeleteJobViewModel: DeleteJobViewModel by viewModels()
-    private val mGetPostJobsViewModel: GetPostJobsViewModel by viewModels()
+    private val mGetPostJobsViewModel: GetPostJobDetailsViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
     private lateinit var accessToken: String
@@ -49,6 +52,15 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         if (extras != null) {
             id = intent?.getIntExtra("id",0)!!
         }
+
+        binding.medicalRecycler.gone()
+        binding.medicalHisHtv.gone()
+        binding.jobExpRecycler.gone()
+        binding.jobExpHtv.gone()
+        binding.otherReqRecycler.gone()
+        binding.otherReqHtv.gone()
+        binding.noCheckListTv.gone()
+        binding.checkListRecycler.gone()
 
         //observer
         deleteJobObserver()
@@ -76,7 +88,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         binding.shimmerView.startShimmer()
         binding.mainLay.gone()
         if(isConnectedToInternet()){
-            mGetPostJobsViewModel.getPostJobs(token = accessToken, id = id)
+            mGetPostJobsViewModel.getPostJobDetails(token = accessToken, id = id)
         }else{
             Snackbar.make(binding.root,"Oops!! No internet connection",Snackbar.LENGTH_SHORT).show()
         }
@@ -153,11 +165,54 @@ class PostJobsDetailsActivity : AppCompatActivity() {
             when(outcome){
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
-                        if(outcome.data?.data != null && outcome.data?.data?.data?.size != 0){
+                        if(outcome.data?.data != null){
                             binding.shimmerView.gone()
                             binding.shimmerView.stopShimmer()
                             binding.mainLay.visible()
-                            Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                            binding.jobTitleTv.text = outcome.data!!.data.title.toString()
+                            binding.jobDescTv.text = outcome.data!!.data.description.toString()
+                            binding.dateHtv.text = outcome.data!!.data.date.toString()
+                            binding.timeTv.text = outcome.data!!.data.start_time.toString()+" - "+outcome.data!!.data.end_time.toString()
+                            binding.priceTv.text = "$"+outcome.data!!.data.amount.toString()
+                            binding.personCountTv.text = outcome.data!!.data.care_items.size.toString()+" "+outcome.data!!.data.care_type
+
+                            var gen = ""
+                            for(i in outcome.data!!.data.care_items){
+                                if(gen.isEmpty()){
+                                    gen = i.gender+": "+i.age
+                                }else{
+                                    gen = gen+", "+i.gender+": "+i.age
+                                }
+                            }
+                            binding.personAgeTv.text = gen
+
+                            if(outcome.data!!.data.medical_history.isNotEmpty() && outcome.data!!.data.medical_history != null){
+                                binding.medicalRecycler.visible()
+                                binding.medicalHisHtv.visible()
+                                medicalHistoryFillRecycler(outcome.data!!.data.medical_history.toMutableList())
+                            }
+
+                            outcome.data!!.data.expertise?.let {
+                                if(outcome.data!!.data.expertise.isNotEmpty() && outcome.data!!.data.expertise != null){
+                                    binding.jobExpRecycler.visible()
+                                    binding.jobExpHtv.visible()
+                                    jobExpFillRecycler(outcome.data!!.data.expertise.toMutableList())
+                                }
+                            }
+
+                            if(outcome.data!!.data.other_requirements.isNotEmpty() && outcome.data!!.data.other_requirements != null){
+                                binding.otherReqRecycler.visible()
+                                binding.otherReqHtv.visible()
+                                otherFillRecycler(outcome.data!!.data.other_requirements.toMutableList())
+                            }
+
+                            if(outcome.data!!.data.check_list.isNotEmpty()){
+                                binding.checkListRecycler.visible()
+                                binding.noCheckListTv.gone()
+                                checkListFillRecycler(outcome.data!!.data.check_list.toMutableList())
+                            }else{
+                                binding.noCheckListTv.visible()
+                            }
                         }else{
                             Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         }
@@ -174,5 +229,37 @@ class PostJobsDetailsActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun medicalHistoryFillRecycler(list: MutableList<String>) {
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.medicalRecycler.apply {
+            layoutManager = gridLayoutManager
+            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+        }
+    }
+
+    private fun jobExpFillRecycler(list: MutableList<String>) {
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.jobExpRecycler.apply {
+            layoutManager = gridLayoutManager
+            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+        }
+    }
+
+    private fun otherFillRecycler(list: MutableList<String>) {
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.otherReqRecycler.apply {
+            layoutManager = gridLayoutManager
+            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+        }
+    }
+
+    private fun checkListFillRecycler(list: MutableList<String>) {
+        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.checkListRecycler.apply {
+            layoutManager = gridLayoutManager
+            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+        }
     }
 }

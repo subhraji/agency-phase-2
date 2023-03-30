@@ -47,6 +47,14 @@ class JobPostActivity : AppCompatActivity() {
     var lat: String = ""
     var lang: String = ""
 
+    var street_n: String = ""
+    var city_n: String = ""
+    var state_n: String = ""
+    var zipcode_n: String = ""
+    var building_n: String? = null
+    var floor_n: String? = null
+    var country_n: String? = null
+
     private var durationHour: Int = 0
     private var durationDay: Int = 0
     private var durationTotalMin: Int = 0
@@ -549,12 +557,12 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         btnSave.setOnClickListener {
-            val street_n = streetTxt.text.toString()
-            val city_n = cityTxt.text.toString()
-            val state_n = stateTxt.text.toString()
-            val zipcode_n = zipcodeTxt.text.toString()
-            val building_n = buildingTxt.text.toString()
-            val floor_n = floorTxt.text.toString()
+            street_n = streetTxt.text.toString()
+            city_n = cityTxt.text.toString()
+            state_n = stateTxt.text.toString()
+            zipcode_n = zipcodeTxt.text.toString()
+            building_n = buildingTxt.text.toString()
+            floor_n = floorTxt.text.toString()
             if(!street_n.isEmpty()){
                 if(!city_n.isEmpty()){
                     if(!state_n.isEmpty()){
@@ -572,7 +580,7 @@ class JobPostActivity : AppCompatActivity() {
                                 binding.showCityNameTv.text = city_n
                                 binding.showStreetTv.text = street_n
                                 binding.showBuildingTv.text = building_n
-                                if(!floor_n.isEmpty()){
+                                if(floor_n?.isNotEmpty() == true){
                                     binding.buildingTv.text = building_n+", "+floor_n
                                     binding.showBuildingTv.text = building_n+", "+floor_n
                                 }
@@ -886,6 +894,13 @@ class JobPostActivity : AppCompatActivity() {
                         place_name,
                         lat,
                         lang,
+                        street_n,
+                        city_n,
+                        state_n,
+                        zipcode_n,
+                        building_n,
+                        floor_n,
+                        "USA",
                         accessToken
                     )
                     loader.show()

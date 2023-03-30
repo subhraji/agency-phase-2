@@ -212,10 +212,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/age_htv"
                         android:layout_alignParentEnd="true"
-                        android:text="27 years"
+                        android:gravity="center_horizontal"
+                        android:text="No Data"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal"/>
+                        android:textStyle="bold" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -239,7 +239,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="10dp"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                android:text="No Data"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -259,15 +259,16 @@
                     android:layout_height="wrap_content"
                     android:text="Tax ID/Number"
                     android:textColor="@color/black"/>
+
                 <TextView
                     android:id="@+id/tax_id_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="bsqjbs"
                     android:layout_below="@+id/tax_id_htv"
-                    android:layout_alignStart="@+id/tax_id_htv"/>
+                    android:layout_alignStart="@+id/tax_id_htv"
+                    android:text="No Data"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/ls_htv"
@@ -278,15 +279,16 @@
                     android:text="Legal Structure"
                     android:layout_alignStart="@+id/org_type_htv"
                     android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/ls_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="Partnership"
-                    android:textStyle="bold"
+                    android:layout_below="@+id/ls_htv"
                     android:layout_alignStart="@+id/ls_htv"
-                    android:layout_below="@+id/ls_htv"/>
+                    android:text="No Data"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/revenue_htv"
                     android:layout_width="wrap_content"
@@ -296,15 +298,16 @@
                     android:layout_marginTop="20dp"
                     android:layout_alignStart="@+id/tax_id_tv"
                     android:textColor="@color/black"/>
+
                 <TextView
                     android:id="@+id/revenue_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$67767"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:layout_below="@+id/revenue_htv"
-                    android:layout_alignStart="@+id/revenue_htv"/>
+                    android:layout_alignStart="@+id/revenue_htv"
+                    android:text="No Data"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/org_type_htv"
                     android:layout_width="wrap_content"
@@ -314,15 +317,16 @@
                     android:layout_marginTop="20dp"
                     android:text="Organization Type"
                     android:textColor="@color/black"/>
+
                 <TextView
                     android:id="@+id/org_type_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="profit"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:layout_below="@+id/org_type_htv"
                     android:layout_alignStart="@+id/org_type_htv"
-                    android:layout_below="@+id/org_type_htv"/>
+                    android:text="No Data"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

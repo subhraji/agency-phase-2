@@ -83,61 +83,66 @@ class ProfileFragment : Fragment() {
                         binding.profileShimmerView.gone()
                         binding.profileShimmerView.stopShimmer()
 
-                        Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
-                            .placeholder(R.color.color_grey)
-                            .into(binding.profileImg)
-                        outcome.data!!.data.company_name?.let {
-                            binding.nameTv.text = it
-                        }
-                        outcome.data!!.data.email?.let {
-                            binding.emailTv.text = it
-                        }
-                        outcome.data!!.data.phone?.let {
-                            binding.phoneTv.text = it
-                        }
-                        if(outcome.data!!.data.years_in_business != null){
-                            binding.yearsOfBusinessTv.text = outcome.data!!.data.years_in_business.toString()
-                        }else{
-                            binding.yearsOfBusinessTv.text = "no data"
-                        }
-                        if(outcome.data!!.data.number_of_employee != null){
-                            binding.numberOfEmployeeTv.text = outcome.data!!.data.number_of_employee.toString()
-                        }else{
-                            binding.numberOfEmployeeTv.text = "no data"
-                        }
-                        if(outcome.data!!.data.country_of_business != null){
-                            binding.countryTv.text = outcome.data!!.data.country_of_business.toString()
-                        }else{
-                            binding.countryTv.text = "no data"
-                        }
+                        outcome.data!!.data?.let {
+                            Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
+                                .placeholder(R.color.color_grey)
+                                .into(binding.profileImg)
+                            outcome.data!!.data.company_name?.let {
+                                binding.nameTv.text = it
+                            }
+                            outcome.data!!.data.email?.let {
+                                binding.emailTv.text = it
+                            }
+                            outcome.data!!.data.phone?.let {
+                                binding.phoneTv.text = it
+                            }
+                            if(outcome.data!!.data.years_in_business != null){
+                                binding.yearsOfBusinessTv.text = outcome.data!!.data.years_in_business.toString()
+                            }else{
+                                binding.yearsOfBusinessTv.text = "no data"
+                            }
+                            if(outcome.data!!.data.number_of_employee != null){
+                                binding.numberOfEmployeeTv.text = outcome.data!!.data.number_of_employee.toString()
+                            }else{
+                                binding.numberOfEmployeeTv.text = "no data"
+                            }
+                            if(outcome.data!!.data.country_of_business != null){
+                                binding.countryTv.text = outcome.data!!.data.country_of_business.toString()
+                            }else{
+                                binding.countryTv.text = "no data"
+                            }
 
-                        if(outcome.data!!.data.organization_type != null){
-                            binding.orgTypeTv.text = outcome.data!!.data.organization_type.toString()
-                        }else{
-                            binding.orgTypeTv.text = "no data"
-                        }
-                        if(outcome.data!!.data.legal_structure != null){
-                            binding.lsTv.text = outcome.data!!.data.legal_structure.toString()
-                        }else{
-                            binding.lsTv.text = "no data"
-                        }
-                        if(outcome.data!!.data.annual_business_revenue != null){
-                            binding.revenueTv.text = outcome.data!!.data.annual_business_revenue.toString()
-                        }else{
-                            binding.revenueTv.text = "no data"
-                        }
-                        if(outcome.data!!.data.tax_id_or_ein_id != null){
-                            binding.taxIdTv.text = outcome.data!!.data.tax_id_or_ein_id.toString()
-                        }else{
-                            binding.taxIdTv.text = "no data"
+                            if(outcome.data!!.data.organization_type != null){
+                                binding.orgTypeTv.text = outcome.data!!.data.organization_type.toString()
+                            }else{
+                                binding.orgTypeTv.text = "no data"
+                            }
+                            if(outcome.data!!.data.legal_structure != null){
+                                binding.lsTv.text = outcome.data!!.data.legal_structure.toString()
+                            }else{
+                                binding.lsTv.text = "no data"
+                            }
+                            if(outcome.data!!.data.annual_business_revenue != null){
+                                binding.revenueTv.text = outcome.data!!.data.annual_business_revenue.toString()
+                            }else{
+                                binding.revenueTv.text = "no data"
+                            }
+                            if(outcome.data!!.data.tax_id_or_ein_id != null){
+                                binding.taxIdTv.text = outcome.data!!.data.tax_id_or_ein_id.toString()
+                            }else{
+                                binding.taxIdTv.text = "no data"
+                            }
+
                         }
 
                         //profile status
-                        if(outcome.data?.data?.profile_status == null){
+                        if(outcome.data?.data == null){
+                            showCompleteDialog("You have not added your business information ",1)
+                        }else if(outcome.data?.data?.profile_completion_status == null){
+                            showCompleteDialog("You have not added your business information ",1)
+                        }else if(outcome.data?.data?.profile_completion_status?.is_business_info_complete == 0){
                             showCompleteDialog("You have not added your business information",1)
-                        }else if(outcome.data?.data?.profile_status?.is_business_info_complete == 0){
-                            showCompleteDialog("You have not added your business information",1)
-                        }else if(outcome.data?.data?.profile_status?.is_authorize_info_added == 0){
+                        }else if(outcome.data?.data?.profile_completion_status?.is_authorize_info_added == 0){
                             showCompleteDialog("You have not added any authorize officer",3)
                         }
 

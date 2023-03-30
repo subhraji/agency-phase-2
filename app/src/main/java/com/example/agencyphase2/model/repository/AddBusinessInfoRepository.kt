@@ -20,6 +20,7 @@ class AddBusinessInfoRepository @Inject constructor(private val apiInterface: Ap
         city_or_district: String,
         state: String,
         zip_code: String,
+        country: String,
         token: String
     ): Flow<InsertBusinessInformationResponse?> = flow{
         emit(apiInterface.addBusinessInfo(
@@ -31,6 +32,7 @@ class AddBusinessInfoRepository @Inject constructor(private val apiInterface: Ap
             city_or_district.toMultipartFormString(),
             state.toMultipartFormString(),
             zip_code.toMultipartFormString(),
+            country.toMultipartFormString(),
             token
         ))
     }.flowOn(Dispatchers.IO)

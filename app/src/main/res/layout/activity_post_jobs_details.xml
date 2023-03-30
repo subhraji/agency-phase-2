@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -91,15 +91,16 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/status_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/status_htv"
                             android:layout_alignStart="@+id/status_htv"
                             android:layout_gravity="center"
                             android:text="QUICK CALL"
-                            android:textStyle="bold"
                             android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
                     <View
@@ -123,16 +124,18 @@
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
+
                         <TextView
+                            android:id="@+id/timer_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/time_left_htv"
                             android:layout_alignStart="@+id/time_left_htv"
                             android:layout_gravity="center"
                             android:text="00:30:00"
-                            android:textStyle="bold"
                             android:textColor="@color/white"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -183,11 +186,13 @@
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/price_htv"
                 app:layout_constraintTop_toBottomOf="@+id/person_count_tv"
                 app:layout_constraintStart_toStartOf="@+id/person_count_tv"/>
 
             <TextView
-                android:id="@+id/status_tv"
+                android:id="@+id/price_htv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -199,14 +204,15 @@
                 app:layout_constraintTop_toTopOf="@+id/person_img" />
 
             <TextView
+                android:id="@+id/price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$80"
                 android:textColor="@color/light_blue"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/status_tv"
-                app:layout_constraintStart_toStartOf="@+id/status_tv"/>
+                app:layout_constraintTop_toBottomOf="@+id/price_htv"
+                app:layout_constraintStart_toStartOf="@+id/price_htv"/>
 
             <TextView
                 android:id="@+id/loc_tv"
@@ -229,33 +235,6 @@
                 app:layout_constraintTop_toTopOf="@+id/date_img"
                 app:layout_constraintEnd_toStartOf="@+id/loc_tv"/>
 
-<!--
-            <ImageView
-                android:id="@+id/loc_img"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_baseline_location_on_24"
-                app:layout_constraintStart_toStartOf="@+id/person_img"
-                app:layout_constraintTop_toBottomOf="@+id/person_age_tv"
-                app:tint="@color/text_grey" />
--->
-
-<!--
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="San Francisco, California | 2 mils"
-                android:textColor="@color/black"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/loc_img"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/loc_img"
-                app:layout_constraintTop_toTopOf="@+id/loc_img" />
--->
-
             <ImageView
                 android:id="@+id/date_img"
                 android:layout_width="24dp"
@@ -268,13 +247,15 @@
 
             <TextView
                 android:id="@+id/date_htv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Today, Sept 24"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/loc_img"
                 app:layout_constraintBottom_toBottomOf="@+id/date_img"
                 app:layout_constraintStart_toEndOf="@+id/date_img"
                 app:layout_constraintTop_toTopOf="@+id/date_img" />
@@ -393,8 +374,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/job_desc_htv"
                     android:layout_marginTop="7dp"
-                    android:textColor="@color/black"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages" />
+                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/medical_his_htv"
@@ -406,194 +387,45 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-                <LinearLayout
-                    android:id="@+id/medical_linear_lay_1"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/medical_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/medical_his_htv"
-                    android:layout_marginTop="10dp">
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:src="@drawable/bullet_point_bg"
-                        android:layout_gravity="center_vertical"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Heart disease"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/medical_linear_lay_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/medical_linear_lay_1"
-                    android:layout_marginTop="5dp">
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:src="@drawable/bullet_point_bg"
-                        android:layout_gravity="center_vertical"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="High blood pressure"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/medical_linear_lay_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/medical_linear_lay_2"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/bullet_point_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="Skin allergy" />
-                </LinearLayout>
+                    android:layout_below="@+id/medical_his_htv" />
 
                 <TextView
                     android:id="@+id/job_exp_htv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/medical_linear_lay_3"
+                    android:layout_below="@+id/medical_recycler"
                     android:layout_marginTop="20dp"
                     android:text="Job Experties Skill(s) Required:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:id="@+id/job_exp_linear_lay_1"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/job_exp_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/job_exp_htv"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/bullet_point_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="CNA Trained" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/job_exp_linear_lay_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/job_exp_linear_lay_1"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/bullet_point_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="CPR Trained" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/job_exp_linear_lay_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/job_exp_linear_lay_2"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/bullet_point_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="Wound care" />
-                </LinearLayout>
+                    android:layout_below="@+id/job_exp_htv" />
 
                 <TextView
                     android:id="@+id/other_req_htv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/job_exp_linear_lay_3"
+                    android:layout_below="@+id/job_exp_recycler"
                     android:layout_marginTop="20dp"
                     android:text="Other Requirements:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-                <LinearLayout
-                    android:id="@+id/other_req_linear_lay_1"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/other_req_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/other_req_htv"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/bullet_point_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="Lorem Ipsum is simply dummy text of the printing" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/other_req_linear_lay_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/other_req_linear_lay_1"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/bullet_point_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="when an unknown printer took a galley" />
-                </LinearLayout>
+                    android:layout_below="@+id/other_req_htv"/>
 
             </RelativeLayout>
             <RelativeLayout
@@ -615,90 +447,19 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
-                <LinearLayout
-                    android:id="@+id/checklist_linear_lay_1"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/check_list_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/checklist_htv"
-                    android:layout_marginTop="7dp">
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_baseline_check_circle_24"
-                        app:tint="@color/light_blue"
-                        android:layout_gravity="center_vertical"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Shopping for groceries"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/checklist_linear_lay_2"
-                    android:layout_width="match_parent"
+                    android:layout_below="@+id/checklist_htv" />
+                <TextView
+                    android:id="@+id/no_check_list_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/checklist_linear_lay_1"
-                    android:layout_marginTop="5dp">
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_baseline_check_circle_24"
-                        app:tint="@color/light_blue"
-                        android:layout_gravity="center_vertical"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Preparing meal"
-                        android:layout_marginStart="10dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/checklist_linear_lay_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/checklist_linear_lay_2"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_baseline_check_circle_24"
-                        app:tint="@color/light_blue" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="Doing dishes and kitchen clean up" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/checklist_linear_lay_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/checklist_linear_lay_3"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_baseline_check_circle_24"
-                        app:tint="@color/light_blue"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/black"
-                        android:text="Changing bedding" />
-                </LinearLayout>
+                    android:text="No Data"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/checklist_htv"/>
 
             </RelativeLayout>
 

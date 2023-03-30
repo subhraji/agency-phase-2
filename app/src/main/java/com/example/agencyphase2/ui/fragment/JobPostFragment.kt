@@ -898,7 +898,7 @@ class JobPostFragment : Fragment() {
 
         binding.prevNextStepBtn.setOnClickListener {
 
-            if(!JobPostActivity.genderAgeList.isEmpty()){
+            /*if(!JobPostActivity.genderAgeList.isEmpty()){
                 if(requireActivity().isConnectedToInternet()){
                     mPostJobViewModel.jobPost(
                         binding.showJobTitleTxt.text.toString(),
@@ -925,7 +925,7 @@ class JobPostFragment : Fragment() {
                 }
             }else{
                 Toast.makeText(requireActivity(), "Please select a care type.", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }
 
         fillMedicalRecycler(medicalHistoryList, binding.showMedicalHisRecycler)

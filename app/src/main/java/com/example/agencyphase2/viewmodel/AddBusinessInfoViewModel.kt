@@ -28,10 +28,11 @@ class AddBusinessInfoViewModel  @Inject constructor(private val repository: AddB
         city_or_district: String,
         state: String,
         zip_code: String,
+        country: String,
         token: String
     ) = viewModelScope.launch {
         repository.addBusinessInfo(
-            photo, phone, email, tax_id_or_ein_id, street, city_or_district, state, zip_code, token
+            photo, phone, email, tax_id_or_ein_id, street, city_or_district, state, zip_code, country, token
         ).onStart {
             _response.value = Outcome.loading(true)
         }.catch {

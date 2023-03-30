@@ -19,6 +19,7 @@ import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResp
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
 import com.example.agencyphase2.model.pojo.get_ongoing_job.GetOngoingJobsResponse
+import com.example.agencyphase2.model.pojo.get_post_job_details.GetPostJobDetailsResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
 import com.example.agencyphase2.model.pojo.get_profile.GetProfileResponse
 import com.example.agencyphase2.model.pojo.get_upcomming_jobs.GetUpcommingJobResponse
@@ -40,8 +41,6 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiInterface {
-    /*@GET("todos")
-    suspend fun getTodos(): GetTodosResponse?*/
 
     @POST("signup")
     suspend fun signup(@Body body: SignUpRequest?): SignUpResponse?
@@ -63,6 +62,7 @@ interface ApiInterface {
         @Part("city_or_district") city_or_district: RequestBody,
         @Part("state") state: RequestBody,
         @Part("zip_code") zip_code: RequestBody,
+        @Part("country") country: RequestBody,
         @Header("Authorization") token: String
     ): InsertBusinessInformationResponse?
 
@@ -97,6 +97,12 @@ interface ApiInterface {
         @Query("id") id: Int? = null,
         @Query("page") page: Int? = null
     ): GetPostJobsResponse?
+
+    @GET("job/get-single-job")
+    suspend fun getPostJobDetails(
+        @Header("Authorization") token: String,
+        @Query("id") id: Int? = null,
+    ): GetPostJobDetailsResponse?
 
     @GET("information/status")
     suspend fun getProfileCompletionStatus(

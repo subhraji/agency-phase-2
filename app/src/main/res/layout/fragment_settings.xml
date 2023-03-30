@@ -50,7 +50,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="Steve Jobs"/>
+            android:text="No Data"/>
 
         <TextView
             android:id="@+id/email_htv"
@@ -72,7 +72,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:text="stevejobs@gmail.com"/>
+            android:text="No Data"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -97,7 +97,7 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:text="Owner"/>
+                android:text="No Data"/>
             <TextView
                 android:id="@+id/mobile_htv"
                 android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:text="+16837676232"/>
+                android:text="No Data"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <RelativeLayout

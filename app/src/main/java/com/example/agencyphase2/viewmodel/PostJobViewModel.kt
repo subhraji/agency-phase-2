@@ -36,10 +36,17 @@ class PostJobViewModel @Inject constructor(private val repository: PostJobReposi
         short_address: String,
         lat: String,
         long: String,
+        street: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        appartment_or_unit: String? = null,
+        floor_no: String? = null,
+        country: String,
         token: String
     ) = viewModelScope.launch {
         repository.postJob(
-            title, care_type, care_items, date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long, token
+            title, care_type, care_items, date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long, street, city, state, zipcode, appartment_or_unit, floor_no, country, token
         ).onStart {
             _response.value = Outcome.loading(true)
         }.catch {

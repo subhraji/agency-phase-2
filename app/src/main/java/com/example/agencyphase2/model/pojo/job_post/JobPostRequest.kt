@@ -18,5 +18,12 @@ data class JobPostRequest(
     val check_list: List<String>? = null,
     val short_address: String,
     val lat: String,
-    val long: String
+    val long: String,
+    val street: String,
+    val city: String,
+    val state: String,
+    val zip_code: String,
+    val appartment_or_unit: String? = null,
+    val floor_no: String? = null,
+    val country: String
 )

@@ -94,9 +94,11 @@ class HomeFragment : Fragment() {
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
 
-                        Glide.with(requireActivity()).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
-                            .placeholder(R.color.color_grey)
-                            .into(binding.userImageView)
+                        if(outcome.data!!.data != null){
+                            Glide.with(requireActivity()).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
+                                .placeholder(R.color.color_grey)
+                                .into(binding.userImageView)
+                        }
 
                         mGetProfileViewModel.navigationComplete()
                     }else{
