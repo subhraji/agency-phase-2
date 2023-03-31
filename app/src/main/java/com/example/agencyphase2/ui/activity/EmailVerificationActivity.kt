@@ -31,19 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EmailVerificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEmailVerificationBinding
-    private val signUpViewModel: SignUpViewModel by viewModels()
     private val mGetEmailVerificationOtpViewModel: GetEmailVerificationOtpViewModel by viewModels()
 
     private lateinit var loader: androidx.appcompat.app.AlertDialog
-    private var company_name: String = ""
-    private var full_name: String = ""
-    private var email: String = ""
-    private var password: String = ""
-    private var con_password: String = ""
     var cTimer: CountDownTimer? = null
 
     private lateinit var token: String
     private var CHANNEL_ID = "101"
+    private var email = ""
+    private var name = ""
+    private var company_name = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +49,9 @@ class EmailVerificationActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if (extras != null) {
-            company_name = extras.getString("company_name").toString()
-            full_name = extras.getString("full_name").toString()
             email = extras.getString("email").toString()
-            password = extras.getString("password").toString()
-            con_password = extras.getString("con_password").toString()
+            name = extras.getString("name").toString()
+            company_name = extras.getString("company_name").toString()
         }
 
         loader = this.loadingDialog()
@@ -143,15 +138,7 @@ class EmailVerificationActivity : AppCompatActivity() {
             hideSoftKeyboard()
             if(otp.length == 6){
                 if(isConnectedToInternet()){
-                    signUpViewModel.signup(
-                        otp.toString().toInt(),
-                        company_name,
-                        full_name,
-                        email,
-                        password,
-                        con_password,
-                        token
-                    )
+                    mGetEmailVerificationOtpViewModel.verifyOtp(email, otp, company_name)
                     loader.show()
 
                 }else{
@@ -163,16 +150,20 @@ class EmailVerificationActivity : AppCompatActivity() {
         }
 
         binding.resendTv.setOnClickListener {
-            if(isConnectedToInternet()){
-                mGetEmailVerificationOtpViewModel.getOtp(
-                    email
-                )
-                loader = this.loadingDialog()
-                loader.show()
-            }else{
-                Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
-            }
+            val otp = "${binding.edTxt1.text}${binding.edTxt2.text}${binding.edTxt3.text}${binding.edTxt4.text}${binding.edTxt5.text}${binding.edTxt6.text}"
+            hideSoftKeyboard()
 
+            if(otp.length == 6){
+                if(isConnectedToInternet()){
+                    mGetEmailVerificationOtpViewModel.verifyOtp(email, otp, company_name)
+                    loader = this.loadingDialog()
+                    loader.show()
+                }else{
+                    Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Invalid OTP.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         createNotificationChannel()
@@ -180,41 +171,7 @@ class EmailVerificationActivity : AppCompatActivity() {
         subscribeToTopic()
 
         //observer
-        signObserver()
         getOtpObserver()
-    }
-
-    private fun signObserver(){
-        signUpViewModel.response.observe(this, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    loader.dismiss()
-                    if(outcome.data?.success == true){
-                        if (outcome.data!!.token != null) {
-                            outcome.data!!.token?.let {
-
-                                PrefManager.setLogInStatus(true)
-
-                                PrefManager.setKeyAuthToken(it)
-                                val intent = Intent(this, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
-                        signUpViewModel.navigationComplete()
-                    }else{
-                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
     }
 
     fun startTimer() {
@@ -252,6 +209,15 @@ class EmailVerificationActivity : AppCompatActivity() {
                         binding.edTxt6.text = null
                         binding.edTxt1.showKeyboard()
 
+                        outcome.data?.token?.let {
+                            PrefManager.setKeyAuthToken(it)
+                            PrefManager.setUserFullName(name)
+                            PrefManager.setLogInStatus(true)
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            finishAffinity()
+                        }
                         mGetEmailVerificationOtpViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()

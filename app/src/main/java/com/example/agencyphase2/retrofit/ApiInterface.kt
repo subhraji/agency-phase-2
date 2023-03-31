@@ -121,7 +121,7 @@ interface ApiInterface {
         @Query("id") id: Int?,
     ): DeleteAuthOfficerResponse?
 
-    @POST("check-email-exist")
+    @POST("verify-otp")
     suspend fun getEmailVerificationOtp(
         @Body body: GetOtpRequest?): GetOtpResponse?
 

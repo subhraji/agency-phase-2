@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class SignUpRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun signup(
-        otp: Int,
         company_name: String,
         name: String,
         email: String,
@@ -19,6 +18,6 @@ class SignUpRepository @Inject constructor(private val apiInterface: ApiInterfac
         con_password: String,
         token: String
     ): Flow<SignUpResponse?> = flow{
-        emit(apiInterface.signup(SignUpRequest(otp,company_name,name,email,password,con_password,token)))
+        emit(apiInterface.signup(SignUpRequest(company_name,name,email,password,con_password,token)))
     }.flowOn(Dispatchers.IO)
 }

@@ -18,10 +18,12 @@ class GetEmailVerificationOtpViewModel @Inject constructor(private val repositor
     private var _response = MutableLiveData<Outcome<GetOtpResponse?>?>()
     val response: LiveData<Outcome<GetOtpResponse?>?> = _response
 
-    fun getOtp(
-        email: String
+    fun verifyOtp(
+        email: String,
+        otp: String,
+        company_name: String
     ) = viewModelScope.launch {
-        repository.getOtp(email).onStart {
+        repository.getOtp(email, otp, company_name).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

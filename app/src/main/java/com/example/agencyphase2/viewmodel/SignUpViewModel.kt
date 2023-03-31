@@ -19,7 +19,6 @@ class SignUpViewModel @Inject constructor(private val repository: SignUpReposito
     val response: LiveData<Outcome<SignUpResponse?>?> = _response
 
     fun signup(
-        otp: Int,
         company_name: String,
         name: String,
         email: String,
@@ -27,7 +26,7 @@ class SignUpViewModel @Inject constructor(private val repository: SignUpReposito
         con_password: String,
         token: String
     ) = viewModelScope.launch {
-        repository.signup(otp, company_name, name, email, password, con_password, token).onStart {
+        repository.signup(company_name, name, email, password, con_password, token).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)
