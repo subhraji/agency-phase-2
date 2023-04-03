@@ -69,9 +69,9 @@ class LoginFragment : Fragment() {
         emailFocusListener()
         passwordFocusListener()
 
-        binding.backBtn.setOnClickListener {
+        /*binding.backBtn.setOnClickListener {
             requireActivity().finish()
-        }
+        }*/
 
         binding.loginBtn.setOnClickListener {
             val validEmail = binding.emailTxtLay.helperText == null && binding.emailTxt.text.toString().isNotEmpty()

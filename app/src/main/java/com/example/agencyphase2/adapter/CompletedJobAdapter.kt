@@ -2,6 +2,7 @@ package com.example.agencyphase2.adapter
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,12 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.CompleteJobsItemLayoutBinding
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_complete_jobs.Data
+import com.user.caregiver.gone
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.LocalTime
+import java.util.*
 
 class CompletedJobAdapter (private val itemList: List<Data>,
                            private val context: Context
@@ -70,7 +77,17 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                     ColorStateList.valueOf(context.resources.getColor(
                         R.color.color_green)))
 
+
+                /*timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
+                    Duration.ofMinutes( getDurationHour(
+                        getCurrentDate(),
+                        parseDateToddMMyyyy("${data.date} ${data?.start_time}")!!
+                    ) )
+                ).toString()*/
+
+                timeLeftTv.gone()
             }
+
         }
 
     }

@@ -5,6 +5,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -267,6 +269,7 @@ class SignUpActivity : AppCompatActivity() {
         dialog.setCancelable(true)
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.privacy_policy_dialog)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val webview = dialog.findViewById<WebView>(R.id.privacy_webview)
         val agree_btn = dialog.findViewById<TextView>(R.id.check_agree)

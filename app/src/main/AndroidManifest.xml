@@ -32,10 +32,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AddClientActivity"
+            android:name=".ui.activity.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateClientActivity"
+            android:name=".ui.activity.AddClientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.CreateClientActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.ClientListActivity"

@@ -137,6 +137,7 @@ class PostFragment : Fragment() {
                             binding.postJobCardBtn.gone()
                             //fillRecyclerView(outcome.data?.data?.data!!)
                             isLoading = false
+
                             adapter.add(outcome.data?.data?.data!!)
                         }else{
                             if(page_no == 1){

@@ -18,6 +18,7 @@ import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.AskLocationActivity
 import com.example.agencyphase2.ui.activity.JobPostActivity
+import com.example.agencyphase2.ui.activity.ProfileActivity
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetProfileViewModel
@@ -59,8 +60,8 @@ class HomeFragment : Fragment() {
         setUpTabLayoutWithViewPager()
 
         binding.userImageView.setOnClickListener {
-            /*val intent = Intent(requireActivity(), AskLocationActivity::class.java)
-            startActivity(intent)*/
+            val intent = Intent(requireActivity(), ProfileActivity::class.java)
+            startActivity(intent)
         }
 
         //observer
