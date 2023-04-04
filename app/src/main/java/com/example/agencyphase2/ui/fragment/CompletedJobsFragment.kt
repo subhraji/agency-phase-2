@@ -52,7 +52,10 @@ class CompletedJobsFragment : Fragment() {
 
         //observe
         getCompleteJobsObserve()
+    }
 
+    override fun onResume() {
+        super.onResume()
         binding.completedJobRecycler.gone()
         binding.completedJobsShimmerView.visible()
         binding.completedJobsShimmerView.startShimmer()

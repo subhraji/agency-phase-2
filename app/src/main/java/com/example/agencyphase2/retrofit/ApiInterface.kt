@@ -29,6 +29,8 @@ import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
 import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
+import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpRequest
+import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpResponse
 import com.example.agencyphase2.model.pojo.save_payment.SavePaymentRequest
 import com.example.agencyphase2.model.pojo.save_payment.SavePaymentsResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
@@ -179,4 +181,9 @@ interface ApiInterface {
     suspend fun updateAuthOfficerStatus(
         @Header("Authorization") token: String,
     ): UpdateAuthOfficerStatusResponse?
+
+    @POST("resend-otp")
+    suspend fun resendOtp(
+        @Body body: ResendOtpRequest?,
+    ): ResendOtpResponse?
 }

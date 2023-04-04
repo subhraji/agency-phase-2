@@ -66,7 +66,10 @@ class HomeFragment : Fragment() {
 
         //observer
         getProfileObserver()
+    }
 
+    override fun onResume() {
+        super.onResume()
         if(requireActivity().isConnectedToInternet()){
             mGetProfileViewModel.getProfile(accessToken)
         }else{

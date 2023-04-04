@@ -62,6 +62,10 @@ class AcceptedFragment : Fragment() {
         getOngoingJobObserver()
         getUpcomingJobObserver()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         binding.ongoingShimmerView.visible()
         binding.upcomingShimmerView.visible()
@@ -78,10 +82,6 @@ class AcceptedFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     private fun getOngoingJobObserver(){

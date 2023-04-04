@@ -84,7 +84,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
                 }else if(data?.status == "Open Job"){
-                    statusTv.text = "Open \u00A0 \u00A0 Job "
+                    statusTv.text = "Open \u00A0 \u00A0 \u00A0 Job "
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                 }else if(data?.status == "Upcoming"){
@@ -102,7 +102,6 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
 
             }
         }
-
 
         private fun getDurationHour(startDateTime: String, endDateTime: String): Long {
 
@@ -159,7 +158,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
             return sdf.format(Date())
         }
 
-        fun parseDateToddMMyyyy(time: String): String? {
+        private fun parseDateToddMMyyyy(time: String): String? {
             val inputPattern = "yyyy-MM-dd h:mm a"
             val outputPattern = "dd-MM-yyyy HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)

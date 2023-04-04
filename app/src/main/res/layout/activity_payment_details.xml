@@ -78,6 +78,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:text="Total amount"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
