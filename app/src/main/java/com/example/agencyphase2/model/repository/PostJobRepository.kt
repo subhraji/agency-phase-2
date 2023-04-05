@@ -15,7 +15,8 @@ class PostJobRepository @Inject constructor(private  val apiInterface: ApiInterf
         title: String,
         care_type: String,
         care_items: List<GenderAgeItemCountModel>,
-        date: String,
+        start_date: String,
+        end_date: String,
         start_time: String,
         end_time: String,
         amount: String,
@@ -39,6 +40,6 @@ class PostJobRepository @Inject constructor(private  val apiInterface: ApiInterf
     ): Flow<JobPostResponse?> = flow{
         emit(apiInterface.jobPost(
             JobPostRequest(
-                title, care_type, care_items, date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long, street, city, state, zipcode, appartment_or_unit, floor_no, country), token))
+                title, care_type, care_items, start_date, end_date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long, street, city, state, zipcode, appartment_or_unit, floor_no, country), token))
     }.flowOn(Dispatchers.IO)
 }

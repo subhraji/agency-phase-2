@@ -882,6 +882,7 @@ class JobPostActivity : AppCompatActivity() {
                         binding.showAddCareTypeHtv.text.toString(),
                         genderAgeList,
                         date,
+                        date,
                         startTime,
                         endTime,
                         binding.showAmountTxt.text.toString(),

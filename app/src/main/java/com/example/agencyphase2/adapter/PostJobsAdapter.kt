@@ -54,7 +54,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = data?.date.toString()
+                dateHtv.text = data?.start_date.toString()+"-"+data?.end_date.toString()
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
@@ -96,7 +96,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
                     Duration.ofMinutes( getDurationHour(
                         getCurrentDate(),
-                        parseDateToddMMyyyy("${data.date} ${data?.start_time}")!!
+                        parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
                     ) )
                 ).toString()
 
