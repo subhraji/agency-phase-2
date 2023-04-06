@@ -19,9 +19,10 @@ class GetUpcommingJobViewModel @Inject constructor(private val repository: GetUp
     val response: LiveData<Outcome<GetUpcommingJobResponse?>?> = _response
 
     fun getUpcommingJob(
-        token: String
+        token: String,
+        id: Int?
     ) = viewModelScope.launch {
-        repository.getUpcomminJobs(token).onStart {
+        repository.getUpcomminJobs(token, id).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

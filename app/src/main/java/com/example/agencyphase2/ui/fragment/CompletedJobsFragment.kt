@@ -62,7 +62,7 @@ class CompletedJobsFragment : Fragment() {
         binding.noDataLottie.gone()
 
         if(requireActivity().isConnectedToInternet()){
-            mGetCompleteJobViewModel.getCompleteJob(accessToken, pageNumber)
+            mGetCompleteJobViewModel.getCompleteJob(accessToken, pageNumber, 0)
         }else{
             Toast.makeText(requireActivity(),"No internet connection.",Toast.LENGTH_SHORT).show()
         }

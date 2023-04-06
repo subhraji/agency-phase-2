@@ -11,6 +11,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.UpcomingListItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_upcomming_jobs.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
+import com.example.agencyphase2.ui.activity.UpcommingJobDetailsActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -46,6 +47,13 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
         var gen: String = ""
         fun bind(data: Data, context: Context) {
 
+            val width = context.resources.displayMetrics?.widthPixels
+            if (width != null) {
+                val params = RecyclerView.LayoutParams((width * 0.9).toInt(),ViewGroup.LayoutParams.MATCH_PARENT)
+                params.setMargins(10, 10, 10, 10)
+                itemView.layoutParams = params
+            }
+
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
@@ -54,10 +62,9 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
-                    /*val intent = Intent(context, PostJobsDetailsActivity::class.java)
-                    intent.putExtra("id",data?.id)
-                    intent.putExtra("title",data?.title)
-                    context.startActivity(intent)*/
+                    val intent = Intent(context, UpcommingJobDetailsActivity::class.java)
+                    intent.putExtra("id",data?.job_id)
+                    context.startActivity(intent)
                 }
                 gen = ""
                 for(i in data?.care_items){

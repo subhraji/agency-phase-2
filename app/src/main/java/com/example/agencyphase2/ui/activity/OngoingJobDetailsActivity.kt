@@ -1,31 +1,24 @@
 package com.example.agencyphase2.ui.activity
 
-import android.app.AlertDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.BulletPointAdapter
-import com.example.agencyphase2.databinding.ActivityPostJobsDetailsBinding
+import com.example.agencyphase2.databinding.ActivityOngoingJobDetailsBinding
+import com.example.agencyphase2.databinding.ActivityUpcommingJobDetailsBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.viewmodel.DeleteJobViewModel
-import com.example.agencyphase2.viewmodel.GetPostJobDetailsViewModel
-import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
-import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
+import com.example.agencyphase2.viewmodel.GetOngoingJobViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
-import com.user.caregiver.loadingDialog
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.ParseException
@@ -35,19 +28,16 @@ import java.time.LocalTime
 import java.util.*
 
 @AndroidEntryPoint
-class PostJobsDetailsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityPostJobsDetailsBinding
+class OngoingJobDetailsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityOngoingJobDetailsBinding
 
-    private val mDeleteJobViewModel: DeleteJobViewModel by viewModels()
-    private val mGetPostJobsViewModel: GetPostJobDetailsViewModel by viewModels()
-    private lateinit var loader: androidx.appcompat.app.AlertDialog
-
+    private val mGetOngoingJobViewModel: GetOngoingJobViewModel by viewModels()
     private lateinit var accessToken: String
     private var id: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityPostJobsDetailsBinding.inflate(layoutInflater)
+        binding= ActivityOngoingJobDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //get token
@@ -67,10 +57,6 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         binding.noCheckListTv.gone()
         binding.checkListRecycler.gone()
 
-        //observer
-        deleteJobObserver()
-        getPostJobsObserve()
-
         clickJobOverview()
 
         binding.jobOverviewCard.setOnClickListener {
@@ -85,18 +71,17 @@ class PostJobsDetailsActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.deleteBtn.setOnClickListener {
-            showDeletePopUp()
-        }
-
         binding.shimmerView.visible()
         binding.shimmerView.startShimmer()
         binding.mainLay.gone()
         if(isConnectedToInternet()){
-            mGetPostJobsViewModel.getPostJobDetails(token = accessToken, id = id)
+            mGetOngoingJobViewModel.getOnGoingJob(token = accessToken, id = id)
         }else{
-            Snackbar.make(binding.root,"Oops!! No internet connection",Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root,"Oops!! No internet connection", Snackbar.LENGTH_SHORT).show()
         }
+
+        //observer
+        getUpcommingJobsObserve()
     }
 
     private fun clickJobOverview(){
@@ -121,52 +106,8 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         binding.relativeLay1.gone()
     }
 
-    private fun deleteJobObserver(){
-        mDeleteJobViewModel.response.observe(this, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
-                    loader.dismiss()
-                    if(outcome.data?.success == true){
-                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                        mDeleteJobViewModel.navigationComplete()
-                        finish()
-                    }else{
-                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is Outcome.Failure<*> -> {
-                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-
-                    outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
-                }
-            }
-        })
-    }
-
-    private fun showDeletePopUp(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Delete")
-        builder.setMessage("Do you want to delete this job ?")
-        builder.setIcon(R.drawable.ic_baseline_warning_amber_24)
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
-            if(isConnectedToInternet()){
-                mDeleteJobViewModel.deleteJob(accessToken,id)
-                loader = this.loadingDialog()
-                loader.show()
-            }else{
-                Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        builder.setNegativeButton("No"){dialogInterface, which ->
-        }
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
-        alertDialog.show()
-    }
-
-    private fun getPostJobsObserve(){
-        mGetPostJobsViewModel.response.observe(this, Observer { outcome ->
+    private fun getUpcommingJobsObserve(){
+        mGetOngoingJobViewModel.response.observe(this, Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
@@ -174,17 +115,17 @@ class PostJobsDetailsActivity : AppCompatActivity() {
                             binding.shimmerView.gone()
                             binding.shimmerView.stopShimmer()
                             binding.mainLay.visible()
-                            binding.statusTv.text = outcome.data!!.data.status.toString()
-                            binding.jobTitleTv.text = outcome.data!!.data.title.toString()
-                            binding.jobDescTv.text = outcome.data!!.data.description.toString()
-                            binding.dateHtv.text = outcome.data!!.data.start_date.toString()+"-"+outcome.data!!.data.end_date.toString()
-                            binding.timeTv.text = outcome.data!!.data.start_time.toString()+" - "+outcome.data!!.data.end_time.toString()
-                            binding.priceTv.text = "$"+outcome.data!!.data.amount.toString()
-                            binding.personCountTv.text = outcome.data!!.data.care_items.size.toString()+" "+outcome.data!!.data.care_type
-                            binding.locTv.text = outcome.data!!.data.address.toString()
+                            binding.statusTv.text = outcome.data!!.data[0].status.toString()
+                            binding.jobTitleTv.text = outcome.data!!.data[0].title.toString()
+                            binding.jobDescTv.text = outcome.data!!.data[0].description.toString()
+                            binding.dateHtv.text = outcome.data!!.data[0].start_date.toString()+" - "+outcome.data!!.data[0].end_date.toString()
+                            binding.timeTv.text = outcome.data!!.data[0].start_time.toString()+" - "+outcome.data!!.data[0].end_time.toString()
+                            binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
+                            binding.personCountTv.text = outcome.data!!.data[0].care_items.size.toString()+" "+outcome.data!!.data[0].care_type
+                            binding.locTv.text = outcome.data!!.data[0].address.toString()
 
                             var gen = ""
-                            for(i in outcome.data!!.data.care_items){
+                            for(i in outcome.data!!.data[0].care_items){
                                 if(gen.isEmpty()){
                                     gen = i.gender+": "+i.age
                                 }else{
@@ -196,41 +137,41 @@ class PostJobsDetailsActivity : AppCompatActivity() {
                             binding.timerTv.text = LocalTime.MIN.plus(
                                 Duration.ofMinutes( getDurationHour(
                                     getCurrentDate(),
-                                    parseDateToddMMyyyy("${outcome.data!!.data.start_date} ${outcome.data!!.data.start_time}")!!
+                                    parseDateToddMMyyyy("${outcome.data!!.data[0].start_date} ${outcome.data!!.data[0].start_time}")!!
                                 ) )
                             ).toString()
 
-                            if(outcome.data!!.data.medical_history.isNotEmpty() && outcome.data!!.data.medical_history != null){
+                            if(outcome.data!!.data[0].medical_history.isNotEmpty() && outcome.data!!.data[0].medical_history != null){
                                 binding.medicalRecycler.visible()
                                 binding.medicalHisHtv.visible()
-                                medicalHistoryFillRecycler(outcome.data!!.data.medical_history.toMutableList())
+                                medicalHistoryFillRecycler(outcome.data!!.data[0].medical_history.toMutableList())
                             }
 
-                            outcome.data!!.data.expertise?.let {
-                                if(outcome.data!!.data.expertise.isNotEmpty() && outcome.data!!.data.expertise != null){
+                            outcome.data!!.data[0].experties?.let {
+                                if(outcome.data!!.data[0].experties.isNotEmpty() && outcome.data!!.data[0].experties != null){
                                     binding.jobExpRecycler.visible()
                                     binding.jobExpHtv.visible()
-                                    jobExpFillRecycler(outcome.data!!.data.expertise.toMutableList())
+                                    jobExpFillRecycler(outcome.data!!.data[0].experties.toMutableList())
                                 }
                             }
 
-                            if(outcome.data!!.data.other_requirements.isNotEmpty() && outcome.data!!.data.other_requirements != null){
+                            if(outcome.data!!.data[0].other_requirements.isNotEmpty() && outcome.data!!.data[0].other_requirements != null){
                                 binding.otherReqRecycler.visible()
                                 binding.otherReqHtv.visible()
-                                otherFillRecycler(outcome.data!!.data.other_requirements.toMutableList())
+                                otherFillRecycler(outcome.data!!.data[0].other_requirements.toMutableList())
                             }
 
-                            if(outcome.data!!.data.check_list.isNotEmpty()){
+                            if(outcome.data!!.data[0].check_list.isNotEmpty()){
                                 binding.checkListRecycler.visible()
                                 binding.noCheckListTv.gone()
-                                checkListFillRecycler(outcome.data!!.data.check_list.toMutableList())
+                                checkListFillRecycler(outcome.data!!.data[0].check_list.toMutableList())
                             }else{
                                 binding.noCheckListTv.visible()
                             }
                         }else{
                             Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         }
-                        mGetPostJobsViewModel.navigationComplete()
+                        mGetOngoingJobViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -249,7 +190,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.medicalRecycler.apply {
             layoutManager = gridLayoutManager
-            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+            adapter = BulletPointAdapter(list,this@OngoingJobDetailsActivity)
         }
     }
 
@@ -257,7 +198,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.jobExpRecycler.apply {
             layoutManager = gridLayoutManager
-            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+            adapter = BulletPointAdapter(list,this@OngoingJobDetailsActivity)
         }
     }
 
@@ -265,7 +206,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.otherReqRecycler.apply {
             layoutManager = gridLayoutManager
-            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+            adapter = BulletPointAdapter(list,this@OngoingJobDetailsActivity)
         }
     }
 
@@ -273,7 +214,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
         val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.checkListRecycler.apply {
             layoutManager = gridLayoutManager
-            adapter = BulletPointAdapter(list,this@PostJobsDetailsActivity)
+            adapter = BulletPointAdapter(list,this@OngoingJobDetailsActivity)
         }
     }
 

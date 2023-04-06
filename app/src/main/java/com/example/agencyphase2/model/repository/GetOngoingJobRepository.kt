@@ -10,8 +10,9 @@ import javax.inject.Inject
 
 class GetOngoingJobRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun getOngoingJob(
-        token: String
+        token: String,
+        id: Int?
     ): Flow<GetOngoingJobsResponse?> = flow{
-        emit(apiInterface.getOngoingJob(token))
+        emit(apiInterface.getOngoingJob(token, id))
     }.flowOn(Dispatchers.IO)
 }

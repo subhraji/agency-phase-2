@@ -1,6 +1,7 @@
 package com.example.agencyphase2.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.CompleteJobsItemLayoutBinding
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_complete_jobs.Data
+import com.example.agencyphase2.ui.activity.CompleteJobDetailsActivity
 import com.user.caregiver.gone
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -52,11 +54,11 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                 dateHtv.text = data?.start_date.toString()+"-"+data?.end_date.toString()
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
+
                 rootLay.setOnClickListener {
-                    /*val intent = Intent(context, PostJobsDetailsActivity::class.java)
-                    intent.putExtra("id",data?.)
-                    intent.putExtra("title",data?.title)
-                    context.startActivity(intent)*/
+                    val intent = Intent(context, CompleteJobDetailsActivity::class.java)
+                    intent.putExtra("id",data?.job_id)
+                    context.startActivity(intent)
                 }
                 gen = ""
                 for(i in data?.care_items){
@@ -76,14 +78,6 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                 timeLeftTv.setBackgroundTintList(
                     ColorStateList.valueOf(context.resources.getColor(
                         R.color.color_green)))
-
-
-                /*timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
-                    Duration.ofMinutes( getDurationHour(
-                        getCurrentDate(),
-                        parseDateToddMMyyyy("${data.date} ${data?.start_time}")!!
-                    ) )
-                ).toString()*/
 
                 timeLeftTv.gone()
             }

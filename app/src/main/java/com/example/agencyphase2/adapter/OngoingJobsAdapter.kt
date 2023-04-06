@@ -1,6 +1,7 @@
 package com.example.agencyphase2.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.agencyphase2.databinding.OngoingJobsItemLayoutBinding
 import com.example.agencyphase2.databinding.OngoingListItemLayoutBinding
 import com.example.agencyphase2.model.pojo.TestModel
 import com.example.agencyphase2.model.pojo.get_ongoing_job.Data
+import com.example.agencyphase2.ui.activity.OngoingJobDetailsActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -45,6 +47,13 @@ class OngoingJobsAdapter (private val itemList: List<Data>,
         var gen: String = ""
         fun bind(data: Data, context: Context) {
 
+            val width = context.resources.displayMetrics?.widthPixels
+            if (width != null) {
+                val params = RecyclerView.LayoutParams((width * 0.9).toInt(),ViewGroup.LayoutParams.MATCH_PARENT)
+                params.setMargins(10, 10, 10, 10)
+                itemView.layoutParams = params
+            }
+
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
@@ -53,17 +62,16 @@ class OngoingJobsAdapter (private val itemList: List<Data>,
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
-                    /*val intent = Intent(context, PostJobsDetailsActivity::class.java)
-                    intent.putExtra("id",data?.id)
-                    intent.putExtra("title",data?.title)
-                    context.startActivity(intent)*/
+                    val intent = Intent(context, OngoingJobDetailsActivity::class.java)
+                    intent.putExtra("id",data?.job_id)
+                    context.startActivity(intent)
                 }
                 gen = ""
                 for(i in data?.care_items){
                     if(gen.isEmpty()){
-                        gen = i.gender+": "+i.age
+                        gen = i.gender+": "+i.age+" Yrs"
                     }else{
-                        gen = gen+", "+i.gender+": "+i.age
+                        gen = gen+", "+i.gender+": "+i.age+" Yrs"
                     }
                 }
                 ageTv.text = gen

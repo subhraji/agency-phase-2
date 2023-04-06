@@ -159,6 +159,7 @@ class LoginFragment : Fragment() {
                             outcome.data!!.token?.let { PrefManager.setKeyAuthToken(it) }
                         }
                         PrefManager.setLogInStatus(true)
+                        PrefManager.setUserFullName(outcome.data?.data?.name.toString())
                         val intent = Intent(requireActivity(), MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)

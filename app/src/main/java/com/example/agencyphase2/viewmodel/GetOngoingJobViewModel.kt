@@ -19,9 +19,10 @@ class GetOngoingJobViewModel @Inject constructor(private val repository: GetOngo
     val response: LiveData<Outcome<GetOngoingJobsResponse?>?> = _response
 
     fun getOnGoingJob(
-        token: String
+        token: String,
+        id: Int?
     ) = viewModelScope.launch {
-        repository.getOngoingJob(token).onStart {
+        repository.getOngoingJob(token, id).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

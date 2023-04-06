@@ -2,7 +2,6 @@ package com.example.agencyphase2.ui.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -13,7 +12,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -26,16 +24,14 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.AuthorizeOfficerAdapter
-import com.example.agencyphase2.databinding.ActivityBasicInformationBinding
 import com.example.agencyphase2.databinding.ActivityRegistrationBinding
 import com.example.agencyphase2.model.pojo.get_authorize_officer.Data
 import com.example.agencyphase2.model.repository.Outcome
@@ -47,7 +43,6 @@ import com.example.agencyphase2.viewmodel.*
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -55,8 +50,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 import com.user.caregiver.*
 import dagger.hilt.android.AndroidEntryPoint
 import id.zelory.compressor.Compressor
@@ -66,6 +64,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.InputStream
+
 
 @AndroidEntryPoint
 class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteClickListener {
@@ -257,12 +256,6 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         }
 
         binding.imageAddBtn.setOnClickListener {
-            /*if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-            }else{
-                //requestPermission()
-                requestStoragePermission()
-            }*/
 
             if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 dispatchGalleryIntent()
@@ -691,13 +684,13 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     }
 
     private fun requestStoragePermission() {
-        Dexter.withActivity(this)
-            .withPermissions(
+        Dexter.withContext(this)
+            .withPermission(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
-            .withListener(object : MultiplePermissionsListener {
+            .withListener(object : PermissionListener {
 
-                @SuppressLint("MissingPermission")
+                /* @SuppressLint("MissingPermission")
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     // check if all permissions are granted
                     if (report.areAllPermissionsGranted()) {
@@ -719,11 +712,13 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                         grantedOtherPermissions = true
                     }
 
+
+
                     // check for permanent denial of any permission
-                    /* if (report.isAnyPermissionPermanentlyDenied) {
+                    *//* if (report.isAnyPermissionPermanentlyDenied) {
                          // show alert dialog navigating to Settings
                          showSettingsDialog()
-                     }*/
+                     }*//*
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
@@ -731,7 +726,22 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                     token: PermissionToken
                 ) {
                     token.continuePermissionRequest()
+                }*/
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                    dispatchGalleryIntent()
                 }
+
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    requestStoragePermission()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+
             })
             .onSameThread()
             .check()
@@ -754,7 +764,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
             }
         }
 
-        if (requestCode == 2296) {
+        /*if (requestCode == 2296) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if (Environment.isExternalStorageManager()) {
                     // perform action when allow permission success
@@ -763,7 +773,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                     Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
+        }*/
 
     }
 

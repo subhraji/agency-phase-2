@@ -54,7 +54,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ongoing_job_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp" />
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/no_data_ongoing_lottie"
@@ -109,7 +110,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/upcoming_job_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"/>
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/no_data_upcoming_lottie"

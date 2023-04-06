@@ -87,7 +87,7 @@ class JobPostActivity : AppCompatActivity() {
         autocomplete()
         showAutocomplete()
 
-        //binding.relativeLay1.gone()
+        //binding.relativeLay1.visible()
         binding.relativeLay2.gone()
         binding.relativeLay3.gone()
         binding.dateTimeLay.gone()

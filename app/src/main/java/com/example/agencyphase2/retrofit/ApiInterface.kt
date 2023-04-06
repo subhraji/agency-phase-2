@@ -152,17 +152,20 @@ interface ApiInterface {
     @GET("job/accepted-job/upcoming")
     suspend fun getUpcomminJobs(
         @Header("Authorization") token: String,
+        @Query("id") id: Int? = null,
     ): GetUpcommingJobResponse?
 
     @GET("job/accepted-job/ongoing")
     suspend fun getOngoingJob(
         @Header("Authorization") token: String,
+        @Query("id") id: Int? = null,
     ): GetOngoingJobsResponse?
 
     @GET("job/completed-job/get")
     suspend fun getCompletedJob(
         @Header("Authorization") token: String,
         @Query("page") page: Int?,
+        @Query("id") id: Int? = null,
     ): GetCompleteJobsResponse?
 
     @POST("payment/save-payment-details")

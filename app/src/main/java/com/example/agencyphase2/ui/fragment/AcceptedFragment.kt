@@ -77,8 +77,8 @@ class AcceptedFragment : Fragment() {
         binding.noDataUpcomingLottie.gone()
 
         if(requireActivity().isConnectedToInternet()){
-            mGetOngoingJobViewModel.getOnGoingJob(accessToken)
-            mGetUpcommingJobViewModel.getUpcommingJob(accessToken)
+            mGetOngoingJobViewModel.getOnGoingJob(accessToken, 0)
+            mGetUpcommingJobViewModel.getUpcommingJob(accessToken, 0)
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
