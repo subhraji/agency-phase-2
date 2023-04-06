@@ -257,14 +257,18 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         }
 
         binding.imageAddBtn.setOnClickListener {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                if(checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                    dispatchGalleryIntent()
-                }else{
-                    requestPermission()
-                }
+            /*if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
             }else{
-                requestPermission()
+                //requestPermission()
+                requestStoragePermission()
+            }*/
+
+            if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                dispatchGalleryIntent()
+            }else{
+                //requestPermission()
+                requestStoragePermission()
             }
         }
 
@@ -364,7 +368,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
         val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
         ivSearch.setImageResource(R.drawable.ic_gps_19)
 
-        autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
+        //autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
         autocompleteFragment.setCountries("US")
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
 
@@ -637,7 +641,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
             if (!Environment.isExternalStorageManager())
             {
                 try {
-                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
                     intent.addCategory("android.intent.category.DEFAULT")
                     intent.data =
                         Uri.parse(String.format("package:%s", applicationContext.packageName))
@@ -689,9 +693,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
     private fun requestStoragePermission() {
         Dexter.withActivity(this)
             .withPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.MANAGE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
             .withListener(object : MultiplePermissionsListener {
 

@@ -119,7 +119,7 @@ class JobPostActivity : AppCompatActivity() {
         /*val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
         ivSearch.setImageResource(R.drawable.ic_gps_19)*/
 
-        autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
+        //autocompleteFragment.setTypeFilter(TypeFilter.Ad)
         autocompleteFragment.setCountries("US")
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
 
@@ -181,7 +181,7 @@ class JobPostActivity : AppCompatActivity() {
         /*val ivSearch: ImageView = findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_button)
         ivSearch.setImageResource(R.drawable.ic_gps_19)*/
 
-        autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
+        //autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
         autocompleteFragment.setCountries("US")
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.ADDRESS_COMPONENTS))
 
@@ -525,7 +525,7 @@ class JobPostActivity : AppCompatActivity() {
 
         var streetVar = ""
         if(streetName.isEmpty() && streetNumber.isEmpty()){
-            streetVar = " "
+            streetVar = ""
         }else if(streetName.isEmpty() && streetNumber.isNotEmpty()){
             streetVar = streetNumber
         }else if(streetName.isNotEmpty() && streetNumber.isEmpty()){
@@ -534,7 +534,9 @@ class JobPostActivity : AppCompatActivity() {
             streetVar = streetNumber+", "+streetName
         }
 
-        streetTxt.text = Editable.Factory.getInstance().newEditable(streetVar)
+        streetVar?.let {
+            streetTxt.text = Editable.Factory.getInstance().newEditable(streetVar)
+        }
 
         city?.let{
             cityTxt.text = Editable.Factory.getInstance().newEditable(city)
@@ -567,7 +569,7 @@ class JobPostActivity : AppCompatActivity() {
                 if(!city_n.isEmpty()){
                     if(!state_n.isEmpty()){
                         if(!zipcode_n.isEmpty()){
-                            if(zipcode_n.length == 5){
+                            if(zipcode_n.length >= 5){
                                 binding.addressCard.visible()
                                 binding.showAddressCard.visible()
 
@@ -710,7 +712,7 @@ class JobPostActivity : AppCompatActivity() {
                                 if(!endTime.isEmpty()){
                                     if(!jobLoc.isEmpty()){
                                         if(!amount.isEmpty()){
-                                            if(!job_address.isEmpty()){
+                                            if(!street_n.isEmpty()){
                                                 if(!job_desc.isEmpty()){
                                                     fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
                                                     binding.relativeLay1.gone()
@@ -814,6 +816,16 @@ class JobPostActivity : AppCompatActivity() {
 
     private fun initializePageThree() {
 
+        binding.showAddressDeleteIcon.setOnClickListener {
+            binding.cityNameTv.text = null
+            binding.fullAddressTv.text = null
+            binding.streetTv.text = null
+            binding.buildingTv.text = null
+            street_n = ""
+
+            binding.showAddressCard.gone()
+        }
+
         binding.addBtnMedi.setOnClickListener {
             val medicalHistoryTxt = binding.prevMedicalHistoryTxt.text.toString()
             if(!medicalHistoryTxt.isEmpty()){
@@ -876,37 +888,41 @@ class JobPostActivity : AppCompatActivity() {
         binding.prevNextStepBtn.setOnClickListener {
 
             if(!genderAgeList.isEmpty()){
-                if(isConnectedToInternet()){
-                    mPostJobViewModel.jobPost(
-                        binding.showJobTitleTxt.text.toString(),
-                        binding.showAddCareTypeHtv.text.toString(),
-                        genderAgeList,
-                        date,
-                        date,
-                        startTime,
-                        endTime,
-                        binding.showAmountTxt.text.toString(),
-                        binding.showFullAddressTv.text.toString(),
-                        binding.showJobDescTxt.text.toString(),
-                        medicalHistoryList,
-                        jobSkillList,
-                        otherReqList,
-                        checkList,
-                        place_name,
-                        lat,
-                        lang,
-                        street_n,
-                        city_n,
-                        state_n,
-                        zipcode_n,
-                        building_n,
-                        floor_n,
-                        "USA",
-                        accessToken
-                    )
-                    loader.show()
+                if(!street_n.isEmpty()){
+                    if(isConnectedToInternet()){
+                        mPostJobViewModel.jobPost(
+                            binding.showJobTitleTxt.text.toString(),
+                            binding.showAddCareTypeHtv.text.toString(),
+                            genderAgeList,
+                            date,
+                            date,
+                            startTime,
+                            endTime,
+                            binding.showAmountTxt.text.toString(),
+                            binding.showFullAddressTv.text.toString(),
+                            binding.showJobDescTxt.text.toString(),
+                            medicalHistoryList,
+                            jobSkillList,
+                            otherReqList,
+                            checkList,
+                            place_name,
+                            lat,
+                            lang,
+                            street_n,
+                            city_n,
+                            state_n,
+                            zipcode_n,
+                            building_n,
+                            floor_n,
+                            "USA",
+                            accessToken
+                        )
+                        loader.show()
+                    }else{
+                        Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                    }
                 }else{
-                    Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please provide address.", Toast.LENGTH_SHORT).show()
                 }
             }else{
                 Toast.makeText(this, "Please select a care type.", Toast.LENGTH_SHORT).show()
