@@ -48,7 +48,8 @@
         <RelativeLayout
             android:id="@+id/relative_lay_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -72,8 +73,8 @@
                         android:layout_marginEnd="20dp"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="3"
                         android:paddingStart="30dp"
+                        android:weightSum="3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -950,6 +951,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="15dp"
+                        android:backgroundTint="@color/black"
                         android:background="@drawable/grey_corner_bg"
                         android:padding="15dp">
 
@@ -958,7 +960,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Full name"
-                            android:textColor="@color/text_grey"
+                            android:textColor="@color/white"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -968,9 +970,8 @@
                             android:id="@+id/full_name_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/edit_btn"
                             app:layout_constraintStart_toStartOf="@+id/full_name_htv"
                             app:layout_constraintTop_toBottomOf="@+id/full_name_htv" />
 
@@ -980,7 +981,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:text="Email address"
-                            android:textColor="@color/text_grey"
+                            android:textColor="@color/white"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@+id/full_name_tv"
@@ -990,7 +991,7 @@
                             android:id="@+id/email_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@+id/mobile_htv"
                             app:layout_constraintStart_toStartOf="@+id/email_htv"
@@ -1000,8 +1001,8 @@
                             android:id="@+id/mobile_htv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mobile number"
-                            android:textColor="@color/text_grey"
+                            android:text="Mobile"
+                            android:textColor="@color/white"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@+id/mobile_tv"
@@ -1011,7 +1012,7 @@
                             android:id="@+id/mobile_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/mobile_htv" />
@@ -1023,7 +1024,7 @@
                             android:paddingTop="7dp"
                             android:paddingBottom="7dp"
                             android:text="+ Add Number"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/email_tv"
@@ -1035,7 +1036,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Role"
-                            android:textColor="@color/text_grey"
+                            android:textColor="@color/white"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="@+id/role_tv"
@@ -1046,7 +1047,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="xbsjkxbak"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/role_htv" />
