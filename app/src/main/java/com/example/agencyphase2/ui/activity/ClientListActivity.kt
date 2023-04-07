@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.setPadding
@@ -31,6 +32,11 @@ class ClientListActivity : AppCompatActivity() {
 
         binding.backArrow.setOnClickListener {
             finish()
+        }
+
+        binding.addClientBtn.setOnClickListener {
+            val intent = Intent(this, AddClientActivity::class.java)
+            startActivity(intent)
         }
 
     }
