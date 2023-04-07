@@ -118,9 +118,9 @@
                             android:id="@+id/time_left_htv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
                             android:text="Time left"
-                            android:layout_centerHorizontal="true"
                             android:textColor="@color/white"
                             android:textSize="13sp" />
 

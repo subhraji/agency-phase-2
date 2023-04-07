@@ -2,6 +2,7 @@ package com.example.agencyphase2.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -134,12 +135,12 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
                             }
                             binding.personAgeTv.text = gen
 
-                            binding.timerTv.text = LocalTime.MIN.plus(
-                                Duration.ofMinutes( getDurationHour(
+                            setTimer(
+                                getDurationHour(
                                     getCurrentDate(),
                                     parseDateToddMMyyyy("${outcome.data!!.data[0].start_date} ${outcome.data!!.data[0].start_time}")!!
-                                ) )
-                            ).toString()
+                                )
+                            )
 
                             if(outcome.data!!.data[0].medical_history.isNotEmpty() && outcome.data!!.data[0].medical_history != null){
                                 binding.medicalRecycler.visible()
@@ -243,21 +244,6 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
             val durationHour = difference_In_Hours.toInt()
 
             durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
-
-
-            Log.d("dateTime","duration => "+
-                    difference_In_Years.toString()+
-                    " years, "
-                    + difference_In_Days
-                    + " days, "
-                    + difference_In_Hours
-                    + " hours, "
-                    + difference_In_Minutes
-                    + " minutes, "
-                    + difference_In_Seconds
-                    + " seconds"
-            )
-
         }
 
         // Catch the Exception
@@ -265,7 +251,7 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        return durationTotalMin.toLong()
+        return durationTotalMin.toLong()*60*1000
     }
 
     private fun getCurrentDate(): String {
@@ -287,5 +273,27 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         return str
+    }
+
+    private fun setTimer(duration: Long){
+        object : CountDownTimer(duration, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                var millisUntilFinished = millisUntilFinished
+                val secondsInMilli: Long = 1000
+                val minutesInMilli = secondsInMilli * 60
+                val hoursInMilli = minutesInMilli * 60
+                val elapsedHours = millisUntilFinished / hoursInMilli
+                millisUntilFinished = millisUntilFinished % hoursInMilli
+                val elapsedMinutes = millisUntilFinished / minutesInMilli
+                millisUntilFinished = millisUntilFinished % minutesInMilli
+                val elapsedSeconds = millisUntilFinished / secondsInMilli
+                val yy = String.format("%02d:%02d:%2d", elapsedHours, elapsedMinutes, elapsedSeconds)
+                binding.timerTv.setText(yy)
+            }
+
+            override fun onFinish() {
+                binding.timerTv.setText("00:00:00")
+            }
+        }.start()
     }
 }
