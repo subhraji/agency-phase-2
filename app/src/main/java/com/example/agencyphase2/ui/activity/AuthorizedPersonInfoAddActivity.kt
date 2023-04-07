@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthorizedPersonInfoAddActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizedPersonInfoAddBinding
-    val roleList: Array<String> =  arrayOf("Select role", "Admin", "Operator")
+    val roleList: Array<String> =  arrayOf("Select role*", "Admin", "Operator")
 
     private val mAddAuthorizeOfficerViewModel: AddAuthorizeOfficerViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
