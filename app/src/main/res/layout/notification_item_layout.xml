@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:background="@drawable/border_background_1"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/notification_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/notification_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:text="Job Completed"
+        app:layout_constraintTop_toTopOf="@+id/notification_img"
+        app:layout_constraintStart_toEndOf="@+id/notification_img"
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv"
+        app:layout_constraintStart_toStartOf="@+id/title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:text="Job number 2034 has been completed by Jhon Methew on 24th, Sept 12:00 PM."/>
+</androidx.constraintlayout.widget.ConstraintLayout>

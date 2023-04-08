@@ -21,5 +21,8 @@ data class Data(
     val user_id: Int,
     val years_in_business: Int,
     val zip_code: String,
-    val profile_completion_status: ProfileStatus
+    val profile_completion_status: ProfileStatus,
+    val revenue_count: Int,
+    val rating_count: Int,
+    val job_count: Int
 )
