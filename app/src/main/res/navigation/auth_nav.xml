@@ -18,5 +18,14 @@
         android:id="@+id/forgotPassEmailFragment"
         android:name="com.example.agencyphase2.ui.fragment.ForgotPassEmailFragment"
         android:label="fragment_forgot_pass_email"
-        tools:layout="@layout/fragment_forgot_pass_email" />
+        tools:layout="@layout/fragment_forgot_pass_email" >
+        <action
+            android:id="@+id/action_forgotPassEmailFragment_to_forgotPasswordOTPFragment"
+            app:destination="@id/forgotPasswordOTPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordOTPFragment"
+        android:name="com.example.agencyphase2.ui.fragment.ForgotPasswordOTPFragment"
+        android:label="fragment_forgot_password_otp"
+        tools:layout="@layout/fragment_forgot_password_otp" />
 </navigation>

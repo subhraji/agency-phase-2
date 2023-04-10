@@ -362,10 +362,14 @@ class JobPostActivity : AppCompatActivity() {
             if(!name.isEmpty()){
                 if(!age.isEmpty()){
                     if(!gender.isEmpty()){
-                        genderAgeList.add(GenderAgeItemCountModel(gender,age,name))
-                        fillGenderAgeRecycler(genderAgeList, binding.careTypeRecycler)
-                        fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
-                        dialog.dismiss()
+                        if(genderAgeList.size <= 5){
+                            genderAgeList.add(GenderAgeItemCountModel(gender,age,name))
+                            fillGenderAgeRecycler(genderAgeList, binding.careTypeRecycler)
+                            fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
+                            dialog.dismiss()
+                        }else{
+                            Toast.makeText(this,"You can not add more than 5 patient.", Toast.LENGTH_SHORT).show()
+                        }
                     }else{
                         Toast.makeText(this,"Please select gender.", Toast.LENGTH_SHORT).show()
                     }

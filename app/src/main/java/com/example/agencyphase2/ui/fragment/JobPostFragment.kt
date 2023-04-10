@@ -380,10 +380,14 @@ class JobPostFragment : Fragment() {
             if(!name.isEmpty()){
                 if(!age.isEmpty()){
                     if(!gender.isEmpty()){
-                        JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(gender,age,name))
-                        fillGenderAgeRecycler(JobPostActivity.genderAgeList, binding.careTypeRecycler)
-                        fillGenderAgeRecycler(JobPostActivity.genderAgeList, binding.showGenderAgeRecycler)
-                        dialog.dismiss()
+                        if(JobPostActivity.genderAgeList.size <= 5){
+                            JobPostActivity.genderAgeList.add(GenderAgeItemCountModel(gender,age,name))
+                            fillGenderAgeRecycler(JobPostActivity.genderAgeList, binding.careTypeRecycler)
+                            fillGenderAgeRecycler(JobPostActivity.genderAgeList, binding.showGenderAgeRecycler)
+                            dialog.dismiss()
+                        }else{
+                            Toast.makeText(requireActivity(),"You can not add more than 5 patient.", Toast.LENGTH_SHORT).show()
+                        }
                     }else{
                         Toast.makeText(requireActivity(),"Please select gender.", Toast.LENGTH_SHORT).show()
                     }

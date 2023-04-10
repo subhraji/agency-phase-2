@@ -19,6 +19,7 @@ import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.AskLocationActivity
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.example.agencyphase2.ui.activity.ProfileActivity
+import com.example.agencyphase2.ui.activity.SearchActivity
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetProfileViewModel
@@ -61,6 +62,11 @@ class HomeFragment : Fragment() {
 
         binding.userImageView.setOnClickListener {
             val intent = Intent(requireActivity(), ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.dashSearchLay.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchActivity::class.java)
             startActivity(intent)
         }
 
