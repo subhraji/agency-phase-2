@@ -2,6 +2,7 @@ package com.example.agencyphase2.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityJobSearchResultBinding
 import com.example.agencyphase2.databinding.ActivitySearchBinding
