@@ -6,10 +6,11 @@ import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
-import com.example.agencyphase2.model.pojo.get_post_jobs.DataX
+import com.example.agencyphase2.model.pojo.search_job.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -17,30 +18,24 @@ import java.time.Duration
 import java.time.LocalTime
 import java.util.*
 
-class PostJobsAdapter (private val itemList: MutableList<DataX>,
-                       private val context: Context):
-    RecyclerView.Adapter<PostJobsAdapter.ViewHolder>() {
+class SearchJobAdapter (private val itemList: MutableList<Data>,
+                        private val context: Context):
+    RecyclerView.Adapter<SearchJobAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostJobsAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchJobAdapter.ViewHolder {
         val itemBinding = PostJobsItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return PostJobsAdapter.ViewHolder(itemBinding)
+        return SearchJobAdapter.ViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
-    fun add(jobs: List<DataX>) {
-        itemList.addAll(jobs)
-        notifyItemInserted(itemList.size-1)
-    }
-
-    override fun onBindViewHolder(holder: PostJobsAdapter.ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: SearchJobAdapter.ViewHolder, position: Int) {
         val rowData = itemList[position]
         holder.bind(rowData, context)
     }
@@ -48,7 +43,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
     class ViewHolder(private val itemBinding: PostJobsItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         private lateinit var gen:String
-        fun bind(data: DataX, context: Context) {
+        fun bind(data: Data, context: Context) {
 
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
@@ -72,21 +67,39 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 }
                 ageTv.text = gen
 
-                //statusTv.text = data.status.toString()
-
                 if(data?.status == "Bidding Started"){
                     statusTv.text = "Bidding Started"
-                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
-                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
+                    statusTvLay.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.color_yellow)))
+                    timeLeftTv.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.color_yellow)))
 
                 }else if(data?.status == "Quick Call"){
                     statusTv.text = "Quick \u00A0 \u00A0 Call"
-                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
-                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.error_red)))
+                    statusTvLay.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.error_red)))
+                    timeLeftTv.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.error_red)))
                 }else if(data?.status == "Open Job"){
                     statusTv.text = "Open \u00A0 \u00A0 \u00A0 Job "
-                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
-                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
+                    statusTvLay.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.color_green)))
+                    timeLeftTv.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.color_green)))
+                }else if(data?.status == "Upcoming"){
+                    statusTvLay.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.theme_blue)))
+                    timeLeftTv.setBackgroundTintList(
+                        ColorStateList.valueOf(context.resources.getColor(
+                            R.color.theme_blue)))
+                    statusTv.text = "Upcoming"
                 }
 
                 timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(

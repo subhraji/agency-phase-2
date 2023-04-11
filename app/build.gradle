@@ -4,6 +4,7 @@ plugins {
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.android.extensions'
 }
 
 android {
@@ -34,6 +35,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    androidExtensions {
+        experimental = true
     }
 }
 
@@ -114,4 +118,5 @@ dependencies {
 
     //stripe
     implementation 'com.stripe:stripe-android:17.2.0'
+
 }

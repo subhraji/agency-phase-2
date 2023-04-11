@@ -20,6 +20,7 @@ import com.example.agencyphase2.databinding.FragmentOngoingBinding
 import com.example.agencyphase2.databinding.FragmentProfileBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.ChooseLoginRegActivity
+import com.example.agencyphase2.ui.activity.EditProfileActivity
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.example.agencyphase2.ui.activity.RegistrationActivity
 import com.example.agencyphase2.utils.Constants
@@ -71,6 +72,11 @@ class ProfileFragment : Fragment() {
             mGetProfileViewModel.getProfile(accessToken)
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.editBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 

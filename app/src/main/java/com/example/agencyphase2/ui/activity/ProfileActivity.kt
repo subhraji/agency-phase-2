@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityCareGiverProfileBinding
 import com.example.agencyphase2.databinding.ActivityProfileBinding
+import com.example.agencyphase2.model.pojo.get_profile.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
@@ -31,6 +32,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var accessToken: String
     private val mGetProfileViewModel: GetProfileViewModel by viewModels()
+    private lateinit var data: Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,12 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.editBtn.setOnClickListener {
+            val intent = Intent(this, EditProfileActivity::class.java)
+            intent.putExtra("data",data)
+            startActivity(intent)
         }
 
         binding.mainLay.gone()
@@ -67,6 +75,7 @@ class ProfileActivity : AppCompatActivity() {
                         binding.profileShimmerView.stopShimmer()
 
                         outcome.data!!.data?.let {
+                            data = outcome.data!!.data
                             Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                                 .placeholder(R.color.color_grey)
                                 .into(binding.profileImg)

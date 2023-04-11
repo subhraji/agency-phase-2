@@ -33,6 +33,8 @@ import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpRequest
 import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpResponse
 import com.example.agencyphase2.model.pojo.save_payment.SavePaymentRequest
 import com.example.agencyphase2.model.pojo.save_payment.SavePaymentsResponse
+import com.example.agencyphase2.model.pojo.search_job.SearchJobRequest
+import com.example.agencyphase2.model.pojo.search_job.SearchJobResponse
 import com.example.agencyphase2.model.pojo.signup.SignUpRequest
 import com.example.agencyphase2.model.pojo.signup.SignUpResponse
 import com.example.agencyphase2.model.pojo.update_auth_officer_status.UpdateAuthOfficerStatusResponse
@@ -189,4 +191,10 @@ interface ApiInterface {
     suspend fun resendOtp(
         @Body body: ResendOtpRequest?,
     ): ResendOtpResponse?
+
+    @POST("job/search")
+    suspend fun searchJob(
+        @Body body: SearchJobRequest?,
+        @Header("Authorization") token: String,
+    ): SearchJobResponse?
 }

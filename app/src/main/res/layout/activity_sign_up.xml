@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:hint="Company Name *"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 &amp;@"
                         android:inputType="text|textCapWords"
                         android:singleLine="true"
                         android:importantForAutofill="noExcludeDescendants"
