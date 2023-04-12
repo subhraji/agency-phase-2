@@ -20,7 +20,6 @@ class EditProfileActivity : AppCompatActivity() {
     var number_employee: String = ""
     var legal_structure: String = ""
     var org_type: String = ""
-    private lateinit var data: Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +28,21 @@ class EditProfileActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if (extras != null) {
-            data = intent?.getParcelableExtra("data")!!
-            binding.companyEmailTxt.text = Editable.Factory.getInstance().newEditable(data.phone)
+            val companyEmail: String? = intent?.getStringExtra("companyEmail")
+            val mobileNumber: String? = intent?.getStringExtra("mobileNumber")
+            val noEmployee: String? = intent?.getStringExtra("noEmployee")
+            val yearsBusiness: String? = intent?.getStringExtra("yearsBusiness")
+            val legalStructure: String? = intent?.getStringExtra("legalStructure")
+            val annualRevenue: String? = intent?.getStringExtra("annualRevenue")
+            val orgType: String? = intent?.getStringExtra("orgType")
+            val country: String? = intent?.getStringExtra("country")
+
+            companyEmail?.let {
+                binding.companyEmailTxt.text = Editable.Factory.getInstance().newEditable(companyEmail)
+            }
+            mobileNumber?.let {
+                binding.mobileNumberTxt.text = Editable.Factory.getInstance().newEditable(mobileNumber)
+            }
         }
 
         binding.backBtn.setOnClickListener {

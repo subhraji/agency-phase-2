@@ -1,11 +1,11 @@
 package com.example.agencyphase2.model.pojo.get_profile
 
+import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class Data(
-    val annual_business_revenue: Any,
+    val annual_business_revenue: String?,
     val city_or_district: String,
     val company_name: String,
     val country_of_business: String,
@@ -29,4 +29,4 @@ data class Data(
     val revenue_count: Int,
     val rating_count: Int,
     val job_count: Int
-): Parcelable
+)
