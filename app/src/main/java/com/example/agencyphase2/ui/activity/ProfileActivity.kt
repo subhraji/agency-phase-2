@@ -69,9 +69,13 @@ class ProfileActivity : AppCompatActivity() {
             intent.putExtra("annualRevenue",annualRevenue)
             intent.putExtra("orgType",orgType)
             intent.putExtra("country",country)
+            intent.putExtra("image",image)
             startActivity(intent)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         binding.mainLay.gone()
         binding.profileShimmerView.visible()
         binding.profileShimmerView.startShimmer()

@@ -7,7 +7,7 @@ data class Data(
     val created_at: String,
     val id: Int,
     val legal_structure: String,
-    val number_of_employee: Int,
+    val number_of_employee: String,
     val organization_type: String,
     val phone: String,
     val state: String,
@@ -15,6 +15,6 @@ data class Data(
     val tax_id_or_ein_id: String,
     val updated_at: String,
     val user_id: Int,
-    val years_in_business: Int,
+    val years_in_business: String,
     val zip_code: String
 )

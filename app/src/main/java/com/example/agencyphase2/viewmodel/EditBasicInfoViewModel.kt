@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +20,7 @@ class EditBasicInfoViewModel @Inject constructor(private val repository: EditBas
     val response: LiveData<Outcome<EditBasicInfoResponse?>?> = _response
 
     fun editBasicInfo(
-        photo: String? = null,
+        photo: MultipartBody.Part? = null,
         phone: String? = null,
         legal_structure: String? = null,
         organization_type: String? = null,
@@ -28,8 +29,8 @@ class EditBasicInfoViewModel @Inject constructor(private val repository: EditBas
         city_or_district: String? = null,
         state: String? = null,
         zip_code: String? = null,
-        number_of_employee: Int? = null,
-        years_in_business: Int? = null,
+        number_of_employee: String? = null,
+        years_in_business: String? = null,
         country_of_business: String? = null,
         annual_business_revenue: String? = null,
         token: String

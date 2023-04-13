@@ -75,9 +75,22 @@ interface ApiInterface {
         @Body body: AddOtherInfoRequest?,
         @Header("Authorization") token: String): AddOtherInfoResponse?
 
+    @Multipart
     @POST("business-profile/edit-basic-profile-details")
     suspend fun editBasicInfo(
-        @Body body: EditBasicInfoRequest?,
+        @Part photo: MultipartBody.Part? = null,
+        @Part("phone") phone: RequestBody? = null,
+        @Part("legal_structure") legal_structure: RequestBody? = null,
+        @Part("organization_type") organization_type: RequestBody? = null,
+        @Part("tax_id_or_ein_id") tax_id_or_ein_id: RequestBody? = null,
+        @Part("street") street: RequestBody? = null,
+        @Part("city_or_district") city_or_district: RequestBody? = null,
+        @Part("state") state: RequestBody? = null,
+        @Part("zip_code") zip_code: RequestBody? = null,
+        @Part("number_of_employee") number_of_employee: RequestBody? = null,
+        @Part("years_in_business") years_in_business: RequestBody? = null,
+        @Part("country_of_business") country_of_business: RequestBody? = null,
+        @Part("annual_business_revenue") annual_business_revenue: RequestBody? = null,
         @Header("Authorization") token: String): EditBasicInfoResponse?
 
     @POST("authorize-officer/create-officer")

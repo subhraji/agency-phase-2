@@ -40,6 +40,17 @@ class ProfileFragment : Fragment() {
 
     private lateinit var accessToken: String
     private val mGetProfileViewModel: GetProfileViewModel by viewModels()
+    private var companyName: String? = null
+    private var companyEmail: String? = null
+    private var mobileNumber: String? = null
+    private var taxId: String? = null
+    private var noEmployee: String? = null
+    private var yearsBusiness: String? = null
+    private var legalStructure: String? = null
+    private var annualRevenue: String? = null
+    private var orgType: String? = null
+    private var country: String? = null
+    private var image: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +76,23 @@ class ProfileFragment : Fragment() {
         //observer
         getProfileObserver()
 
+        binding.editBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
+            intent.putExtra("companyEmail",companyEmail)
+            intent.putExtra("mobileNumber",mobileNumber)
+            intent.putExtra("noEmployee",noEmployee)
+            intent.putExtra("yearsBusiness",yearsBusiness)
+            intent.putExtra("legalStructure",legalStructure)
+            intent.putExtra("annualRevenue",annualRevenue)
+            intent.putExtra("orgType",orgType)
+            intent.putExtra("country",country)
+            intent.putExtra("image",image)
+            startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         binding.mainLay.gone()
         binding.profileShimmerView.visible()
         binding.profileShimmerView.startShimmer()
@@ -72,11 +100,6 @@ class ProfileFragment : Fragment() {
             mGetProfileViewModel.getProfile(accessToken)
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.editBtn.setOnClickListener {
-            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
-            startActivity(intent)
         }
     }
 
@@ -90,46 +113,59 @@ class ProfileFragment : Fragment() {
                         binding.profileShimmerView.stopShimmer()
 
                         outcome.data!!.data?.let {
+
+                            outcome.data!!.data.photo?.let {
+                                image = it
+                            }
                             Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                                 .placeholder(R.color.color_grey)
                                 .into(binding.profileImg)
                             outcome.data!!.data.company_name?.let {
                                 binding.nameTv.text = it
+                                companyName = it
                             }
                             outcome.data!!.data.email?.let {
                                 binding.emailTv.text = it
+                                companyEmail = it
                             }
                             outcome.data!!.data.phone?.let {
                                 binding.phoneTv.text = it
+                                mobileNumber = it
                             }
                             if(outcome.data!!.data.years_in_business != null){
                                 binding.yearsOfBusinessTv.text = outcome.data!!.data.years_in_business.toString()
+                                yearsBusiness = outcome.data!!.data.years_in_business.toString()
                             }else{
                                 binding.yearsOfBusinessTv.text = "no data"
                             }
                             if(outcome.data!!.data.number_of_employee != null){
                                 binding.numberOfEmployeeTv.text = outcome.data!!.data.number_of_employee.toString()
+                                noEmployee = outcome.data!!.data.number_of_employee.toString()
                             }else{
                                 binding.numberOfEmployeeTv.text = "no data"
                             }
                             if(outcome.data!!.data.country_of_business != null){
                                 binding.countryTv.text = outcome.data!!.data.country_of_business.toString()
+                                country = outcome.data!!.data.country_of_business.toString()
                             }else{
                                 binding.countryTv.text = "no data"
                             }
 
                             if(outcome.data!!.data.organization_type != null){
                                 binding.orgTypeTv.text = outcome.data!!.data.organization_type.toString()
+                                orgType = outcome.data!!.data.organization_type.toString()
                             }else{
                                 binding.orgTypeTv.text = "no data"
                             }
                             if(outcome.data!!.data.legal_structure != null){
                                 binding.lsTv.text = outcome.data!!.data.legal_structure.toString()
+                                legalStructure = outcome.data!!.data.legal_structure.toString()
                             }else{
                                 binding.lsTv.text = "no data"
                             }
                             if(outcome.data!!.data.annual_business_revenue != null){
                                 binding.revenueTv.text = outcome.data!!.data.annual_business_revenue.toString()
+                                annualRevenue = outcome.data!!.data.annual_business_revenue.toString()
                             }else{
                                 binding.revenueTv.text = "no data"
                             }
