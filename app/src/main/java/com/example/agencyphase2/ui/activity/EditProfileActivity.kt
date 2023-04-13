@@ -71,7 +71,6 @@ class EditProfileActivity : AppCompatActivity(), UploadDocListener {
     var legal_structure: String = ""
     var org_type: String = ""
 
-    private var companyEmail: String? = null
     private var mobileNumber: String? = null
     private var yearsBusiness: String? = null
     private var annualRevenue: String? = null
@@ -85,7 +84,6 @@ class EditProfileActivity : AppCompatActivity(), UploadDocListener {
 
         val extras = intent.extras
         if (extras != null) {
-            companyEmail = intent?.getStringExtra("companyEmail")
             mobileNumber = intent?.getStringExtra("mobileNumber")
             yearsBusiness = intent?.getStringExtra("yearsBusiness")
             annualRevenue = intent?.getStringExtra("annualRevenue")
@@ -101,9 +99,6 @@ class EditProfileActivity : AppCompatActivity(), UploadDocListener {
             setUpOrgTypeSpinner(orgType)
             setUpEmployeeNoSpinner(noEmployee)
 
-            companyEmail?.let {
-                binding.companyEmailTxt.text = Editable.Factory.getInstance().newEditable(companyEmail)
-            }
             mobileNumber?.let {
                 binding.mobileNumberTxt.text = Editable.Factory.getInstance().newEditable(mobileNumber)
             }

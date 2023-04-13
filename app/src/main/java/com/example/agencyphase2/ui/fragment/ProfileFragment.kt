@@ -78,7 +78,6 @@ class ProfileFragment : Fragment() {
 
         binding.editBtn.setOnClickListener {
             val intent = Intent(requireActivity(), EditProfileActivity::class.java)
-            intent.putExtra("companyEmail",companyEmail)
             intent.putExtra("mobileNumber",mobileNumber)
             intent.putExtra("noEmployee",noEmployee)
             intent.putExtra("yearsBusiness",yearsBusiness)

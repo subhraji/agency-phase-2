@@ -61,7 +61,6 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.editBtn.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
-            intent.putExtra("companyEmail",companyEmail)
             intent.putExtra("mobileNumber",mobileNumber)
             intent.putExtra("noEmployee",noEmployee)
             intent.putExtra("yearsBusiness",yearsBusiness)
