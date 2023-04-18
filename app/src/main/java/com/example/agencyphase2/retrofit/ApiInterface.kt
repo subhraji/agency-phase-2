@@ -5,6 +5,7 @@ import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOff
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoRequest
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoResponse
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
+import com.example.agencyphase2.model.pojo.caregiver_profile.GetCaregiverProfileResponse
 import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneRequest
 import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneResponse
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
@@ -210,4 +211,9 @@ interface ApiInterface {
         @Body body: SearchJobRequest?,
         @Header("Authorization") token: String,
     ): SearchJobResponse?
+
+    @GET("job/caregiver-profile?job_id")
+    suspend fun getCaregiverProfile(
+        @Header("Authorization") token: String,
+    ): GetCaregiverProfileResponse?
 }
