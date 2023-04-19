@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.BulletPointAdapter
 import com.example.agencyphase2.databinding.ActivityCompleteJobDetailsBinding
 import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetCompleteJobViewModel
 import com.example.agencyphase2.viewmodel.GetUpcommingJobViewModel
@@ -71,6 +74,12 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.profileCard.setOnClickListener {
+            val intent = Intent(this,CareGiverProfileActivity::class.java)
+            intent.putExtra("job_id", id.toString())
+            startActivity(intent)
         }
 
         binding.shimmerView.visible()
@@ -162,6 +171,10 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                                 binding.otherReqHtv.visible()
                                 otherFillRecycler(outcome.data!!.data[0].other_requirements.toMutableList())
                             }
+
+                            Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data[0].job_accepted_by.photo)
+                                .placeholder(R.color.color_grey)
+                                .into(binding.profileImg)
 
                             if(outcome.data!!.data[0].check_list.isNotEmpty()){
                                 binding.checkListRecycler.visible()

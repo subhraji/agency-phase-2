@@ -408,14 +408,24 @@ class JobPostActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         btnSave.setOnClickListener {
-            binding.dateTv1.text = getCurrentDate(datePicker)
-            binding.showDateTv.text = getCurrentDate(datePicker)
-            binding.timeTv1.text = startTime_n+" - "+endTime_n
-            binding.showTimeTv.text = startTime_n+" - "+endTime_n
-            date = getCurrentDate(datePicker).toString()
-            binding.dateTimeBtn.gone()
-            binding.dateTimeLay.visible()
-            dialog.dismiss()
+
+            if(!startTime.isEmpty()){
+                if(!endTime.isEmpty()){
+                    binding.dateTv1.text = getCurrentDate(datePicker)
+                    binding.showDateTv.text = getCurrentDate(datePicker)
+                    binding.timeTv1.text = startTime_n+" - "+endTime_n
+                    binding.showTimeTv.text = startTime_n+" - "+endTime_n
+                    date = getCurrentDate(datePicker).toString()
+                    binding.dateTimeBtn.gone()
+                    binding.dateTimeLay.visible()
+                    dialog.dismiss()
+                }else{
+                    Toast.makeText(this,"Please provide end time.", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Please provide start time.", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         startTimeBtn.setOnClickListener {
