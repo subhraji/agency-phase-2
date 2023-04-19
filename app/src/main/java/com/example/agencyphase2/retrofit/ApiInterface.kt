@@ -215,5 +215,6 @@ interface ApiInterface {
     @GET("job/caregiver-profile?job_id")
     suspend fun getCaregiverProfile(
         @Header("Authorization") token: String,
+        @Query("job_id")job_id: String
     ): GetCaregiverProfileResponse?
 }

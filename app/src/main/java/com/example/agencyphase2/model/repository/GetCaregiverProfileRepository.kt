@@ -10,8 +10,9 @@ import javax.inject.Inject
 
 class GetCaregiverProfileRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun getCaregiverProfile(
-        token: String
+        token: String,
+        job_id: String
     ): Flow<GetCaregiverProfileResponse?> = flow{
-        emit(apiInterface.getCaregiverProfile(token))
+        emit(apiInterface.getCaregiverProfile(token, job_id))
     }.flowOn(Dispatchers.IO)
 }

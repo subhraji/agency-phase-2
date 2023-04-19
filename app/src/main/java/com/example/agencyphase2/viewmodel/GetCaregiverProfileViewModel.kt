@@ -19,9 +19,10 @@ class GetCaregiverProfileViewModel @Inject constructor(private val repository: G
     val response: LiveData<Outcome<GetCaregiverProfileResponse?>?> = _response
 
     fun getCaregiverProfile(
-        token: String
+        token: String,
+        job_id: String
     ) = viewModelScope.launch {
-        repository.getCaregiverProfile(token).onStart {
+        repository.getCaregiverProfile(token, job_id).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

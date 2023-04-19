@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,11 +11,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.BulletPointAdapter
 import com.example.agencyphase2.databinding.ActivityRegistrationBinding
 import com.example.agencyphase2.databinding.ActivityUpcommingJobDetailsBinding
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetOngoingJobViewModel
 import com.example.agencyphase2.viewmodel.GetUpcommingJobViewModel
@@ -71,6 +74,12 @@ class UpcommingJobDetailsActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.profileCard.setOnClickListener {
+            val intent = Intent(this,CareGiverProfileActivity::class.java)
+            intent.putExtra("job_id", id.toString())
+            startActivity(intent)
         }
 
         binding.shimmerView.visible()
@@ -170,6 +179,10 @@ class UpcommingJobDetailsActivity : AppCompatActivity() {
                             }else{
                                 binding.noCheckListTv.visible()
                             }
+
+                            Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data[0].job_accepted_by.photo)
+                                .placeholder(R.color.color_grey)
+                                .into(binding.profileImg)
                         }else{
                             Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         }
