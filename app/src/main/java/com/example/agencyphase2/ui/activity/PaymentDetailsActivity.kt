@@ -62,7 +62,11 @@ class PaymentDetailsActivity : AppCompatActivity() {
         }
 
         amount?.let {
-            percentage= (amount!!.toDouble()*10).toFloat()/100.00
+            if(amount!!.toDouble() <= 100.00){
+                percentage= 20.00
+            }else{
+                percentage= (amount!!.toDouble()*10).toFloat()/100.00
+            }
             val percentList = percentage.toString().split(".").toTypedArray()
             val p1 = percentList[0]
             var p2 = percentList[1]

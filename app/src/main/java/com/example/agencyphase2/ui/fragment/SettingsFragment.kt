@@ -161,7 +161,7 @@ class SettingsFragment : Fragment() {
                                 binding.emailTv.text = outcome.data?.data!![0].email
                             }
                             outcome.data?.data!![0].role?.let {
-                                binding.roleTv.text = outcome.data?.data!![0].role
+                                binding.roleTv.text = "Agency Owner"
                             }
                             outcome.data?.data!![0].phone?.let {
                                 binding.mobileTv.text = it.toString()
