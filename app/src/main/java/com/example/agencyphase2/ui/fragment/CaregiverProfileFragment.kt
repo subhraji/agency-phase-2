@@ -2,39 +2,37 @@ package com.example.agencyphase2.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
-import com.example.agencyphase2.databinding.FragmentCanceledBinding
 import com.example.agencyphase2.databinding.FragmentCaregiverProfileBinding
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetCaregiverProfileViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CaregiverProfileFragment : Fragment() {
+class CaregiverProfileFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentCaregiverProfileBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var accessToken: String
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private val mGetCaregiverProfileViewModel: GetCaregiverProfileViewModel by viewModels()
-    private lateinit var job_id: String
+    private var job_id: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {}
+        job_id = arguments?.getString("id")
     }
 
     override fun onCreateView(
@@ -80,18 +78,15 @@ class CaregiverProfileFragment : Fragment() {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         binding.nameTv.text = outcome.data?.data?.name.toString()
-                        binding.caregiverTypeTv.text = outcome.data?.data?.email.toString()
-                        outcome.data?.data?.phone?.let {
-                            binding.phoneTv.text = it
-                        }
+
                         outcome.data?.data?.gender?.let {
                             binding.genderTv.text = it
                         }
                         outcome.data?.data?.experience?.let {
-                            binding.expTv.text = it.toString()
+                            binding.phoneTv.text = it.toString()+" Yrs"
                         }
-                        outcome.data?.data?.dob?.let {
-                            binding.ageTv.text = it.toString()
+                        outcome.data?.data?.care_completed?.let {
+                            binding.careCompletedTv.text = it.toString()
                         }
                         Glide.with(this).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                             .placeholder(R.color.color_grey)
@@ -109,6 +104,12 @@ class CaregiverProfileFragment : Fragment() {
                 }
             }
         })
+    }
+
+    companion object {
+        fun newInstance(): CaregiverProfileFragment {
+            return CaregiverProfileFragment()
+        }
     }
 
 }

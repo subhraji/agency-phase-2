@@ -20,7 +20,7 @@ class GetCaregiverProfileViewModel @Inject constructor(private val repository: G
 
     fun getCaregiverProfile(
         token: String,
-        job_id: String
+        job_id: String?
     ) = viewModelScope.launch {
         repository.getCaregiverProfile(token, job_id).onStart {
             _response.value = Outcome.loading(true)

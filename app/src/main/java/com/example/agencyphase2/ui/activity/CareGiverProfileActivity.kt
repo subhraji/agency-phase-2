@@ -1,19 +1,18 @@
 package com.example.agencyphase2.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityCareGiverProfileBinding
-import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.ui.fragment.CaregiverProfileFragment
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.viewmodel.ChangePasswordViewModel
 import com.example.agencyphase2.viewmodel.GetCaregiverProfileViewModel
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog

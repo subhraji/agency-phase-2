@@ -62,7 +62,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
         }
 
         amount?.let {
-            if(amount!!.toDouble() <= 100.00){
+            if(amount!!.toDouble() <= 200.00){
                 percentage= 20.00
             }else{
                 percentage= (amount!!.toDouble()*10).toFloat()/100.00

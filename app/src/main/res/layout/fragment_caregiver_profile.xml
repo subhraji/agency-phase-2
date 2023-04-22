@@ -18,17 +18,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/theme_blue">
-            <ImageView
-                android:id="@+id/back_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:tint="@color/white"
-                android:src="@drawable/ic_baseline_arrow_back_ios_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:background="@color/black">
 
             <TextView
                 android:id="@+id/text_view_1"
@@ -38,10 +28,10 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/back_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/back_btn" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"/>
 
             <RelativeLayout
                 android:id="@+id/image_lay_1"
@@ -50,7 +40,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/back_btn">
+                app:layout_constraintTop_toBottomOf="@+id/text_view_1">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_image"
@@ -72,7 +62,8 @@
                     android:text="   4.5"
                     android:textColor="@color/white"
                     android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <TextView
@@ -97,16 +88,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_tv" />
 
+
+            <View
+                android:id="@+id/view_top_1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/light_white"
+                app:layout_constraintTop_toBottomOf="@+id/caregiver_type_tv"/>
+
             <LinearLayout
                 android:id="@+id/linear_lay_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:weightSum="4"
+                android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/caregiver_type_tv">
+                app:layout_constraintTop_toBottomOf="@+id/view_top_1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,79 +174,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@color/light_white" />
-
-                <LinearLayout
-                    android:id="@+id/stike_lay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Total Strikes"
-                        android:textAlignment="center"
-                        android:textColor="@color/light_white"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/strike_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@color/light_white" />
-
-                <LinearLayout
-                    android:id="@+id/flag_lay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Total Flags"
-                        android:textAlignment="center"
-                        android:textColor="@color/light_white"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/flag_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -267,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Phone no."
+                    android:text="Caregiver experience"
                     android:textColor="@color/text_grey"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -280,31 +206,10 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintEnd_toStartOf="@+id/gender_tv"
                     app:layout_constraintStart_toStartOf="@+id/phone_htv"
                     app:layout_constraintTop_toBottomOf="@+id/phone_htv" />
-
-                <TextView
-                    android:id="@+id/exp_htv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Caregiver experience"
-                    android:textColor="@color/text_grey"
-                    android:textSize="13sp"
-                    app:layout_constraintStart_toStartOf="@+id/phone_htv"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_tv" />
-
-                <TextView
-                    android:id="@+id/exp_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/age_tv"
-                    app:layout_constraintStart_toStartOf="@+id/phone_htv"
-                    app:layout_constraintTop_toBottomOf="@+id/exp_htv" />
 
                 <TextView
                     android:id="@+id/gender_htv"
@@ -324,32 +229,9 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_marginEnd="20dp"
+                    android:text="dcbjjkbdck"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/age_tv"
                     app:layout_constraintTop_toTopOf="@+id/phone_tv" />
-
-                <TextView
-                    android:id="@+id/age_htv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DOB"
-                    android:textColor="@color/text_grey"
-                    android:textSize="13sp"
-                    app:layout_constraintStart_toStartOf="@+id/age_tv"
-                    app:layout_constraintTop_toTopOf="@+id/exp_htv" />
-
-                <TextView
-                    android:id="@+id/age_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No data"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintStart_toEndOf="@+id/exp_tv"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/age_htv" />
 
                 <View
                     android:id="@+id/view_1"
@@ -357,7 +239,7 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:background="@color/color_grey"
-                    app:layout_constraintTop_toBottomOf="@+id/age_tv" />
+                    app:layout_constraintTop_toBottomOf="@+id/gender_tv" />
                 <TextView
                     android:id="@+id/show_bio_htv"
                     android:layout_width="wrap_content"

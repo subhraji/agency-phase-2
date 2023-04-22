@@ -17,6 +17,7 @@ import com.example.agencyphase2.adapter.BulletPointAdapter
 import com.example.agencyphase2.databinding.ActivityRegistrationBinding
 import com.example.agencyphase2.databinding.ActivityUpcommingJobDetailsBinding
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.ui.fragment.CaregiverProfileFragment
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetOngoingJobViewModel
@@ -77,9 +78,18 @@ class UpcommingJobDetailsActivity : AppCompatActivity() {
         }
 
         binding.profileCard.setOnClickListener {
-            val intent = Intent(this,CareGiverProfileActivity::class.java)
+            /*val intent = Intent(this,CareGiverProfileActivity::class.java)
             intent.putExtra("job_id", id.toString())
-            startActivity(intent)
+            startActivity(intent)*/
+            val addPhotoBottomDialogFragment: CaregiverProfileFragment =
+                CaregiverProfileFragment.newInstance()
+            val bundle = Bundle()
+            bundle.putString("id", id.toString())
+            addPhotoBottomDialogFragment.arguments = bundle
+            addPhotoBottomDialogFragment.show(
+                supportFragmentManager,
+                "caregiver_profile_fragment"
+            )
         }
 
         binding.shimmerView.visible()
