@@ -12,7 +12,6 @@ import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordResponse
 import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
-import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoRequest
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse

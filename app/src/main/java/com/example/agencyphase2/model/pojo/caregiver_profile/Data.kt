@@ -3,6 +3,7 @@ package com.example.agencyphase2.model.pojo.caregiver_profile
 data class Data(
     val bio: String,
     val care_completed: Int,
+    val certificate: List<Certificate>,
     val country: String,
     val dob: String,
     val email: String,

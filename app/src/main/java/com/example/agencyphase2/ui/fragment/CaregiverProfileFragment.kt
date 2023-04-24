@@ -8,16 +8,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
+import com.example.agencyphase2.adapter.CertificateAdapter
 import com.example.agencyphase2.databinding.FragmentCaregiverProfileBinding
+import com.example.agencyphase2.model.pojo.caregiver_profile.Certificate
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetCaregiverProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
+import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -92,6 +97,15 @@ class CaregiverProfileFragment : BottomSheetDialogFragment() {
                             .placeholder(R.color.color_grey)
                             .into(binding.userImage)
                         mGetCaregiverProfileViewModel.navigationComplete()
+
+                        if(outcome.data?.data?.certificate != null && outcome.data?.data?.certificate!!.isNotEmpty()){
+                            binding.certificateHtv.visible()
+                            binding.certificateRecycler.visible()
+                            fillCertificateRecycler(outcome.data?.data?.certificate!!.toMutableList())
+                        }else{
+                            binding.certificateHtv.gone()
+                            binding.certificateRecycler.gone()
+                        }
                     }else{
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
@@ -104,6 +118,14 @@ class CaregiverProfileFragment : BottomSheetDialogFragment() {
                 }
             }
         })
+    }
+
+    private fun fillCertificateRecycler(list: MutableList<Certificate>) {
+        val gridLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.certificateRecycler.apply {
+            layoutManager = gridLayoutManager
+            adapter = CertificateAdapter(list,requireActivity())
+        }
     }
 
     companion object {
