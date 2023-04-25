@@ -4,6 +4,8 @@ import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOff
 import com.example.agencyphase2.model.pojo.add_authorize_officer.AddAuthorizeOfficerResponse
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoRequest
 import com.example.agencyphase2.model.pojo.add_other_info.AddOtherInfoResponse
+import com.example.agencyphase2.model.pojo.add_review.AddReviewRequest
+import com.example.agencyphase2.model.pojo.add_review.AddReviewResponse
 import com.example.agencyphase2.model.pojo.business_information.InsertBusinessInformationResponse
 import com.example.agencyphase2.model.pojo.caregiver_profile.GetCaregiverProfileResponse
 import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneRequest
@@ -216,4 +218,10 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("job_id")job_id: String?
     ): GetCaregiverProfileResponse?
+
+    @POST("rating/add-caregiver-rating")
+    suspend fun addReview(
+        @Body body: AddReviewRequest?,
+        @Header("Authorization") token: String,
+    ): AddReviewResponse?
 }

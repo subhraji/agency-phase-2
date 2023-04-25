@@ -4,12 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.RatingBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.BulletPointAdapter
@@ -19,11 +24,15 @@ import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.fragment.CaregiverProfileFragment
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.viewmodel.AddReviewViewModel
 import com.example.agencyphase2.viewmodel.GetCompleteJobViewModel
 import com.example.agencyphase2.viewmodel.GetUpcommingJobViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.ncorti.slidetoact.SlideToActView
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
+import com.user.caregiver.loadingDialog
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.ParseException
@@ -38,8 +47,12 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
     private lateinit var accessToken: String
     private val mGetCompleteJobViewModel: GetCompleteJobViewModel by viewModels()
+    private val mAddReviewViewModel: AddReviewViewModel by viewModels()
+    private lateinit var loader: androidx.appcompat.app.AlertDialog
+
     private var id: Int = 0
     private var pageNumber = 1
+    private var user_id: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +61,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
+        loader = this.loadingDialog()
 
         val extras = intent.extras
         if (extras != null) {
@@ -64,6 +78,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         binding.checkListRecycler.gone()
 
         clickJobOverview()
+        addReviewObserver()
 
         binding.jobOverviewCard.setOnClickListener {
             clickJobOverview()
@@ -101,8 +116,64 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
             Snackbar.make(binding.root,"Oops!! No internet connection", Snackbar.LENGTH_SHORT).show()
         }
 
+
+        binding.slideToCompleteBtn.onSlideToActAnimationEventListener = (object : SlideToActView.OnSlideToActAnimationEventListener{
+            override fun onSlideCompleteAnimationEnded(view: SlideToActView) {
+                //Toast.makeText(this@CompleteJobDetailsActivity,"onSlideCompleteAnimationEnded",Toast.LENGTH_SHORT).show()
+                showReviewDialog()
+            }
+
+            override fun onSlideCompleteAnimationStarted(view: SlideToActView, threshold: Float) {
+                //Toast.makeText(this@CompleteJobDetailsActivity,"onSlideCompleteAnimationStarted",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSlideResetAnimationEnded(view: SlideToActView) {
+                //Toast.makeText(this@CompleteJobDetailsActivity,"onSlideResetAnimationEnded",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSlideResetAnimationStarted(view: SlideToActView) {
+                //showReviewDialog()
+            }
+
+        })
+
+
         //observer
         getCompletedJobsObserve()
+    }
+
+    private fun showReviewDialog(){
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.add_review_bottomsheet_layout, null)
+
+        val submit = view.findViewById<TextView>(R.id.submit_btn)
+        val reviewTxt = view.findViewById<EditText>(R.id.review_txt)
+        val ratingBar = view.findViewById<RatingBar>(R.id.rating_bar)
+
+        submit.setOnClickListener {
+            val rating = ratingBar.rating.toString()
+            val review = reviewTxt.text.toString()
+            if(!rating.isEmpty()){
+                if(!review.isEmpty()){
+                    mAddReviewViewModel.addReview(
+                        user_id.toString(),
+                        rating.toString(),
+                        review.toString(),
+                        accessToken
+                    )
+                    loader.show()
+                    dialog.dismiss()
+                    finish()
+                }else{
+                    Toast.makeText(this,"Please provide your review.",Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Rating is missing.",Toast.LENGTH_SHORT).show()
+            }
+        }
+        dialog.setCancelable(false)
+        dialog.setContentView(view)
+        dialog.show()
     }
 
     private fun clickJobOverview(){
@@ -144,6 +215,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                             binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
                             binding.personCountTv.text = outcome.data!!.data[0].care_items.size.toString()+" "+outcome.data!!.data[0].care_type
                             binding.locTv.text = outcome.data!!.data[0].address.toString()
+                            user_id = outcome.data!!.data[0].job_accepted_by.user_id.toString()
 
                             var gen = ""
                             for(i in outcome.data!!.data[0].care_items){
@@ -313,4 +385,28 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         }
         return str
     }
+
+    private fun addReviewObserver(){
+        mAddReviewViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        mAddReviewViewModel.navigationComplete()
+                        finish()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    loader.dismiss()
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
 }
