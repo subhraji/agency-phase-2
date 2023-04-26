@@ -152,21 +152,19 @@ class AskLocationActivity : AppCompatActivity() {
 
         val btnSave = view.findViewById<TextView>(R.id.save_btn)
         val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
-        val datePicker = view.findViewById<DatePicker>(R.id.date_picker)
         val startTimeBtn = view.findViewById<RelativeLayout>(R.id.start_time_btn)
         val endTimeBtn = view.findViewById<RelativeLayout>(R.id.end_time_btn)
         val startTimeTv = view.findViewById<TextView>(R.id.start_time_txt)
         val endTimeTv = view.findViewById<TextView>(R.id.end_time_txt)
 
-        datePicker.setMinDate(System.currentTimeMillis() - 1000)
 
         btnClear.setOnClickListener {
             dialog.dismiss()
         }
         btnSave.setOnClickListener {
-            binding.helloHtv.text = getCurrentDate(datePicker)
+            /*binding.helloHtv.text = getCurrentDate(datePicker)
             date = getCurrentDate(datePicker).toString()
-            startDate = getDurationCurrentDate(datePicker).toString()
+            startDate = getDurationCurrentDate(datePicker).toString()*/
             dialog.dismiss()
         }
 

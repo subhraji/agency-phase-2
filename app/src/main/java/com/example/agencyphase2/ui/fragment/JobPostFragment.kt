@@ -413,24 +413,23 @@ class JobPostFragment : Fragment() {
 
         val btnSave = view.findViewById<TextView>(R.id.save_btn)
         val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
-        val datePicker = view.findViewById<DatePicker>(R.id.date_picker)
         val startTimeBtn = view.findViewById<RelativeLayout>(R.id.start_time_btn)
         val endTimeBtn = view.findViewById<RelativeLayout>(R.id.end_time_btn)
         val startTimeTv = view.findViewById<TextView>(R.id.start_time_txt)
         val endTimeTv = view.findViewById<TextView>(R.id.end_time_txt)
         var startTime_n = ""
         var endTime_n = ""
-        datePicker.setMinDate(System.currentTimeMillis() - 1000)
+        //datePicker.setMinDate(System.currentTimeMillis() - 1000)
 
         btnClear.setOnClickListener {
             dialog.dismiss()
         }
         btnSave.setOnClickListener {
-            binding.dateTv1.text = getCurrentDate(datePicker)
-            binding.showDateTv.text = getCurrentDate(datePicker)
+            /*binding.dateTv1.text = getCurrentDate(datePicker)
+            binding.showDateTv.text = getCurrentDate(datePicker)*/
             binding.timeTv1.text = startTime_n+" - "+endTime_n
             binding.showTimeTv.text = startTime_n+" - "+endTime_n
-            date = getCurrentDate(datePicker).toString()
+            //date = getCurrentDate(datePicker).toString()
             binding.dateTimeBtn.gone()
             binding.dateTimeLay.visible()
             dialog.dismiss()

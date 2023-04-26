@@ -111,8 +111,25 @@ class HomeFragment : Fragment() {
                         }
 
                         binding.numberTv3.text = outcome.data?.data?.job_count.toString()
-                        binding.numberTv2.text = "$"+outcome.data?.data?.revenue_count.toString()
                         binding.numberTv1.text = outcome.data?.data?.rating_count.toString()
+
+                        outcome.data?.data?.revenue_count?.let {
+                            var numberString = ""
+                            var number = outcome.data?.data?.revenue_count!!.toDouble()
+
+                            if (Math.abs(number / 1000000) > 1) {
+                                numberString = (number / 1000000).toString() + "m";
+
+                            } else if (Math.abs(number / 1000) > 1) {
+                                numberString = (number / 1000).toString() + "k";
+
+                            } else {
+                                numberString = number.toString();
+
+                            }
+                            binding.numberTv2.text = numberString.toString()
+                        }
+
 
                         mGetProfileViewModel.navigationComplete()
                     }else{
