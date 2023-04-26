@@ -3,42 +3,34 @@ package com.example.agencyphase2.adapter
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.CompleteJobsItemLayoutBinding
-import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
-import com.example.agencyphase2.model.pojo.get_complete_jobs.Data
+import com.example.agencyphase2.model.pojo.get_canceled_job.Data
 import com.example.agencyphase2.ui.activity.CompleteJobDetailsActivity
 import com.user.caregiver.gone
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.time.Duration
-import java.time.LocalTime
-import java.util.*
 
-class CompletedJobAdapter (private val itemList: List<Data>,
-                           private val context: Context
+class CanceledJobAdapter (private val itemList: List<Data>,
+                          private val context: Context
 ):
-    RecyclerView.Adapter<CompletedJobAdapter.ViewHolder>() {
+    RecyclerView.Adapter<CanceledJobAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompletedJobAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CanceledJobAdapter.ViewHolder {
         val itemBinding = CompleteJobsItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return CompletedJobAdapter.ViewHolder(itemBinding)
+        return CanceledJobAdapter.ViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
-    override fun onBindViewHolder(holder: CompletedJobAdapter.ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: CanceledJobAdapter.ViewHolder, position: Int) {
         val rowData = itemList[position]
         holder.bind(rowData, context)
     }
@@ -56,9 +48,9 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                 priceTv.text = "$"+data?.amount.toString()
 
                 rootLay.setOnClickListener {
-                    val intent = Intent(context, CompleteJobDetailsActivity::class.java)
+                    /*val intent = Intent(context, CompleteJobDetailsActivity::class.java)
                     intent.putExtra("id",data?.job_id)
-                    context.startActivity(intent)
+                    context.startActivity(intent)*/
                 }
                 gen = ""
                 for(i in data?.care_items){
@@ -70,14 +62,14 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                 }
                 ageTv.text = gen
 
-                statusTv.text = data.status.toString()
+                statusTv.text = "Canceled Job"
 
                 statusTvLay.setBackgroundTintList(
                     ColorStateList.valueOf(context.resources.getColor(
-                        R.color.color_green)))
+                        R.color.error_red)))
                 timeLeftTv.setBackgroundTintList(
                     ColorStateList.valueOf(context.resources.getColor(
-                        R.color.color_green)))
+                        R.color.error_red)))
 
                 timeLeftTv.gone()
             }

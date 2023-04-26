@@ -16,6 +16,7 @@ import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficer
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
+import com.example.agencyphase2.model.pojo.get_canceled_job.GetCanceledJobResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
 import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
@@ -224,4 +225,9 @@ interface ApiInterface {
         @Body body: AddReviewRequest?,
         @Header("Authorization") token: String,
     ): AddReviewResponse?
+
+    @GET("job/canceled-job/get")
+    suspend fun getCanceledJob(
+        @Header("Authorization") token: String,
+    ): GetCanceledJobResponse?
 }
