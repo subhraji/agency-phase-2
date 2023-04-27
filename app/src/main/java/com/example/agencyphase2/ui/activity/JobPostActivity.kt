@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -400,34 +401,54 @@ class JobPostActivity : AppCompatActivity() {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.select_date_time_bottomsheet, null)
 
-        val btnSave = view.findViewById<TextView>(R.id.save_btn)
-        val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
+        val conLay_1 = view.findViewById<ConstraintLayout>(R.id.cons_lay_1)
+        val btnNext = view.findViewById<TextView>(R.id.next_btn)
+        val btnClear_1 = view.findViewById<ImageView>(R.id.clear_btn_1)
         val startTimeBtn = view.findViewById<RelativeLayout>(R.id.start_time_btn)
-        val endTimeBtn = view.findViewById<RelativeLayout>(R.id.end_time_btn)
         val startTimeTv = view.findViewById<TextView>(R.id.start_time_txt)
+        val startDatePicker = view.findViewById<DatePicker>(R.id.start_date_picker)
+        val conLay_2 = view.findViewById<ConstraintLayout>(R.id.cons_lay_2)
+        val btnSave = view.findViewById<TextView>(R.id.save_btn)
+        val btnClear_2 = view.findViewById<ImageView>(R.id.clear_btn_2)
+        val endTimeBtn = view.findViewById<RelativeLayout>(R.id.end_time_btn)
         val endTimeTv = view.findViewById<TextView>(R.id.end_time_txt)
-        val startDateBtn = view.findViewById<RelativeLayout>(R.id.start_date_btn)
-        val endDateBtn = view.findViewById<RelativeLayout>(R.id.end_date_btn)
-        val startDateTv = view.findViewById<TextView>(R.id.start_date_txt)
-        val endDateTv = view.findViewById<TextView>(R.id.end_date_txt)
+        val endDatePicker = view.findViewById<DatePicker>(R.id.end_date_picker)
+
+        startDatePicker.setMinDate(System.currentTimeMillis() - 1000)
+        endDatePicker.setMinDate(System.currentTimeMillis() - 1000)
+        conLay_2.gone()
+        conLay_1.visible()
 
         var startTime_n = ""
         var endTime_n = ""
 
-        btnClear.setOnClickListener {
+        btnClear_1.setOnClickListener {
             dialog.dismiss()
         }
+        btnClear_2.setOnClickListener {
+            dialog.dismiss()
+        }
+        btnNext.setOnClickListener {
+
+            start_date = getDate(startDatePicker).toString()
+            startDate = getDate2(startDatePicker).toString()
+            if(!start_date.isEmpty()){
+                if(!startTime.isEmpty()){
+                    conLay_2.visible()
+                    conLay_1.gone()
+                }else{
+                    Toast.makeText(this,"Please select start time.", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Please select start date.", Toast.LENGTH_SHORT).show()
+            }
+        }
         btnSave.setOnClickListener {
+            end_date = getDate(endDatePicker).toString()
+            endDate = getDate2(startDatePicker).toString()
 
             if(!startTime.isEmpty()){
                 if(!endTime.isEmpty()){
-                    /*binding.dateTv1.text = ""
-                    binding.showDateTv.text = ""
-                    binding.timeTv1.text = startTime_n+" - "+endTime_n
-                    binding.showTimeTv.text = startTime_n+" - "+endTime_n
-                    binding.dateTimeBtn.gone()
-                    binding.dateTimeLay.visible()
-                    dialog.dismiss()*/
                     if(!startDate.isEmpty()){
                         if(!endDate.isEmpty()){
                               if(getDurationHour(
@@ -448,7 +469,19 @@ class JobPostActivity : AppCompatActivity() {
                                     dialog.dismiss()
 
                                 }else{
-                                    Toast.makeText(this,"Job duration should be more than 1 hour", Toast.LENGTH_LONG).show()
+                                    if(
+                                        getDurationHour(
+                                            startDate+" "+startTime,
+                                            endDate+" "+endTime
+                                        ) > 0
+                                    ){
+                                        Toast.makeText(this,"Job duration should be more than 1 hour  ${getDurationHour(
+                                            startDate+" "+startTime,
+                                            endDate+" "+endTime
+                                        )}", Toast.LENGTH_LONG).show()
+                                    }else{
+                                        Toast.makeText(this,"Please check the end time", Toast.LENGTH_LONG).show()
+                                    }
                                 }
                             }else{
                                 Toast.makeText(this,"There should be a minimum of 3 hours gap current time and job start time.", Toast.LENGTH_LONG).show()
@@ -465,64 +498,6 @@ class JobPostActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Please provide start time.", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        startDateBtn.setOnClickListener {
-
-            val cal = Calendar.getInstance()
-            val c = cal.time
-            val dateSetListener =
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    cal.set(Calendar.YEAR, year)
-                    cal.set(Calendar.MONTH, monthOfYear)
-                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                    val myFormat = "MM-dd-yyyy" // mention the format you need
-                    val sdf = SimpleDateFormat(myFormat, Locale.US)
-                    startDateTv.text = sdf.format(cal.time)
-                    start_date = sdf.format(cal.time)
-
-                    val startDateTime_sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
-                    startDate = startDateTime_sdf.format(cal.time)
-                }
-
-           val datePickerDialog = DatePickerDialog(
-                this, dateSetListener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            )
-            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog.show()
-        }
-
-        endDateBtn.setOnClickListener {
-
-            val cal = Calendar.getInstance()
-            val c = cal.time
-            val dateSetListener =
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    cal.set(Calendar.YEAR, year)
-                    cal.set(Calendar.MONTH, monthOfYear)
-                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                    val myFormat = "MM-dd-yyyy" // mention the format you need
-                    val sdf = SimpleDateFormat(myFormat, Locale.US)
-                    endDateTv.text = sdf.format(cal.time)
-                    end_date = sdf.format(cal.time)
-
-                    val endDateTime_sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
-                    endDate = endDateTime_sdf.format(cal.time)
-                }
-
-            val datePickerDialog = DatePickerDialog(
-                this, dateSetListener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            )
-            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog.show()
         }
 
         startTimeBtn.setOnClickListener {
@@ -610,6 +585,49 @@ class JobPostActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.setContentView(view)
         dialog.show()
+    }
+
+    fun getDate(picker: DatePicker): String? {
+        val builder = StringBuilder()
+        var month = ""
+        var day = ""
+        if((picker.getMonth() + 1) < 10){
+            month = "0"+ (picker.getMonth() + 1)
+        }else{
+            month = (picker.getMonth() + 1).toString()
+        }
+        if(picker.getDayOfMonth() < 10){
+            day = "0"+picker.getDayOfMonth().toString()
+        }else{
+            day = picker.getDayOfMonth().toString()
+        }
+
+        builder.append(month.toString() + "-") //month is 0 based
+        builder.append(day.toString() + "-")
+        builder.append(picker.getYear())
+
+        return builder.toString()
+    }
+    fun getDate2(picker: DatePicker): String? {
+        val builder = StringBuilder()
+        var month = ""
+        var day = ""
+        if((picker.getMonth() + 1) < 10){
+            month = "0"+ (picker.getMonth() + 1)
+        }else{
+            month = (picker.getMonth() + 1).toString()
+        }
+        if(picker.getDayOfMonth() < 10){
+            day = "0"+picker.getDayOfMonth().toString()
+        }else{
+            day = picker.getDayOfMonth().toString()
+        }
+
+        builder.append(day.toString() + "-")
+        builder.append(month.toString() + "-") //month is 0 based
+        builder.append(picker.getYear())
+
+        return builder.toString()
     }
 
     private fun getCurrentDate(): String {
@@ -765,28 +783,6 @@ class JobPostActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.setContentView(view)
         dialog.show()
-    }
-
-    fun getCurrentDate(picker: DatePicker): String? {
-        val builder = StringBuilder()
-        var month = ""
-        var day = ""
-        if((picker.getMonth() + 1) < 10){
-            month = "0"+ (picker.getMonth() + 1)
-        }else{
-            month = (picker.getMonth() + 1).toString()
-        }
-        if(picker.getDayOfMonth() < 10){
-            day = "0"+picker.getDayOfMonth().toString()
-        }else{
-            day = picker.getDayOfMonth().toString()
-        }
-
-        builder.append(month.toString() + "-") //month is 0 based
-        builder.append(day.toString() + "-")
-        builder.append(picker.getYear())
-
-        return builder.toString()
     }
 
     private fun jobPostObserve(){

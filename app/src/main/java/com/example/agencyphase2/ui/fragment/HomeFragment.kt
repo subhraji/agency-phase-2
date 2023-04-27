@@ -33,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val tabTitles = arrayListOf("     Post     "," Accepted ", "    Completed    ", " Canceled ")
+    private val tabTitles = arrayListOf("     Post     "," Accepted ", "    Completed    ", "Incomplete")
 
     private val mGetProfileViewModel: GetProfileViewModel by viewModels()
     private lateinit var accessToken: String

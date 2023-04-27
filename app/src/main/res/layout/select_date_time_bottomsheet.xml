@@ -4,176 +4,52 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="20dp">
-    <TextView
-        android:id="@+id/date_time_htv"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_lay_1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select date and time"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@color/black"/>
-    <ImageView
-        android:id="@+id/clear_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/date_time_htv"
-        app:layout_constraintBottom_toBottomOf="@+id/date_time_htv"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_baseline_clear_24"
-        app:tint="#787878"/>
-    <LinearLayout
-        android:id="@+id/data_linear_lay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="50dp"
-        android:weightSum="2"
-        app:layout_constraintTop_toBottomOf="@+id/clear_btn">
+        app:layout_constraintEnd_toEndOf="parent">
         <TextView
+            android:id="@+id/date_time_htv_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start date"
-            android:textSize="16sp"
-            android:textColor="@color/black"
+            android:text="Select start date and time"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
             android:textStyle="bold"
-            android:layout_weight="1"
-            />
-        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <ImageView
+            android:id="@+id/clear_btn_1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/date_time_htv_1"
+            app:layout_constraintBottom_toBottomOf="@+id/date_time_htv_1"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_baseline_clear_24"
+            app:tint="#787878"/>
+        <DatePicker
+            android:id="@+id/start_date_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End date"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/date_linear_lay_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/data_linear_lay"
-        android:weightSum="2"
-        app:layout_constraintStart_toStartOf="@id/linear_lay_1"
-        app:layout_constraintEnd_toEndOf="@id/linear_lay_2"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp">
-        <RelativeLayout
-            android:id="@+id/start_date_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/time_selector_border">
+            app:layout_constraintTop_toBottomOf="@+id/clear_btn_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"/>
 
-            <TextView
-                android:id="@+id/start_date_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="Start date"
-                android:textColor="@color/text_grey"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/end_date_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/time_selector_border">
-
-            <TextView
-                android:id="@+id/end_date_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="End date"
-                android:textColor="@color/text_grey"
-                android:textSize="16sp" />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-
-
-
-
-    <LinearLayout
-        android:id="@+id/linear_lay_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/date_linear_lay_2"
-        android:weightSum="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start time"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="End time"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linear_lay_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/linear_lay_1"
-        android:weightSum="2"
-        app:layout_constraintStart_toStartOf="@id/linear_lay_1"
-        app:layout_constraintEnd_toEndOf="@id/linear_lay_2"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp">
         <RelativeLayout
             android:id="@+id/start_time_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/start_date_picker"
             android:background="@drawable/time_selector_border">
 
             <TextView
@@ -183,8 +59,8 @@
                 android:layout_marginStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="Start time"
-                android:textColor="@color/text_grey"
+                android:text="Select Start time"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <ImageView
@@ -193,14 +69,75 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24" />
+                android:src="@drawable/ic_baseline_access_time_24" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@drawable/agree_btn_bg"
+            android:backgroundTint="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/start_time_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_lay_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/date_time_htv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select end date and time"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <ImageView
+            android:id="@+id/clear_btn_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/date_time_htv_2"
+            app:layout_constraintBottom_toBottomOf="@+id/date_time_htv_2"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_baseline_clear_24"
+            app:tint="#787878"/>
+        <DatePicker
+            android:id="@+id/end_date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/clear_btn_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"/>
+
         <RelativeLayout
             android:id="@+id/end_time_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/end_date_picker"
             android:background="@drawable/time_selector_border">
 
             <TextView
@@ -210,37 +147,38 @@
                 android:layout_marginStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="End time"
-                android:textColor="@color/text_grey"
+                android:text="Select End time"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_baseline_arrow_drop_down_24"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_baseline_access_time_24" />
         </RelativeLayout>
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/save_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:background="@drawable/agree_btn_bg"
-        android:backgroundTint="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/linear_lay_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="15dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"/>
+        <TextView
+            android:id="@+id/save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@drawable/agree_btn_bg"
+            android:backgroundTint="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/end_time_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,8 @@ import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneRe
 import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneResponse
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordResponse
+import com.example.agencyphase2.model.pojo.close_job.CloseJobRequest
+import com.example.agencyphase2.model.pojo.close_job.CloseJobResponse
 import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
@@ -230,4 +232,10 @@ interface ApiInterface {
     suspend fun getCanceledJob(
         @Header("Authorization") token: String,
     ): GetCanceledJobResponse?
+
+    @POST("job/closed-job/close")
+    suspend fun closeJob(
+        @Body body: CloseJobRequest?,
+        @Header("Authorization") token: String,
+    ): CloseJobResponse?
 }

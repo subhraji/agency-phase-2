@@ -25,6 +25,7 @@ import com.example.agencyphase2.ui.fragment.CaregiverProfileFragment
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.AddReviewViewModel
+import com.example.agencyphase2.viewmodel.CloseJobViewModel
 import com.example.agencyphase2.viewmodel.GetCompleteJobViewModel
 import com.example.agencyphase2.viewmodel.GetUpcommingJobViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -47,6 +48,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
     private lateinit var accessToken: String
     private val mGetCompleteJobViewModel: GetCompleteJobViewModel by viewModels()
+    private val mCloseJobViewModel: CloseJobViewModel by viewModels()
     private val mAddReviewViewModel: AddReviewViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
@@ -79,6 +81,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         clickJobOverview()
         addReviewObserver()
+        closeJobObserver()
 
         binding.jobOverviewCard.setOnClickListener {
             clickJobOverview()
@@ -120,7 +123,15 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         binding.slideToCompleteBtn.onSlideToActAnimationEventListener = (object : SlideToActView.OnSlideToActAnimationEventListener{
             override fun onSlideCompleteAnimationEnded(view: SlideToActView) {
                 //Toast.makeText(this@CompleteJobDetailsActivity,"onSlideCompleteAnimationEnded",Toast.LENGTH_SHORT).show()
-                showReviewDialog()
+                if(isConnectedToInternet()){
+                    mCloseJobViewModel.closeJob(
+                        id.toString(),
+                        accessToken
+                    )
+                    loader.show()
+                }else{
+                    Toast.makeText(this@CompleteJobDetailsActivity,"Oops!!, No internet connection.", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onSlideCompleteAnimationStarted(view: SlideToActView, threshold: Float) {
@@ -395,6 +406,29 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         mAddReviewViewModel.navigationComplete()
                         finish()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    loader.dismiss()
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
+    private fun closeJobObserver(){
+        mCloseJobViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        showReviewDialog()
+                        mCloseJobViewModel.navigationComplete()
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
