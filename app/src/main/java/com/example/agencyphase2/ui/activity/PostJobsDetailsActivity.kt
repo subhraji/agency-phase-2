@@ -178,7 +178,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data.status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data.title.toString()
                             binding.jobDescTv.text = outcome.data!!.data.description.toString()
-                            binding.dateHtv.text = outcome.data!!.data.start_date.toString()+"-"+outcome.data!!.data.end_date.toString()
+                            binding.dateHtv.text = outcome.data!!.data.start_date.toString()+" to "+outcome.data!!.data.end_date.toString()
                             binding.timeTv.text = outcome.data!!.data.start_time.toString()+" - "+outcome.data!!.data.end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data.amount.toString()
                             binding.personCountTv.text = outcome.data!!.data.care_items.size.toString()+" "+outcome.data!!.data.care_type

@@ -265,9 +265,8 @@
                         android:id="@+id/revenue_txt_lay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:background="@color/transparent"
-                        android:padding="5dp"
+                        android:layout_weight="1"
                         android:textColorHint="@color/text_grey"
                         app:boxBackgroundColor="@color/transparent"
                         app:boxStrokeColor="@color/text_grey"
@@ -281,6 +280,7 @@
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
                             android:digits="0123456789"
+                            android:drawableStart="@drawable/ic_baseline_attach_money_24"
                             android:hint="Annual revenue"
                             android:inputType="number"
                             android:maxLength="15"
@@ -298,6 +298,7 @@
                             android:background="@color/text_grey"
                             android:visibility="visible" />
                     </com.google.android.material.textfield.TextInputLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"

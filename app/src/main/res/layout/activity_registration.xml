@@ -720,6 +720,7 @@
                                 android:background="@color/transparent"
                                 android:hint="Annual revenue"
                                 android:inputType="number"
+                                android:drawableStart="@drawable/ic_baseline_attach_money_24"
                                 android:maxLength="15"
                                 android:digits="0123456789"
                                 android:singleLine="true"

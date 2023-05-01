@@ -434,8 +434,16 @@ class JobPostActivity : AppCompatActivity() {
             startDate = getDate2(startDatePicker).toString()
             if(!start_date.isEmpty()){
                 if(!startTime.isEmpty()){
-                    conLay_2.visible()
-                    conLay_1.gone()
+
+                    if(getDurationHour(
+                            getCurrentDate(),
+                            startDate+" "+startTime
+                        ) >= 180){
+                        conLay_2.visible()
+                        conLay_1.gone()
+                    }else{
+                        Toast.makeText(this,"There should be a minimum of 3 hours gap current time and job start time.", Toast.LENGTH_LONG).show()
+                    }
                 }else{
                     Toast.makeText(this,"Please select start time.", Toast.LENGTH_SHORT).show()
                 }
@@ -451,15 +459,17 @@ class JobPostActivity : AppCompatActivity() {
                 if(!endTime.isEmpty()){
                     if(!startDate.isEmpty()){
                         if(!endDate.isEmpty()){
-                              if(getDurationHour(
-                                    getCurrentDate(),
-                                    startDate+" "+startTime
-                                ) >= 180){
-                                if(getDurationHour(
+                            if(getDurationHour(
+                                    startDate+" "+startTime,
+                                    endDate+" "+endTime
+                                ) >= 60){
+
+                                if(
+                                    getDurationHour(
                                         startDate+" "+startTime,
                                         endDate+" "+endTime
-                                    ) >= 60){
-
+                                    ) <= 1440
+                                ){
                                     binding.dateTv1.text = start_date+" to "+end_date
                                     binding.showDateTv.text = start_date+" to "+end_date
                                     binding.timeTv1.text = startTime_n+" - "+endTime_n
@@ -467,24 +477,21 @@ class JobPostActivity : AppCompatActivity() {
                                     binding.dateTimeBtn.gone()
                                     binding.dateTimeLay.visible()
                                     dialog.dismiss()
-
                                 }else{
-                                    if(
-                                        getDurationHour(
-                                            startDate+" "+startTime,
-                                            endDate+" "+endTime
-                                        ) > 0
-                                    ){
-                                        Toast.makeText(this,"Job duration should be more than 1 hour  ${getDurationHour(
-                                            startDate+" "+startTime,
-                                            endDate+" "+endTime
-                                        )}", Toast.LENGTH_LONG).show()
-                                    }else{
-                                        Toast.makeText(this,"Please check the end time", Toast.LENGTH_LONG).show()
-                                    }
+                                    Toast.makeText(this,"Job duration can not be more than 24 hour.", Toast.LENGTH_LONG).show()
                                 }
+
                             }else{
-                                Toast.makeText(this,"There should be a minimum of 3 hours gap current time and job start time.", Toast.LENGTH_LONG).show()
+                                if(
+                                    getDurationHour(
+                                        startDate+" "+startTime,
+                                        endDate+" "+endTime
+                                    ) > 0
+                                ){
+                                    Toast.makeText(this,"Job duration should be more than 1 hour", Toast.LENGTH_LONG).show()
+                                }else{
+                                    Toast.makeText(this,"Please check the end time", Toast.LENGTH_LONG).show()
+                                }
                             }
                         }else{
                             Toast.makeText(this,"Please provide end date.", Toast.LENGTH_SHORT).show()
