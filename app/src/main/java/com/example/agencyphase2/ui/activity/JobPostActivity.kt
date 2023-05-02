@@ -63,10 +63,6 @@ class JobPostActivity : AppCompatActivity() {
     var floor_n: String? = null
     var country_n: String? = null
 
-    private var durationHour: Int = 0
-    private var durationDay: Int = 0
-    private var durationTotalMin: Int = 0
-
     private val medicalHistoryList:MutableList<String> = mutableListOf()
     private val jobSkillList:MutableList<String> = mutableListOf()
     private val otherReqList:MutableList<String> = mutableListOf()
@@ -443,6 +439,12 @@ class JobPostActivity : AppCompatActivity() {
                         conLay_1.gone()
                     }else{
                         Toast.makeText(this,"There should be a minimum of 3 hours gap current time and job start time.", Toast.LENGTH_LONG).show()
+
+
+                        Log.i("time", " \n next  start => ${startDate}, ${startTime} \n current => ${getCurrentDate()} \n diff => ${getDurationHour(
+                            getCurrentDate(),
+                            startDate+" "+startTime
+                        ).toString()}")
                     }
                 }else{
                     Toast.makeText(this,"Please select start time.", Toast.LENGTH_SHORT).show()
@@ -452,13 +454,14 @@ class JobPostActivity : AppCompatActivity() {
             }
         }
         btnSave.setOnClickListener {
-            end_date = getDate(endDatePicker).toString()
-            endDate = getDate2(startDatePicker).toString()
+            end_date = getEndDate(endDatePicker).toString()
+            endDate = getEndDate2(endDatePicker).toString()
 
             if(!startTime.isEmpty()){
                 if(!endTime.isEmpty()){
                     if(!startDate.isEmpty()){
                         if(!endDate.isEmpty()){
+
                             if(getDurationHour(
                                     startDate+" "+startTime,
                                     endDate+" "+endTime
@@ -470,13 +473,20 @@ class JobPostActivity : AppCompatActivity() {
                                         endDate+" "+endTime
                                     ) <= 1440
                                 ){
-                                    binding.dateTv1.text = start_date+" to "+end_date
-                                    binding.showDateTv.text = start_date+" to "+end_date
+                                    binding.dateTv1.text = start_date+" To "+end_date
+                                    binding.showDateTv.text = start_date+" To "+end_date
                                     binding.timeTv1.text = startTime_n+" - "+endTime_n
                                     binding.showTimeTv.text = startTime_n+" - "+endTime_n
                                     binding.dateTimeBtn.gone()
                                     binding.dateTimeLay.visible()
                                     dialog.dismiss()
+
+                                    Log.i("time", "\n start => ${startDate}, ${startTime} \n end => ${endDate}, ${endTime} \n diff => ${getDurationHour(
+                                        startDate+" "+startTime,
+                                        endDate+" "+endTime
+                                    ).toString()}")
+
+
                                 }else{
                                     Toast.makeText(this,"Job duration can not be more than 24 hour.", Toast.LENGTH_LONG).show()
                                 }
@@ -637,6 +647,51 @@ class JobPostActivity : AppCompatActivity() {
         return builder.toString()
     }
 
+
+    fun getEndDate(picker: DatePicker): String? {
+        val builder = StringBuilder()
+        var month = ""
+        var day = ""
+        if((picker.getMonth() + 1) < 10){
+            month = "0"+ (picker.getMonth() + 1)
+        }else{
+            month = (picker.getMonth() + 1).toString()
+        }
+        if(picker.getDayOfMonth() < 10){
+            day = "0"+picker.getDayOfMonth().toString()
+        }else{
+            day = picker.getDayOfMonth().toString()
+        }
+
+        builder.append(month.toString() + "-") //month is 0 based
+        builder.append(day.toString() + "-")
+        builder.append(picker.getYear())
+
+        return builder.toString()
+    }
+    fun getEndDate2(picker: DatePicker): String? {
+        val builder = StringBuilder()
+        var month = ""
+        var day = ""
+        if((picker.getMonth() + 1) < 10){
+            month = "0"+ (picker.getMonth() + 1)
+        }else{
+            month = (picker.getMonth() + 1).toString()
+        }
+        if(picker.getDayOfMonth() < 10){
+            day = "0"+picker.getDayOfMonth().toString()
+        }else{
+            day = picker.getDayOfMonth().toString()
+        }
+
+        builder.append(day.toString() + "-")
+        builder.append(month.toString() + "-") //month is 0 based
+        builder.append(picker.getYear())
+
+        return builder.toString()
+    }
+
+
     private fun getCurrentDate(): String {
         val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
         return sdf.format(Date())
@@ -646,7 +701,6 @@ class JobPostActivity : AppCompatActivity() {
 
         val sdf: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
         var durationTotalMin = 0
-
         try {
             val d1: Date = sdf.parse(startDateTime)
             val d2: Date = sdf.parse(endDateTime)
@@ -666,7 +720,9 @@ class JobPostActivity : AppCompatActivity() {
             val durationDay = difference_In_Days.toInt()
             val durationHour = difference_In_Hours.toInt()
 
-            durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
+            Log.i("time_diff", "day: ${difference_In_Days}  minute: ${difference_In_Minutes}")
+
+            durationTotalMin = (durationDay*1440)+(durationHour*60)+difference_In_Minutes.toInt()
         }
 
         // Catch the Exception
