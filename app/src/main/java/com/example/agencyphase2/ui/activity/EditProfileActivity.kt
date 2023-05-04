@@ -353,6 +353,7 @@ class EditProfileActivity : AppCompatActivity(), UploadDocListener {
                 is Outcome.Success ->{
                     loader.dismiss()
                     if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                         mEditBasicInfoViewModel.navigationComplete()
                         finish()
                     }else{

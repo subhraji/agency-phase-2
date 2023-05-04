@@ -146,7 +146,7 @@ class ProfileActivity : AppCompatActivity() {
                                 binding.lsTv.text = "no data"
                             }
                             if(outcome.data!!.data.annual_business_revenue != null){
-                                binding.revenueTv.text = outcome.data!!.data.annual_business_revenue.toString()
+                                binding.revenueTv.text = "$ "+outcome.data!!.data.annual_business_revenue.toString()
                                 annualRevenue = outcome.data!!.data.annual_business_revenue.toString()
                             }else{
                                 binding.revenueTv.text = "no data"

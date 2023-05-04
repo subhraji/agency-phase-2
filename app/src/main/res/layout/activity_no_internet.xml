@@ -23,6 +23,7 @@
         android:text="No internet connection."
         android:textColor="@color/black"
         android:textSize="18sp" />
+
     <TextView
         android:id="@+id/retry_btn"
         android:layout_width="wrap_content"

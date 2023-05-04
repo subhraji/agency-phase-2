@@ -106,16 +106,16 @@ class ChangePasswordActivity : AppCompatActivity() {
             return "Minimum 6 characters required."
         }
         if(!passwordText.matches(".*[A-Z].*".toRegex())){
-            return "Must contain 1 upper case character."
+            return "Password Must contain 1 upper case character."
         }
         if(!passwordText.matches(".*[a-z].*".toRegex())){
-            return "Must contain 1 lower case character."
+            return "Password Must contain 1 lower case character."
         }
         if(!passwordText.matches(".*[0-9].*".toRegex())){
-            return "Must contain at least 1 number."
+            return "Password Must contain at least 1 number."
         }
         if(!passwordText.matches(".*[!@$#%&*_-].*".toRegex())){
-            return "Must contain 1 special character (!@$#%&*_-)."
+            return "Password Must contain 1 special character (!@$#%&*_-)."
         }
         return  null
     }

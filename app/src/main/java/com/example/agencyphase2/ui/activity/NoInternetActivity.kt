@@ -20,11 +20,15 @@ class NoInternetActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         checkInternet()
+
+        binding.retryBtn.setOnClickListener {
+            checkInternet()
+        }
     }
 
     private fun checkInternet(){
         if(isConnectedToInternet()){
-            if(PrefManager.getLogInStatus() == true){
+            /*if(PrefManager.getLogInStatus() == true){
                 val intent = Intent(this, ChooseLoginRegActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -32,7 +36,11 @@ class NoInternetActivity : AppCompatActivity() {
                 val intent = Intent(this, AuthActivity::class.java)
                 startActivity(intent)
                 finish()
-            }
+            }*/
+
+            val intent = Intent(this, SplashActivity::class.java)
+            startActivity(intent)
+            finish()
         }else{
             Toast.makeText(this,"No internet connection, please retry.", Toast.LENGTH_SHORT).show()
         }
