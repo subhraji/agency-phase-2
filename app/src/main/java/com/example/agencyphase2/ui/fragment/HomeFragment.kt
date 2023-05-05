@@ -58,8 +58,6 @@ class HomeFragment : Fragment() {
         //get token
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
 
-        setUpTabLayoutWithViewPager()
-
         binding.userImageView.setOnClickListener {
             val intent = Intent(requireActivity(), ProfileActivity::class.java)
             startActivity(intent)
@@ -81,6 +79,9 @@ class HomeFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
+
+        setUpTabLayoutWithViewPager()
+
     }
 
     private fun setUpTabLayoutWithViewPager() {
