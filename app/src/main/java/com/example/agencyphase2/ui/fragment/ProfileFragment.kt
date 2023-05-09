@@ -173,7 +173,6 @@ class ProfileFragment : Fragment() {
                             }else{
                                 binding.taxIdTv.text = "no data"
                             }
-
                         }
 
                         //profile status

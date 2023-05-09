@@ -81,7 +81,6 @@ class HomeFragment : Fragment() {
         }
 
         setUpTabLayoutWithViewPager()
-
     }
 
     private fun setUpTabLayoutWithViewPager() {
