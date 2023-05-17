@@ -1,28 +1,61 @@
 package com.example.agencyphase2.ui.activity
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.Observer
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityAddClientBinding
 import com.example.agencyphase2.databinding.ActivityAskLocationBinding
+import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.ui.fragment.ImagePreviewFragment
+import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.utils.UploadDocListener
+import com.example.agencyphase2.viewmodel.CreateClientViewModel
+import com.example.agencyphase2.viewmodel.SignUpViewModel
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.user.caregiver.gone
-import com.user.caregiver.showKeyboard
-import com.user.caregiver.visible
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
+import com.user.caregiver.*
+import dagger.hilt.android.AndroidEntryPoint
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.InputStream
 
-class AddClientActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class AddClientActivity : AppCompatActivity(), UploadDocListener {
     private lateinit var binding: ActivityAddClientBinding
+
+    private val mCreateClientViewModel: CreateClientViewModel by viewModels()
+    private lateinit var loader: androidx.appcompat.app.AlertDialog
+    private lateinit var accessToken: String
 
     var job_address: String = ""
     var place_name: String = ""
@@ -36,10 +69,20 @@ class AddClientActivity : AppCompatActivity() {
     var building_n = ""
     var floor_n = ""
 
+    private var imageUri: Uri? = null
+    private var absolutePath: String? = null
+    private val PICK_IMAGE = 100
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityAddClientBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //get token
+        accessToken = "Bearer "+PrefManager.getKeyAuthToken()
+
+        //observe
+        createClientObserve()
 
         Places.initialize(applicationContext, getString(R.string.api_key))
         autocomplete()
@@ -62,6 +105,43 @@ class AddClientActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.addImageBtn.setOnClickListener {
+            if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                dispatchGalleryIntent()
+            }else{
+                requestStoragePermission()
+            }
+        }
+
+        binding.addBtn.setOnClickListener {
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.Main) {
+                        val file = File(absolutePath)
+                        val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
+                        val imagePart = createMultiPart("photo", compressedImageFile)
+                        if(isConnectedToInternet()){
+                            mCreateClientViewModel.createClient(
+                                photo = imagePart,
+                                email = binding.emailNameTxt.text.toString(),
+                                name = binding.fullNameTxt.text.toString(),
+                                phone = binding.mobileNameTxt.text.toString(),
+                                address = job_address,
+                                token = accessToken
+                            )
+                            hideSoftKeyboard()
+                            loader.show()
+                        }else{
+                            Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
     }
@@ -232,4 +312,114 @@ class AddClientActivity : AppCompatActivity() {
         dialog.setContentView(view)
         dialog.show()
     }
+
+    private fun dispatchGalleryIntent() {
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(gallery, PICK_IMAGE)
+    }
+
+    fun getRealPathFromUri(contentUri: Uri?): String? {
+        var cursor: Cursor? = null
+        return try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = this.contentResolver.query(contentUri!!, proj, null, null, null)
+            assert(cursor != null)
+            val columnIndex: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(columnIndex)
+        } finally {
+            if (cursor != null) {
+                cursor.close()
+            }
+        }
+    }
+
+    private fun showImageDialog(absolutePath: String,uri: String,type: String) {
+        val bundle = Bundle()
+        bundle.putString("path", absolutePath)
+        bundle.putString("uri",uri)
+        bundle.putString("type",type)
+        val dialogFragment = ImagePreviewFragment(this)
+        dialogFragment.arguments = bundle
+        dialogFragment.show(this.supportFragmentManager, "signature")
+    }
+
+    private fun requestStoragePermission() {
+        Dexter.withContext(this)
+            .withPermission(
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .withListener(object : PermissionListener {
+
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                    dispatchGalleryIntent()
+                }
+
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    requestStoragePermission()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+
+            })
+            .onSameThread()
+            .check()
+    }
+
+    override fun uploadFile(path: String) {
+        val uri = imageUri
+        val imageStream: InputStream = uri?.let {
+            contentResolver.openInputStream(
+                it
+            )
+        }!!
+        val selectedImage: Bitmap = BitmapFactory.decodeStream(imageStream)
+        binding.addImageBtn.setImageBitmap(selectedImage)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == PICK_IMAGE) {
+            try {
+                imageUri = data?.data
+                val path = getRealPathFromUri(imageUri)
+                val imageFile = File(path!!)
+                absolutePath = imageFile.absolutePath
+                showImageDialog(imageFile.absolutePath,imageUri.toString(),"covid")
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun createClientObserve(){
+        mCreateClientViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        mCreateClientViewModel.navigationComplete()
+                        finish()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    loader.dismiss()
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
 }

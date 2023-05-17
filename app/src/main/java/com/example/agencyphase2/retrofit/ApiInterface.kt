@@ -14,9 +14,16 @@ import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordResponse
 import com.example.agencyphase2.model.pojo.close_job.CloseJobRequest
 import com.example.agencyphase2.model.pojo.close_job.CloseJobResponse
+import com.example.agencyphase2.model.pojo.create_client.CreateClientResponse
 import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
+import com.example.agencyphase2.model.pojo.forgot_pass_change.ForgotPassChangeRequest
+import com.example.agencyphase2.model.pojo.forgot_pass_change.ForgotPassChangeResponse
+import com.example.agencyphase2.model.pojo.forgot_pass_otv_verify.ForgotPassOtpVerifyRequest
+import com.example.agencyphase2.model.pojo.forgot_pass_otv_verify.ForgotPassOtpVerifyResponse
+import com.example.agencyphase2.model.pojo.forgotpass_send_email.ForgotPassSendEmailRequest
+import com.example.agencyphase2.model.pojo.forgotpass_send_email.ForgotPassSendEmailResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.get_canceled_job.GetCanceledJobResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
@@ -238,4 +245,30 @@ interface ApiInterface {
         @Body body: CloseJobRequest?,
         @Header("Authorization") token: String,
     ): CloseJobResponse?
+
+    @POST("send-forgot-password-mail")
+    suspend fun forgotPasswordEmail(
+        @Body body: ForgotPassSendEmailRequest?,
+    ): ForgotPassSendEmailResponse?
+
+    @POST("verify-forgot-otp")
+    suspend fun forgotPassOtpVerify(
+        @Body body: ForgotPassOtpVerifyRequest?,
+    ): ForgotPassOtpVerifyResponse?
+
+    @POST("update-forgot-password")
+    suspend fun updatePass(
+        @Body body: ForgotPassChangeRequest?,
+    ): ForgotPassChangeResponse?
+
+    @Multipart
+    @POST("client/create-profile")
+    suspend fun createClient(
+        @Part photo: MultipartBody.Part?,
+        @Part("email") email: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("address") address: RequestBody,
+        @Header("Authorization") token: String
+    ): CreateClientResponse?
 }

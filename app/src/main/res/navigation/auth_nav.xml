@@ -27,5 +27,14 @@
         android:id="@+id/forgotPasswordOTPFragment"
         android:name="com.example.agencyphase2.ui.fragment.ForgotPasswordOTPFragment"
         android:label="fragment_forgot_password_otp"
-        tools:layout="@layout/fragment_forgot_password_otp" />
+        tools:layout="@layout/fragment_forgot_password_otp" >
+        <action
+            android:id="@+id/action_forgotPasswordOTPFragment_to_forgotPassChangeFragment"
+            app:destination="@id/forgotPassChangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPassChangeFragment"
+        android:name="com.example.agencyphase2.ui.fragment.ForgotPassChangeFragment"
+        android:label="fragment_forgot_pass_change"
+        tools:layout="@layout/fragment_forgot_pass_change" />
 </navigation>
