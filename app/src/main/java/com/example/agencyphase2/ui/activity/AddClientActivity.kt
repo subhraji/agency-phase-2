@@ -80,6 +80,7 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
+        loader = this.loadingDialog(false)
 
         //observe
         createClientObserve()
@@ -116,32 +117,61 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
         }
 
         binding.addBtn.setOnClickListener {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
-                    withContext(Dispatchers.Main) {
-                        val file = File(absolutePath)
-                        val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
-                        val imagePart = createMultiPart("photo", compressedImageFile)
-                        if(isConnectedToInternet()){
-                            mCreateClientViewModel.createClient(
-                                photo = imagePart,
-                                email = binding.emailNameTxt.text.toString(),
-                                name = binding.fullNameTxt.text.toString(),
-                                phone = binding.mobileNameTxt.text.toString(),
-                                address = job_address,
-                                token = accessToken
-                            )
-                            hideSoftKeyboard()
-                            loader.show()
-                        }else{
-                            Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
-                        }
+            val name = binding.fullNameTxt.text.toString()
+            val email = binding.emailNameTxt.text.toString()
+            val phone = binding.mobileNameTxt.text.toString()
 
+            if(!name.isEmpty()){
+                if(!phone.isEmpty()){
+                    if(!email.isEmpty()){
+                        if(!job_address.isEmpty()){
+                            if(absolutePath != null){
+                                if(isConnectedToInternet()){
+                                    try {
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            withContext(Dispatchers.Main) {
+                                                val file = File(absolutePath)
+                                                val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
+                                                val imagePart = createMultiPart("photo", compressedImageFile)
+                                                if(isConnectedToInternet()){
+                                                    mCreateClientViewModel.createClient(
+                                                        photo = imagePart,
+                                                        email = binding.emailNameTxt.text.toString(),
+                                                        name = binding.fullNameTxt.text.toString(),
+                                                        phone = binding.mobileNameTxt.text.toString(),
+                                                        address = job_address,
+                                                        token = accessToken
+                                                    )
+                                                    hideSoftKeyboard()
+                                                    loader.show()
+                                                }else{
+                                                    Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                                                }
+
+                                            }
+                                        }
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }else{
+                                    Toast.makeText(this,"Oops!! No internet connection.", Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                Toast.makeText(this,"select profile image.", Toast.LENGTH_SHORT).show()
+                            }
+                        }else{
+                            Toast.makeText(this,"Provide address.", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(this,"Provide email address.", Toast.LENGTH_SHORT).show()
                     }
+                }else{
+                    Toast.makeText(this,"Provide mobile number.", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }else{
+                Toast.makeText(this,"Provide the full name.", Toast.LENGTH_SHORT).show()
             }
+
         }
 
     }

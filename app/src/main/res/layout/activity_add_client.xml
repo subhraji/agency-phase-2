@@ -283,7 +283,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/upload_proof_btn_border_bg"
                 android:padding="30dp"
-                android:src="@drawable/ic_outline_description_24" />
+                android:src="@drawable/ic_outline_person_outline_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

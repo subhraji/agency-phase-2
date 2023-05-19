@@ -27,6 +27,7 @@ import com.example.agencyphase2.model.pojo.forgotpass_send_email.ForgotPassSendE
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.get_canceled_job.GetCanceledJobResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
+import com.example.agencyphase2.model.pojo.get_clients.GetClientsResponse
 import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
@@ -271,4 +272,9 @@ interface ApiInterface {
         @Part("address") address: RequestBody,
         @Header("Authorization") token: String
     ): CreateClientResponse?
+
+    @GET("client/get-profile")
+    suspend fun getClients(
+        @Header("Authorization") token: String,
+    ): GetClientsResponse?
 }
