@@ -15,7 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -69,7 +68,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     //notification subscribe
     private fun subscribeToTopic(){

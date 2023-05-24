@@ -18,6 +18,16 @@ class CreateClientRepository @Inject constructor(private val apiInterface: ApiIn
         name: String,
         phone: String,
         address: String,
+        short_address: String,
+        street: String,
+        appartment_or_unit: String?,
+        floor_no: String?,
+        city: String,
+        zip_code: String,
+        state: String,
+        country: String,
+        lat: String,
+        long: String,
         token: String
     ): Flow<CreateClientResponse?> = flow{
         emit(apiInterface.createClient(
@@ -26,7 +36,18 @@ class CreateClientRepository @Inject constructor(private val apiInterface: ApiIn
             name.toMultipartFormString(),
             phone.toMultipartFormString(),
             address.toMultipartFormString(),
-            token)
+            short_address.toMultipartFormString(),
+            street.toMultipartFormString(),
+            appartment_or_unit?.toMultipartFormString(),
+            floor_no?.toMultipartFormString(),
+            city.toMultipartFormString(),
+            zip_code.toMultipartFormString(),
+            state.toMultipartFormString(),
+            country.toMultipartFormString(),
+            lat.toMultipartFormString(),
+            long.toMultipartFormString(),
+            token
+        )
         )
     }.flowOn(Dispatchers.IO)
 }

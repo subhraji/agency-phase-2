@@ -25,10 +25,20 @@ class CreateClientViewModel @Inject constructor(private val repository: CreateCl
         name: String,
         phone: String,
         address: String,
+        short_address: String,
+        street: String,
+        appartment_or_unit: String?,
+        floor_no: String?,
+        city: String,
+        zip_code: String,
+        state: String,
+        country: String,
+        lat: String,
+        long: String,
         token: String
     ) = viewModelScope.launch {
         repository.createClient(
-            photo, email, name, phone, address, token
+            photo, email, name, phone, address, short_address, street, appartment_or_unit, floor_no, city, zip_code, state, country, lat, long, token
         ).onStart {
             _response.value = Outcome.loading(true)
         }.catch {

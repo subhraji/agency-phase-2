@@ -270,6 +270,16 @@ interface ApiInterface {
         @Part("name") name: RequestBody,
         @Part("phone") phone: RequestBody,
         @Part("address") address: RequestBody,
+        @Part("short_address") short_address: RequestBody,
+        @Part("street") street: RequestBody,
+        @Part("appartment_or_unit") appartment_or_unit: RequestBody?,
+        @Part("floor_no") floor_no: RequestBody?,
+        @Part("city") city: RequestBody,
+        @Part("zip_code") zip_code: RequestBody,
+        @Part("state") state: RequestBody,
+        @Part("country") country: RequestBody,
+        @Part("lat") lat: RequestBody,
+        @Part("long") long: RequestBody,
         @Header("Authorization") token: String
     ): CreateClientResponse?
 

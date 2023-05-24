@@ -68,6 +68,7 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
     var zipcode_n = ""
     var building_n = ""
     var floor_n = ""
+    var country_n: String? = null
 
     private var imageUri: Uri? = null
     private var absolutePath: String? = null
@@ -140,6 +141,16 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
                                                         name = binding.fullNameTxt.text.toString(),
                                                         phone = binding.mobileNameTxt.text.toString(),
                                                         address = job_address,
+                                                        short_address = job_address,
+                                                        street = street_n,
+                                                        appartment_or_unit = building_n,
+                                                        floor_no = floor_n,
+                                                        city = city_n,
+                                                        zip_code = zipcode_n,
+                                                        state = state_n,
+                                                        country = "USA",
+                                                        lat = lat,
+                                                        long = lang,
                                                         token = accessToken
                                                     )
                                                     hideSoftKeyboard()
