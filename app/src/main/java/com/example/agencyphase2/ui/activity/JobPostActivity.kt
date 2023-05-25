@@ -72,9 +72,9 @@ class JobPostActivity : AppCompatActivity() {
 
     private val AUTOCOMPLETE_REQUEST_CODE = 1
 
-    companion object {
+    /*companion object {
         var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
-    }
+    }*/
 
     private val mPostJobViewModel: PostJobViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
@@ -360,6 +360,7 @@ class JobPostActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
+/*
         btnSave.setOnClickListener {
             val age = ageTxt.text.toString()
             val name = nameTxt.text.toString()
@@ -387,6 +388,7 @@ class JobPostActivity : AppCompatActivity() {
             }
 
         }
+*/
 
         dialog.setCancelable(false)
         dialog.setContentView(view)
@@ -899,7 +901,10 @@ class JobPostActivity : AppCompatActivity() {
         }
 
         binding.addPatient.setOnClickListener {
-            showPatientDetailsBottomSheet()
+            //showPatientDetailsBottomSheet()
+
+            val intent = Intent(this, SearchClientActivity::class.java)
+            startActivity(intent)
         }
 
         binding.addressDeleteIcon.setOnClickListener {
@@ -919,37 +924,33 @@ class JobPostActivity : AppCompatActivity() {
             if(!job_title.isEmpty()){
                 if(!job_desc.isEmpty()){
                     if(!careType.isEmpty()){
-                        if(!genderAgeList.isEmpty()){
-                            if(!start_date.isEmpty() && !end_date.isEmpty()){
-                                if(!startTime.isEmpty()){
-                                    if(!endTime.isEmpty()){
-                                        if(!jobLoc.isEmpty()){
-                                            if(!amount.isEmpty()){
-                                                if(!street_n.isEmpty()){
-                                                    fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)
-                                                    binding.relativeLay1.gone()
-                                                    binding.relativeLay3.gone()
-                                                    binding.relativeLay2.visible()
-                                                }else{
-                                                    Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
-                                                }
+                        if(!start_date.isEmpty() && !end_date.isEmpty()){
+                            if(!startTime.isEmpty()){
+                                if(!endTime.isEmpty()){
+                                    if(!jobLoc.isEmpty()){
+                                        if(!amount.isEmpty()){
+                                            if(!street_n.isEmpty()){
+                                                /*fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)*/
+                                                binding.relativeLay1.gone()
+                                                binding.relativeLay3.gone()
+                                                binding.relativeLay2.visible()
                                             }else{
-                                                Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
                                             }
                                         }else{
-                                            Toast.makeText(this,"Please provide job location.",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
                                         }
                                     }else{
-                                        Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this,"Please provide job location.",Toast.LENGTH_SHORT).show()
                                     }
                                 }else{
-                                    Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
                                 }
                             }else{
-                                Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
                             }
                         }else{
-                            Toast.makeText(this,"Please add patient details.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
                         }
                     }else{
                         Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
@@ -1089,7 +1090,7 @@ class JobPostActivity : AppCompatActivity() {
         binding.consLay1.setOnClickListener {
             /*val intent = Intent(this, SelectCareTypeActivity::class.java)
             startActivity(intent)*/
-            showCareTypeBottomSheet()
+            /*showCareTypeBottomSheet()*/
 
         }
 
@@ -1099,45 +1100,47 @@ class JobPostActivity : AppCompatActivity() {
 
         binding.prevNextStepBtn.setOnClickListener {
 
-            if(!genderAgeList.isEmpty()){
-                if(!street_n.isEmpty()){
-                    if(isConnectedToInternet()){
-                        mPostJobViewModel.jobPost(
-                            binding.showJobTitleTxt.text.toString(),
-                            binding.showAddCareTypeHtv.text.toString(),
-                            genderAgeList,
-                            start_date,
-                            end_date,
-                            startTime,
-                            endTime,
-                            binding.showAmountTxt.text.toString(),
-                            binding.showFullAddressTv.text.toString(),
-                            binding.showJobDescTxt.text.toString(),
-                            medicalHistoryList,
-                            jobSkillList,
-                            otherReqList,
-                            checkList,
-                            place_name,
-                            lat,
-                            lang,
-                            street_n,
-                            city_n,
-                            state_n,
-                            zipcode_n,
-                            building_n,
-                            floor_n,
-                            "USA",
-                            accessToken
-                        )
-                        loader.show()
-                    }else{
-                        Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
-                    }
-                }else{
-                    Toast.makeText(this, "Please provide address.", Toast.LENGTH_SHORT).show()
-                }
+            /*if(!genderAgeList.isEmpty()){
+
             }else{
                 Toast.makeText(this, "Please select a care type.", Toast.LENGTH_SHORT).show()
+            }*/
+
+            if(!street_n.isEmpty()){
+                /*if(isConnectedToInternet()){
+                    mPostJobViewModel.jobPost(
+                        binding.showJobTitleTxt.text.toString(),
+                        binding.showAddCareTypeHtv.text.toString(),
+                        "",
+                        start_date,
+                        end_date,
+                        startTime,
+                        endTime,
+                        binding.showAmountTxt.text.toString(),
+                        binding.showFullAddressTv.text.toString(),
+                        binding.showJobDescTxt.text.toString(),
+                        medicalHistoryList,
+                        jobSkillList,
+                        otherReqList,
+                        checkList,
+                        place_name,
+                        lat,
+                        lang,
+                        street_n,
+                        city_n,
+                        state_n,
+                        zipcode_n,
+                        building_n,
+                        floor_n,
+                        "USA",
+                        accessToken
+                    )
+                    loader.show()
+                }else{
+                    Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                }*/
+            }else{
+                Toast.makeText(this, "Please provide address.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -1196,7 +1199,7 @@ class JobPostActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        genderAgeList = mutableListOf()
+        /*genderAgeList = mutableListOf()*/
         super.onDestroy()
     }
 }

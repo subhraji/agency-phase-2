@@ -287,4 +287,10 @@ interface ApiInterface {
     suspend fun getClients(
         @Header("Authorization") token: String,
     ): GetClientsResponse?
+
+    @GET("client/search")
+    suspend fun searchClient(
+        @Header("Authorization") token: String,
+        @Query("client_name") client_name: String?,
+    ): GetClientsResponse?
 }

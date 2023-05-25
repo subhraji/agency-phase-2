@@ -32,7 +32,7 @@ class GenderAgeAdapter (private val itemList: MutableList<GenderAgeItemCountMode
 
     fun remove(genderAgeItemCountModel: GenderAgeItemCountModel) {
         itemList.remove(genderAgeItemCountModel)
-        JobPostActivity.genderAgeList.remove(genderAgeItemCountModel)
+        /*JobPostActivity.genderAgeList.remove(genderAgeItemCountModel)*/
     }
 
     override fun onBindViewHolder(holder: GenderAgeAdapter.ViewHolder, position: Int) {

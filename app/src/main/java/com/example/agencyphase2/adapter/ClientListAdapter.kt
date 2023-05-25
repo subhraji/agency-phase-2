@@ -10,6 +10,7 @@ import com.example.agencyphase2.databinding.ClientListItemLayoutBinding
 import com.example.agencyphase2.model.pojo.TestModel
 import com.example.agencyphase2.model.pojo.get_clients.Data
 import com.example.agencyphase2.utils.Constants
+import com.user.caregiver.gone
 
 class ClientListAdapter (private val itemList: MutableList<Data>,
                          private val context: Context):
@@ -37,6 +38,7 @@ class ClientListAdapter (private val itemList: MutableList<Data>,
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Data, context: Context) {
             itemBinding.apply {
+                addBtn.gone()
                 fullNameTv.text = data.name.toString()
                 emailTv.text = data.email.toString()
                 mobileTv.text = data.phone.toString()

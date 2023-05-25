@@ -54,7 +54,7 @@
             android:name=".ui.activity.AddClientActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.CreateClientActivity"
+            android:name=".ui.activity.SearchClientActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.ClientListActivity"
