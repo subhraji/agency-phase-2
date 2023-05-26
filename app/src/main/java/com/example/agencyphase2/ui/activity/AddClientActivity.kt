@@ -12,9 +12,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
@@ -56,6 +55,8 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
     private val mCreateClientViewModel: CreateClientViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
     private lateinit var accessToken: String
+    val genderList: Array<String> =  arrayOf("Select gender", "Male", "Female", "Other")
+    private lateinit var gender: String
 
     var job_address: String = ""
     var place_name: String = ""
@@ -85,6 +86,9 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
 
         //observe
         createClientObserve()
+
+        //spinner
+        setUpGenderSpinner()
 
         Places.initialize(applicationContext, getString(R.string.api_key))
         autocomplete()
@@ -121,57 +125,68 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
             val name = binding.fullNameTxt.text.toString()
             val email = binding.emailNameTxt.text.toString()
             val phone = binding.mobileNameTxt.text.toString()
+            val age = binding.ageTxt.text.toString()
 
             if(!name.isEmpty()){
                 if(!phone.isEmpty()){
                     if(!email.isEmpty()){
-                        if(!job_address.isEmpty()){
-                            if(absolutePath != null){
-                                if(isConnectedToInternet()){
-                                    try {
-                                        CoroutineScope(Dispatchers.IO).launch {
-                                            withContext(Dispatchers.Main) {
-                                                val file = File(absolutePath)
-                                                val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
-                                                val imagePart = createMultiPart("photo", compressedImageFile)
-                                                if(isConnectedToInternet()){
-                                                    mCreateClientViewModel.createClient(
-                                                        photo = imagePart,
-                                                        email = binding.emailNameTxt.text.toString(),
-                                                        name = binding.fullNameTxt.text.toString(),
-                                                        phone = binding.mobileNameTxt.text.toString(),
-                                                        address = job_address,
-                                                        short_address = job_address,
-                                                        street = street_n,
-                                                        appartment_or_unit = building_n,
-                                                        floor_no = floor_n,
-                                                        city = city_n,
-                                                        zip_code = zipcode_n,
-                                                        state = state_n,
-                                                        country = "USA",
-                                                        lat = lat,
-                                                        long = lang,
-                                                        token = accessToken
-                                                    )
-                                                    hideSoftKeyboard()
-                                                    loader.show()
-                                                }else{
-                                                    Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
-                                                }
+                        if(!age.isEmpty()){
+                            if(!gender.isEmpty()){
+                                if(!job_address.isEmpty()){
+                                    if(absolutePath != null){
+                                        if(isConnectedToInternet()){
+                                            try {
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    withContext(Dispatchers.Main) {
+                                                        val file = File(absolutePath)
+                                                        val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
+                                                        val imagePart = createMultiPart("photo", compressedImageFile)
+                                                        if(isConnectedToInternet()){
+                                                            mCreateClientViewModel.createClient(
+                                                                photo = imagePart,
+                                                                email = binding.emailNameTxt.text.toString(),
+                                                                name = binding.fullNameTxt.text.toString(),
+                                                                phone = binding.mobileNameTxt.text.toString(),
+                                                                address = job_address,
+                                                                short_address = job_address,
+                                                                street = street_n,
+                                                                appartment_or_unit = building_n,
+                                                                floor_no = floor_n,
+                                                                city = city_n,
+                                                                zip_code = zipcode_n,
+                                                                state = state_n,
+                                                                country = "USA",
+                                                                lat = lat,
+                                                                long = lang,
+                                                                age = age,
+                                                                gender = gender,
+                                                                token = accessToken
+                                                            )
+                                                            hideSoftKeyboard()
+                                                            loader.show()
+                                                        }else{
+                                                            Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                                                        }
 
+                                                    }
+                                                }
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
                                             }
+                                        }else{
+                                            Toast.makeText(this,"Oops!! No internet connection.", Toast.LENGTH_SHORT).show()
                                         }
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
+                                    }else{
+                                        Toast.makeText(this,"select profile image.", Toast.LENGTH_SHORT).show()
                                     }
                                 }else{
-                                    Toast.makeText(this,"Oops!! No internet connection.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"Provide address.", Toast.LENGTH_SHORT).show()
                                 }
                             }else{
-                                Toast.makeText(this,"select profile image.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"Please select a gender.", Toast.LENGTH_SHORT).show()
                             }
                         }else{
-                            Toast.makeText(this,"Provide address.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,"Please provide the age.", Toast.LENGTH_SHORT).show()
                         }
                     }else{
                         Toast.makeText(this,"Provide email address.", Toast.LENGTH_SHORT).show()
@@ -186,6 +201,31 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
         }
 
     }
+
+    private fun setUpGenderSpinner(){
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,genderList)
+        binding.genderSpinner.adapter = arrayAdapter
+        binding.genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
+            AdapterView.OnItemClickListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(p2 == 0){
+                    gender = ""
+                }else{
+                    gender = genderList[p2]
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+
+        }
+    }
+
 
     private fun autocomplete(){
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.client_autocomplete_fragment) as AutocompleteSupportFragment

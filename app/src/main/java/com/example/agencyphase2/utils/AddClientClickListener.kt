@@ -4,5 +4,5 @@ import android.view.View
 import com.example.agencyphase2.model.pojo.get_clients.Data
 
 interface AddClientClickListener {
-    fun onClick(view: View, data: Data)
+    fun onAddClick(view: View, data: Data)
 }

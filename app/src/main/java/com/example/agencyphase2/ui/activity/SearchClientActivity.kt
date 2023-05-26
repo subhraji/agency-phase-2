@@ -1,51 +1,29 @@
 package com.example.agencyphase2.ui.activity
 
-import android.Manifest
-import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.SearchClientAdapter
-import com.example.agencyphase2.databinding.ActivityClientListBinding
 import com.example.agencyphase2.databinding.ActivityCreateClientBinding
 import com.example.agencyphase2.model.pojo.get_clients.Data
 import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.ui.fragment.ImagePreviewFragment
 import com.example.agencyphase2.utils.AddClientClickListener
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.utils.UploadDocListener
-import com.example.agencyphase2.viewmodel.PostJobViewModel
 import com.example.agencyphase2.viewmodel.SearchClientViewModel
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 import com.user.caregiver.gone
 import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.InputStream
 
 @AndroidEntryPoint
 class SearchClientActivity : AppCompatActivity(), AddClientClickListener {
@@ -137,8 +115,9 @@ class SearchClientActivity : AppCompatActivity(), AddClientClickListener {
         })
     }
 
-    override fun onClick(view: View, data: Data) {
-        Toast.makeText(this, data.email.toString(), Toast.LENGTH_SHORT).show()
+    override fun onAddClick(view: View, data: Data) {
+        JobPostActivity.clientItem = data
+        finish()
     }
 
 }

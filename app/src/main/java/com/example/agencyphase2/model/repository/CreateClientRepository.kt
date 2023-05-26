@@ -28,6 +28,8 @@ class CreateClientRepository @Inject constructor(private val apiInterface: ApiIn
         country: String,
         lat: String,
         long: String,
+        age: String,
+        gender: String,
         token: String
     ): Flow<CreateClientResponse?> = flow{
         emit(apiInterface.createClient(
@@ -46,6 +48,8 @@ class CreateClientRepository @Inject constructor(private val apiInterface: ApiIn
             country.toMultipartFormString(),
             lat.toMultipartFormString(),
             long.toMultipartFormString(),
+            age.toMultipartFormString(),
+            gender.toMultipartFormString(),
             token
         )
         )

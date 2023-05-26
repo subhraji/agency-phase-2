@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ClientListItemLayoutBinding
-import com.example.agencyphase2.model.pojo.TestModel
 import com.example.agencyphase2.model.pojo.get_clients.Data
 import com.example.agencyphase2.utils.Constants
+import com.example.agencyphase2.utils.EditDeleteClickListener
 import com.user.caregiver.gone
 
 class ClientListAdapter (private val itemList: MutableList<Data>,
-                         private val context: Context):
+                         private val context: Context,
+                         private val editDeleteClickListener: EditDeleteClickListener
+):
     RecyclerView.Adapter<ClientListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientListAdapter.ViewHolder {
@@ -22,7 +24,7 @@ class ClientListAdapter (private val itemList: MutableList<Data>,
             parent,
             false
         )
-        return ClientListAdapter.ViewHolder(itemBinding)
+        return ClientListAdapter.ViewHolder(itemBinding, editDeleteClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -34,17 +36,21 @@ class ClientListAdapter (private val itemList: MutableList<Data>,
         holder.bind(rowData, context)
     }
 
-    class ViewHolder(private val itemBinding: ClientListItemLayoutBinding) :
+    class ViewHolder(private val itemBinding: ClientListItemLayoutBinding, private val editDeleteClickListener: EditDeleteClickListener) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Data, context: Context) {
             itemBinding.apply {
                 addBtn.gone()
+                editBtn.gone()
                 fullNameTv.text = data.name.toString()
                 emailTv.text = data.email.toString()
                 mobileTv.text = data.phone.toString()
                 Glide.with(context).load(Constants.PUBLIC_URL+ data.photo)
                     .placeholder(R.color.color_grey)
                     .into(clientImg)
+                deleteBtn.setOnClickListener {
+                    editDeleteClickListener.onClick(it.rootView, data.id)
+                }
             }
         }
     }

@@ -325,10 +325,16 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
+
+                    <include
+                        android:id="@+id/gender_age_lay"
+                        layout="@layout/gender_age_item_layout"
+                        />
+                    <!--<androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/care_type_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>-->
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_time_btn"

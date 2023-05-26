@@ -16,6 +16,8 @@ import com.example.agencyphase2.model.pojo.close_job.CloseJobRequest
 import com.example.agencyphase2.model.pojo.close_job.CloseJobResponse
 import com.example.agencyphase2.model.pojo.create_client.CreateClientResponse
 import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
+import com.example.agencyphase2.model.pojo.delete_client.DeleteClientRequest
+import com.example.agencyphase2.model.pojo.delete_client.DeleteClientResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
 import com.example.agencyphase2.model.pojo.forgot_pass_change.ForgotPassChangeRequest
@@ -280,6 +282,8 @@ interface ApiInterface {
         @Part("country") country: RequestBody,
         @Part("lat") lat: RequestBody,
         @Part("long") long: RequestBody,
+        @Part("age") age: RequestBody,
+        @Part("gender") gender: RequestBody,
         @Header("Authorization") token: String
     ): CreateClientResponse?
 
@@ -293,4 +297,10 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("client_name") client_name: String?,
     ): GetClientsResponse?
+
+    @POST("client/delete")
+    suspend fun deleteClient(
+        @Body body: DeleteClientRequest?,
+        @Header("Authorization") token: String
+    ): DeleteClientResponse?
 }

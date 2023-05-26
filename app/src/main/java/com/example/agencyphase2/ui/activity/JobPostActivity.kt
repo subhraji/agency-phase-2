@@ -1,6 +1,5 @@
 package com.example.agencyphase2.ui.activity
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -20,15 +19,13 @@ import com.example.agencyphase2.adapter.ChipsAdapter
 import com.example.agencyphase2.adapter.GenderAgeAdapter
 import com.example.agencyphase2.databinding.ActivityJobPostBinding
 import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
+import com.example.agencyphase2.model.pojo.get_clients.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.PostJobViewModel
 import com.google.android.gms.common.api.Status
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.RectangularBounds
-import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -67,14 +64,12 @@ class JobPostActivity : AppCompatActivity() {
     private val jobSkillList:MutableList<String> = mutableListOf()
     private val otherReqList:MutableList<String> = mutableListOf()
     private val checkList:MutableList<String> = mutableListOf()
-
     private lateinit var accessToken: String
 
-    private val AUTOCOMPLETE_REQUEST_CODE = 1
-
-    /*companion object {
+    companion object {
         var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
-    }*/
+        var clientItem: Data? = null
+    }
 
     private val mPostJobViewModel: PostJobViewModel by viewModels()
     private lateinit var loader: androidx.appcompat.app.AlertDialog
@@ -97,6 +92,9 @@ class JobPostActivity : AppCompatActivity() {
         binding.dateTimeLay.gone()
         loader = this.loadingDialog()
 
+        binding.addPatient.visible()
+        binding.genderAgeLay.root.gone()
+
         binding.backBtn.setOnClickListener {
             finish()
         }
@@ -108,6 +106,36 @@ class JobPostActivity : AppCompatActivity() {
 
         //observer
         jobPostObserve()
+
+        //patient details
+
+        binding.genderAgeLay.imageView.setOnClickListener {
+            clientItem = null
+            genderAgeList = mutableListOf()
+            binding.addPatient.visible()
+            binding.genderAgeLay.root.gone()
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(clientItem != null){
+            genderAgeList.add(
+                GenderAgeItemCountModel(
+                    clientItem?.gender,
+                    clientItem?.age,
+                    clientItem?.name,
+                )
+            )
+            binding.addPatient.gone()
+            binding.genderAgeLay.root.visible()
+            binding.genderAgeLay.nameTv.text = clientItem?.name
+            binding.genderAgeLay.ageTv.text = "age: ${clientItem?.age} years"
+            binding.genderAgeLay.careTypeTv.text = careType
+            binding.genderAgeLay.genderTv.text = clientItem?.gender
+        }
     }
 
     private fun autocomplete(){
@@ -267,7 +295,13 @@ class JobPostActivity : AppCompatActivity() {
 
         btnSave.setOnClickListener {
             if(!careType.isEmpty()){
-                binding.addPatient.visible()
+
+                if(genderAgeList.isNotEmpty() && genderAgeList.size != 0){
+                    binding.addPatient.gone()
+                    binding.genderAgeLay.careTypeTv.text = careType.toString()
+                }else{
+                    binding.addPatient.visible()
+                }
                 binding.addCareTypeHtv.text = careType.toString()
                 binding.showAddCareTypeHtv.text = careType.toString()
                 dialog.dismiss()
@@ -1199,7 +1233,7 @@ class JobPostActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        /*genderAgeList = mutableListOf()*/
+        genderAgeList = mutableListOf()
         super.onDestroy()
     }
 }

@@ -60,7 +60,7 @@ class SearchClientAdapter(
                 .into(clientImg)
 
             root.setOnClickListener {
-                addClientClickListener.onClick(it.rootView, data)
+                addClientClickListener.onAddClick(it.rootView, data)
             }
         }
     }
