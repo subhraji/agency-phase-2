@@ -108,7 +108,6 @@ class JobPostActivity : AppCompatActivity() {
         jobPostObserve()
 
         //patient details
-
         binding.genderAgeLay.imageView.setOnClickListener {
             clientItem = null
             genderAgeList = mutableListOf()
@@ -131,10 +130,35 @@ class JobPostActivity : AppCompatActivity() {
             )
             binding.addPatient.gone()
             binding.genderAgeLay.root.visible()
+            binding.addressCard.visible()
+            binding.showAddressCard.visible()
             binding.genderAgeLay.nameTv.text = clientItem?.name
             binding.genderAgeLay.ageTv.text = "age: ${clientItem?.age} years"
             binding.genderAgeLay.careTypeTv.text = careType
             binding.genderAgeLay.genderTv.text = clientItem?.gender
+            place_name = clientItem?.short_address.toString()
+            lat = clientItem?.lat.toString()
+            lang = clientItem?.long.toString()
+            street_n = clientItem?.street.toString()
+            city_n = clientItem?.city.toString()
+            state_n = clientItem?.state.toString()
+            zipcode_n = clientItem?.zip_code.toString()
+            building_n = clientItem?.appartment_or_unit.toString()
+            floor_n = clientItem?.floor_no.toString()
+
+            binding.fullAddressTv.text = place_name+", "+street_n+", "+city_n+", "+state_n+", "+zipcode_n
+            binding.cityNameTv.text = city_n
+            binding.streetTv.text = street_n
+            binding.buildingTv.text = building_n
+
+            binding.showFullAddressTv.text = place_name+", "+street_n+", "+city_n+", "+state_n+", "+zipcode_n
+            binding.showCityNameTv.text = city_n
+            binding.showStreetTv.text = street_n
+            binding.showBuildingTv.text = building_n
+            if(floor_n?.isNotEmpty() == true){
+                binding.buildingTv.text = building_n+", "+floor_n
+                binding.showBuildingTv.text = building_n+", "+floor_n
+            }
         }
     }
 
@@ -683,7 +707,6 @@ class JobPostActivity : AppCompatActivity() {
         return builder.toString()
     }
 
-
     fun getEndDate(picker: DatePicker): String? {
         val builder = StringBuilder()
         var month = ""
@@ -1140,12 +1163,12 @@ class JobPostActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please select a care type.", Toast.LENGTH_SHORT).show()
             }*/
 
-            if(!street_n.isEmpty()){
-                /*if(isConnectedToInternet()){
+            if(!genderAgeList.isEmpty() && genderAgeList.size != 0){
+                if(isConnectedToInternet()){
                     mPostJobViewModel.jobPost(
                         binding.showJobTitleTxt.text.toString(),
                         binding.showAddCareTypeHtv.text.toString(),
-                        "",
+                        genderAgeList,
                         start_date,
                         end_date,
                         startTime,
@@ -1172,9 +1195,9 @@ class JobPostActivity : AppCompatActivity() {
                     loader.show()
                 }else{
                     Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
-                }*/
+                }
             }else{
-                Toast.makeText(this, "Please provide address.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please provide client details.", Toast.LENGTH_SHORT).show()
             }
         }
 
