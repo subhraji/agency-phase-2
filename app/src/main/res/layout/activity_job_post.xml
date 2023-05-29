@@ -328,8 +328,7 @@
 
                     <include
                         android:id="@+id/gender_age_lay"
-                        layout="@layout/gender_age_item_layout"
-                        />
+                        layout="@layout/gender_age_item_layout" />
                     <!--<androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/care_type_recycler"
                         android:layout_width="match_parent"
@@ -636,7 +635,6 @@
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/relative_lay_2"
             android:layout_width="match_parent"
@@ -973,7 +971,6 @@
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/relative_lay_3"
             android:layout_width="match_parent"
@@ -1068,8 +1065,8 @@
                             android:background="@color/transparent"
                             android:digits="01234567890abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ.,"
                             android:hint="Job title"
-                            android:maxLength="100"
                             android:inputType="textEmailAddress"
+                            android:maxLength="100"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/text_grey"
@@ -1186,11 +1183,28 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <LinearLayout
+                        android:id="@+id/gender_age_linear_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@+id/show_add_patient"
+                        app:layout_constraintStart_toStartOf="@+id/show_add_patient"
+                        app:layout_constraintTop_toBottomOf="@id/show_add_patient">
+
+                        <include
+                            android:id="@+id/show_gender_age_lay"
+                            layout="@layout/gender_age_item_layout"
+                            app:layout_constraintTop_toBottomOf="@+id/show_add_patient" />
+
+                    </LinearLayout>
+
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/show_gender_age_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/show_add_patient" />
+                        app:layout_constraintTop_toBottomOf="@+id/gender_age_linear_lay" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout

@@ -50,6 +50,7 @@ class ClientListActivity : AppCompatActivity(), EditDeleteClickListener {
 
         binding.addClientBtn.setOnClickListener {
             val intent = Intent(this, AddClientActivity::class.java)
+            intent.putExtra("from", "other")
             startActivity(intent)
         }
 

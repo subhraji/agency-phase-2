@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 class PostJobRepository @Inject constructor(private  val apiInterface: ApiInterface)  {
     fun postJob(
+        client_id: Int,
         title: String,
         care_type: String,
         care_items: List<GenderAgeItemCountModel>,
@@ -40,6 +41,6 @@ class PostJobRepository @Inject constructor(private  val apiInterface: ApiInterf
     ): Flow<JobPostResponse?> = flow{
         emit(apiInterface.jobPost(
             JobPostRequest(
-                title, care_type, care_items, start_date, end_date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long, street, city, state, zipcode, appartment_or_unit, floor_no, country), token))
+                client_id, title, care_type, care_items, start_date, end_date, start_time, end_time, amount, address, description, medical_history, expertise, other_requirements, check_list, short_address, lat, long, street, city, state, zipcode, appartment_or_unit, floor_no, country), token))
     }.flowOn(Dispatchers.IO)
 }

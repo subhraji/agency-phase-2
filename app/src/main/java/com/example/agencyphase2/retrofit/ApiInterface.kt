@@ -285,7 +285,7 @@ interface ApiInterface {
         @Part("age") age: RequestBody,
         @Part("gender") gender: RequestBody,
         @Header("Authorization") token: String
-    ): CreateClientResponse?
+    ): GetClientsResponse?
 
     @GET("client/get-profile")
     suspend fun getClients(

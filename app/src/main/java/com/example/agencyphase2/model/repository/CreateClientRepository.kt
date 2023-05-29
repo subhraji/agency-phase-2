@@ -1,6 +1,7 @@
 package com.example.agencyphase2.model.repository
 
 import com.example.agencyphase2.model.pojo.create_client.CreateClientResponse
+import com.example.agencyphase2.model.pojo.get_clients.GetClientsResponse
 import com.example.agencyphase2.retrofit.ApiInterface
 import com.user.caregiver.toMultipartFormString
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +32,7 @@ class CreateClientRepository @Inject constructor(private val apiInterface: ApiIn
         age: String,
         gender: String,
         token: String
-    ): Flow<CreateClientResponse?> = flow{
+    ): Flow<GetClientsResponse?> = flow{
         emit(apiInterface.createClient(
             photo,
             email.toMultipartFormString(),

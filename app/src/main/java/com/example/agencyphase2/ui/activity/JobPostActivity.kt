@@ -1,10 +1,13 @@
 package com.example.agencyphase2.ui.activity
 
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
+import android.view.Window
+import android.view.WindowManager
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -58,7 +61,7 @@ class JobPostActivity : AppCompatActivity() {
     var zipcode_n: String = ""
     var building_n: String? = null
     var floor_n: String? = null
-    var country_n: String? = null
+    var client_id: Int? = null
 
     private val medicalHistoryList:MutableList<String> = mutableListOf()
     private val jobSkillList:MutableList<String> = mutableListOf()
@@ -115,12 +118,20 @@ class JobPostActivity : AppCompatActivity() {
             binding.genderAgeLay.root.gone()
         }
 
+        binding.showGenderAgeLay.imageView.setOnClickListener {
+            clientItem = null
+            genderAgeList = mutableListOf()
+            binding.addPatient.visible()
+            binding.genderAgeLay.root.gone()
+            binding.showAddPatient.visible()
+            binding.showGenderAgeLay.root.gone()
+        }
     }
 
     override fun onResume() {
-        super.onResume()
-
         if(clientItem != null){
+            Log.e("client", clientItem!!.toString())
+
             genderAgeList.add(
                 GenderAgeItemCountModel(
                     clientItem?.gender,
@@ -128,14 +139,27 @@ class JobPostActivity : AppCompatActivity() {
                     clientItem?.name,
                 )
             )
+            client_id = clientItem?.id
             binding.addPatient.gone()
+            binding.showAddPatient.gone()
             binding.genderAgeLay.root.visible()
+            binding.showGenderAgeLay.root.visible()
             binding.addressCard.visible()
             binding.showAddressCard.visible()
+            binding.showAddressDeleteIcon.gone()
+            binding.addressDeleteIcon.gone()
+
+
             binding.genderAgeLay.nameTv.text = clientItem?.name
             binding.genderAgeLay.ageTv.text = "age: ${clientItem?.age} years"
             binding.genderAgeLay.careTypeTv.text = careType
             binding.genderAgeLay.genderTv.text = clientItem?.gender
+
+            binding.showGenderAgeLay.nameTv.text = clientItem?.name
+            binding.showGenderAgeLay.ageTv.text = "age: ${clientItem?.age} years"
+            binding.showGenderAgeLay.careTypeTv.text = careType
+            binding.showGenderAgeLay.genderTv.text = clientItem?.gender
+
             place_name = clientItem?.short_address.toString()
             lat = clientItem?.lat.toString()
             lang = clientItem?.long.toString()
@@ -159,7 +183,16 @@ class JobPostActivity : AppCompatActivity() {
                 binding.buildingTv.text = building_n+", "+floor_n
                 binding.showBuildingTv.text = building_n+", "+floor_n
             }
+        }else{
+            binding.showAddPatient.visible()
+            binding.genderAgeLay.root.gone()
+            binding.showGenderAgeLay.root.gone()
+            binding.addressCard.gone()
+            binding.showAddressCard.gone()
         }
+
+        super.onResume()
+
     }
 
     private fun autocomplete(){
@@ -323,6 +356,7 @@ class JobPostActivity : AppCompatActivity() {
                 if(genderAgeList.isNotEmpty() && genderAgeList.size != 0){
                     binding.addPatient.gone()
                     binding.genderAgeLay.careTypeTv.text = careType.toString()
+                    binding.showGenderAgeLay.careTypeTv.text = careType
                 }else{
                     binding.addPatient.visible()
                 }
@@ -959,9 +993,7 @@ class JobPostActivity : AppCompatActivity() {
 
         binding.addPatient.setOnClickListener {
             //showPatientDetailsBottomSheet()
-
-            val intent = Intent(this, SearchClientActivity::class.java)
-            startActivity(intent)
+           showAddClientDialog()
         }
 
         binding.addressDeleteIcon.setOnClickListener {
@@ -977,37 +1009,45 @@ class JobPostActivity : AppCompatActivity() {
             val amount = binding.addAmountTxt.text.toString()
             val jobLoc = binding.fullAddressTv.text.toString()
             val job_desc = binding.jobDescTxt.text.toString()
+            hideSoftKeyboard()
 
             if(!job_title.isEmpty()){
                 if(!job_desc.isEmpty()){
                     if(!careType.isEmpty()){
-                        if(!start_date.isEmpty() && !end_date.isEmpty()){
-                            if(!startTime.isEmpty()){
-                                if(!endTime.isEmpty()){
-                                    if(!jobLoc.isEmpty()){
-                                        if(!amount.isEmpty()){
-                                            if(!street_n.isEmpty()){
-                                                /*fillGenderAgeRecycler(genderAgeList, binding.showGenderAgeRecycler)*/
-                                                binding.relativeLay1.gone()
-                                                binding.relativeLay3.gone()
-                                                binding.relativeLay2.visible()
+                        if(genderAgeList.isNotEmpty() && genderAgeList.size > 0){
+                            if(!start_date.isEmpty() && !end_date.isEmpty()){
+                                if(!startTime.isEmpty()){
+                                    if(!endTime.isEmpty()){
+                                        if(!jobLoc.isEmpty()){
+                                            if(!amount.isEmpty()){
+                                                if(amount.toDouble() != 0.00){
+                                                    if(!street_n.isEmpty()){
+                                                        binding.relativeLay1.gone()
+                                                        binding.relativeLay3.gone()
+                                                        binding.relativeLay2.visible()
+                                                    }else{
+                                                        Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }else{
+                                                    Toast.makeText(this,"Please provide a valid amount.",Toast.LENGTH_SHORT).show()
+                                                }
                                             }else{
-                                                Toast.makeText(this,"Please provide the address of this job.",Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
                                             }
                                         }else{
-                                            Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this,"Please provide job location.",Toast.LENGTH_SHORT).show()
                                         }
                                     }else{
-                                        Toast.makeText(this,"Please provide job location.",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
                                     }
                                 }else{
-                                    Toast.makeText(this,"Please select a end time for this job.",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
                                 }
                             }else{
-                                Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
                             }
                         }else{
-                            Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,"Please provide patient details.",Toast.LENGTH_SHORT).show()
                         }
                     }else{
                         Toast.makeText(this,"Please select a care type.",Toast.LENGTH_SHORT).show()
@@ -1147,54 +1187,57 @@ class JobPostActivity : AppCompatActivity() {
         binding.consLay1.setOnClickListener {
             /*val intent = Intent(this, SelectCareTypeActivity::class.java)
             startActivity(intent)*/
-            /*showCareTypeBottomSheet()*/
-
+            showCareTypeBottomSheet()
         }
 
         binding.showAddPatient.setOnClickListener {
-            showPatientDetailsBottomSheet()
+            /*showPatientDetailsBottomSheet()*/
+            showAddClientDialog()
         }
 
         binding.prevNextStepBtn.setOnClickListener {
 
-            /*if(!genderAgeList.isEmpty()){
-
-            }else{
-                Toast.makeText(this, "Please select a care type.", Toast.LENGTH_SHORT).show()
-            }*/
-
             if(!genderAgeList.isEmpty() && genderAgeList.size != 0){
-                if(isConnectedToInternet()){
-                    mPostJobViewModel.jobPost(
-                        binding.showJobTitleTxt.text.toString(),
-                        binding.showAddCareTypeHtv.text.toString(),
-                        genderAgeList,
-                        start_date,
-                        end_date,
-                        startTime,
-                        endTime,
-                        binding.showAmountTxt.text.toString(),
-                        binding.showFullAddressTv.text.toString(),
-                        binding.showJobDescTxt.text.toString(),
-                        medicalHistoryList,
-                        jobSkillList,
-                        otherReqList,
-                        checkList,
-                        place_name,
-                        lat,
-                        lang,
-                        street_n,
-                        city_n,
-                        state_n,
-                        zipcode_n,
-                        building_n,
-                        floor_n,
-                        "USA",
-                        accessToken
-                    )
-                    loader.show()
+                if(!street_n.isEmpty()){
+                    if(client_id != null){
+                        if(isConnectedToInternet()){
+                            mPostJobViewModel.jobPost(
+                                client_id!!,
+                                binding.showJobTitleTxt.text.toString(),
+                                binding.showAddCareTypeHtv.text.toString(),
+                                genderAgeList,
+                                start_date,
+                                end_date,
+                                startTime,
+                                endTime,
+                                binding.showAmountTxt.text.toString(),
+                                binding.showFullAddressTv.text.toString(),
+                                binding.showJobDescTxt.text.toString(),
+                                medicalHistoryList,
+                                jobSkillList,
+                                otherReqList,
+                                checkList,
+                                place_name,
+                                lat,
+                                lang,
+                                street_n,
+                                city_n,
+                                state_n,
+                                zipcode_n,
+                                building_n,
+                                floor_n,
+                                "USA",
+                                accessToken
+                            )
+                            loader.show()
+                        }else{
+                            Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(this, "Please select a patient.", Toast.LENGTH_SHORT).show()
+                    }
                 }else{
-                    Toast.makeText(this,"No internet connection.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please provide the address.", Toast.LENGTH_SHORT).show()
                 }
             }else{
                 Toast.makeText(this, "Please provide client details.", Toast.LENGTH_SHORT).show()
@@ -1255,8 +1298,36 @@ class JobPostActivity : AppCompatActivity() {
         }
     }
 
+    private fun showAddClientDialog(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(R.layout.add_client_option_dialog_layout)
+        val addClientRbg =  dialog.findViewById<RadioGroup>(R.id.add_client_rbg)
+        addClientRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.new_client -> {
+                    val intent = Intent(this, AddClientActivity::class.java)
+                    intent.putExtra("from", "job_post")
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
+                R.id.existing_client -> {
+                    val intent = Intent(this, SearchClientActivity::class.java)
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
+            }
+        })
+        dialog.show()
+        val window: Window? = dialog?.getWindow()
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+    }
+
     override fun onDestroy() {
         genderAgeList = mutableListOf()
+        clientItem = null
         super.onDestroy()
     }
 }

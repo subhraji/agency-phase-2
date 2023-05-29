@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.agencyphase2.model.pojo.create_client.CreateClientResponse
+import com.example.agencyphase2.model.pojo.get_clients.GetClientsResponse
 import com.example.agencyphase2.model.repository.CreateClientRepository
 import com.example.agencyphase2.model.repository.Outcome
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateClientViewModel @Inject constructor(private val repository: CreateClientRepository) : ViewModel() {
-    private var _response = MutableLiveData<Outcome<CreateClientResponse?>?>()
-    val response: LiveData<Outcome<CreateClientResponse?>?> = _response
+    private var _response = MutableLiveData<Outcome<GetClientsResponse?>?>()
+    val response: LiveData<Outcome<GetClientsResponse?>?> = _response
 
     fun createClient(
         photo: MultipartBody.Part?,

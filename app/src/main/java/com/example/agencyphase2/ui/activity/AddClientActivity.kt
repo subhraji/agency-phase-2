@@ -69,7 +69,7 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
     var zipcode_n = ""
     var building_n = ""
     var floor_n = ""
-    var country_n: String? = null
+    var from: String? = null
 
     private var imageUri: Uri? = null
     private var absolutePath: String? = null
@@ -79,6 +79,11 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
         super.onCreate(savedInstanceState)
         binding= ActivityAddClientBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val extras = intent.extras
+        if (extras != null) {
+            from = extras.getString("from").toString()
+        }
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
@@ -487,8 +492,17 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
-                        mCreateClientViewModel.navigationComplete()
-                        finish()
+                        if(outcome.data?.data != null && outcome.data?.data?.size!! > 0){
+
+                            if(from == "job_post"){
+                                JobPostActivity.clientItem = outcome.data!!.data[0]
+                                Log.e("client","here.. ${from}")
+                                finish()
+                            }else{
+                                Log.e("client","here too.. ${from}")
+                                finish()
+                            }
+                        }
                     }else{
                         Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
                     }
