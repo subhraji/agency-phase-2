@@ -16,10 +16,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.HomeViewPagerAdapter
 import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.ui.activity.AskLocationActivity
-import com.example.agencyphase2.ui.activity.JobPostActivity
-import com.example.agencyphase2.ui.activity.ProfileActivity
-import com.example.agencyphase2.ui.activity.SearchActivity
+import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetProfileViewModel
@@ -65,6 +62,11 @@ class HomeFragment : Fragment() {
 
         binding.dashSearchLay.setOnClickListener {
             val intent = Intent(requireActivity(), SearchActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.imageView1.setOnClickListener {
+            val intent = Intent(requireActivity(), ChatActivity::class.java)
             startActivity(intent)
         }
 

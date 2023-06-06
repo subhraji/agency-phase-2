@@ -102,6 +102,11 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
 
         //observer
         getUpcommingJobsObserve()
+
+        binding.chatCard.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun clickJobOverview(){
