@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.Target
 import com.example.agencyphase2.databinding.ItemChatMeBinding
 import com.example.agencyphase2.databinding.ItemChatOtherBinding
 import com.example.agencyphase2.model.pojo.chat.ChatModel
+import com.google.android.gms.cloudmessaging.CloudMessage
 import com.user.caregiver.gone
 
 class MessageListAdapter (private val messageList: MutableList<ChatModel>,
@@ -75,6 +76,16 @@ class MessageListAdapter (private val messageList: MutableList<ChatModel>,
 
     override fun getItemCount(): Int {
         return messageList.size
+    }
+
+    fun addMessage(message: ChatModel) {
+        messageList.add(message)
+        notifyItemInserted(messageList.size - 1)
+    }
+
+    fun addAllMessages(messages: List<ChatModel>) {
+        messageList.addAll(0, messages)
+        notifyItemRangeInserted(0, messages.size)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
