@@ -211,9 +211,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/care_completed_htv"
                         android:layout_alignStart="@+id/care_completed_htv"
+                        android:gravity="center_horizontal"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal"/>
+                        android:textStyle="bold" />
                 </RelativeLayout>
                 <View
                     android:layout_width="0.5dp"
