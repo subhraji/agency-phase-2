@@ -170,35 +170,39 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
                 if(validEmail){
                     if(validMobile){
                         if(validTax){
-                            try {
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    withContext(Dispatchers.Main) {
-                                        val file = File(absolutePath)
-                                        val compressedImageFile = Compressor.compress(this@RegistrationActivity, file)
-                                        val imagePart = createMultiPart("photo", compressedImageFile)
-                                        if(isConnectedToInternet()){
-                                            addBusinessInfoViewModel.addBusinessInfo(
-                                                imagePart,
-                                                binding.mobileNumberTxt.text.toString(),
-                                                binding.companyEmailTxt.text.toString(),
-                                                binding.taxNumberTxt.text.toString(),
-                                                street_n,
-                                                city_n,
-                                                state_n,
-                                                zipcode_n,
-                                                "USA",
-                                                accessToken
-                                            )
-                                            hideSoftKeyboard()
-                                            loader.show()
-                                        }else{
-                                            Toast.makeText(this@RegistrationActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
-                                        }
+                            if(!street_n.isEmpty()){
+                                try {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        withContext(Dispatchers.Main) {
+                                            val file = File(absolutePath)
+                                            val compressedImageFile = Compressor.compress(this@RegistrationActivity, file)
+                                            val imagePart = createMultiPart("photo", compressedImageFile)
+                                            if(isConnectedToInternet()){
+                                                addBusinessInfoViewModel.addBusinessInfo(
+                                                    imagePart,
+                                                    binding.mobileNumberTxt.text.toString(),
+                                                    binding.companyEmailTxt.text.toString(),
+                                                    binding.taxNumberTxt.text.toString(),
+                                                    street_n,
+                                                    city_n,
+                                                    state_n,
+                                                    zipcode_n,
+                                                    "USA",
+                                                    accessToken
+                                                )
+                                                hideSoftKeyboard()
+                                                loader.show()
+                                            }else{
+                                                Toast.makeText(this@RegistrationActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                                            }
 
+                                        }
                                     }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
                                 }
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                            }else{
+                                Toast.makeText(this,"Please provide the address",Toast.LENGTH_SHORT).show()
                             }
                         }else{
                             if(binding.taxNumberTxtLay.helperText == null) binding.taxNumberTxtLay.helperText = "required"
@@ -435,7 +439,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
 
         var streetVar = ""
         if(streetName.isEmpty() && streetNumber.isEmpty()){
-            streetVar = " "
+            streetVar = ""
         }else if(streetName.isEmpty() && streetNumber.isNotEmpty()){
             streetVar = streetNumber
         }else if(streetName.isNotEmpty() && streetNumber.isEmpty()){

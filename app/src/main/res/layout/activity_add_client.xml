@@ -328,7 +328,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Apartment name/number"
+                        android:text="Apartment name/floor number"
                         android:textColor="@color/text_grey"
                         android:textSize="13sp"
                         app:layout_constraintEnd_toEndOf="parent"

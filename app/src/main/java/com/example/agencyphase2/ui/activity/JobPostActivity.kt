@@ -594,6 +594,8 @@ class JobPostActivity : AppCompatActivity() {
                                 ){
                                     Toast.makeText(this,"Job duration should be more than 1 hour", Toast.LENGTH_LONG).show()
                                 }else{
+                                    end_date = ""
+                                    endTime = ""
                                     Toast.makeText(this,"Please check the end time", Toast.LENGTH_LONG).show()
                                 }
                             }
@@ -840,7 +842,6 @@ class JobPostActivity : AppCompatActivity() {
     ){
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.address_fill_bottomsheet_layout, null)
-
         val btnSave = view.findViewById<CardView>(R.id.save_address_btn)
         val btnClear = view.findViewById<ImageView>(R.id.clear_btn)
         val streetTxt = view.findViewById<EditText>(R.id.street_txt)
@@ -1044,7 +1045,7 @@ class JobPostActivity : AppCompatActivity() {
                                     Toast.makeText(this,"Please select a start time for this job.",Toast.LENGTH_SHORT).show()
                                 }
                             }else{
-                                Toast.makeText(this,"Please select a date for this job.",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,"Please select a date and time for this job.",Toast.LENGTH_SHORT).show()
                             }
                         }else{
                             Toast.makeText(this,"Please provide patient details.",Toast.LENGTH_SHORT).show()

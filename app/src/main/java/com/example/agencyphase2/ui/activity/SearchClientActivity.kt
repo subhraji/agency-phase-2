@@ -48,6 +48,9 @@ class SearchClientActivity : AppCompatActivity(), AddClientClickListener {
         //observe
         searchClientObserver()
 
+        mSearchClientViewModel.searchClient(accessToken,"")
+        binding.progressBar.visible()
+
         binding.clearBtn.setOnClickListener {
             setUpRecyclerView()
             binding.etSearch.text = null
