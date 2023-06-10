@@ -170,18 +170,29 @@ class JobPostActivity : AppCompatActivity() {
             building_n = clientItem?.appartment_or_unit.toString()
             floor_n = clientItem?.floor_no.toString()
 
+            Log.i("floor", "building => ${building_n} and floor => ${floor_n}")
+
             binding.fullAddressTv.text = place_name+", "+street_n+", "+city_n+", "+state_n+", "+zipcode_n
             binding.cityNameTv.text = city_n
             binding.streetTv.text = street_n
-            binding.buildingTv.text = building_n
 
             binding.showFullAddressTv.text = place_name+", "+street_n+", "+city_n+", "+state_n+", "+zipcode_n
             binding.showCityNameTv.text = city_n
             binding.showStreetTv.text = street_n
-            binding.showBuildingTv.text = building_n
-            if(floor_n?.isNotEmpty() == true){
-                binding.buildingTv.text = building_n+", "+floor_n
-                binding.showBuildingTv.text = building_n+", "+floor_n
+            if(building_n == "null"){
+                binding.buildingTv.text = " "
+                binding.showBuildingTv.text = " "
+            }else{
+
+                if (floor_n == "null"){
+
+                    binding.buildingTv.text = building_n
+                    binding.showBuildingTv.text = building_n
+                }else{
+
+                    binding.buildingTv.text = building_n+", "+floor_n
+                    binding.showBuildingTv.text = building_n+", "+floor_n
+                }
             }
         }else{
             binding.showAddPatient.visible()
@@ -1033,7 +1044,7 @@ class JobPostActivity : AppCompatActivity() {
                                                     Toast.makeText(this,"Please provide a valid amount.",Toast.LENGTH_SHORT).show()
                                                 }
                                             }else{
-                                                Toast.makeText(this,"Please type a remittance.",Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(this,"Please enter remittance.",Toast.LENGTH_SHORT).show()
                                             }
                                         }else{
                                             Toast.makeText(this,"Please provide job location.",Toast.LENGTH_SHORT).show()
