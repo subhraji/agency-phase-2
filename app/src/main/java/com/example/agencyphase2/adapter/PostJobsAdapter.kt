@@ -52,7 +52,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
 
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
-                careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
+                careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
                 dateHtv.text = data?.start_date.toString()
                 hourHtv.text = data?.start_time+" - "+data?.end_time

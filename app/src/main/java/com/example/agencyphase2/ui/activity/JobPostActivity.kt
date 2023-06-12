@@ -170,8 +170,6 @@ class JobPostActivity : AppCompatActivity() {
             building_n = clientItem?.appartment_or_unit.toString()
             floor_n = clientItem?.floor_no.toString()
 
-            Log.i("floor", "building => ${building_n} and floor => ${floor_n}")
-
             binding.fullAddressTv.text = place_name+", "+street_n+", "+city_n+", "+state_n+", "+zipcode_n
             binding.cityNameTv.text = city_n
             binding.streetTv.text = street_n
@@ -1313,8 +1311,8 @@ class JobPostActivity : AppCompatActivity() {
     private fun showAddClientDialog(){
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(R.layout.add_client_option_dialog_layout)
         val addClientRbg =  dialog.findViewById<RadioGroup>(R.id.add_client_rbg)
         addClientRbg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->

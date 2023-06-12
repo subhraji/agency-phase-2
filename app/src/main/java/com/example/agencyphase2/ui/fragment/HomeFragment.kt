@@ -66,8 +66,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.imageView1.setOnClickListener {
-            val intent = Intent(requireActivity(), ChatActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(requireActivity(), ChatActivity::class.java)
+            startActivity(intent)*/
         }
 
         //observer

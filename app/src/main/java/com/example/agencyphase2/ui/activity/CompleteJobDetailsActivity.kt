@@ -154,7 +154,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
     }
 
     private fun showReviewDialog(){
-        val dialog = BottomSheetDialog(this)
+        val dialog = BottomSheetDialog(this, R.style.DialogStyle)
         val view = layoutInflater.inflate(R.layout.add_review_bottomsheet_layout, null)
 
         val submit = view.findViewById<TextView>(R.id.submit_btn)
@@ -224,7 +224,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                             binding.dateHtv.text = outcome.data!!.data[0].start_date.toString()+" to "+outcome.data!!.data[0].end_date.toString()
                             binding.timeTv.text = outcome.data!!.data[0].start_time.toString()+" - "+outcome.data!!.data[0].end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
-                            binding.personCountTv.text = outcome.data!!.data[0].care_items.size.toString()+" "+outcome.data!!.data[0].care_type
+                            binding.personCountTv.text = outcome.data!!.data[0].care_type
                             binding.locTv.text = outcome.data!!.data[0].address.toString()
                             user_id = outcome.data!!.data[0].job_accepted_by.user_id.toString()
 

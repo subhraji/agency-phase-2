@@ -117,7 +117,7 @@ class IncompleteJobDetailsActivity : AppCompatActivity() {
                             binding.dateHtv.text = outcome.data!!.data.start_date.toString()+" to "+outcome.data!!.data.end_date.toString()
                             binding.timeTv.text = outcome.data!!.data.start_time.toString()+" - "+outcome.data!!.data.end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data.amount.toString()
-                            binding.personCountTv.text = outcome.data!!.data.care_items.size.toString()+" "+outcome.data!!.data.care_type
+                            binding.personCountTv.text = outcome.data!!.data.care_type
                             binding.locTv.text = outcome.data!!.data.address.toString()
 
                             var gen = ""
