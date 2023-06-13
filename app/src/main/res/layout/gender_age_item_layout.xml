@@ -57,5 +57,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:padding="5dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_cancel_fill0_wght400_grad0_opsz48"/>
+        android:src="@drawable/ic_outline_cancel_24"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

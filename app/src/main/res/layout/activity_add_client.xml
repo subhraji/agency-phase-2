@@ -288,7 +288,7 @@
                         android:id="@+id/address_delete_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_cancel_fill0_wght400_grad0_opsz48"
+                        android:src="@drawable/ic_outline_cancel_24"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

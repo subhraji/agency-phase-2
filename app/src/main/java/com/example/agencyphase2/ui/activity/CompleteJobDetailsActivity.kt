@@ -148,6 +148,10 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         })
 
+        binding.jobActivities.setOnClickListener {
+            val intent = Intent(this,JobActivitiesActivity::class.java)
+            startActivity(intent)
+        }
 
         //observer
         getCompletedJobsObserve()
