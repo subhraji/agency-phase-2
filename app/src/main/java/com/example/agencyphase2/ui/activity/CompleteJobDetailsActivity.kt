@@ -95,6 +95,11 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.chatCard.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.profileCard.setOnClickListener {
             /*val intent = Intent(this,CareGiverProfileActivity::class.java)
             intent.putExtra("job_id", id.toString())

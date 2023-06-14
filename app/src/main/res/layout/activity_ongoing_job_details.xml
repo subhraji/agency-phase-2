@@ -443,6 +443,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/check_list_recycler"
                     android:layout_width="match_parent"
@@ -471,7 +472,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/theme_blue"
+        app:cardBackgroundColor="@color/black"
         android:layout_above="@+id/profile_card">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chat_img"
