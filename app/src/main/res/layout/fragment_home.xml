@@ -79,7 +79,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:layout_toRightOf="@+id/search_icon_image_view"
-                    android:text="Search job"
+                    android:text="Search post job"
                     android:textSize="15sp" />
             </RelativeLayout>
 

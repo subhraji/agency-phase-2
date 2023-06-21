@@ -583,13 +583,7 @@ class JobPostActivity : AppCompatActivity() {
                                     binding.dateTimeBtn.gone()
                                     binding.dateTimeLay.visible()
                                     dialog.dismiss()
-
-                                    Log.i("time", "\n start => ${startDate}, ${startTime} \n end => ${endDate}, ${endTime} \n diff => ${getDurationHour(
-                                        startDate+" "+startTime,
-                                        endDate+" "+endTime
-                                    ).toString()}")
-
-
+                                    binding.addAmountTxt.showKeyboard()
                                 }else{
                                     Toast.makeText(this,"Job duration can not be more than 24 hour.", Toast.LENGTH_LONG).show()
                                 }
