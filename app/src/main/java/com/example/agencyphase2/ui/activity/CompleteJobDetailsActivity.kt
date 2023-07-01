@@ -97,6 +97,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         binding.chatCard.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("caregiver_id",user_id.toString())
             startActivity(intent)
         }
 

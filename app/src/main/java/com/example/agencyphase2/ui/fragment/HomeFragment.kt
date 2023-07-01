@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
 
     private val mGetProfileViewModel: GetProfileViewModel by viewModels()
     private lateinit var accessToken: String
-    private var mSocket: Socket? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,19 +78,6 @@ class HomeFragment : Fragment() {
         //observer
         getProfileObserver()
 
-
-        //socket......
-        try {
-            mSocket = IO.socket("https://891b-2405-201-a805-1a07-85b3-27a4-601a-d8fd.ngrok-free.app")
-        } catch (e: URISyntaxException) {
-            e.printStackTrace()
-            Log.d("test_msg","socket error => ${e.message}")
-        }
-        mSocket?.on("test-msg", onNewMessage);
-        mSocket?.connect()
-        Log.d("socket_connect", "socket => ${mSocket?.connected()}")
-
-        attemptSend()
     }
 
     override fun onResume() {
@@ -105,26 +91,6 @@ class HomeFragment : Fragment() {
         setUpTabLayoutWithViewPager()
     }
 
-    private fun attemptSend() {
-        val message: String = "android connected"
-        mSocket!!.emit("test-msg", message)
-    }
-
-    private val onNewMessage: Emitter.Listener = object : Emitter.Listener {
-        override fun call(vararg args: Any) {
-            activity!!.runOnUiThread(Runnable {
-                val data = args[0] as JSONObject
-                val msg: String
-                try {
-                    msg = data.getString("hello")
-                } catch (e: JSONException) {
-                    return@Runnable
-                }
-
-                Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
-            })
-        }
-    }
 
     private fun setUpTabLayoutWithViewPager() {
         binding.viewPager.adapter = HomeViewPagerAdapter(this)
@@ -191,7 +157,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mSocket!!.disconnect()
     }
 
 }
