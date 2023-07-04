@@ -55,6 +55,8 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
     private var id: Int = 0
     private var pageNumber = 1
     private var user_id: String? = null
+    private var caregiver_name: String? = null
+    private var caregiver_photo: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +100,8 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         binding.chatCard.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("caregiver_id",user_id.toString())
+            intent.putExtra("name",caregiver_name.toString())
+            intent.putExtra("photo",caregiver_photo.toString())
             startActivity(intent)
         }
 
@@ -237,6 +241,8 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                             binding.personCountTv.text = outcome.data!!.data[0].care_type
                             binding.locTv.text = outcome.data!!.data[0].address.toString()
                             user_id = outcome.data!!.data[0].job_accepted_by.user_id.toString()
+                            caregiver_name = outcome.data!!.data[0].job_accepted_by.name.toString()
+                            caregiver_photo = outcome.data!!.data[0].job_accepted_by.photo.toString()
 
                             var gen = ""
                             for(i in outcome.data!!.data[0].care_items){

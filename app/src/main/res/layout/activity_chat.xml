@@ -30,17 +30,16 @@
                 android:layout_toRightOf="@+id/chat_frg_back_arrow"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"/>
+
             <TextView
                 android:id="@+id/chat_frg_phone_no_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/user_img"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:text="Jhon methew"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                />
+                android:layout_toRightOf="@+id/user_img"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
 
         </RelativeLayout>
 
