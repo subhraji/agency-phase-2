@@ -23,12 +23,16 @@ import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.example.agencyphase2.ui.activity.RegistrationActivity
 import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.utils.SocketHelper
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -45,6 +49,11 @@ class MainActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
+
+        //socket connect
+        /*CoroutineScope(Dispatchers.IO).launch {
+            SocketHelper.initSocket()
+        }*/
 
         binding.bottomNavigation.itemIconTintList=null
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
@@ -188,4 +197,9 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //SocketHelper.mSocket!!.disconnect()
+    }
 }

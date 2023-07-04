@@ -5,5 +5,6 @@ data class GetOtpResponse (
     val http_status_code: String,
     val message: String,
     val success: Boolean,
-    val token: String
+    val token: String,
+    val verified_user_id: String
 )

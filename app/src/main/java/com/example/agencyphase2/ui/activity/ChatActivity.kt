@@ -12,11 +12,17 @@ import com.example.agencyphase2.model.pojo.chat.ChatModel
 import com.example.agencyphase2.model.pojo.chat.ChatRequest
 import com.example.agencyphase2.model.pojo.chat.Data
 import com.example.agencyphase2.utils.Constants
+import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.utils.SocketHelper
 import com.google.gson.Gson
 import com.user.caregiver.hideSoftKeyboard
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import java.net.URISyntaxException
@@ -28,6 +34,8 @@ class ChatActivity : AppCompatActivity() {
     private var mSocket: Socket? = null
     val list: MutableList<ChatModel> = mutableListOf()
     private lateinit var caregiver_id: String
+    private lateinit var userId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityChatBinding.inflate(layoutInflater)
@@ -37,6 +45,8 @@ class ChatActivity : AppCompatActivity() {
         if (extras != null) {
             caregiver_id = intent?.getStringExtra("caregiver_id").toString()
         }
+
+        userId = PrefManager.getUserId().toString()
 
         binding.chatFrgBackArrow.setOnClickListener {
             finish()
@@ -69,6 +79,7 @@ class ChatActivity : AppCompatActivity() {
                 val currentThreadTimeMillis = System.currentTimeMillis()
                 val sendMsg = ChatRequest(
                     messageText,
+                    PrefManager.getUserId().toString(),
                     caregiver_id,
                     currentThreadTimeMillis.toString(),
                     "",
@@ -79,7 +90,9 @@ class ChatActivity : AppCompatActivity() {
                 binding.textInput.text = null
             }
         }
-
+/*
+        CoroutineScope(Dispatchers.IO).launch {}
+*/
         initSocket()
     }
 
@@ -91,6 +104,10 @@ class ChatActivity : AppCompatActivity() {
         }
         mSocket?.on("receiveMessage", onNewMessage);
         mSocket?.connect()
+
+        //delay(10L)
+
+        mSocket!!.emit("signin", PrefManager.getUserId())
     }
 
     private fun attemptSend(message: ChatRequest) {

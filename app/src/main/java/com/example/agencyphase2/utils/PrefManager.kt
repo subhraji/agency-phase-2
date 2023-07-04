@@ -24,13 +24,6 @@ object PrefManager {
     const val ID = "id"
     const val USER_ID = "user_id"
     const val IS_LOGIN = "login"
-    const val IS_WHATS = "whatsOnTut"
-    const val IS_HOW = "howTut"
-    const val IS_CIRCLE = "circleTut"
-    const val IS_ON_BOARDING = "on_boardingTut"
-    const val IS_HOME = "homeTut"
-    const val CIRCLE_ID = "circle_id"
-
 
 
     fun getString(key: String): String? {
@@ -109,8 +102,8 @@ object PrefManager {
     fun getLogInStatus(): Boolean? {
         return getBoolean(IS_LOGIN)
     }
-    fun getUserId(): Int? {
-        return getInt(USER_ID)
+    fun getUserId(): String? {
+        return getString(USER_ID)
     }
 
 
@@ -130,7 +123,7 @@ object PrefManager {
     fun setLogInStatus(loginStatus: Boolean) {
         putBoolean(IS_LOGIN, loginStatus)
     }
-    fun setUserId(userId: Int) {
-        putInt(USER_ID, userId)
+    fun setUserId(userId: String) {
+        putString(USER_ID, userId)
     }
 }
