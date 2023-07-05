@@ -87,7 +87,6 @@ class ChatActivity : AppCompatActivity() {
                     true
                 )
 
-                val currentThreadTimeMillis = System.currentTimeMillis()
                 val sendMsg = ChatRequest(
                     messageText,
                     PrefManager.getUserId().toString(),
@@ -100,11 +99,10 @@ class ChatActivity : AppCompatActivity() {
 
                 mMessageAdapter.addMessage(message)
                 binding.textInput.text = null
+                scrollToLast()
             }
         }
-/*
-        CoroutineScope(Dispatchers.IO).launch {}
-*/
+
         initSocket()
     }
 
@@ -156,6 +154,7 @@ class ChatActivity : AppCompatActivity() {
                             false
                         )
                         mMessageAdapter.addMessage(chat)
+                        scrollToLast()
                     }else{
                         val chat = ChatModel(
                             msg,
@@ -164,6 +163,7 @@ class ChatActivity : AppCompatActivity() {
                             false
                         )
                         mMessageAdapter.addMessage(chat)
+                        scrollToLast()
                     }
 
                 } catch (e: JSONException) {
@@ -185,6 +185,10 @@ class ChatActivity : AppCompatActivity() {
             layoutManager = gridLayoutManager
             adapter = mMessageAdapter
         }
+    }
+
+    private fun scrollToLast(){
+        binding.chatRecycler.scrollToPosition((binding.chatRecycler.adapter?.itemCount ?: 1) - 1)
     }
 
     override fun onDestroy() {
