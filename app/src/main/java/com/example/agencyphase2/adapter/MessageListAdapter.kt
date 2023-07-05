@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.bumptech.glide.Glide
+import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ItemChatMeBinding
 import com.example.agencyphase2.databinding.ItemChatOtherBinding
 import com.example.agencyphase2.model.pojo.chat.ChatModel
 import com.example.agencyphase2.model.pojo.chat.Data
+import com.example.agencyphase2.utils.Constants
 import com.user.caregiver.gone
+import com.user.caregiver.visible
 
 class MessageListAdapter (private val messageList: MutableList<ChatModel>,
                           private val context: Context
@@ -94,6 +98,7 @@ class MessageListAdapter (private val messageList: MutableList<ChatModel>,
                 chatImgViewMe.gone()
                 imageProgressMe.gone()
                 textChatMessageMe.text = data.msg
+                textChatTimestampMe.text = data.time
             }
         }
     }
@@ -101,9 +106,19 @@ class MessageListAdapter (private val messageList: MutableList<ChatModel>,
     private class ReceivedMessageHolder(private val itemBinding: ItemChatOtherBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: ChatModel, context: Context, holder: RecyclerView.ViewHolder, position: Int) {
             itemBinding.apply {
-                chatImgViewOther.gone()
                 imageProgressOther.gone()
+                if(!data.image.isEmpty() && data.image != null){
+                    chatImgViewOther.visible()
+                    Glide.with(context)
+                        .load(Constants.PUBLIC_URL+data?.image) // image url
+                        .placeholder(R.color.color_grey) // any placeholder to load at start
+                        .centerCrop()
+                        .into(chatImgViewOther)
+                }else{
+                    chatImgViewOther.gone()
+                }
                 textChatMessageOther.text = data.msg
+                textGchatTimestampOther.text = data.time
             }
         }
     }

@@ -26,6 +26,8 @@ import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import java.net.URISyntaxException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ChatActivity : AppCompatActivity() {
@@ -80,6 +82,8 @@ class ChatActivity : AppCompatActivity() {
 
                 val message = ChatModel(
                     messageText,
+                    "",
+                    getCurrentTime(),
                     true
                 )
 
@@ -88,7 +92,7 @@ class ChatActivity : AppCompatActivity() {
                     messageText,
                     PrefManager.getUserId().toString(),
                     caregiver_id,
-                    currentThreadTimeMillis.toString(),
+                    getCurrentTime(),
                     "",
                     accessToken
                 )
@@ -132,8 +136,9 @@ class ChatActivity : AppCompatActivity() {
         override fun call(vararg args: Any) {
             this@ChatActivity.runOnUiThread(Runnable {
                 val data = args[0] as JSONObject
-                val username: String
+                var image: String? = null
                 val msg: String
+                val time: String
                 val gson = Gson()
 
                 try {
@@ -141,12 +146,25 @@ class ChatActivity : AppCompatActivity() {
                     val messageData = data.getJSONObject("chatResponse")
                     val message = Gson().fromJson(messageData.toString(), Data::class.java)
                     msg = message.msg
-
-                    val chat = ChatModel(
-                        msg,
-                        false
-                    )
-                    mMessageAdapter.addMessage(chat)
+                    image = message.image
+                    time = message.time
+                    if(!image.isEmpty() && image != null){
+                        val chat = ChatModel(
+                            msg,
+                            image,
+                            time,
+                            false
+                        )
+                        mMessageAdapter.addMessage(chat)
+                    }else{
+                        val chat = ChatModel(
+                            msg,
+                            "",
+                            time,
+                            false
+                        )
+                        mMessageAdapter.addMessage(chat)
+                    }
 
                 } catch (e: JSONException) {
                     return@Runnable
@@ -154,6 +172,11 @@ class ChatActivity : AppCompatActivity() {
 
             })
         }
+    }
+
+    private fun getCurrentTime(): String{
+        val sdf = SimpleDateFormat("hh:mm a")
+        return sdf.format(Date())
     }
 
     private fun fillChatRecycler() {
