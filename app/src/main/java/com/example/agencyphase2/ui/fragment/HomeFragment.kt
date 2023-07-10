@@ -61,18 +61,13 @@ class HomeFragment : Fragment() {
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
 
         binding.userImageView.setOnClickListener {
-            val intent = Intent(requireActivity(), ProfileActivity::class.java)
+            val intent = Intent(requireActivity(), ChatListActivity::class.java)
             startActivity(intent)
         }
 
         binding.dashSearchLay.setOnClickListener {
             val intent = Intent(requireActivity(), SearchActivity::class.java)
             startActivity(intent)
-        }
-
-        binding.imageView1.setOnClickListener {
-            /*val intent = Intent(requireActivity(), ChatActivity::class.java)
-            startActivity(intent)*/
         }
 
         //observer
@@ -113,11 +108,11 @@ class HomeFragment : Fragment() {
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
 
-                        if(outcome.data!!.data != null){
+                        /*if(outcome.data!!.data != null){
                             Glide.with(requireActivity()).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                                 .placeholder(R.color.color_grey)
                                 .into(binding.userImageView)
-                        }
+                        }*/
 
                         binding.numberTv3.text = outcome.data?.data?.job_count.toString()
                         binding.numberTv1.text = outcome.data?.data?.rating_count.toString()

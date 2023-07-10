@@ -2,6 +2,7 @@ package com.example.agencyphase2.ui.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -15,7 +16,9 @@ import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.utils.SocketHelper
 import com.google.gson.Gson
+import com.user.caregiver.gone
 import com.user.caregiver.hideSoftKeyboard
+import com.user.caregiver.visible
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -54,6 +57,7 @@ class ChatActivity : AppCompatActivity() {
             Glide.with(this).load(Constants.PUBLIC_URL+photo)
                 .placeholder(R.color.color_grey)
                 .into(binding.userImg)
+            binding.chatWithTv.text = "Chat with ${name}"
         }
 
         //get token
@@ -67,11 +71,9 @@ class ChatActivity : AppCompatActivity() {
 
         mMessageAdapter = MessageListAdapter(mutableListOf(), this)
 
-        /*list.add(ChatModel("hello how are you?", true))
-        list.add(ChatModel("Hey long time no see, i am fine, what about you?", false))
-        list.add(ChatModel("Are you ok?", true))*/
         fillChatRecycler()
-        //mMessageAdapter.addAllMessages(list)
+
+        isMsgAvailAble()
 
         binding.chatBtnSend.setOnClickListener {
             hideSoftKeyboard()
@@ -100,10 +102,19 @@ class ChatActivity : AppCompatActivity() {
                 mMessageAdapter.addMessage(message)
                 binding.textInput.text = null
                 scrollToLast()
+                isMsgAvailAble()
             }
         }
 
         initSocket()
+    }
+
+    private fun isMsgAvailAble() {
+        if(mMessageAdapter.itemCount == 0){
+            binding.chatWithCard.visible()
+        }else{
+            binding.chatWithCard.gone()
+        }
     }
 
     private fun initSocket(){
@@ -137,10 +148,8 @@ class ChatActivity : AppCompatActivity() {
                 var image: String? = null
                 val msg: String
                 val time: String
-                val gson = Gson()
 
                 try {
-                    //msg = data.getString("msg")
                     val messageData = data.getJSONObject("chatResponse")
                     val message = Gson().fromJson(messageData.toString(), Data::class.java)
                     msg = message.msg
@@ -164,6 +173,7 @@ class ChatActivity : AppCompatActivity() {
                         )
                         mMessageAdapter.addMessage(chat)
                         scrollToLast()
+                        isMsgAvailAble()
                     }
 
                 } catch (e: JSONException) {
