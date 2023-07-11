@@ -205,4 +205,8 @@ class ChatActivity : AppCompatActivity() {
         super.onDestroy()
         mSocket!!.disconnect()
     }
+
+    private fun printArray(){
+        var array: Array<String> = arrayOf("1","2","3")
+    }
 }

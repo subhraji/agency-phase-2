@@ -210,7 +210,7 @@ class EmailVerificationActivity : AppCompatActivity() {
                             PrefManager.setKeyAuthToken(it)
                             PrefManager.setUserFullName(name)
                             PrefManager.setLogInStatus(true)
-                            PrefManager.setUserId(outcome.data?.verified_user_id.toString())
+                            PrefManager.setUserId(outcome.data?.data.toString())
                             val intent = Intent(this, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
