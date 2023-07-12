@@ -111,6 +111,7 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
             intent.putExtra("caregiver_id",user_id.toString())
             intent.putExtra("name",caregiver_name.toString())
             intent.putExtra("photo",caregiver_photo.toString())
+            intent.putExtra("job_id",id.toString())
             startActivity(intent)
         }
     }

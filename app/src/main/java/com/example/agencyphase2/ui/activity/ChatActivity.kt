@@ -11,6 +11,7 @@ import com.example.agencyphase2.adapter.MessageListAdapter
 import com.example.agencyphase2.databinding.ActivityChatBinding
 import com.example.agencyphase2.model.pojo.chat.ChatModel
 import com.example.agencyphase2.model.pojo.chat.ChatRequest
+import com.example.agencyphase2.model.pojo.chat.ChatSeenRequested
 import com.example.agencyphase2.model.pojo.chat.Data
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
@@ -38,6 +39,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var mMessageAdapter: MessageListAdapter
     private var mSocket: Socket? = null
     val list: MutableList<ChatModel> = mutableListOf()
+    private var job_id: String? = null
+
     private lateinit var caregiver_id: String
     private lateinit var userId: String
     private lateinit var accessToken: String
@@ -52,6 +55,7 @@ class ChatActivity : AppCompatActivity() {
             caregiver_id = intent?.getStringExtra("caregiver_id").toString()
             val name = intent?.getStringExtra("name")
             val photo = intent?.getStringExtra("photo")
+            job_id = intent?.getStringExtra("job_id")
 
             binding.chatFrgPhoneNoTxt.text = name
             Glide.with(this).load(Constants.PUBLIC_URL+photo)
@@ -89,12 +93,16 @@ class ChatActivity : AppCompatActivity() {
                     true
                 )
 
+                val currentThreadTimeMillis = System.currentTimeMillis()
+                val msgUuid = currentThreadTimeMillis.toString()
                 val sendMsg = ChatRequest(
                     messageText,
                     PrefManager.getUserId().toString(),
                     caregiver_id,
                     getCurrentTime(),
                     "",
+                    msgUuid,
+                    job_id!!,
                     accessToken
                 )
                 attemptSend(sendMsg)
@@ -124,6 +132,7 @@ class ChatActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         mSocket?.on("receiveMessage", onNewMessage);
+        mSocket?.on("messageAck", ackStatusListener);
         mSocket?.connect()
 
         //delay(10L)
@@ -139,9 +148,16 @@ class ChatActivity : AppCompatActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+    }
 
-        Log.e("check_id", "chat => "+caregiver_id.toString())
-
+    private fun attemptSendSeen(request: ChatSeenRequested) {
+        val gson = Gson()
+        try {
+            val obj = JSONObject(gson.toJson(request))
+            mSocket!!.emit("isMessageSeen", obj)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
     }
 
     private val onNewMessage: Emitter.Listener = object : Emitter.Listener {
@@ -178,14 +194,34 @@ class ChatActivity : AppCompatActivity() {
                         mMessageAdapter.addMessage(chat)
                         scrollToLast()
                         isMsgAvailAble()
+
+                        val sendSeen = ChatSeenRequested(
+                            message.messageId,
+                            caregiver_id
+                        )
+                        attemptSendSeen(sendSeen)
                     }
-
-                    Toast.makeText(this@ChatActivity,msg.toString(),Toast.LENGTH_SHORT).show()
-
                 } catch (e: JSONException) {
                     return@Runnable
                 }
 
+            })
+        }
+    }
+
+    private val ackStatusListener: Emitter.Listener = object : Emitter.Listener {
+        override fun call(vararg args: Any) {
+            this@ChatActivity.runOnUiThread(Runnable {
+                val data = args[0] as JSONObject
+                try {
+                    /*val messageData = data.getJSONObject("chatResponse")
+                    val message = Gson().fromJson(messageData.toString(), Data::class.java)*/
+                    val msgId = data.getString("messageId")
+                    val seenStatus = data.getString("messageSeen")
+                    Toast.makeText(this@ChatActivity, "seen => ${msgId}", Toast.LENGTH_SHORT).show()
+                } catch (e: JSONException) {
+                    return@Runnable
+                }
             })
         }
     }
@@ -209,9 +245,5 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-    }
-
-    private fun printArray(){
-        var array: Array<String> = arrayOf("1","2","3")
     }
 }
