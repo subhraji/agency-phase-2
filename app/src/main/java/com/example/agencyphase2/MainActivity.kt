@@ -19,20 +19,30 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.agencyphase2.databinding.ActivityMainBinding
+import com.example.agencyphase2.model.pojo.chat.ChatModel
+import com.example.agencyphase2.model.pojo.chat.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.example.agencyphase2.ui.activity.RegistrationActivity
+import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.utils.SocketHelper
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
 import dagger.hilt.android.AndroidEntryPoint
+import io.socket.client.IO
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
+import java.net.URISyntaxException
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -42,6 +52,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var accessToken: String
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
+    private var mSocket: Socket? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -49,11 +61,6 @@ class MainActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
-
-        //socket connect
-        /*CoroutineScope(Dispatchers.IO).launch {
-            SocketHelper.initSocket()
-        }*/
 
         binding.bottomNavigation.itemIconTintList=null
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
@@ -76,6 +83,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        initSocket()
     }
 
     //notification subscribe
@@ -197,9 +206,41 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun initSocket(){
+        try {
+            mSocket = IO.socket(Constants.NODE_URL)
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+        mSocket?.on("receiveMessage", onNewMessage);
+        mSocket?.connect()
+
+        //delay(10L)
+
+        mSocket!!.emit("signin", PrefManager.getUserId())
+    }
+
+    private val onNewMessage: Emitter.Listener = object : Emitter.Listener {
+        override fun call(vararg args: Any) {
+            this@MainActivity.runOnUiThread(Runnable {
+                val data = args[0] as JSONObject
+                val msg: String
+                try {
+                    val messageData = data.getJSONObject("chatResponse")
+                    val message = Gson().fromJson(messageData.toString(), Data::class.java)
+                    msg = message.msg
+
+                    Toast.makeText(this@MainActivity,msg.toString(),Toast.LENGTH_SHORT).show()
+                } catch (e: JSONException) {
+                    return@Runnable
+                }
+
+            })
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        //SocketHelper.mSocket!!.disconnect()
+        mSocket!!.disconnect()
     }
 }

@@ -139,6 +139,9 @@ class ChatActivity : AppCompatActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+
+        Log.e("check_id", "chat => "+caregiver_id.toString())
+
     }
 
     private val onNewMessage: Emitter.Listener = object : Emitter.Listener {
@@ -164,6 +167,7 @@ class ChatActivity : AppCompatActivity() {
                         )
                         mMessageAdapter.addMessage(chat)
                         scrollToLast()
+                        isMsgAvailAble()
                     }else{
                         val chat = ChatModel(
                             msg,
@@ -175,6 +179,8 @@ class ChatActivity : AppCompatActivity() {
                         scrollToLast()
                         isMsgAvailAble()
                     }
+
+                    Toast.makeText(this@ChatActivity,msg.toString(),Toast.LENGTH_SHORT).show()
 
                 } catch (e: JSONException) {
                     return@Runnable
@@ -203,7 +209,6 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mSocket!!.disconnect()
     }
 
     private fun printArray(){
