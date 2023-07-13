@@ -89,10 +89,11 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/sent_mark_img"
+                    android:id="@+id/sent_mark_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="sent"
+                    android:text="sending..."
+                    android:textSize="10sp"
                     android:textColor="@color/white"
                     android:layout_marginStart="7dp"
                     />

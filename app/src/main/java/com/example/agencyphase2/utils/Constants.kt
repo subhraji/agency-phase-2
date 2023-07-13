@@ -14,7 +14,7 @@ object Constants {
     const val PUBLIC_URL = "http://134.122.119.7/"*/
 
     //Node
-    //const val NODE_URL = "http://134.209.119.88"
-    const val NODE_URL = "https://b736-2401-4900-1c3b-9907-513d-44d3-d35f-3da1.ngrok-free.app"
+    const val NODE_URL = "http://134.209.119.88"
+    //const val NODE_URL = "https://b736-2401-4900-1c3b-9907-513d-44d3-d35f-3da1.ngrok-free.app"
 
 }

@@ -85,16 +85,10 @@ class ChatActivity : AppCompatActivity() {
             if (messageText.isEmpty()) {
                 binding.textInput.error = "message cannot be empty"
             }else{
-
-                val message = ChatModel(
-                    messageText,
-                    "",
-                    getCurrentTime(),
-                    true
-                )
-
                 val currentThreadTimeMillis = System.currentTimeMillis()
                 val msgUuid = currentThreadTimeMillis.toString()
+
+                //send chat msg
                 val sendMsg = ChatRequest(
                     messageText,
                     PrefManager.getUserId().toString(),
@@ -107,6 +101,14 @@ class ChatActivity : AppCompatActivity() {
                 )
                 attemptSend(sendMsg)
 
+                //save chat msg on list to show on recyclerview
+                val message = ChatModel(
+                    msgUuid,
+                    messageText,
+                    "",
+                    getCurrentTime(),
+                    true
+                )
                 mMessageAdapter.addMessage(message)
                 binding.textInput.text = null
                 scrollToLast()
@@ -176,6 +178,7 @@ class ChatActivity : AppCompatActivity() {
                     time = message.time
                     if(!image.isEmpty() && image != null){
                         val chat = ChatModel(
+                            message.messageId,
                             msg,
                             image,
                             time,
@@ -186,21 +189,25 @@ class ChatActivity : AppCompatActivity() {
                         isMsgAvailAble()
                     }else{
                         val chat = ChatModel(
+                            message.messageId,
                             msg,
                             "",
                             time,
                             false
                         )
                         mMessageAdapter.addMessage(chat)
+
                         scrollToLast()
                         isMsgAvailAble()
-
-                        val sendSeen = ChatSeenRequested(
-                            message.messageId,
-                            caregiver_id
-                        )
-                        attemptSendSeen(sendSeen)
                     }
+
+                    //send seen ack
+                    val sendSeen = ChatSeenRequested(
+                        message.messageId,
+                        caregiver_id
+                    )
+                    attemptSendSeen(sendSeen)
+
                 } catch (e: JSONException) {
                     return@Runnable
                 }
@@ -214,10 +221,9 @@ class ChatActivity : AppCompatActivity() {
             this@ChatActivity.runOnUiThread(Runnable {
                 val data = args[0] as JSONObject
                 try {
-                    /*val messageData = data.getJSONObject("chatResponse")
-                    val message = Gson().fromJson(messageData.toString(), Data::class.java)*/
                     val msgId = data.getString("messageId")
                     val seenStatus = data.getString("messageSeen")
+                    mMessageAdapter.updateSeen(msgId)
                     Toast.makeText(this@ChatActivity, "seen => ${msgId}", Toast.LENGTH_SHORT).show()
                 } catch (e: JSONException) {
                     return@Runnable
