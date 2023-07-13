@@ -138,7 +138,6 @@ class ChatActivity : AppCompatActivity() {
         mSocket?.connect()
 
         //delay(10L)
-
         mSocket!!.emit("signin", PrefManager.getUserId())
     }
 
