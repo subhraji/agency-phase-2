@@ -3,6 +3,7 @@ package com.example.agencyphase2.ui.activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -13,27 +14,26 @@ import com.example.agencyphase2.model.pojo.chat.ChatModel
 import com.example.agencyphase2.model.pojo.chat.ChatRequest
 import com.example.agencyphase2.model.pojo.chat.ChatSeenRequested
 import com.example.agencyphase2.model.pojo.chat.Data
+import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.utils.SocketHelper
+import com.example.agencyphase2.viewmodel.GetAllChatViewModel
 import com.google.gson.Gson
 import com.user.caregiver.gone
 import com.user.caregiver.hideSoftKeyboard
+import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.visible
+import dagger.hilt.android.AndroidEntryPoint
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
     private lateinit var mMessageAdapter: MessageListAdapter
@@ -41,9 +41,12 @@ class ChatActivity : AppCompatActivity() {
     val list: MutableList<ChatModel> = mutableListOf()
     private var job_id: String? = null
 
+    private val mGetAllChatViewModel: GetAllChatViewModel by viewModels()
+
     private lateinit var caregiver_id: String
     private lateinit var userId: String
     private lateinit var accessToken: String
+    private var page_no = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +69,20 @@ class ChatActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
+        binding.progressBar.gone()
+
+        if(isConnectedToInternet()){
+            binding.chatRecycler.gone()
+            binding.chatShimmerView.startShimmer()
+            binding.progressBar.visible()
+            binding.chatBtnSend.gone()
+            mGetAllChatViewModel.getAllChat(accessToken,job_id!!.toInt(),page_no)
+        }else{
+            Toast.makeText(this,"Oops!! No internet connection", Toast.LENGTH_SHORT).show()
+        }
+
+        //observe
+        getAllChatObserve()
 
         userId = PrefManager.getUserId().toString()
 
@@ -103,12 +120,15 @@ class ChatActivity : AppCompatActivity() {
 
                 //save chat msg on list to show on recyclerview
                 val message = ChatModel(
+                    "",
+                    0,
                     msgUuid,
                     messageText,
-                    "",
-                    getCurrentTime(),
-                    true
+                    PrefManager.getUserId().toString(),
+                    caregiver_id.toString(),
+                    getCurrentTime()
                 )
+                message.isSender = true
                 mMessageAdapter.addMessage(message)
                 binding.textInput.text = null
                 scrollToLast()
@@ -177,23 +197,29 @@ class ChatActivity : AppCompatActivity() {
                     time = message.time
                     if(!image.isEmpty() && image != null){
                         val chat = ChatModel(
+                            message.image,
+                            0,
                             message.messageId,
                             msg,
-                            image,
-                            time,
-                            false
+                            message.targetId,
+                            message.userId,
+                            time
                         )
+                        chat.isSender = false
                         mMessageAdapter.addMessage(chat)
                         scrollToLast()
                         isMsgAvailAble()
                     }else{
                         val chat = ChatModel(
+                            "",
+                            0,
                             message.messageId,
                             msg,
-                            "",
-                            time,
-                            false
+                            message.targetId,
+                            message.userId,
+                            time
                         )
+                        chat.isSender = false
                         mMessageAdapter.addMessage(chat)
 
                         scrollToLast()
@@ -245,6 +271,45 @@ class ChatActivity : AppCompatActivity() {
 
     private fun scrollToLast(){
         binding.chatRecycler.scrollToPosition((binding.chatRecycler.adapter?.itemCount ?: 1) - 1)
+    }
+
+    private fun getAllChatObserve(){
+        mGetAllChatViewModel.response.observe(this, androidx.lifecycle.Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    binding.progressBar.gone()
+                    binding.chatBtnSend.visible()
+                    if(outcome.data?.success == true){
+                        binding.chatShimmerView.stopShimmer()
+                        binding.chatShimmerView.gone()
+
+                        if(outcome.data?.chatModel != null && outcome.data?.chatModel?.size != 0){
+                            binding.chatRecycler.visible()
+                            val revResult = outcome.data?.chatModel!!.reversed()
+                            for (msg in revResult){
+                                msg.isSender = msg.userId.toString() == PrefManager.getUserId().toString()
+                                msg.isSeen = msg.is_message_seen == 1
+                            }
+                            mMessageAdapter.addAllMessages(revResult)
+                            binding.chatWithTv.gone()
+                            scrollToLast()
+                        }else{
+                            binding.chatRecycler.gone()
+                        }
+                        mGetAllChatViewModel.navigationComplete()
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.gone()
+                    binding.chatBtnSend.visible()
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
     }
 
     override fun onDestroy() {

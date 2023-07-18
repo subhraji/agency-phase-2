@@ -19,14 +19,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.agencyphase2.databinding.ActivityMainBinding
-import com.example.agencyphase2.model.pojo.chat.ChatModel
 import com.example.agencyphase2.model.pojo.chat.Data
 import com.example.agencyphase2.model.repository.Outcome
 import com.example.agencyphase2.ui.activity.JobPostActivity
 import com.example.agencyphase2.ui.activity.RegistrationActivity
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
-import com.example.agencyphase2.utils.SocketHelper
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -37,9 +35,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import java.net.URISyntaxException

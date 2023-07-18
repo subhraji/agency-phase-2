@@ -12,6 +12,7 @@ import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneRe
 import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneResponse
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordResponse
+import com.example.agencyphase2.model.pojo.chat.GetChatResponse
 import com.example.agencyphase2.model.pojo.close_job.CloseJobRequest
 import com.example.agencyphase2.model.pojo.close_job.CloseJobResponse
 import com.example.agencyphase2.model.pojo.create_client.CreateClientResponse
@@ -303,4 +304,11 @@ interface ApiInterface {
         @Body body: DeleteClientRequest?,
         @Header("Authorization") token: String
     ): DeleteClientResponse?
+
+    @GET("chatting/get-chats")
+    suspend fun getAllChat(
+        @Header("Authorization") token: String,
+        @Query("job_id") id: Int?,
+        @Query("page") page: Int?,
+    ): GetChatResponse?
 }

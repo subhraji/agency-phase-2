@@ -10,7 +10,6 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ItemChatMeBinding
 import com.example.agencyphase2.databinding.ItemChatOtherBinding
 import com.example.agencyphase2.model.pojo.chat.ChatModel
-import com.example.agencyphase2.model.pojo.chat.Data
 import com.example.agencyphase2.utils.Constants
 import com.user.caregiver.gone
 import com.user.caregiver.visible
@@ -93,7 +92,7 @@ class MessageListAdapter (private val messageList: MutableList<ChatModel>,
     }
 
     fun updateSeen(msgUuid:String){
-        messageList?.find { it.msgUuid == msgUuid }?.isSeen = true
+        messageList?.find { it.messageId == msgUuid }?.isSeen = true
         notifyDataSetChanged()
     }
 
