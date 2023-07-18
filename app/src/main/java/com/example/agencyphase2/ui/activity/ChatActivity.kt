@@ -71,6 +71,13 @@ class ChatActivity : AppCompatActivity() {
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
         binding.progressBar.gone()
 
+        binding.loadChatBtn.setOnClickListener {
+            page_no++
+            binding.loadChatBtn.gone()
+            binding.loadChatProgressBar.visible()
+            mGetAllChatViewModel.getAllChat(accessToken,job_id!!.toInt(),page_no)
+        }
+
         if(isConnectedToInternet()){
             binding.chatRecycler.gone()
             binding.chatShimmerView.startShimmer()
@@ -279,6 +286,7 @@ class ChatActivity : AppCompatActivity() {
                 is Outcome.Success ->{
                     binding.progressBar.gone()
                     binding.chatBtnSend.visible()
+                    binding.loadChatProgressBar.gone()
                     if(outcome.data?.success == true){
                         binding.chatShimmerView.stopShimmer()
                         binding.chatShimmerView.gone()
@@ -294,7 +302,12 @@ class ChatActivity : AppCompatActivity() {
                             binding.chatWithTv.gone()
                             scrollToLast()
                         }else{
-                            binding.chatRecycler.gone()
+                            if(page_no == 1){
+                                binding.chatRecycler.gone()
+                                binding.loadChatBtn.gone()
+                            }else{
+                                binding.loadChatBtn.gone()
+                            }
                         }
                         mGetAllChatViewModel.navigationComplete()
                     }else{
