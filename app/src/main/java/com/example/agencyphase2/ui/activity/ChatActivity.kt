@@ -69,7 +69,6 @@ class ChatActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
-        binding.progressBar.gone()
 
         binding.loadChatBtn.setOnClickListener {
             page_no++
@@ -81,7 +80,6 @@ class ChatActivity : AppCompatActivity() {
         if(isConnectedToInternet()){
             binding.chatRecycler.gone()
             binding.chatShimmerView.startShimmer()
-            binding.progressBar.visible()
             binding.chatBtnSend.gone()
             mGetAllChatViewModel.getAllChat(accessToken,job_id!!.toInt(),page_no)
         }else{
@@ -284,7 +282,6 @@ class ChatActivity : AppCompatActivity() {
         mGetAllChatViewModel.response.observe(this, androidx.lifecycle.Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
-                    binding.progressBar.gone()
                     binding.chatBtnSend.visible()
                     binding.loadChatProgressBar.gone()
                     if(outcome.data?.success == true){
@@ -316,7 +313,6 @@ class ChatActivity : AppCompatActivity() {
                 }
                 is Outcome.Failure<*> -> {
                     Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
-                    binding.progressBar.gone()
                     binding.chatBtnSend.visible()
                     outcome.e.printStackTrace()
                     Log.i("status",outcome.e.cause.toString())
