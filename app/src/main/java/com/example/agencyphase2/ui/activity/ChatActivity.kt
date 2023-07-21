@@ -78,9 +78,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         if(isConnectedToInternet()){
-            binding.chatRecycler.gone()
             binding.chatShimmerView.startShimmer()
-            binding.chatBtnSend.gone()
             mGetAllChatViewModel.getAllChat(accessToken,job_id!!.toInt(),page_no)
         }else{
             Toast.makeText(this,"Oops!! No internet connection", Toast.LENGTH_SHORT).show()
@@ -282,14 +280,14 @@ class ChatActivity : AppCompatActivity() {
         mGetAllChatViewModel.response.observe(this, androidx.lifecycle.Observer { outcome ->
             when(outcome){
                 is Outcome.Success ->{
-                    binding.chatBtnSend.visible()
                     binding.loadChatProgressBar.gone()
                     if(outcome.data?.success == true){
                         binding.chatShimmerView.stopShimmer()
                         binding.chatShimmerView.gone()
 
                         if(outcome.data?.chatModel != null && outcome.data?.chatModel?.size != 0){
-                            binding.chatRecycler.visible()
+                            binding.loadChatBtn.visible()
+
                             val revResult = outcome.data?.chatModel!!.reversed()
                             for (msg in revResult){
                                 msg.isSender = msg.userId.toString() == PrefManager.getUserId().toString()
@@ -300,7 +298,6 @@ class ChatActivity : AppCompatActivity() {
                             scrollToLast()
                         }else{
                             if(page_no == 1){
-                                binding.chatRecycler.gone()
                                 binding.loadChatBtn.gone()
                             }else{
                                 binding.loadChatBtn.gone()
