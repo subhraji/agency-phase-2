@@ -61,8 +61,8 @@ class HomeFragment : Fragment() {
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
 
         binding.userImageView.setOnClickListener {
-            val intent = Intent(requireActivity(), ChatListActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(requireActivity(), ChatListActivity::class.java)
+            startActivity(intent)*/
         }
 
         binding.dashSearchLay.setOnClickListener {

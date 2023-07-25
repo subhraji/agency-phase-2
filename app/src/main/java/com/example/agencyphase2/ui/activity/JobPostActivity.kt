@@ -34,6 +34,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.user.caregiver.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notify
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -1071,6 +1072,9 @@ class JobPostActivity : AppCompatActivity() {
             if(!medicalHistoryTxt.isEmpty()){
                 medicalHistoryList.add(medicalHistoryTxt)
                 fillMedicalRecycler(medicalHistoryList, binding.medicalRecycler)
+                binding.medicalRecycler.adapter?.notifyItemInserted(medicalHistoryList.size -1)
+                binding.medicalRecycler.scrollToPosition((binding.medicalRecycler.adapter?.itemCount ?: 1) - 1)
+
                 binding.medicalHistoryTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -1083,6 +1087,9 @@ class JobPostActivity : AppCompatActivity() {
             if(!jobSkillTxt.isEmpty()){
                 jobSkillList.add(jobSkillTxt)
                 fillJobSkillRecycler(jobSkillList, binding.expertiseRecycler)
+                binding.expertiseRecycler.adapter?.notifyItemInserted(jobSkillList.size -1)
+                binding.expertiseRecycler.scrollToPosition((binding.expertiseRecycler.adapter?.itemCount ?: 1) - 1)
+
                 binding.jobSkillTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -1095,6 +1102,9 @@ class JobPostActivity : AppCompatActivity() {
             if(!otherReqTxt.isEmpty()){
                 otherReqList.add(otherReqTxt)
                 fillOtherRequirementRecycler(otherReqList, binding.otherRequirementRecycler)
+                binding.otherRequirementRecycler.adapter?.notifyItemInserted(otherReqList.size -1)
+                binding.otherRequirementRecycler.scrollToPosition((binding.otherRequirementRecycler.adapter?.itemCount ?: 1) - 1)
+
                 binding.otherRequirementsTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()
@@ -1107,6 +1117,9 @@ class JobPostActivity : AppCompatActivity() {
             if(!checkListTxt.isEmpty()){
                 checkList.add(checkListTxt)
                 fillCheckListRecycler(checkList, binding.checklistRecycler)
+                binding.checklistRecycler.adapter?.notifyItemInserted(checkList.size -1)
+                binding.checklistRecycler.scrollToPosition((binding.checklistRecycler.adapter?.itemCount ?: 1) - 1)
+
                 binding.checklistTxt.text = null
             }else{
                 Toast.makeText(this,"Please give your input on the text field.",Toast.LENGTH_SHORT).show()

@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
 
     private var mSocket: Socket? = null
 
+    companion object{
+        var resume: Boolean? = false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -80,6 +84,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         initSocket()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(resume == true){
+            setUpBottomNav()
+            resume = false
+        }
+    }
+
+    private fun setUpBottomNav(){
+        binding.bottomNavigation.itemIconTintList=null
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigation.setSelectedItemId(R.id.homeFragment)
     }
 
     //notification subscribe

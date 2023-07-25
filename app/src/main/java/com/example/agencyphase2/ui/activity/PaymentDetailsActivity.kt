@@ -215,6 +215,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         Toast.makeText(this,"Job posted successfully.", Toast.LENGTH_SHORT).show()
+                        MainActivity.resume = true
                         if(from == "activity"){
                             finish()
                         }else{
@@ -246,7 +247,7 @@ class PaymentDetailsActivity : AppCompatActivity() {
         builder.setTitle("Payment Failed")
         builder.setMessage("Your Payment has been failed, Please try again to post the job.")
         builder.setIcon(android.R.drawable.ic_dialog_alert)
-        builder.setPositiveButton("Ok, thank you"){dialogInterface, which ->
+        builder.setPositiveButton("Ok"){dialogInterface, which ->
             mUpdatePaymentStatusViewModel.updatePaymentStatus(
                 job_id!!.toInt(),
                 (amount!!.toFloat()+percentage!!).toDouble(),
