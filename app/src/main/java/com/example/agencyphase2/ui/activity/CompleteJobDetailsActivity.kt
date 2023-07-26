@@ -103,6 +103,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
             intent.putExtra("name",caregiver_name.toString())
             intent.putExtra("photo",caregiver_photo.toString())
             intent.putExtra("job_id",id.toString())
+            intent.putExtra("status","completed")
             startActivity(intent)
         }
 

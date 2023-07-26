@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -40,6 +41,7 @@ class ChatActivity : AppCompatActivity() {
     private var mSocket: Socket? = null
     val list: MutableList<ChatModel> = mutableListOf()
     private var job_id: String? = null
+    private var job_status: String? = null
 
     private val mGetAllChatViewModel: GetAllChatViewModel by viewModels()
 
@@ -59,6 +61,7 @@ class ChatActivity : AppCompatActivity() {
             val name = intent?.getStringExtra("name")
             val photo = intent?.getStringExtra("photo")
             job_id = intent?.getStringExtra("job_id")
+            job_status = intent?.getStringExtra("status")
 
             binding.chatFrgPhoneNoTxt.text = name
             Glide.with(this).load(Constants.PUBLIC_URL+photo)
@@ -69,6 +72,18 @@ class ChatActivity : AppCompatActivity() {
 
         //get token
         accessToken = "Bearer "+PrefManager.getKeyAuthToken()
+
+        binding.infoBtn.setOnClickListener {
+            if(job_status == "completed"){
+                val intent = Intent(this, CompleteJobDetailsActivity::class.java)
+                intent.putExtra("id",job_id?.toInt())
+                startActivity(intent)
+            }else if(job_status == "ongoing"){
+                val intent = Intent(this, OngoingJobDetailsActivity::class.java)
+                intent.putExtra("id",job_id?.toInt())
+                startActivity(intent)
+            }
+        }
 
         binding.loadChatBtn.setOnClickListener {
             page_no++
