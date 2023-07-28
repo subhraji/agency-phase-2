@@ -134,7 +134,6 @@ class HomeFragment : Fragment() {
                             binding.numberTv2.text = numberString.toString()
                         }
 
-
                         mGetProfileViewModel.navigationComplete()
                     }else{
                         Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
