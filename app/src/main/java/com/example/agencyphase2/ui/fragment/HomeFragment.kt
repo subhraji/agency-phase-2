@@ -82,10 +82,8 @@ class HomeFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
-
         setUpTabLayoutWithViewPager()
     }
-
 
     private fun setUpTabLayoutWithViewPager() {
         binding.viewPager.adapter = HomeViewPagerAdapter(this)
@@ -100,6 +98,8 @@ class HomeFragment : Fragment() {
             binding.tabLayout.getTabAt(i)?.customView = textView
             textView.text = tabTitles[i]
         }
+
+        binding.tabLayout.getTabAt(0)?.select()
     }
 
     private fun getProfileObserver(){
