@@ -409,7 +409,11 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
     }
 
     private fun dispatchGalleryIntent() {
+       /* val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(gallery, PICK_IMAGE)*/
+
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        gallery.setType("image/*")
         startActivityForResult(gallery, PICK_IMAGE)
     }
 
@@ -504,6 +508,7 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
                         if(outcome.data?.data != null && outcome.data?.data?.size!! > 0){
 
                             if(from == "job_post"){
+                                JobPostActivity.clientItem = null
                                 JobPostActivity.clientItem = outcome.data!!.data[0]
                                 Log.e("client","here.. ${from}")
                                 finish()

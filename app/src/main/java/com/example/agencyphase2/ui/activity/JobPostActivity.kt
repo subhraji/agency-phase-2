@@ -132,7 +132,7 @@ class JobPostActivity : AppCompatActivity() {
     override fun onResume() {
         if(clientItem != null){
             Log.e("client", clientItem!!.toString())
-
+            genderAgeList = mutableListOf()
             genderAgeList.add(
                 GenderAgeItemCountModel(
                     clientItem?.gender,
