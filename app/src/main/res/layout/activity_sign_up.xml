@@ -81,7 +81,7 @@
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeColor="@color/white"
                     app:hintTextColor="@color/white"
-                    app:helperTextTextColor="@color/error_red"
+                    app:helperTextTextColor="@color/white"
                     app:boxStrokeWidthFocused="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -122,7 +122,7 @@
                     app:hintTextColor="@color/white"
                     app:boxStrokeWidthFocused="0dp"
                     android:layout_marginTop="10dp"
-                    app:helperTextTextColor="@color/error_red">
+                    app:helperTextTextColor="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/full_name_txt"
@@ -162,7 +162,7 @@
                     app:hintTextColor="@color/white"
                     app:boxStrokeWidthFocused="0dp"
                     android:layout_marginTop="10dp"
-                    app:helperTextTextColor="@color/error_red">
+                    app:helperTextTextColor="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_txt"
@@ -200,7 +200,7 @@
                     app:passwordToggleTint="@color/white"
                     app:boxStrokeWidthFocused="0dp"
                     android:layout_marginTop="10dp"
-                    app:helperTextTextColor="@color/error_red">
+                    app:helperTextTextColor="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_txt"
@@ -240,7 +240,7 @@
                     app:passwordToggleTint="@color/white"
                     app:boxStrokeWidthFocused="0dp"
                     android:layout_marginTop="10dp"
-                    app:helperTextTextColor="@color/error_red">
+                    app:helperTextTextColor="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/con_password_txt"
