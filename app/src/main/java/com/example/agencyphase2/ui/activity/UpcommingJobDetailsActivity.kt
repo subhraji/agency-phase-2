@@ -148,7 +148,7 @@ class UpcommingJobDetailsActivity : AppCompatActivity() {
                             var gen = ""
                             for(i in outcome.data!!.data[0].care_items){
                                 if(gen.isEmpty()){
-                                    gen = i.gender+": "+i.age
+                                    gen = i.patient_name+", "+i.gender+": "+i.age
                                 }else{
                                     gen = gen+", "+i.gender+": "+i.age
                                 }
