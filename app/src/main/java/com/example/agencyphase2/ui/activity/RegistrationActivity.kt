@@ -658,6 +658,7 @@ class RegistrationActivity : AppCompatActivity(), UploadDocListener, EditDeleteC
 
     private fun dispatchGalleryIntent() {
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        gallery.setType("image/*")
         startActivityForResult(gallery, PICK_IMAGE)
     }
 
