@@ -2,7 +2,6 @@ package com.example.agencyphase2.utils
 
 object Constants {
 
-
     const val BASE_URL = "http://peaceworc.com/api/agency/"
     const val PUBLIC_URL = "http://peaceworc.com/"
 
