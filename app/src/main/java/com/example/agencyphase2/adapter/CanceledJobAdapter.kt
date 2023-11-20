@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.CompleteJobsItemLayoutBinding
-import com.example.agencyphase2.model.pojo.get_canceled_job.Data
-import com.example.agencyphase2.ui.activity.CompleteJobDetailsActivity
+import com.example.agencyphase2.model.pojo.get_canceled_job.DataX
 import com.example.agencyphase2.ui.activity.IncompleteJobDetailsActivity
 import com.user.caregiver.gone
 
-class CanceledJobAdapter (private val itemList: List<Data>,
+class CanceledJobAdapter (private val itemList: List<DataX>,
                           private val context: Context
 ):
     RecyclerView.Adapter<CanceledJobAdapter.ViewHolder>() {
@@ -39,7 +38,7 @@ class CanceledJobAdapter (private val itemList: List<Data>,
     class ViewHolder(private val itemBinding: CompleteJobsItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         private lateinit var gen:String
-        fun bind(data: Data, context: Context) {
+        fun bind(data: DataX, context: Context) {
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
@@ -63,7 +62,7 @@ class CanceledJobAdapter (private val itemList: List<Data>,
                 }
                 ageTv.text = gen
 
-                statusTv.text = "Canceled Job"
+                statusTv.text = data?.status
 
                 statusTvLay.setBackgroundTintList(
                     ColorStateList.valueOf(context.resources.getColor(
