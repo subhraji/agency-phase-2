@@ -134,7 +134,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         binding.slideToCompleteBtn.onSlideToActAnimationEventListener = (object : SlideToActView.OnSlideToActAnimationEventListener{
             override fun onSlideCompleteAnimationEnded(view: SlideToActView) {
-                //Toast.makeText(this@CompleteJobDetailsActivity,"onSlideCompleteAnimationEnded",Toast.LENGTH_SHORT).show()
+                binding.slideToCompleteBtn.resetSlider()
                 if(isConnectedToInternet()){
                     mCloseJobViewModel.closeJob(
                         id.toString(),
@@ -180,25 +180,29 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         submit.setOnClickListener {
             val rating = ratingBar.rating.toString()
             val review = reviewTxt.text.toString()
-            if(!rating.isEmpty()){
-                if(!review.isEmpty()){
-                    mAddReviewViewModel.addReview(
-                        user_id.toString(),
-                        rating.toString(),
-                        review.toString(),
-                        accessToken
-                    )
-                    loader.show()
-                    dialog.dismiss()
-                    finish()
+            if(rating != "0.0"){
+                if(!rating.isEmpty()){
+                    if(!review.isEmpty()){
+                        mAddReviewViewModel.addReview(
+                            user_id.toString(),
+                            rating.toString(),
+                            review.toString(),
+                            accessToken
+                        )
+                        loader.show()
+                        dialog.dismiss()
+                        finish()
+                    }else{
+                        Toast.makeText(this,"Please provide your review.",Toast.LENGTH_SHORT).show()
+                    }
                 }else{
-                    Toast.makeText(this,"Please provide your review.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Rating is missing.",Toast.LENGTH_SHORT).show()
                 }
             }else{
                 Toast.makeText(this,"Rating is missing.",Toast.LENGTH_SHORT).show()
             }
         }
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
         dialog.setContentView(view)
         dialog.show()
     }
