@@ -58,6 +58,7 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                 rootLay.setOnClickListener {
                     val intent = Intent(context, CompleteJobDetailsActivity::class.java)
                     intent.putExtra("id",data?.job_id)
+                    intent.putExtra("status",data?.status)
                     context.startActivity(intent)
                 }
                 gen = ""

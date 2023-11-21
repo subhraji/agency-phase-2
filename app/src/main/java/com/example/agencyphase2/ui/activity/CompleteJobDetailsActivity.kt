@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.TextView
@@ -53,6 +54,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
     private var id: Int = 0
+    private var status: String? = null
     private var pageNumber = 1
     private var user_id: String? = null
     private var caregiver_name: String? = null
@@ -70,6 +72,16 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         val extras = intent.extras
         if (extras != null) {
             id = intent?.getIntExtra("id",0)!!
+            status = intent?.getStringExtra("status")!!
+        }
+        status?.let {
+            if(status == "Closed"){
+                binding.slideToCompleteBtn.visibility = View.INVISIBLE
+                binding.chatCard.visibility = View.INVISIBLE
+            }else{
+                binding.slideToCompleteBtn.visible()
+                binding.chatCard.visible()
+            }
         }
 
         binding.medicalRecycler.gone()
