@@ -18,5 +18,4 @@ object Constants {
 
     //Node
     const val NODE_URL = "http://134.209.119.88"
-
 }

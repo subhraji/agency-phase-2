@@ -33,6 +33,7 @@ import com.example.agencyphase2.model.pojo.get_clients.GetClientsResponse
 import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
+import com.example.agencyphase2.model.pojo.get_notifications.GetNotificationsResponse
 import com.example.agencyphase2.model.pojo.get_ongoing_job.GetOngoingJobsResponse
 import com.example.agencyphase2.model.pojo.get_post_job_details.GetPostJobDetailsResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
@@ -310,4 +311,9 @@ interface ApiInterface {
         @Query("job_id") id: Int?,
         @Query("page") page: Int?,
     ): GetChatResponse?
+
+    @GET("notification/unread-notification")
+    suspend fun getNotifications(
+        @Header("Authorization") token: String,
+    ): GetNotificationsResponse?
 }
