@@ -44,6 +44,8 @@ import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
+import com.example.agencyphase2.model.pojo.mark_read_notification.MarkReadNotificationRequest
+import com.example.agencyphase2.model.pojo.mark_read_notification.MarkReadNotificationResponse
 import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
 import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpRequest
 import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpResponse
@@ -316,4 +318,10 @@ interface ApiInterface {
     suspend fun getNotifications(
         @Header("Authorization") token: String,
     ): GetNotificationsResponse?
+
+    @POST("notification/mark-as-read")
+    suspend fun markReadNotification(
+        @Body body: MarkReadNotificationRequest?,
+        @Header("Authorization") token: String
+    ): MarkReadNotificationResponse?
 }

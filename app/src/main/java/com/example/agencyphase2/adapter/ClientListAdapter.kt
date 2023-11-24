@@ -49,7 +49,7 @@ class ClientListAdapter (private val itemList: MutableList<Data>,
                     .placeholder(R.color.color_grey)
                     .into(clientImg)
                 deleteBtn.setOnClickListener {
-                    editDeleteClickListener.onClick(it.rootView, data.id)
+                    editDeleteClickListener.onClick(it.rootView, data.client_id)
                 }
             }
         }

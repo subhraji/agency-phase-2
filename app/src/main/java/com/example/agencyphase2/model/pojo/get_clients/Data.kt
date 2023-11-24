@@ -10,6 +10,7 @@ data class Data(
     val email: String,
     val floor_no: String,
     val id: Int,
+    val client_id: Int,
     val lat: String,
     val long: String,
     val name: String,

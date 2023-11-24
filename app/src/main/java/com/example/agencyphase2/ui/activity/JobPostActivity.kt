@@ -140,7 +140,7 @@ class JobPostActivity : AppCompatActivity() {
                     clientItem?.name,
                 )
             )
-            client_id = clientItem?.id
+            client_id = clientItem?.client_id
             binding.addPatient.gone()
             binding.showAddPatient.gone()
             binding.genderAgeLay.root.visible()

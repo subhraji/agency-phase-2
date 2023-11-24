@@ -21,7 +21,6 @@
         android:textColor="@color/black"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:text="Job Completed"
         app:layout_constraintTop_toTopOf="@+id/notification_img"
         app:layout_constraintStart_toEndOf="@+id/notification_img"
         android:layout_marginStart="10dp"
@@ -34,5 +33,6 @@
         app:layout_constraintStart_toStartOf="@+id/title_tv"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="5dp"
-        android:text="Job number 2034 has been completed by Jhon Methew on 24th, Sept 12:00 PM."/>
+        android:maxLines="2"
+        android:ellipsize="end"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

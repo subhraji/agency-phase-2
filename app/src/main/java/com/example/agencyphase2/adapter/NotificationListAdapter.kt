@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.NotificationItemLayoutBinding
 import com.example.agencyphase2.model.pojo.TestModel
+import com.example.agencyphase2.model.pojo.get_notifications.Data
 
-class NotificationListAdapter (private val itemList: MutableList<TestModel>,
+class NotificationListAdapter (private val itemList: MutableList<Data>,
                                private val context: Context):
     RecyclerView.Adapter<NotificationListAdapter.ViewHolder>() {
 
@@ -33,8 +34,11 @@ class NotificationListAdapter (private val itemList: MutableList<TestModel>,
 
     class ViewHolder(private val itemBinding: NotificationItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(data: TestModel, context: Context) {
-            itemBinding.apply {}
+        fun bind(data: Data, context: Context) {
+            itemBinding.apply {
+                titleTv.text = data.type
+                contentTv.text = data.content
+            }
         }
     }
 }

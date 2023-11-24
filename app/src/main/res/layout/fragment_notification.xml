@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.NotificationFragment">
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/completed_jobs_shimmer_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <include layout="@layout/post_jobs_shimmer_lay" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notification_recycler"
         android:layout_width="match_parent"
@@ -13,5 +23,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/no_data_lottie"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:lottie_rawRes="@raw/no_data_lottie"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_centerInParent="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
