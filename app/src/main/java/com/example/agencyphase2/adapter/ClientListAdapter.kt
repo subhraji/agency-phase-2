@@ -46,7 +46,7 @@ class ClientListAdapter (private val itemList: MutableList<Data>,
                 emailTv.text = data.email.toString()
                 mobileTv.text = data.phone.toString()
                 Glide.with(context).load(Constants.PUBLIC_URL+ data.photo)
-                    .placeholder(R.color.color_grey)
+                    .placeholder(R.color.white)
                     .into(clientImg)
                 deleteBtn.setOnClickListener {
                     editDeleteClickListener.onClick(it.rootView, data.client_id)

@@ -4,11 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.NotificationItemLayoutBinding
 import com.example.agencyphase2.model.pojo.TestModel
 import com.example.agencyphase2.model.pojo.get_notifications.Data
+import com.example.agencyphase2.viewmodel.GetNotificationsViewModel
+import com.example.agencyphase2.viewmodel.MarkReadNotificationViewModel
 
 class NotificationListAdapter (private val itemList: MutableList<Data>,
                                private val context: Context):

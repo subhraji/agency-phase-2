@@ -137,5 +137,4 @@ class NotificationFragment : Fragment() {
         })
     }
 
-
 }

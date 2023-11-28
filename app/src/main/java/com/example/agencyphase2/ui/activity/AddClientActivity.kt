@@ -140,55 +140,72 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
                             if(!age.isEmpty()){
                                 if(!gender.isEmpty()){
                                     if(!job_address.isEmpty()){
-                                        if(absolutePath != null){
-                                            if(imageUri != null){
-                                                if(isConnectedToInternet()){
-                                                    try {
-                                                        CoroutineScope(Dispatchers.IO).launch {
-                                                            withContext(Dispatchers.Main) {
-                                                                val file = File(absolutePath)
-                                                                val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
-                                                                val imagePart = createMultiPart("photo", compressedImageFile)
-                                                                if(isConnectedToInternet()){
-                                                                    mCreateClientViewModel.createClient(
-                                                                        photo = imagePart,
-                                                                        email = binding.emailNameTxt.text.toString(),
-                                                                        name = binding.fullNameTxt.text.toString(),
-                                                                        phone = binding.mobileNameTxt.text.toString(),
-                                                                        address = job_address,
-                                                                        short_address = job_address,
-                                                                        street = street_n,
-                                                                        appartment_or_unit = building_n,
-                                                                        floor_no = floor_n,
-                                                                        city = city_n,
-                                                                        zip_code = zipcode_n,
-                                                                        state = state_n,
-                                                                        country = "USA",
-                                                                        lat = lat,
-                                                                        long = lang,
-                                                                        age = age,
-                                                                        gender = gender,
-                                                                        token = accessToken
-                                                                    )
-                                                                    hideSoftKeyboard()
-                                                                    loader.show()
-                                                                }else{
-                                                                    Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
-                                                                }
-
-                                                            }
+                                        if(imageUri != null && absolutePath != null){
+                                            try {
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    withContext(Dispatchers.Main) {
+                                                        val file = File(absolutePath)
+                                                        val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
+                                                        val imagePart = createMultiPart("photo", compressedImageFile)
+                                                        if(isConnectedToInternet()){
+                                                            mCreateClientViewModel.createClient(
+                                                                photo = imagePart,
+                                                                email = binding.emailNameTxt.text.toString(),
+                                                                name = binding.fullNameTxt.text.toString(),
+                                                                phone = binding.mobileNameTxt.text.toString(),
+                                                                address = job_address,
+                                                                short_address = job_address,
+                                                                street = street_n,
+                                                                appartment_or_unit = building_n,
+                                                                floor_no = floor_n,
+                                                                city = city_n,
+                                                                zip_code = zipcode_n,
+                                                                state = state_n,
+                                                                country = "USA",
+                                                                lat = lat,
+                                                                long = lang,
+                                                                age = age,
+                                                                gender = gender,
+                                                                token = accessToken
+                                                            )
+                                                            hideSoftKeyboard()
+                                                            loader.show()
+                                                        }else{
+                                                            Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
                                                         }
-                                                    } catch (e: Exception) {
-                                                        e.printStackTrace()
+
                                                     }
-                                                }else{
-                                                    Toast.makeText(this,"Oops!! No internet connection.", Toast.LENGTH_SHORT).show()
                                                 }
-                                            }else{
-                                                Toast.makeText(this,"please select a profile image.", Toast.LENGTH_SHORT).show()
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
                                             }
                                         }else{
-                                            Toast.makeText(this,"select profile image.", Toast.LENGTH_SHORT).show()
+                                            if(isConnectedToInternet()){
+                                                mCreateClientViewModel.createClient(
+                                                    photo = null,
+                                                    email = binding.emailNameTxt.text.toString(),
+                                                    name = binding.fullNameTxt.text.toString(),
+                                                    phone = binding.mobileNameTxt.text.toString(),
+                                                    address = job_address,
+                                                    short_address = job_address,
+                                                    street = street_n,
+                                                    appartment_or_unit = building_n,
+                                                    floor_no = floor_n,
+                                                    city = city_n,
+                                                    zip_code = zipcode_n,
+                                                    state = state_n,
+                                                    country = "USA",
+                                                    lat = lat,
+                                                    long = lang,
+                                                    age = age,
+                                                    gender = gender,
+                                                    token = accessToken
+                                                )
+                                                hideSoftKeyboard()
+                                                loader.show()
+                                            }else{
+                                                Toast.makeText(this,"Oops!! No internet connection.", Toast.LENGTH_SHORT).show()
+                                            }
                                         }
                                     }else{
                                         Toast.makeText(this,"Provide address.", Toast.LENGTH_SHORT).show()
