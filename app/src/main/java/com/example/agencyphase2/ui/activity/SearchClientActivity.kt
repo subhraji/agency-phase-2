@@ -120,6 +120,7 @@ class SearchClientActivity : AppCompatActivity(), AddClientClickListener {
 
     override fun onAddClick(view: View, data: Data) {
         JobPostActivity.clientItem = data
+        JobPostActivity.from = "search"
         finish()
     }
 

@@ -73,6 +73,7 @@ class JobPostActivity : AppCompatActivity() {
     companion object {
         var genderAgeList: MutableList<GenderAgeItemCountModel> = mutableListOf()
         var clientItem: Data? = null
+        var from = "";
     }
 
     private val mPostJobViewModel: PostJobViewModel by viewModels()
@@ -140,7 +141,11 @@ class JobPostActivity : AppCompatActivity() {
                     clientItem?.name,
                 )
             )
-            client_id = clientItem?.client_id
+            if(from == "search"){
+                client_id = clientItem?.id
+            }else{
+                client_id = clientItem?.client_id
+            }
             binding.addPatient.gone()
             binding.showAddPatient.gone()
             binding.genderAgeLay.root.visible()
@@ -1357,6 +1362,7 @@ class JobPostActivity : AppCompatActivity() {
     override fun onDestroy() {
         genderAgeList = mutableListOf()
         clientItem = null
+        from = ""
         super.onDestroy()
     }
 }

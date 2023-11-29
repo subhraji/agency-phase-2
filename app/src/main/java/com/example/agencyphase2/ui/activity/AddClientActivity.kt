@@ -526,8 +526,8 @@ class AddClientActivity : AppCompatActivity(), UploadDocListener {
 
                             if(from == "job_post"){
                                 JobPostActivity.clientItem = null
+                                JobPostActivity.from = ""
                                 JobPostActivity.clientItem = outcome.data!!.data[0]
-                                Log.e("client","here.. ${from}")
                                 finish()
                             }else{
                                 Log.e("client","here too.. ${from}")
