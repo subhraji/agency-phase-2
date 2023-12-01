@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         binding.jobPostBtn.setOnClickListener {
             if(isConnectedToInternet()){
                 mGetProfileCompletionStatusViewModel.getProfileCompletionStatus(accessToken)
-                loader = loadingDialog()
+                loader = loadingDialog(true)
                 loader.show()
             }else{
                 Toast.makeText(this,"No internet connection.", Toast.LENGTH_SHORT).show()

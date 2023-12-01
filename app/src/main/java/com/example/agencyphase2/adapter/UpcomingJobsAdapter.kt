@@ -12,6 +12,7 @@ import com.example.agencyphase2.databinding.UpcomingListItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_upcomming_jobs.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
 import com.example.agencyphase2.ui.activity.UpcommingJobDetailsActivity
+import com.user.caregiver.convertDate
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -58,7 +59,7 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = data?.start_date.toString()+"-"+data?.end_date.toString()
+                dateHtv.text = "${convertDate(data?.start_date)} - ${convertDate(data?.end_date)}"
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {

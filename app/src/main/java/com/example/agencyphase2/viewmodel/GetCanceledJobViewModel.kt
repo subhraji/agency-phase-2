@@ -19,9 +19,10 @@ class GetCanceledJobViewModel @Inject constructor(private val repository: GetCan
     val response: LiveData<Outcome<GetCanceledJobResponse?>?> = _response
 
     fun getCanceledJob(
-        token: String
+        token: String,
+        page_no: Int
     ) = viewModelScope.launch {
-        repository.getCanceledJob(token).onStart {
+        repository.getCanceledJob(token, page_no).onStart {
             _response.value = Outcome.loading(true)
         }.catch {
             _response.value = Outcome.Failure(it)

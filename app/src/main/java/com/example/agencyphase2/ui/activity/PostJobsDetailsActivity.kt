@@ -24,6 +24,7 @@ import com.example.agencyphase2.viewmodel.GetPostJobDetailsViewModel
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.user.caregiver.convertDate
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
@@ -178,7 +179,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data.status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data.title.toString()
                             binding.jobDescTv.text = outcome.data!!.data.description.toString()
-                            binding.dateHtv.text = outcome.data!!.data.start_date.toString()+" to "+outcome.data!!.data.end_date.toString()
+                            binding.dateHtv.text = convertDate(outcome.data!!.data.start_date) +" to "+ convertDate(outcome.data!!.data.end_date)
                             binding.timeTv.text = outcome.data!!.data.start_time.toString()+" - "+outcome.data!!.data.end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data.amount.toString()
                             binding.personCountTv.text = outcome.data!!.data.care_type

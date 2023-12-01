@@ -22,6 +22,7 @@ import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetOngoingJobViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.user.caregiver.convertDate
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.visible
@@ -151,7 +152,7 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data[0].status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data[0].title.toString()
                             binding.jobDescTv.text = outcome.data!!.data[0].description.toString()
-                            binding.dateHtv.text = outcome.data!!.data[0].start_date.toString()+" to "+outcome.data!!.data[0].end_date.toString()
+                            binding.dateHtv.text = convertDate(outcome.data!!.data[0].start_date) +" to "+ convertDate(outcome.data!!.data[0].end_date)
                             binding.timeTv.text = outcome.data!!.data[0].start_time.toString()+" - "+outcome.data!!.data[0].end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
                             binding.personCountTv.text = outcome.data!!.data[0].care_type

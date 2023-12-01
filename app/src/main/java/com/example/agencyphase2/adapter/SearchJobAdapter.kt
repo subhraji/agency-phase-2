@@ -12,6 +12,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.search_job.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
+import com.user.caregiver.convertDate
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -49,7 +50,7 @@ class SearchJobAdapter (private val itemList: MutableList<Data>,
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = data?.start_date.toString()
+                dateHtv.text = "${convertDate(data?.start_date)} to ${convertDate(data?.end_date)}"
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {

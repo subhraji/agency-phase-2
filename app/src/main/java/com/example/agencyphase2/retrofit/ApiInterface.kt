@@ -244,6 +244,7 @@ interface ApiInterface {
     @GET("job/canceled-job/get")
     suspend fun getCanceledJob(
         @Header("Authorization") token: String,
+        @Query("page") page: Int?
     ): GetCanceledJobResponse?
 
     @POST("job/closed-job/close")

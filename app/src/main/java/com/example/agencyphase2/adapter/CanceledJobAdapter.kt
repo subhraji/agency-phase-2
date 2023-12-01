@@ -12,7 +12,7 @@ import com.example.agencyphase2.model.pojo.get_canceled_job.DataX
 import com.example.agencyphase2.ui.activity.IncompleteJobDetailsActivity
 import com.user.caregiver.gone
 
-class CanceledJobAdapter (private val itemList: List<DataX>,
+class CanceledJobAdapter (private val itemList: MutableList<DataX>,
                           private val context: Context
 ):
     RecyclerView.Adapter<CanceledJobAdapter.ViewHolder>() {
@@ -29,7 +29,10 @@ class CanceledJobAdapter (private val itemList: List<DataX>,
     override fun getItemCount(): Int {
         return itemList.size
     }
-
+    fun add(jobs: List<DataX>) {
+        itemList.addAll(jobs)
+        notifyItemInserted(itemList.size-1)
+    }
     override fun onBindViewHolder(holder: CanceledJobAdapter.ViewHolder, position: Int) {
         val rowData = itemList[position]
         holder.bind(rowData, context)
