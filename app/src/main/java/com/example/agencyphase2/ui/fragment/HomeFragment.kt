@@ -122,14 +122,15 @@ class HomeFragment : Fragment() {
                             var number = outcome.data?.data?.revenue_count!!.toDouble()
 
                             if (Math.abs(number / 1000000) > 1) {
-                                numberString = (number / 1000000).toString() + "m";
+                                numberString = (number / 1000000).toString()
+                                numberString = numberString.substringBefore(".") + "m"
 
                             } else if (Math.abs(number / 1000) > 1) {
                                 numberString = (number / 1000).toString() + "k";
-
+                                numberString = numberString.substringBefore(".") + "k"
                             } else {
-                                numberString = number.toString();
-
+                                numberString = number.toString()
+                                numberString = numberString.substringBefore(".")
                             }
                             binding.numberTv2.text = numberString.toString()
                         }

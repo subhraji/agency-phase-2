@@ -88,6 +88,10 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                     statusTv.text = "Open \u00A0 \u00A0 \u00A0 Job "
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
+                }else if(data?.status == "Bidding Ended"){
+                    statusTv.text = "Bidding Ended"
+                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
+                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
                 }
 
                 timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
