@@ -94,12 +94,25 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
                 }
 
-                timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
-                    Duration.ofMinutes( getDurationHour(
-                        getCurrentDate(),
-                        parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
-                    ) )
-                ).toString()
+                val duration = getDurationHour(
+                    getCurrentDate(),
+                    parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                )
+
+                if(duration > 0){
+                    if(duration > 1440){
+                        timeLeftTv.text = "TIME LEFT : ${formatMinutesToHourMinute(duration)}"
+                    }else{
+                        timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
+                            Duration.ofMinutes( getDurationHour(
+                                getCurrentDate(),
+                                parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                            ) )
+                        ).toString()
+                    }
+                }else{
+                    timeLeftTv.text = "TIME LEFT : 00:00"
+                }
 
             }
         }
@@ -128,8 +141,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 val durationDay = difference_In_Days.toInt()
                 val durationHour = difference_In_Hours.toInt()
 
-                durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
-
+                durationTotalMin = (durationDay*24*60)+(durationHour*60)+difference_In_Minutes.toInt()
 
                 Log.d("dateTime","duration => "+
                         difference_In_Years.toString()+
@@ -174,6 +186,11 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
             }
             return str
         }
+        fun formatMinutesToHourMinute(minutes: Long): String {
+            val hours = minutes / 60
+            val remainingMinutes = minutes % 60
 
+            return String.format("%02d:%02d", hours, remainingMinutes)
+        }
     }
 }
