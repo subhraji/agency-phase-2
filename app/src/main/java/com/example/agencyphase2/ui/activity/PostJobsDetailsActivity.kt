@@ -303,7 +303,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
             val durationDay = difference_In_Days.toInt()
             val durationHour = difference_In_Hours.toInt()
 
-            durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
+            durationTotalMin = (durationDay*24*60)+(durationHour*60)+difference_In_Minutes.toInt()
         }
 
         // Catch the Exception
