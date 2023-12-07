@@ -19,6 +19,7 @@ import com.example.agencyphase2.databinding.FragmentNotificationBinding
 import com.example.agencyphase2.model.pojo.TestModel
 import com.example.agencyphase2.model.pojo.get_complete_jobs.Data
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.utils.DeleteNotificationClickListener
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetCompleteJobViewModel
 import com.example.agencyphase2.viewmodel.GetNotificationsViewModel
@@ -30,13 +31,14 @@ import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotificationFragment : Fragment() {
+class NotificationFragment : Fragment(), DeleteNotificationClickListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var accessToken: String
     private val mMarkReadNotificationViewModel: MarkReadNotificationViewModel by viewModels()
     private val mGetNotificationsViewModel: GetNotificationsViewModel by viewModels()
+    lateinit var adapter: NotificationListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,7 @@ class NotificationFragment : Fragment() {
     }
 
     override fun onResume() {
+        fillRecyclerView()
         binding.notificationRecycler.gone()
         binding.completedJobsShimmerView.visible()
         binding.completedJobsShimmerView.startShimmer()
@@ -77,14 +80,18 @@ class NotificationFragment : Fragment() {
         getNotificationsObserve()
     }
 
-    private fun fillRecyclerView(list: MutableList<com.example.agencyphase2.model.pojo.get_notifications.Data>) {
-        val linearlayoutManager = LinearLayoutManager(activity)
+    private fun fillRecyclerView() {
+        /*val linearlayoutManager = LinearLayoutManager(activity)
         binding.notificationRecycler.apply {
             layoutManager = linearlayoutManager
             setHasFixedSize(true)
             isFocusable = false
             adapter = NotificationListAdapter(list,requireActivity())
-        }
+        }*/
+        adapter = NotificationListAdapter(mutableListOf(), requireActivity(),this@NotificationFragment)
+        val layoutManager = LinearLayoutManager(requireActivity())
+        binding.notificationRecycler.layoutManager = layoutManager
+        binding.notificationRecycler.adapter = adapter
     }
 
     private fun markReadNotificationsObserve(){
@@ -117,8 +124,8 @@ class NotificationFragment : Fragment() {
                     if(outcome.data?.success == true){
                         if(outcome.data?.data != null && outcome.data?.data?.size != 0){
                             binding.notificationRecycler.visible()
-                            fillRecyclerView(outcome.data?.data!!.toMutableList())
                             binding.noDataLottie.gone()
+                            adapter.add(outcome.data?.data!!)
                         }else{
                             binding.noDataLottie.visible()
                         }
@@ -135,6 +142,15 @@ class NotificationFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun deleteClick(id: Int, pos: Int) {
+        if(requireActivity().isConnectedToInternet()){
+            mMarkReadNotificationViewModel.markReadNotification(id.toString(),accessToken)
+            adapter.remove(pos)
+        }else{
+            Toast.makeText(requireActivity(), "Oops! No internet connection.", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
