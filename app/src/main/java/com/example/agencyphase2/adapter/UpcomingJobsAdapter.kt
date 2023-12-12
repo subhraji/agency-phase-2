@@ -59,7 +59,7 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = "${convertDate(data?.start_date)} - ${convertDate(data?.end_date)}"
+                dateHtv.text = data?.start_date+" to "+data?.end_date
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
@@ -79,12 +79,22 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
 
                 statusTv.text = data.status.toString()
 
-                timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
-                    Duration.ofMinutes( getDurationHour(
-                        getCurrentDate(),
-                        parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
-                    ) )
-                ).toString()
+
+                val duration = getDurationHour(
+                    getCurrentDate(),
+                    parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                )
+
+                 if(duration > 0){
+                    timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
+                        Duration.ofMinutes( getDurationHour(
+                            getCurrentDate(),
+                            parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                        ) )
+                    ).toString()
+                }else{
+                    timeLeftTv.text = "TIME LEFT : 00:00"
+                }
             }
         }
 
@@ -144,7 +154,7 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
         }
 
         fun parseDateToddMMyyyy(time: String): String? {
-            val inputPattern = "yyyy-MM-dd h:mm a"
+            val inputPattern = "MM-dd-yyyy h:mm a"
             val outputPattern = "dd-MM-yyyy HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
             val outputFormat = SimpleDateFormat(outputPattern)
