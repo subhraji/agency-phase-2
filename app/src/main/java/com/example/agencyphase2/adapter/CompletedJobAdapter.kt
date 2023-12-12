@@ -52,7 +52,7 @@ class CompletedJobAdapter (private val itemList: List<Data>,
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = "${convertDate(data?.start_date)} to ${convertDate(data?.end_date)}"
+                dateHtv.text = "${data?.start_date} to ${data?.end_date}"
                 hourHtv.text = data?.start_time+" to "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
 

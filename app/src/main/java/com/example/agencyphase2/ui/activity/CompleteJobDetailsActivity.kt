@@ -254,7 +254,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data[0].status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data[0].title.toString()
                             binding.jobDescTv.text = outcome.data!!.data[0].description.toString()
-                            binding.dateHtv.text = convertDate(outcome.data!!.data[0].start_date)+" to "+convertDate(outcome.data!!.data[0].end_date)
+                            binding.dateHtv.text = outcome.data!!.data[0].start_date+" to "+outcome.data!!.data[0].end_date
                             binding.timeTv.text = outcome.data!!.data[0].start_time.toString()+" - "+outcome.data!!.data[0].end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
                             binding.personCountTv.text = outcome.data!!.data[0].care_type
