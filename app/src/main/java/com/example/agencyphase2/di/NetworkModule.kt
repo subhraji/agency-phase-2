@@ -1,10 +1,11 @@
 package com.example.agencyphase2.di
 
 import com.example.agencyphase2.BuildConfig
+import com.example.agencyphase2.di.qualifier.AppApiService
 import com.example.agencyphase2.di.qualifier.BaseUrl
+import com.example.agencyphase2.di.qualifier.PaymentApiService
 import com.example.agencyphase2.di.qualifier.PaymentBaseUrl
 import com.example.agencyphase2.retrofit.ApiInterface
-import com.example.agencyphase2.retrofit.PaymentService
 import com.example.agencyphase2.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -73,7 +74,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesPaymentAPI(@PaymentBaseUrl retrofit: Retrofit) : PaymentService {
-        return retrofit.create(PaymentService::class.java)
+    @PaymentApiService
+    fun providesPaymentAPI(@PaymentBaseUrl retrofit: Retrofit) : ApiInterface {
+        return retrofit.create(ApiInterface::class.java)
     }
 }

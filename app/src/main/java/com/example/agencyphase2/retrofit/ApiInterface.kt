@@ -31,10 +31,13 @@ import com.example.agencyphase2.model.pojo.get_canceled_job.GetCanceledJobRespon
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
 import com.example.agencyphase2.model.pojo.get_clients.GetClientsResponse
 import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
+import com.example.agencyphase2.model.pojo.get_customer_id.GetCustomerIdResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
+import com.example.agencyphase2.model.pojo.get_ephemeral_key.GetEphemeralKeyResponse
 import com.example.agencyphase2.model.pojo.get_notifications.GetNotificationsResponse
 import com.example.agencyphase2.model.pojo.get_ongoing_job.GetOngoingJobsResponse
+import com.example.agencyphase2.model.pojo.get_payment_intent.GetPaymentIntentResponse
 import com.example.agencyphase2.model.pojo.get_post_job_details.GetPostJobDetailsResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
 import com.example.agencyphase2.model.pojo.get_profile.GetProfileResponse
@@ -325,4 +328,29 @@ interface ApiInterface {
         @Body body: MarkReadNotificationRequest?,
         @Header("Authorization") token: String
     ): MarkReadNotificationResponse?
+
+
+    //payment end point
+    @POST("customers")
+    suspend fun getCustomerId(
+        @Header("Authorization") token: String,
+    ): GetCustomerIdResponse?
+
+    @FormUrlEncoded
+    @POST("ephemeral_keys")
+    suspend fun getEphemeralKey(
+        @Field("customer") customer: String?,
+        @Header("Authorization") token: String,
+        @Header("Stripe-Version") stripeVersion: String
+    ): GetEphemeralKeyResponse?
+
+    @FormUrlEncoded
+    @POST("payment_intents")
+    suspend fun getPaymentIntent(
+        @Field("customer") customer: String?,
+        @Field("amount") amount: String?,
+        @Field("currency") currency: String?,
+        @Field("automatic_payment_methods[enabled]") auto_pay_enable: String?,
+        @Header("Authorization") token: String?,
+    ): GetPaymentIntentResponse?
 }
