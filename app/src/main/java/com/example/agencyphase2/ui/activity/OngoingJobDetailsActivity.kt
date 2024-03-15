@@ -22,6 +22,7 @@ import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetOngoingJobViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.user.caregiver.convertDate
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.visible
@@ -39,6 +40,9 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
     private val mGetOngoingJobViewModel: GetOngoingJobViewModel by viewModels()
     private lateinit var accessToken: String
     private var id: Int = 0
+    private var user_id: String? = null
+    private var caregiver_name: String? = null
+    private var caregiver_photo: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +106,16 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
 
         //observer
         getUpcommingJobsObserve()
+
+        binding.chatCard.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("caregiver_id",user_id.toString())
+            intent.putExtra("name",caregiver_name.toString())
+            intent.putExtra("photo",caregiver_photo.toString())
+            intent.putExtra("job_id",id.toString())
+            intent.putExtra("status","ongoing")
+            startActivity(intent)
+        }
     }
 
     private fun clickJobOverview(){
@@ -138,16 +152,20 @@ class OngoingJobDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data[0].status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data[0].title.toString()
                             binding.jobDescTv.text = outcome.data!!.data[0].description.toString()
-                            binding.dateHtv.text = outcome.data!!.data[0].start_date.toString()+" to "+outcome.data!!.data[0].end_date.toString()
+                            binding.dateHtv.text = convertDate(outcome.data!!.data[0].start_date) +" to "+ convertDate(outcome.data!!.data[0].end_date)
                             binding.timeTv.text = outcome.data!!.data[0].start_time.toString()+" - "+outcome.data!!.data[0].end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
-                            binding.personCountTv.text = outcome.data!!.data[0].care_items.size.toString()+" "+outcome.data!!.data[0].care_type
+                            binding.personCountTv.text = outcome.data!!.data[0].care_type
                             binding.locTv.text = outcome.data!!.data[0].address.toString()
+
+                            user_id = outcome.data!!.data[0].job_accepted_by.user_id.toString()
+                            caregiver_name = outcome.data!!.data[0].job_accepted_by.name.toString()
+                            caregiver_photo = outcome.data!!.data[0].job_accepted_by.photo.toString()
 
                             var gen = ""
                             for(i in outcome.data!!.data[0].care_items){
                                 if(gen.isEmpty()){
-                                    gen = i.gender+": "+i.age
+                                    gen = i.patient_name+", "+i.gender+": "+i.age
                                 }else{
                                     gen = gen+", "+i.gender+": "+i.age
                                 }

@@ -12,17 +12,28 @@ import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneRe
 import com.example.agencyphase2.model.pojo.change_owner_phone.ChangeOwnerPhoneResponse
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordRequest
 import com.example.agencyphase2.model.pojo.change_password.ChangePasswordResponse
+import com.example.agencyphase2.model.pojo.chat.GetChatResponse
 import com.example.agencyphase2.model.pojo.close_job.CloseJobRequest
 import com.example.agencyphase2.model.pojo.close_job.CloseJobResponse
 import com.example.agencyphase2.model.pojo.delete_auth_officer.DeleteAuthOfficerResponse
+import com.example.agencyphase2.model.pojo.delete_client.DeleteClientRequest
+import com.example.agencyphase2.model.pojo.delete_client.DeleteClientResponse
 import com.example.agencyphase2.model.pojo.delete_job.DeleteJobResponse
 import com.example.agencyphase2.model.pojo.edit_basic_info.EditBasicInfoResponse
+import com.example.agencyphase2.model.pojo.forgot_pass_change.ForgotPassChangeRequest
+import com.example.agencyphase2.model.pojo.forgot_pass_change.ForgotPassChangeResponse
+import com.example.agencyphase2.model.pojo.forgot_pass_otv_verify.ForgotPassOtpVerifyRequest
+import com.example.agencyphase2.model.pojo.forgot_pass_otv_verify.ForgotPassOtpVerifyResponse
+import com.example.agencyphase2.model.pojo.forgotpass_send_email.ForgotPassSendEmailRequest
+import com.example.agencyphase2.model.pojo.forgotpass_send_email.ForgotPassSendEmailResponse
 import com.example.agencyphase2.model.pojo.get_authorize_officer.GetAuthOfficerResponse
 import com.example.agencyphase2.model.pojo.get_canceled_job.GetCanceledJobResponse
 import com.example.agencyphase2.model.pojo.get_care_type.GetCareTypeResponse
+import com.example.agencyphase2.model.pojo.get_clients.GetClientsResponse
 import com.example.agencyphase2.model.pojo.get_complete_jobs.GetCompleteJobsResponse
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpRequest
 import com.example.agencyphase2.model.pojo.get_email_verify_otp.GetOtpResponse
+import com.example.agencyphase2.model.pojo.get_notifications.GetNotificationsResponse
 import com.example.agencyphase2.model.pojo.get_ongoing_job.GetOngoingJobsResponse
 import com.example.agencyphase2.model.pojo.get_post_job_details.GetPostJobDetailsResponse
 import com.example.agencyphase2.model.pojo.get_post_jobs.GetPostJobsResponse
@@ -33,6 +44,8 @@ import com.example.agencyphase2.model.pojo.job_post.JobPostResponse
 import com.example.agencyphase2.model.pojo.login.LoginRequest
 import com.example.agencyphase2.model.pojo.login.LoginResponse
 import com.example.agencyphase2.model.pojo.logout.LogoutResponse
+import com.example.agencyphase2.model.pojo.mark_read_notification.MarkReadNotificationRequest
+import com.example.agencyphase2.model.pojo.mark_read_notification.MarkReadNotificationResponse
 import com.example.agencyphase2.model.pojo.profile_completion_status.GetProfileCompletionStatusResponse
 import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpRequest
 import com.example.agencyphase2.model.pojo.resend_otp.ResendOtpResponse
@@ -231,6 +244,7 @@ interface ApiInterface {
     @GET("job/canceled-job/get")
     suspend fun getCanceledJob(
         @Header("Authorization") token: String,
+        @Query("page") page: Int?
     ): GetCanceledJobResponse?
 
     @POST("job/closed-job/close")
@@ -238,4 +252,77 @@ interface ApiInterface {
         @Body body: CloseJobRequest?,
         @Header("Authorization") token: String,
     ): CloseJobResponse?
+
+    @POST("send-forgot-password-mail")
+    suspend fun forgotPasswordEmail(
+        @Body body: ForgotPassSendEmailRequest?,
+    ): ForgotPassSendEmailResponse?
+
+    @POST("verify-forgot-otp")
+    suspend fun forgotPassOtpVerify(
+        @Body body: ForgotPassOtpVerifyRequest?,
+    ): ForgotPassOtpVerifyResponse?
+
+    @POST("update-forgot-password")
+    suspend fun updatePass(
+        @Body body: ForgotPassChangeRequest?,
+    ): ForgotPassChangeResponse?
+
+    @Multipart
+    @POST("client/create-profile")
+    suspend fun createClient(
+        @Part photo: MultipartBody.Part?,
+        @Part("email") email: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part("short_address") short_address: RequestBody,
+        @Part("street") street: RequestBody,
+        @Part("appartment_or_unit") appartment_or_unit: RequestBody?,
+        @Part("floor_no") floor_no: RequestBody?,
+        @Part("city") city: RequestBody,
+        @Part("zip_code") zip_code: RequestBody,
+        @Part("state") state: RequestBody,
+        @Part("country") country: RequestBody,
+        @Part("lat") lat: RequestBody,
+        @Part("long") long: RequestBody,
+        @Part("age") age: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Header("Authorization") token: String
+    ): GetClientsResponse?
+
+    @GET("client/get-profile")
+    suspend fun getClients(
+        @Header("Authorization") token: String,
+    ): GetClientsResponse?
+
+    @GET("client/search")
+    suspend fun searchClient(
+        @Header("Authorization") token: String,
+        @Query("client_name") client_name: String?,
+    ): GetClientsResponse?
+
+    @POST("client/delete")
+    suspend fun deleteClient(
+        @Body body: DeleteClientRequest?,
+        @Header("Authorization") token: String
+    ): DeleteClientResponse?
+
+    @GET("chatting/get-chats")
+    suspend fun getAllChat(
+        @Header("Authorization") token: String,
+        @Query("job_id") id: Int?,
+        @Query("page") page: Int?,
+    ): GetChatResponse?
+
+    @GET("notification/unread-notification")
+    suspend fun getNotifications(
+        @Header("Authorization") token: String,
+    ): GetNotificationsResponse?
+
+    @POST("notification/mark-as-read")
+    suspend fun markReadNotification(
+        @Body body: MarkReadNotificationRequest?,
+        @Header("Authorization") token: String
+    ): MarkReadNotificationResponse?
 }

@@ -135,43 +135,43 @@ class ProfileFragment : Fragment() {
                                 binding.yearsOfBusinessTv.text = outcome.data!!.data.years_in_business.toString()
                                 yearsBusiness = outcome.data!!.data.years_in_business.toString()
                             }else{
-                                binding.yearsOfBusinessTv.text = "no data"
+                                binding.yearsOfBusinessTv.text = "No data"
                             }
                             if(outcome.data!!.data.number_of_employee != null){
                                 binding.numberOfEmployeeTv.text = outcome.data!!.data.number_of_employee.toString()
                                 noEmployee = outcome.data!!.data.number_of_employee.toString()
                             }else{
-                                binding.numberOfEmployeeTv.text = "no data"
+                                binding.numberOfEmployeeTv.text = "No data"
                             }
                             if(outcome.data!!.data.country_of_business != null){
                                 binding.countryTv.text = outcome.data!!.data.country_of_business.toString()
                                 country = outcome.data!!.data.country_of_business.toString()
                             }else{
-                                binding.countryTv.text = "no data"
+                                binding.countryTv.text = "No data"
                             }
 
                             if(outcome.data!!.data.organization_type != null){
                                 binding.orgTypeTv.text = outcome.data!!.data.organization_type.toString()
                                 orgType = outcome.data!!.data.organization_type.toString()
                             }else{
-                                binding.orgTypeTv.text = "no data"
+                                binding.orgTypeTv.text = "No data"
                             }
                             if(outcome.data!!.data.legal_structure != null){
                                 binding.lsTv.text = outcome.data!!.data.legal_structure.toString()
                                 legalStructure = outcome.data!!.data.legal_structure.toString()
                             }else{
-                                binding.lsTv.text = "no data"
+                                binding.lsTv.text = "No data"
                             }
                             if(outcome.data!!.data.annual_business_revenue != null){
                                 binding.revenueTv.text = "$ "+outcome.data!!.data.annual_business_revenue.toString()
                                 annualRevenue = outcome.data!!.data.annual_business_revenue.toString()
                             }else{
-                                binding.revenueTv.text = "no data"
+                                binding.revenueTv.text = "No data"
                             }
                             if(outcome.data!!.data.tax_id_or_ein_id != null){
                                 binding.taxIdTv.text = outcome.data!!.data.tax_id_or_ein_id.toString()
                             }else{
-                                binding.taxIdTv.text = "no data"
+                                binding.taxIdTv.text = "No data"
                             }
                         }
 

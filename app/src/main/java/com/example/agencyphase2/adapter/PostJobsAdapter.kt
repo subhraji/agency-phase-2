@@ -11,6 +11,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_post_jobs.DataX
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
+import com.user.caregiver.convertDate
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -52,9 +53,9 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
 
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
-                careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
+                careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = data?.start_date.toString()
+                dateHtv.text = "${convertDate(data?.start_date)} to ${convertDate(data?.end_date)}"
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
@@ -65,7 +66,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 gen = ""
                 for(i in data?.care_items){
                     if(gen.isEmpty()){
-                        gen = i.gender+": "+i.age+" Yrs"
+                        gen = i.patient_name+", "+i.gender+": "+i.age+" Yrs"
                     }else{
                         gen = gen+", "+i.gender+": "+i.age+" Yrs"
                     }
@@ -87,14 +88,31 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                     statusTv.text = "Open \u00A0 \u00A0 \u00A0 Job "
                     statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
                     timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_green)))
+                }else if(data?.status == "Bidding Ended"){
+                    statusTv.text = "Bidding Ended"
+                    statusTvLay.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
+                    timeLeftTv.setBackgroundTintList(ColorStateList.valueOf(context.resources.getColor(R.color.color_yellow)))
                 }
 
-                timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
-                    Duration.ofMinutes( getDurationHour(
-                        getCurrentDate(),
-                        parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
-                    ) )
-                ).toString()
+                val duration = getDurationHour(
+                    getCurrentDate(),
+                    parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                )
+
+                if(duration > 0){
+                    if(duration > 1440){
+                        timeLeftTv.text = "TIME LEFT : ${formatMinutesToHourMinute(duration)}"
+                    }else{
+                        timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
+                            Duration.ofMinutes( getDurationHour(
+                                getCurrentDate(),
+                                parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                            ) )
+                        ).toString()
+                    }
+                }else{
+                    timeLeftTv.text = "TIME LEFT : 00:00"
+                }
 
             }
         }
@@ -123,8 +141,7 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
                 val durationDay = difference_In_Days.toInt()
                 val durationHour = difference_In_Hours.toInt()
 
-                durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
-
+                durationTotalMin = (durationDay*24*60)+(durationHour*60)+difference_In_Minutes.toInt()
 
                 Log.d("dateTime","duration => "+
                         difference_In_Years.toString()+
@@ -169,6 +186,11 @@ class PostJobsAdapter (private val itemList: MutableList<DataX>,
             }
             return str
         }
+        fun formatMinutesToHourMinute(minutes: Long): String {
+            val hours = minutes / 60
+            val remainingMinutes = minutes % 60
 
+            return String.format("%02d:%02d", hours, remainingMinutes)
+        }
     }
 }

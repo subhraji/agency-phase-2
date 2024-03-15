@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.TextView
@@ -31,6 +32,7 @@ import com.example.agencyphase2.viewmodel.GetUpcommingJobViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ncorti.slidetoact.SlideToActView
+import com.user.caregiver.convertDate
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
@@ -53,8 +55,11 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
     private lateinit var loader: androidx.appcompat.app.AlertDialog
 
     private var id: Int = 0
+    private var status: String? = null
     private var pageNumber = 1
     private var user_id: String? = null
+    private var caregiver_name: String? = null
+    private var caregiver_photo: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +73,16 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         val extras = intent.extras
         if (extras != null) {
             id = intent?.getIntExtra("id",0)!!
+            status = intent?.getStringExtra("status")!!
+        }
+        status?.let {
+            if(status == "Closed"){
+                binding.slideToCompleteBtn.visibility = View.INVISIBLE
+                binding.chatCard.visibility = View.INVISIBLE
+            }else{
+                binding.slideToCompleteBtn.visible()
+                binding.chatCard.visible()
+            }
         }
 
         binding.medicalRecycler.gone()
@@ -93,6 +108,16 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.chatCard.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("caregiver_id",user_id.toString())
+            intent.putExtra("name",caregiver_name.toString())
+            intent.putExtra("photo",caregiver_photo.toString())
+            intent.putExtra("job_id",id.toString())
+            intent.putExtra("status","completed")
+            startActivity(intent)
         }
 
         binding.profileCard.setOnClickListener {
@@ -122,7 +147,7 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         binding.slideToCompleteBtn.onSlideToActAnimationEventListener = (object : SlideToActView.OnSlideToActAnimationEventListener{
             override fun onSlideCompleteAnimationEnded(view: SlideToActView) {
-                //Toast.makeText(this@CompleteJobDetailsActivity,"onSlideCompleteAnimationEnded",Toast.LENGTH_SHORT).show()
+                binding.slideToCompleteBtn.resetSlider()
                 if(isConnectedToInternet()){
                     mCloseJobViewModel.closeJob(
                         id.toString(),
@@ -148,13 +173,17 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
 
         })
 
+        binding.jobActivities.setOnClickListener {
+            val intent = Intent(this,JobActivitiesActivity::class.java)
+            startActivity(intent)
+        }
 
         //observer
         getCompletedJobsObserve()
     }
 
     private fun showReviewDialog(){
-        val dialog = BottomSheetDialog(this)
+        val dialog = BottomSheetDialog(this, R.style.DialogStyle)
         val view = layoutInflater.inflate(R.layout.add_review_bottomsheet_layout, null)
 
         val submit = view.findViewById<TextView>(R.id.submit_btn)
@@ -164,25 +193,29 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
         submit.setOnClickListener {
             val rating = ratingBar.rating.toString()
             val review = reviewTxt.text.toString()
-            if(!rating.isEmpty()){
-                if(!review.isEmpty()){
-                    mAddReviewViewModel.addReview(
-                        user_id.toString(),
-                        rating.toString(),
-                        review.toString(),
-                        accessToken
-                    )
-                    loader.show()
-                    dialog.dismiss()
-                    finish()
+            if(rating != "0.0"){
+                if(!rating.isEmpty()){
+                    if(!review.isEmpty()){
+                        mAddReviewViewModel.addReview(
+                            user_id.toString(),
+                            rating.toString(),
+                            review.toString(),
+                            accessToken
+                        )
+                        loader.show()
+                        dialog.dismiss()
+                        finish()
+                    }else{
+                        Toast.makeText(this,"Please provide your review.",Toast.LENGTH_SHORT).show()
+                    }
                 }else{
-                    Toast.makeText(this,"Please provide your review.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Rating is missing.",Toast.LENGTH_SHORT).show()
                 }
             }else{
                 Toast.makeText(this,"Rating is missing.",Toast.LENGTH_SHORT).show()
             }
         }
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
         dialog.setContentView(view)
         dialog.show()
     }
@@ -221,17 +254,19 @@ class CompleteJobDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data[0].status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data[0].title.toString()
                             binding.jobDescTv.text = outcome.data!!.data[0].description.toString()
-                            binding.dateHtv.text = outcome.data!!.data[0].start_date.toString()+" to "+outcome.data!!.data[0].end_date.toString()
+                            binding.dateHtv.text = outcome.data!!.data[0].start_date+" to "+outcome.data!!.data[0].end_date
                             binding.timeTv.text = outcome.data!!.data[0].start_time.toString()+" - "+outcome.data!!.data[0].end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data[0].amount.toString()
-                            binding.personCountTv.text = outcome.data!!.data[0].care_items.size.toString()+" "+outcome.data!!.data[0].care_type
+                            binding.personCountTv.text = outcome.data!!.data[0].care_type
                             binding.locTv.text = outcome.data!!.data[0].address.toString()
                             user_id = outcome.data!!.data[0].job_accepted_by.user_id.toString()
+                            caregiver_name = outcome.data!!.data[0].job_accepted_by.name.toString()
+                            caregiver_photo = outcome.data!!.data[0].job_accepted_by.photo.toString()
 
                             var gen = ""
                             for(i in outcome.data!!.data[0].care_items){
                                 if(gen.isEmpty()){
-                                    gen = i.gender+": "+i.age
+                                    gen = i.patient_name+", "+i.gender+": "+i.age
                                 }else{
                                     gen = gen+", "+i.gender+": "+i.age
                                 }

@@ -3,12 +3,12 @@ package com.example.agencyphase2.ui.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -16,18 +16,20 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.adapter.HomeViewPagerAdapter
 import com.example.agencyphase2.databinding.FragmentHomeBinding
 import com.example.agencyphase2.model.repository.Outcome
-import com.example.agencyphase2.ui.activity.AskLocationActivity
-import com.example.agencyphase2.ui.activity.JobPostActivity
-import com.example.agencyphase2.ui.activity.ProfileActivity
-import com.example.agencyphase2.ui.activity.SearchActivity
+import com.example.agencyphase2.ui.activity.*
 import com.example.agencyphase2.utils.Constants
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetProfileViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
-import com.user.caregiver.visible
 import dagger.hilt.android.AndroidEntryPoint
+import io.socket.client.IO
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import org.json.JSONException
+import org.json.JSONObject
+import java.net.URISyntaxException
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -59,8 +61,8 @@ class HomeFragment : Fragment() {
         accessToken = "Bearer "+ PrefManager.getKeyAuthToken()
 
         binding.userImageView.setOnClickListener {
-            val intent = Intent(requireActivity(), ProfileActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(requireActivity(), ChatListActivity::class.java)
+            startActivity(intent)*/
         }
 
         binding.dashSearchLay.setOnClickListener {
@@ -70,6 +72,7 @@ class HomeFragment : Fragment() {
 
         //observer
         getProfileObserver()
+
     }
 
     override fun onResume() {
@@ -79,7 +82,6 @@ class HomeFragment : Fragment() {
         }else{
             Toast.makeText(requireActivity(),"No internet connection", Toast.LENGTH_SHORT).show()
         }
-
         setUpTabLayoutWithViewPager()
     }
 
@@ -96,6 +98,8 @@ class HomeFragment : Fragment() {
             binding.tabLayout.getTabAt(i)?.customView = textView
             textView.text = tabTitles[i]
         }
+
+        binding.tabLayout.getTabAt(0)?.select()
     }
 
     private fun getProfileObserver(){
@@ -104,11 +108,11 @@ class HomeFragment : Fragment() {
                 is Outcome.Success ->{
                     if(outcome.data?.success == true){
 
-                        if(outcome.data!!.data != null){
+                        /*if(outcome.data!!.data != null){
                             Glide.with(requireActivity()).load(Constants.PUBLIC_URL+ outcome.data!!.data.photo)
                                 .placeholder(R.color.color_grey)
                                 .into(binding.userImageView)
-                        }
+                        }*/
 
                         binding.numberTv3.text = outcome.data?.data?.job_count.toString()
                         binding.numberTv1.text = outcome.data?.data?.rating_count.toString()
@@ -118,18 +122,18 @@ class HomeFragment : Fragment() {
                             var number = outcome.data?.data?.revenue_count!!.toDouble()
 
                             if (Math.abs(number / 1000000) > 1) {
-                                numberString = (number / 1000000).toString() + "m";
+                                numberString = (number / 1000000).toString()
+                                numberString = numberString.substringBefore(".") + "m"
 
                             } else if (Math.abs(number / 1000) > 1) {
                                 numberString = (number / 1000).toString() + "k";
-
+                                numberString = numberString.substringBefore(".") + "k"
                             } else {
-                                numberString = number.toString();
-
+                                numberString = number.toString()
+                                numberString = numberString.substringBefore(".")
                             }
                             binding.numberTv2.text = numberString.toString()
                         }
-
 
                         mGetProfileViewModel.navigationComplete()
                     }else{
@@ -144,6 +148,10 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 }

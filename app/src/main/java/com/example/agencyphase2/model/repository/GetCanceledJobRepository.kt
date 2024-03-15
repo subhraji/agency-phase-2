@@ -11,7 +11,8 @@ import javax.inject.Inject
 class GetCanceledJobRepository @Inject constructor(private val apiInterface: ApiInterface)  {
     fun getCanceledJob(
         token: String,
+        page_no: Int
     ): Flow<GetCanceledJobResponse?> = flow{
-        emit(apiInterface.getCanceledJob(token))
+        emit(apiInterface.getCanceledJob(token, page_no))
     }.flowOn(Dispatchers.IO)
 }

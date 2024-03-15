@@ -12,7 +12,7 @@
         android:layout_height="20dp"
         android:src="@drawable/notification_icon"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black"
+        app:tint="@color/theme_blue"
         app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         android:id="@+id/title_tv"
@@ -21,11 +21,10 @@
         android:textColor="@color/black"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:text="Job Completed"
         app:layout_constraintTop_toTopOf="@+id/notification_img"
         app:layout_constraintStart_toEndOf="@+id/notification_img"
         android:layout_marginStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/mark_read_tv"/>
     <TextView
         android:id="@+id/content_tv"
         android:layout_width="0dp"
@@ -33,6 +32,37 @@
         app:layout_constraintTop_toBottomOf="@+id/title_tv"
         app:layout_constraintStart_toStartOf="@+id/title_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="5dp"
-        android:text="Job number 2034 has been completed by Jhon Methew on 24th, Sept 12:00 PM."/>
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/mark_read_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mark Read"
+        android:textStyle="bold"
+        android:textColor="@color/color_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/title_tv"
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/read_more_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read more"
+        android:textColor="@color/theme_blue"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_tv"/>
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/theme_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

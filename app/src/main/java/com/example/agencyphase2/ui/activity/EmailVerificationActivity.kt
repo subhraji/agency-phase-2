@@ -1,5 +1,6 @@
 package com.example.agencyphase2.ui.activity
 
+import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -20,6 +21,7 @@ import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityChooseLoginRegBinding
 import com.example.agencyphase2.databinding.ActivityEmailVerificationBinding
 import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.service.OtpTimerService
 import com.example.agencyphase2.utils.PrefManager
 import com.example.agencyphase2.viewmodel.GetEmailVerificationOtpViewModel
 import com.example.agencyphase2.viewmodel.ResendOtpViewModel
@@ -36,13 +38,13 @@ class EmailVerificationActivity : AppCompatActivity() {
     private val mResendOtpViewModel: ResendOtpViewModel by viewModels()
 
     private lateinit var loader: androidx.appcompat.app.AlertDialog
-    var cTimer: CountDownTimer? = null
 
     private lateinit var token: String
     private var CHANNEL_ID = "101"
     private var email = ""
     private var name = ""
     private var company_name = ""
+    private var otp: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,89 +60,25 @@ class EmailVerificationActivity : AppCompatActivity() {
 
         loader = this.loadingDialog()
 
-        startTimer()
+        optTimerObserver()
+        startService()
+
         binding.resendTv.gone()
 
         binding.backBtn.setOnClickListener {
+            stopService()
             finish()
         }
 
-        binding.edTxt1.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if(binding.edTxt1.text.length == 1){
-                    binding.edTxt2.requestFocus()
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        binding.edTxt2.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if(binding.edTxt2.text.length == 1){
-                    binding.edTxt3.requestFocus()
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        binding.edTxt3.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if(binding.edTxt3.text.length == 1){
-                    binding.edTxt4.requestFocus()
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        binding.edTxt4.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if(binding.edTxt4.text.length == 1){
-                    binding.edTxt5.requestFocus()
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        binding.edTxt5.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if(binding.edTxt5.text.length == 1){
-                    binding.edTxt6.requestFocus()
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
+        binding.otpView.setOtpCompletionListener {
+            otp = it.toString()
+        }
 
         binding.verifyBtn.setOnClickListener {
-            val otp = "${binding.edTxt1.text}${binding.edTxt2.text}${binding.edTxt3.text}${binding.edTxt4.text}${binding.edTxt5.text}${binding.edTxt6.text}"
             hideSoftKeyboard()
-            if(otp.length == 6){
+            if(otp?.length == 6){
                 if(isConnectedToInternet()){
-                    mGetEmailVerificationOtpViewModel.verifyOtp(email, otp, company_name)
+                    mGetEmailVerificationOtpViewModel.verifyOtp(email, otp!!, company_name)
                     loader.show()
 
                 }else{
@@ -171,23 +109,6 @@ class EmailVerificationActivity : AppCompatActivity() {
         resendOtpObserver()
     }
 
-    fun startTimer() {
-        cTimer = object : CountDownTimer(180000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                binding.timerTv.setText("OTP well be expired in: " + millisUntilFinished / 1000 +" sec");
-            }
-            override fun onFinish() {
-                cancelTimer()
-                binding.resendTv.visible()
-            }
-        }
-        (cTimer as CountDownTimer).start()
-    }
-
-    fun cancelTimer() {
-        if (cTimer != null) cTimer!!.cancel()
-    }
-
     private fun getOtpObserver(){
         mGetEmailVerificationOtpViewModel.response.observe(this, Observer { outcome ->
             when(outcome){
@@ -195,21 +116,17 @@ class EmailVerificationActivity : AppCompatActivity() {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         Toast.makeText(this,outcome.data!!.message.toString(), Toast.LENGTH_LONG).show()
-                        startTimer()
+                        //startTimer()
+                        //startService()
                         binding.resendTv.gone()
-
-                        binding.edTxt1.text = null
-                        binding.edTxt2.text = null
-                        binding.edTxt3.text = null
-                        binding.edTxt4.text = null
-                        binding.edTxt5.text = null
-                        binding.edTxt6.text = null
-                        binding.edTxt1.showKeyboard()
+                        binding.otpView.text = null
 
                         outcome.data?.token?.let {
                             PrefManager.setKeyAuthToken(it)
                             PrefManager.setUserFullName(name)
                             PrefManager.setLogInStatus(true)
+                            PrefManager.setUserId(outcome.data?.data.toString())
+                            stopService()
                             val intent = Intent(this, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
@@ -237,16 +154,10 @@ class EmailVerificationActivity : AppCompatActivity() {
                     loader.dismiss()
                     if(outcome.data?.success == true){
                         Toast.makeText(this,outcome.data!!.message.toString(), Toast.LENGTH_LONG).show()
-                        startTimer()
+                        //startTimer()
+                        startService()
                         binding.resendTv.gone()
-
-                        binding.edTxt1.text = null
-                        binding.edTxt2.text = null
-                        binding.edTxt3.text = null
-                        binding.edTxt4.text = null
-                        binding.edTxt5.text = null
-                        binding.edTxt6.text = null
-                        binding.edTxt1.showKeyboard()
+                        binding.otpView.text = null
 
                         mResendOtpViewModel.navigationComplete()
                     }else{
@@ -315,9 +226,43 @@ class EmailVerificationActivity : AppCompatActivity() {
 
         }
     }
+    private fun startService(){
+        if(!isMyServiceRunning(OtpTimerService::class.java)){
+            startService(Intent(this, OtpTimerService::class.java))
+        }else{
+            Toast.makeText(this,"service is still running.", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun stopService(){
+        stopService(Intent(this, OtpTimerService::class.java))
+    }
+    private fun isMyServiceRunning(mClass: Class<OtpTimerService>): Boolean{
 
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        for(service: ActivityManager.RunningServiceInfo in manager.getRunningServices(Integer.MAX_VALUE)){
+
+            if(mClass.name.equals(service.service.className)){
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun optTimerObserver(){
+        OtpTimerService.timeRunInMillis.observe(this, Observer {
+            if(it == 0L){
+                binding.timerTv.text = null
+                binding.resendTv.visible()
+                stopService()
+            }else{
+                binding.resendTv.gone()
+                binding.timerTv.text = "OTP well be expired in: ${it.toString()} sec"
+            }
+        })
+    }
     override fun onDestroy() {
-        cancelTimer()
         super.onDestroy()
+        stopService()
     }
 }

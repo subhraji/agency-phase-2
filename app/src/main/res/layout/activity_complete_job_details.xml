@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -135,6 +135,24 @@
                             android:textStyle="bold" />
 
                     </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/job_activities"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Job Activities"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:background="@drawable/job_activities_bg"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -167,7 +185,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="2 Senior"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -462,6 +479,24 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/chat_card"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cardCornerRadius="100dp"
+        android:layout_above="@+id/profile_card"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardBackgroundColor="@color/black">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chat_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sms_fill0_wght400_grad0_opsz48"
+            android:tint="@color/white"
+            android:layout_margin="10dp"/>
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_card"
@@ -490,7 +525,8 @@
         app:inner_color="@color/color_grey"
         app:border_radius="80dp"
         app:text="Swipe to close the job."
-        app:text_size="12sp"
+        app:text_style="bold"
+        app:text_size="16sp"
         app:slider_height="60dp"
         app:slider_locked="false"
         android:layout_alignParentBottom="true"

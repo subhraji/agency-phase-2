@@ -24,6 +24,7 @@ import com.example.agencyphase2.viewmodel.GetPostJobDetailsViewModel
 import com.example.agencyphase2.viewmodel.GetPostJobsViewModel
 import com.example.agencyphase2.viewmodel.GetProfileCompletionStatusViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.user.caregiver.convertDate
 import com.user.caregiver.gone
 import com.user.caregiver.isConnectedToInternet
 import com.user.caregiver.loadingDialog
@@ -178,16 +179,16 @@ class PostJobsDetailsActivity : AppCompatActivity() {
                             binding.statusTv.text = outcome.data!!.data.status.toString()
                             binding.jobTitleTv.text = outcome.data!!.data.title.toString()
                             binding.jobDescTv.text = outcome.data!!.data.description.toString()
-                            binding.dateHtv.text = outcome.data!!.data.start_date.toString()+" to "+outcome.data!!.data.end_date.toString()
+                            binding.dateHtv.text = convertDate(outcome.data!!.data.start_date) +" to "+ convertDate(outcome.data!!.data.end_date)
                             binding.timeTv.text = outcome.data!!.data.start_time.toString()+" - "+outcome.data!!.data.end_time.toString()
                             binding.priceTv.text = "$"+outcome.data!!.data.amount.toString()
-                            binding.personCountTv.text = outcome.data!!.data.care_items.size.toString()+" "+outcome.data!!.data.care_type
+                            binding.personCountTv.text = outcome.data!!.data.care_type
                             binding.locTv.text = outcome.data!!.data.address.toString()
 
                             var gen = ""
                             for(i in outcome.data!!.data.care_items){
                                 if(gen.isEmpty()){
-                                    gen = i.gender+": "+i.age
+                                    gen = i.patient_name+", "+i.gender+": "+i.age
                                 }else{
                                     gen = gen+", "+i.gender+": "+i.age
                                 }
@@ -302,7 +303,7 @@ class PostJobsDetailsActivity : AppCompatActivity() {
             val durationDay = difference_In_Days.toInt()
             val durationHour = difference_In_Hours.toInt()
 
-            durationTotalMin = (durationHour*60)+difference_In_Minutes.toInt()
+            durationTotalMin = (durationDay*24*60)+(durationHour*60)+difference_In_Minutes.toInt()
         }
 
         // Catch the Exception

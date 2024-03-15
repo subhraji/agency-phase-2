@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.CompleteJobsItemLayoutBinding
-import com.example.agencyphase2.model.pojo.get_canceled_job.Data
-import com.example.agencyphase2.ui.activity.CompleteJobDetailsActivity
+import com.example.agencyphase2.model.pojo.get_canceled_job.DataX
 import com.example.agencyphase2.ui.activity.IncompleteJobDetailsActivity
 import com.user.caregiver.gone
 
-class CanceledJobAdapter (private val itemList: List<Data>,
+class CanceledJobAdapter (private val itemList: MutableList<DataX>,
                           private val context: Context
 ):
     RecyclerView.Adapter<CanceledJobAdapter.ViewHolder>() {
@@ -30,7 +29,10 @@ class CanceledJobAdapter (private val itemList: List<Data>,
     override fun getItemCount(): Int {
         return itemList.size
     }
-
+    fun add(jobs: List<DataX>) {
+        itemList.addAll(jobs)
+        notifyItemInserted(itemList.size-1)
+    }
     override fun onBindViewHolder(holder: CanceledJobAdapter.ViewHolder, position: Int) {
         val rowData = itemList[position]
         holder.bind(rowData, context)
@@ -39,7 +41,7 @@ class CanceledJobAdapter (private val itemList: List<Data>,
     class ViewHolder(private val itemBinding: CompleteJobsItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         private lateinit var gen:String
-        fun bind(data: Data, context: Context) {
+        fun bind(data: DataX, context: Context) {
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
                 careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
@@ -56,14 +58,14 @@ class CanceledJobAdapter (private val itemList: List<Data>,
                 gen = ""
                 for(i in data?.care_items){
                     if(gen.isEmpty()){
-                        gen = i.gender+": "+i.age+" Yrs"
+                        gen = i.patient_name+", "+i.gender+": "+i.age+" Yrs"
                     }else{
                         gen = gen+", "+i.gender+": "+i.age+" Yrs"
                     }
                 }
                 ageTv.text = gen
 
-                statusTv.text = "Canceled Job"
+                statusTv.text = data?.status
 
                 statusTvLay.setBackgroundTintList(
                     ColorStateList.valueOf(context.resources.getColor(

@@ -12,6 +12,7 @@ import com.example.agencyphase2.databinding.CompleteJobsItemLayoutBinding
 import com.example.agencyphase2.databinding.PostJobsItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_complete_jobs.Data
 import com.example.agencyphase2.ui.activity.CompleteJobDetailsActivity
+import com.user.caregiver.convertDate
 import com.user.caregiver.gone
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -49,21 +50,22 @@ class CompletedJobAdapter (private val itemList: List<Data>,
         fun bind(data: Data, context: Context) {
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
-                careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
+                careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = data?.start_date.toString()+"-"+data?.end_date.toString()
+                dateHtv.text = "${data?.start_date} to ${data?.end_date}"
                 hourHtv.text = data?.start_time+" to "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
 
                 rootLay.setOnClickListener {
                     val intent = Intent(context, CompleteJobDetailsActivity::class.java)
                     intent.putExtra("id",data?.job_id)
+                    intent.putExtra("status",data?.status)
                     context.startActivity(intent)
                 }
                 gen = ""
                 for(i in data?.care_items){
                     if(gen.isEmpty()){
-                        gen = i.gender+": "+i.age+" Yrs"
+                        gen = i.patient_name+", "+i.gender+": "+i.age+" Yrs"
                     }else{
                         gen = gen+", "+i.gender+": "+i.age+" Yrs"
                     }

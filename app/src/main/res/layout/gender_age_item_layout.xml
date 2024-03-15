@@ -12,7 +12,6 @@
         android:id="@+id/name_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Jhon Methew"
         android:textColor="@color/text_grey"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -25,7 +24,6 @@
         android:id="@+id/care_type_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Care Type: Senior care"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/name_tv"
         app:layout_constraintStart_toStartOf="@+id/name_tv"
@@ -36,7 +34,6 @@
         android:id="@+id/age_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Age: 25 years"
         android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/image_view"
@@ -46,7 +43,6 @@
         android:id="@+id/gender_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Gender: Male"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/image_view"
@@ -61,5 +57,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:padding="5dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_cancel_fill0_wght400_grad0_opsz48"/>
+        android:src="@drawable/ic_outline_cancel_24"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,20 +6,18 @@
     android:background="@drawable/settings_item_background"
     android:padding="10dp"
     android:layout_margin="10dp">
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/client_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_outline_person_outline_24"
-        android:background="@color/white"
+        android:src="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
     <ImageView
         android:id="@+id/client_finger_print_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_baseline_fingerprint_24"
-        android:background="@color/white"
+        android:background="@color/color_grey"
         app:layout_constraintTop_toBottomOf="@+id/client_img"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -59,7 +57,6 @@
         app:layout_constraintEnd_toStartOf="@+id/edit_btn"
         app:layout_constraintBottom_toTopOf="@+id/linear_lay_1"
         android:layout_marginEnd="10dp"
-        android:text="Alex O'Brown"
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="@color/light_black"/>
@@ -71,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/full_name_tv"
         app:layout_constraintBottom_toTopOf="@+id/mobile_htv"
         app:layout_constraintStart_toStartOf="@+id/full_name_htv"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_btn"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp">
@@ -86,10 +83,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="alex@gmail.com"
             android:textColor="@color/light_black"
             android:textStyle="bold"/>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/add_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_baseline_add_circle_outline_24"/>
     <TextView
         android:id="@+id/mobile_htv"
         android:layout_width="0dp"
@@ -105,7 +111,6 @@
         android:id="@+id/mobile_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="+180112889354"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/light_black"

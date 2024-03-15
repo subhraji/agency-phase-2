@@ -12,6 +12,7 @@ import com.example.agencyphase2.databinding.UpcomingListItemLayoutBinding
 import com.example.agencyphase2.model.pojo.get_upcomming_jobs.Data
 import com.example.agencyphase2.ui.activity.PostJobsDetailsActivity
 import com.example.agencyphase2.ui.activity.UpcommingJobDetailsActivity
+import com.user.caregiver.convertDate
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -56,9 +57,9 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
 
             itemBinding.apply {
                 jobTitleTv.text = data?.title.toString()
-                careTypeTv.text = data?.care_items.size.toString()+" "+data?.care_type
+                careTypeTv.text = data?.care_type
                 addressTv.text = data?.short_address.toString()
-                dateHtv.text = data?.start_date.toString()+"-"+data?.end_date.toString()
+                dateHtv.text = data?.start_date+" to "+data?.end_date
                 hourHtv.text = data?.start_time+" - "+data?.end_time
                 priceTv.text = "$"+data?.amount.toString()
                 rootLay.setOnClickListener {
@@ -69,7 +70,7 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
                 gen = ""
                 for(i in data?.care_items){
                     if(gen.isEmpty()){
-                        gen = i.gender+": "+i.age+" Yrs"
+                        gen = i.patient_name+", "+i.gender+": "+i.age+" Yrs"
                     }else{
                         gen = gen+", "+i.gender+": "+i.age+" Yrs"
                     }
@@ -78,12 +79,22 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
 
                 statusTv.text = data.status.toString()
 
-                timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
-                    Duration.ofMinutes( getDurationHour(
-                        getCurrentDate(),
-                        parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
-                    ) )
-                ).toString()
+
+                val duration = getDurationHour(
+                    getCurrentDate(),
+                    parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                )
+
+                 if(duration > 0){
+                    timeLeftTv.text = "TIME LEFT : "+ LocalTime.MIN.plus(
+                        Duration.ofMinutes( getDurationHour(
+                            getCurrentDate(),
+                            parseDateToddMMyyyy("${data.start_date} ${data?.start_time}")!!
+                        ) )
+                    ).toString()
+                }else{
+                    timeLeftTv.text = "TIME LEFT : 00:00"
+                }
             }
         }
 
@@ -143,7 +154,7 @@ class UpcomingJobsAdapter (private val itemList: List<Data>,
         }
 
         fun parseDateToddMMyyyy(time: String): String? {
-            val inputPattern = "yyyy-MM-dd h:mm a"
+            val inputPattern = "MM-dd-yyyy h:mm a"
             val outputPattern = "dd-MM-yyyy HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
             val outputFormat = SimpleDateFormat(outputPattern)

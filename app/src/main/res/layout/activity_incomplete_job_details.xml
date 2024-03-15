@@ -44,7 +44,7 @@
                 android:id="@+id/text_view_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upcoming Job Details"
+                android:text="Expired Job Details"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"

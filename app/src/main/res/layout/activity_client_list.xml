@@ -5,22 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.ClientListActivity">
-    <androidx.cardview.widget.CardView
-        android:id="@+id/add_client_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:cardBackgroundColor="@color/color_grey"
-        app:cardCornerRadius="5dp"
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Client"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_gravity="center"/>
-    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/back_arrow"
@@ -41,11 +25,50 @@
         android:layout_alignTop="@+id/back_arrow"
         android:layout_alignBottom="@+id/back_arrow"/>
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/client_shimmer_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/back_arrow">
+        <include layout="@layout/post_jobs_shimmer_lay" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/client_list_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/add_client_btn"
+        android:layout_height="match_parent"
         android:layout_below="@+id/back_arrow"
+        android:paddingBottom="50dp"
         android:layout_marginTop="10dp"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/no_data_lottie"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:lottie_rawRes="@raw/no_data_lottie"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_centerInParent="true"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/add_client_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/color_grey"
+        app:cardCornerRadius="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add Client"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

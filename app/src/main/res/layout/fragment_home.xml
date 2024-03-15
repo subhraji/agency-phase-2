@@ -39,14 +39,13 @@
                 app:layout_constraintStart_toEndOf="@+id/image_view_1"
                 app:layout_constraintTop_toTopOf="@+id/image_view_1" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/user_image_view"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="15dp"
-                android:src="@color/color_grey"
-                app:civ_border_width="1dp"
-                app:civ_border_color="#787878"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_chat_24"
                 app:layout_constraintBottom_toBottomOf="@+id/image_view_1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/image_view_1" />
@@ -79,7 +78,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:layout_toRightOf="@+id/search_icon_image_view"
-                    android:text="Search job"
+                    android:text="Search post job"
                     android:textSize="15sp" />
             </RelativeLayout>
 

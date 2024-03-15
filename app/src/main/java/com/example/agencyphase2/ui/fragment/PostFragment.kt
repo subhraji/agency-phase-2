@@ -107,7 +107,7 @@ class PostFragment : Fragment() {
     private fun onScrollLister(){
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.postJobsRecycler.layoutManager = layoutManager
-        binding.postJobsRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+        binding.postJobsRecycler.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLastPage(): Boolean {
                 return isLastPage
             }
@@ -125,13 +125,13 @@ class PostFragment : Fragment() {
     }
 
     private fun getPostJobsObserve(){
-        mGetPostJobsViewModel.response.observe(viewLifecycleOwner, Observer { outcome ->
-            when(outcome){
-                is Outcome.Success ->{
+        mGetPostJobsViewModel.response.observe(viewLifecycleOwner) { outcome ->
+            when (outcome) {
+                is Outcome.Success -> {
                     binding.postJobsShimmerView.stopShimmer()
                     binding.postJobsShimmerView.gone()
-                    if(outcome.data?.success == true){
-                        if(outcome.data?.data != null && outcome.data?.data?.data?.size != 0){
+                    if (outcome.data?.success == true) {
+                        if (outcome.data?.data != null && outcome.data?.data?.data?.size != 0) {
                             binding.postJobsRecycler.visible()
                             binding.textView1.gone()
                             binding.postJobCardBtn.gone()
@@ -139,32 +139,44 @@ class PostFragment : Fragment() {
                             isLoading = false
 
                             adapter.add(outcome.data?.data?.data!!)
-                        }else{
-                            if(page_no == 1){
+                        } else {
+                            if (page_no == 1) {
                                 binding.postJobsRecycler.gone()
                                 binding.textView1.visible()
                                 binding.postJobCardBtn.visible()
                             }
                         }
                         mGetPostJobsViewModel.navigationComplete()
-                    }else{
-                        if(outcome.data?.http_status_code == 401){
+                    } else {
+                        if (outcome.data?.http_status_code == 401) {
                             PrefManager.clearPref()
-                            startActivity(Intent(requireActivity(), ChooseLoginRegActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    requireActivity(),
+                                    ChooseLoginRegActivity::class.java
+                                )
+                            )
                             requireActivity().finish()
-                        }else{
-                            Toast.makeText(requireActivity(),outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                requireActivity(),
+                                outcome.data!!.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
+
                 is Outcome.Failure<*> -> {
-                    Toast.makeText(requireActivity(),outcome.e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), outcome.e.message, Toast.LENGTH_SHORT).show()
 
                     outcome.e.printStackTrace()
-                    Log.i("status",outcome.e.cause.toString())
+                    Log.i("status", outcome.e.cause.toString())
                 }
+
+                else -> {}
             }
-        })
+        }
     }
 
     private fun getProfileCompletionStatusObserver(){

@@ -1,28 +1,63 @@
 package com.example.agencyphase2.ui.activity
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.util.Patterns
+import android.view.View
+import android.widget.*
+import androidx.activity.viewModels
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.Observer
 import com.example.agencyphase2.R
 import com.example.agencyphase2.databinding.ActivityAddClientBinding
 import com.example.agencyphase2.databinding.ActivityAskLocationBinding
+import com.example.agencyphase2.model.repository.Outcome
+import com.example.agencyphase2.ui.fragment.ImagePreviewFragment
+import com.example.agencyphase2.utils.PrefManager
+import com.example.agencyphase2.utils.UploadDocListener
+import com.example.agencyphase2.viewmodel.CreateClientViewModel
+import com.example.agencyphase2.viewmodel.SignUpViewModel
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.user.caregiver.gone
-import com.user.caregiver.showKeyboard
-import com.user.caregiver.visible
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
+import com.user.caregiver.*
+import dagger.hilt.android.AndroidEntryPoint
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.InputStream
 
-class AddClientActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class AddClientActivity : AppCompatActivity(), UploadDocListener {
     private lateinit var binding: ActivityAddClientBinding
+
+    private val mCreateClientViewModel: CreateClientViewModel by viewModels()
+    private lateinit var loader: androidx.appcompat.app.AlertDialog
+    private lateinit var accessToken: String
+    val genderList: Array<String> =  arrayOf("Select gender", "Male", "Female", "Other")
+    private lateinit var gender: String
 
     var job_address: String = ""
     var place_name: String = ""
@@ -35,11 +70,31 @@ class AddClientActivity : AppCompatActivity() {
     var zipcode_n = ""
     var building_n = ""
     var floor_n = ""
+    var from: String? = null
+
+    private var imageUri: Uri? = null
+    private var absolutePath: String? = null
+    private val PICK_IMAGE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityAddClientBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val extras = intent.extras
+        if (extras != null) {
+            from = extras.getString("from").toString()
+        }
+
+        //get token
+        accessToken = "Bearer "+PrefManager.getKeyAuthToken()
+        loader = this.loadingDialog(false)
+
+        //observe
+        createClientObserve()
+
+        //spinner
+        setUpGenderSpinner()
 
         Places.initialize(applicationContext, getString(R.string.api_key))
         autocomplete()
@@ -64,7 +119,144 @@ class AddClientActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.addImageBtn.setOnClickListener {
+            if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                dispatchGalleryIntent()
+            }else{
+                requestStoragePermission()
+            }
+        }
+
+        binding.addBtn.setOnClickListener {
+            val name = binding.fullNameTxt.text.toString()
+            val email = binding.emailNameTxt.text.toString()
+            val phone = binding.mobileNameTxt.text.toString()
+            val age = binding.ageTxt.text.toString()
+
+            if(!name.isEmpty()){
+                if(!phone.isEmpty()){
+                    if(!email.isEmpty()){
+                        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                            if(!age.isEmpty()){
+                                if(!gender.isEmpty()){
+                                    if(!job_address.isEmpty()){
+                                        if(imageUri != null && absolutePath != null){
+                                            try {
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    withContext(Dispatchers.Main) {
+                                                        val file = File(absolutePath)
+                                                        val compressedImageFile = Compressor.compress(this@AddClientActivity, file)
+                                                        val imagePart = createMultiPart("photo", compressedImageFile)
+                                                        if(isConnectedToInternet()){
+                                                            mCreateClientViewModel.createClient(
+                                                                photo = imagePart,
+                                                                email = binding.emailNameTxt.text.toString(),
+                                                                name = binding.fullNameTxt.text.toString(),
+                                                                phone = binding.mobileNameTxt.text.toString(),
+                                                                address = job_address,
+                                                                short_address = job_address,
+                                                                street = street_n,
+                                                                appartment_or_unit = building_n,
+                                                                floor_no = floor_n,
+                                                                city = city_n,
+                                                                zip_code = zipcode_n,
+                                                                state = state_n,
+                                                                country = "USA",
+                                                                lat = lat,
+                                                                long = lang,
+                                                                age = age,
+                                                                gender = gender,
+                                                                token = accessToken
+                                                            )
+                                                            hideSoftKeyboard()
+                                                            loader.show()
+                                                        }else{
+                                                            Toast.makeText(this@AddClientActivity,"No internet connection.", Toast.LENGTH_SHORT).show()
+                                                        }
+
+                                                    }
+                                                }
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                            }
+                                        }else{
+                                            if(isConnectedToInternet()){
+                                                mCreateClientViewModel.createClient(
+                                                    photo = null,
+                                                    email = binding.emailNameTxt.text.toString(),
+                                                    name = binding.fullNameTxt.text.toString(),
+                                                    phone = binding.mobileNameTxt.text.toString(),
+                                                    address = job_address,
+                                                    short_address = job_address,
+                                                    street = street_n,
+                                                    appartment_or_unit = building_n,
+                                                    floor_no = floor_n,
+                                                    city = city_n,
+                                                    zip_code = zipcode_n,
+                                                    state = state_n,
+                                                    country = "USA",
+                                                    lat = lat,
+                                                    long = lang,
+                                                    age = age,
+                                                    gender = gender,
+                                                    token = accessToken
+                                                )
+                                                hideSoftKeyboard()
+                                                loader.show()
+                                            }else{
+                                                Toast.makeText(this,"Oops!! No internet connection.", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }else{
+                                        Toast.makeText(this,"Provide address.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }else{
+                                    Toast.makeText(this,"Please select a gender.", Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                Toast.makeText(this,"Please provide the age.", Toast.LENGTH_SHORT).show()
+                            }
+                        }else{
+                            Toast.makeText(this,"Provide a valid email address.", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(this,"Provide email address.", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(this,"Provide mobile number.", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Provide the full name.", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
     }
+
+    private fun setUpGenderSpinner(){
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,genderList)
+        binding.genderSpinner.adapter = arrayAdapter
+        binding.genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
+            AdapterView.OnItemClickListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(p2 == 0){
+                    gender = ""
+                }else{
+                    gender = genderList[p2]
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+
+        }
+    }
+
 
     private fun autocomplete(){
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.client_autocomplete_fragment) as AutocompleteSupportFragment
@@ -152,7 +344,7 @@ class AddClientActivity : AppCompatActivity() {
 
         var streetVar = ""
         if(streetName.isEmpty() && streetNumber.isEmpty()){
-            streetVar = " "
+            streetVar = ""
         }else if(streetName.isEmpty() && streetNumber.isNotEmpty()){
             streetVar = streetNumber
         }else if(streetName.isNotEmpty() && streetNumber.isEmpty()){
@@ -232,4 +424,128 @@ class AddClientActivity : AppCompatActivity() {
         dialog.setContentView(view)
         dialog.show()
     }
+
+    private fun dispatchGalleryIntent() {
+       /* val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(gallery, PICK_IMAGE)*/
+
+        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        gallery.setType("image/*")
+        startActivityForResult(gallery, PICK_IMAGE)
+    }
+
+    fun getRealPathFromUri(contentUri: Uri?): String? {
+        var cursor: Cursor? = null
+        return try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = this.contentResolver.query(contentUri!!, proj, null, null, null)
+            assert(cursor != null)
+            val columnIndex: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(columnIndex)
+        } finally {
+            if (cursor != null) {
+                cursor.close()
+            }
+        }
+    }
+
+    private fun showImageDialog(absolutePath: String,uri: String,type: String) {
+        val bundle = Bundle()
+        bundle.putString("path", absolutePath)
+        bundle.putString("uri",uri)
+        bundle.putString("type",type)
+        val dialogFragment = ImagePreviewFragment(this)
+        dialogFragment.arguments = bundle
+        dialogFragment.show(this.supportFragmentManager, "signature")
+    }
+
+    private fun requestStoragePermission() {
+        Dexter.withContext(this)
+            .withPermission(
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            .withListener(object : PermissionListener {
+
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                    dispatchGalleryIntent()
+                }
+
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    requestStoragePermission()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+
+            })
+            .onSameThread()
+            .check()
+    }
+
+    override fun uploadFile(path: String) {
+        val uri = imageUri
+        val imageStream: InputStream = uri?.let {
+            contentResolver.openInputStream(
+                it
+            )
+        }!!
+        val selectedImage: Bitmap = BitmapFactory.decodeStream(imageStream)
+        binding.addImageBtn.setImageBitmap(selectedImage)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == PICK_IMAGE) {
+            try {
+                imageUri = data?.data
+                val path = getRealPathFromUri(imageUri)
+                val imageFile = File(path!!)
+                absolutePath = imageFile.absolutePath
+                showImageDialog(imageFile.absolutePath,imageUri.toString(),"covid")
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun createClientObserve(){
+        mCreateClientViewModel.response.observe(this, Observer { outcome ->
+            when(outcome){
+                is Outcome.Success ->{
+                    loader.dismiss()
+                    if(outcome.data?.success == true){
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                        if(outcome.data?.data != null && outcome.data?.data?.size!! > 0){
+
+                            if(from == "job_post"){
+                                JobPostActivity.clientItem = null
+                                JobPostActivity.from = ""
+                                JobPostActivity.clientItem = outcome.data!!.data[0]
+                                finish()
+                            }else{
+                                Log.e("client","here too.. ${from}")
+                                finish()
+                            }
+                        }
+                    }else{
+                        Toast.makeText(this,outcome.data!!.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Outcome.Failure<*> -> {
+                    Toast.makeText(this,outcome.e.message, Toast.LENGTH_SHORT).show()
+                    loader.dismiss()
+                    outcome.e.printStackTrace()
+                    Log.i("status",outcome.e.cause.toString())
+                }
+            }
+        })
+    }
+
 }

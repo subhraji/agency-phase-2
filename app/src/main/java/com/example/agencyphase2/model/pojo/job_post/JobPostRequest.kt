@@ -3,6 +3,7 @@ package com.example.agencyphase2.model.pojo.job_post
 import com.example.agencyphase2.model.pojo.GenderAgeItemCountModel
 
 data class JobPostRequest(
+    val client_id: Int,
     val title: String,
     val care_type: String,
     val care_items: List<GenderAgeItemCountModel>,
