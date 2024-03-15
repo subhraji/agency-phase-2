@@ -1,6 +1,5 @@
 package com.example.agencyphase2.model.repository
 
-import com.example.agencyphase2.di.PaymentApiClient
 import com.example.agencyphase2.model.pojo.get_customer_id.GetCustomerIdResponse
 import com.example.agencyphase2.retrofit.ApiInterface
 import com.example.agencyphase2.retrofit.PaymentService
@@ -10,13 +9,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetCustomerIdRepository @Inject constructor(){
+class GetCustomerIdRepository @Inject constructor(private val apiInterface: PaymentService){
 
-    private val apiService = PaymentApiClient.getInstance()
+    //private val apiService = apiInterface.getInstance()
 
     fun getCustomerId(
         token: String
     ): Flow<GetCustomerIdResponse?> = flow{
-        emit(apiService.getCustomerId(token))
+        emit(apiInterface.getCustomerId(token))
     }.flowOn(Dispatchers.IO)
 }

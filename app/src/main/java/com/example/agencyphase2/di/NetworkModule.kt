@@ -1,6 +1,8 @@
 package com.example.agencyphase2.di
 
 import com.example.agencyphase2.BuildConfig
+import com.example.agencyphase2.di.qualifier.BaseUrl
+import com.example.agencyphase2.di.qualifier.PaymentBaseUrl
 import com.example.agencyphase2.retrofit.ApiInterface
 import com.example.agencyphase2.retrofit.PaymentService
 import com.example.agencyphase2.utils.Constants
@@ -37,7 +39,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit() : Retrofit {
+    @BaseUrl
+    fun providesApiRetrofit() : Retrofit {
 
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
@@ -50,7 +53,27 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesFakerAPI(retrofit: Retrofit) : ApiInterface {
+    @PaymentBaseUrl
+    fun providesPaymentRetrofit() : Retrofit {
+
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+
+        return Retrofit.Builder().baseUrl(Constants.PAYMENT_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(getHttpLogClientWithToken())
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun providesAppAPI(@BaseUrl retrofit: Retrofit) : ApiInterface {
         return retrofit.create(ApiInterface::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesPaymentAPI(@PaymentBaseUrl retrofit: Retrofit) : PaymentService {
+        return retrofit.create(PaymentService::class.java)
     }
 }
